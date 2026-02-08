@@ -1,0 +1,148 @@
+import { NextResponse } from 'next/server'
+import { createClient } from '@/lib/supabase/server'
+
+interface FounderData {
+  id?: string
+  role?: string
+}
+
+export async function GET(request: Request) {
+  try {
+    const supabase = await createClient()
+
+    // Get current user
+    const { data: { user }, error: userError } = await supabase.auth.getUser()
+    if (userError || !user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+
+    // Check if admin
+    const { data: currentFounderData } = await supabase
+      .from('founders')
+      .select('role')
+      .eq('user_id', user.id)
+      .single()
+
+    const currentFounder = currentFounderData as FounderData | null
+
+    if (currentFounder?.role === 'admin') {
+      // Admin can see all founders
+      const { searchParams } = new URL(request.url)
+      const limit = parseInt(searchParams.get('limit') || '50')
+      const offset = parseInt(searchParams.get('offset') || '0')
+
+      const { data: founders, error, count } = await supabase
+        .from('founders')
+        .select('*, trust_scores(*), companies(*)', { count: 'exact' })
+        .range(offset, offset + limit - 1)
+        .order('created_at', { ascending: false })
+
+      if (error) {
+        return NextResponse.json({ error: error.message }, { status: 500 })
+      }
+
+      return NextResponse.json({ founders, total: count })
+    } else {
+      // Regular user can only see their own profile
+      const { data: founder, error } = await supabase
+        .from('founders')
+        .select('*, trust_scores(*), companies(*)')
+        .eq('user_id', user.id)
+        .single()
+
+      if (error) {
+        return NextResponse.json({ error: error.message }, { status: 404 })
+      }
+
+      return NextResponse.json({ founder })
+    }
+  } catch {
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+  }
+}
+
+export async function POST(request: Request) {
+  try {
+    const supabase = await createClient()
+
+    // Get current user
+    const { data: { user }, error: userError } = await supabase.auth.getUser()
+    if (userError || !user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+
+    const body = await request.json()
+
+    // Check if founder already exists
+    const { data: existingFounder } = await supabase
+      .from('founders')
+      .select('id')
+      .eq('user_id', user.id)
+      .single()
+
+    if (existingFounder) {
+      return NextResponse.json({ error: 'Founder profile already exists' }, { status: 400 })
+    }
+
+    // Create founder profile with type assertion
+    const insertData = {
+      user_id: user.id,
+      email: body.email || user.email,
+      full_name: body.fullName,
+      phone: body.phone,
+      country_of_origin: body.countryOfOrigin,
+      country_of_residence: body.countryOfResidence,
+    }
+
+    const { data: founder, error } = await (supabase
+      .from('founders') as ReturnType<typeof supabase.from>)
+      .insert(insertData)
+      .select()
+      .single()
+
+    if (error) {
+      return NextResponse.json({ error: error.message }, { status: 500 })
+    }
+
+    return NextResponse.json({ founder }, { status: 201 })
+  } catch {
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+  }
+}
+
+export async function PATCH(request: Request) {
+  try {
+    const supabase = await createClient()
+
+    // Get current user
+    const { data: { user }, error: userError } = await supabase.auth.getUser()
+    if (userError || !user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+
+    const body = await request.json()
+
+    const updateData = {
+      full_name: body.fullName,
+      phone: body.phone,
+      country_of_origin: body.countryOfOrigin,
+      country_of_residence: body.countryOfResidence,
+      onboarding_completed: body.onboardingCompleted,
+    }
+
+    const { data: founder, error } = await (supabase
+      .from('founders') as ReturnType<typeof supabase.from>)
+      .update(updateData)
+      .eq('user_id', user.id)
+      .select()
+      .single()
+
+    if (error) {
+      return NextResponse.json({ error: error.message }, { status: 500 })
+    }
+
+    return NextResponse.json({ founder })
+  } catch {
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+  }
+}
