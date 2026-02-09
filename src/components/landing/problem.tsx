@@ -55,12 +55,12 @@ export function Problem() {
             The Problem
           </div>
           <h2 className="text-3xl font-bold tracking-tight text-white sm:text-5xl">
-            17+ Countries Banned from Mercury in{' '}
-            <span className="gradient-text-warm">2024</span>
+            The Banking System Is{' '}
+            <span className="gradient-text-warm">Broken</span>
           </h2>
           <p className="mt-5 text-lg text-zinc-300 leading-relaxed">
-            100+ countries de-risked by major US banks. 0 options for founders
-            from restricted countries — until now.
+            It&apos;s not because founders are risky. It&apos;s because banks have no way
+            to verify who they really are. Traditional KYC was never built for the internet age.
           </p>
         </div>
 
