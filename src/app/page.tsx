@@ -12,9 +12,9 @@ import {
 
 export default function Home() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-[#09090b] text-white">
       <Navbar />
-      <main className="pt-16">
+      <main>
         <Hero />
         <Problem />
         <HowItWorks />

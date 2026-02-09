@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { ChevronDown } from 'lucide-react'
+import { ChevronDown, HelpCircle } from 'lucide-react'
 
 const faqs = [
   {
@@ -50,36 +50,55 @@ export function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
 
   return (
-    <section id="faq" className="bg-white py-20">
-      <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+    <section id="faq" className="relative py-24 sm:py-32">
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
+
+      <div className="mx-auto max-w-3xl px-6 lg:px-8">
         <div className="text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            Frequently Asked Questions
+          <div className="inline-flex items-center gap-2 rounded-full border border-white/[0.12] bg-white/[0.06] px-4 py-1.5 text-sm text-zinc-300 mb-6">
+            <HelpCircle className="h-3.5 w-3.5" />
+            FAQ
+          </div>
+          <h2 className="text-3xl font-bold tracking-tight text-white sm:text-5xl">
+            Frequently asked questions
           </h2>
-          <p className="mt-4 text-lg text-gray-600">
+          <p className="mt-5 text-lg text-zinc-300">
             Everything you need to know about Bedrock
           </p>
         </div>
 
-        <div className="mt-12 divide-y divide-gray-200">
+        <div className="mt-14 space-y-2">
           {faqs.map((faq, index) => (
-            <div key={index} className="py-6">
+            <div
+              key={index}
+              className={`rounded-xl border transition-all duration-300 ${
+                openIndex === index
+                  ? 'border-white/[0.15] bg-white/[0.06]'
+                  : 'border-white/[0.08] bg-white/[0.03] hover:border-white/[0.12]'
+              }`}
+            >
               <button
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                className="flex w-full items-start justify-between text-left"
+                className="flex w-full items-center justify-between px-6 py-5 text-left"
               >
-                <span className="text-base font-medium text-gray-900">
+                <span className="text-sm font-medium text-zinc-100 pr-4">
                   {faq.question}
                 </span>
                 <ChevronDown
-                  className={`ml-6 h-5 w-5 shrink-0 text-gray-500 transition-transform ${
+                  className={`h-4 w-4 shrink-0 text-zinc-400 transition-transform duration-300 ${
                     openIndex === index ? 'rotate-180' : ''
                   }`}
                 />
               </button>
-              {openIndex === index && (
-                <p className="mt-4 text-sm text-gray-600">{faq.answer}</p>
-              )}
+              <div
+                className={`overflow-hidden transition-all duration-300 ${
+                  openIndex === index ? 'max-h-96 pb-5' : 'max-h-0'
+                }`}
+              >
+                <p className="px-6 text-sm leading-relaxed text-zinc-400">
+                  {faq.answer}
+                </p>
+              </div>
             </div>
           ))}
         </div>

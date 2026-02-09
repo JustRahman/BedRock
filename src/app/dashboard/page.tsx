@@ -1,7 +1,8 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { FileText, Calendar, Shield, Building2 } from 'lucide-react'
+import Link from 'next/link'
+import { FileText, Calendar, Shield, Building2, Landmark } from 'lucide-react'
 import { StatusCard, ActionItems, TrustScoreCard } from '@/components/dashboard'
 import { Card, CardContent } from '@/components/ui/card'
 
@@ -25,6 +26,19 @@ interface DeadlineData {
   due_date: string
 }
 
+interface CompanyData {
+  id: string
+  name: string
+  formation_status: string
+  ein: string | null
+}
+
+interface BankAppData {
+  id: string
+  status: string
+  bank_name: string | null
+}
+
 const statusLabels: Record<string, string> = {
   elite: 'Elite',
   approved: 'Approved',
@@ -37,15 +51,19 @@ export default function DashboardPage() {
   const [trustScore, setTrustScore] = useState<TrustScoreData | null>(null)
   const [documents, setDocuments] = useState<DocumentData[]>([])
   const [deadlines, setDeadlines] = useState<DeadlineData[]>([])
+  const [company, setCompany] = useState<CompanyData | null>(null)
+  const [bankApp, setBankApp] = useState<BankAppData | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const [tsRes, docRes, compRes] = await Promise.all([
+        const [tsRes, docRes, compRes, coRes, bankRes] = await Promise.all([
           fetch('/api/trust-score'),
           fetch('/api/documents'),
           fetch('/api/compliance'),
+          fetch('/api/companies'),
+          fetch('/api/bank-applications'),
         ])
 
         if (tsRes.ok) {
@@ -60,8 +78,18 @@ export default function DashboardPage() {
           const compData = await compRes.json()
           setDeadlines(compData.deadlines ?? [])
         }
+        if (coRes.ok) {
+          const coData = await coRes.json()
+          setCompany(coData.company ?? null)
+        }
+        if (bankRes.ok) {
+          const bankData = await bankRes.json()
+          if (bankData.applications && bankData.applications.length > 0) {
+            setBankApp(bankData.applications[0])
+          }
+        }
       } catch {
-        // silently fail — cards show empty state
+        // silently fail
       } finally {
         setLoading(false)
       }
@@ -85,18 +113,6 @@ export default function DashboardPage() {
             </Card>
           ))}
         </div>
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-          <Card>
-            <CardContent className="p-6">
-              <div className="h-48 animate-pulse rounded bg-gray-100" />
-            </CardContent>
-          </Card>
-          <Card className="lg:col-span-2">
-            <CardContent className="p-6">
-              <div className="h-48 animate-pulse rounded bg-gray-100" />
-            </CardContent>
-          </Card>
-        </div>
       </div>
     )
   }
@@ -108,6 +124,28 @@ export default function DashboardPage() {
     (d) => !d.completed && new Date(d.due_date) < new Date()
   ).length
 
+  // Formation status
+  const formationStatus = company?.formation_status || 'not_started'
+  const formationText = company
+    ? formationStatus === 'formed'
+      ? company.ein
+        ? 'LLC Formed + EIN'
+        : 'LLC Formed'
+      : formationStatus === 'processing'
+      ? 'Processing'
+      : 'Pending'
+    : 'Not Started'
+
+  // Bank status
+  const bankStatus = bankApp?.status || 'not_started'
+  const bankText = bankApp
+    ? bankApp.status === 'approved'
+      ? 'Approved'
+      : bankApp.status === 'submitted' || bankApp.status === 'under_review'
+      ? `${bankApp.bank_name} - ${bankApp.status.replace('_', ' ')}`
+      : 'Draft'
+    : 'Not Started'
+
   // Build dynamic action items
   const actionItems: {
     id: string
@@ -118,6 +156,17 @@ export default function DashboardPage() {
     href: string
   }[] = []
 
+  if (!trustScore) {
+    actionItems.push({
+      id: 'onboard',
+      title: 'Complete Onboarding',
+      description: 'Finish the onboarding process to calculate your trust score',
+      priority: 'high',
+      icon: 'alert',
+      href: '/onboarding',
+    })
+  }
+
   if (documents.length === 0) {
     actionItems.push({
       id: 'upload-docs',
@@ -126,6 +175,39 @@ export default function DashboardPage() {
       priority: 'high',
       icon: 'document',
       href: '/dashboard/documents',
+    })
+  }
+
+  if (!company && trustScore) {
+    actionItems.push({
+      id: 'start-formation',
+      title: 'Start LLC Formation',
+      description: 'Begin your LLC formation process',
+      priority: 'high',
+      icon: 'alert',
+      href: '/dashboard/formation',
+    })
+  }
+
+  if (company && company.formation_status === 'formed' && !company.ein) {
+    actionItems.push({
+      id: 'get-ein',
+      title: 'Obtain Your EIN',
+      description: 'Your LLC is formed. Get your EIN from the IRS.',
+      priority: 'high',
+      icon: 'alert',
+      href: '/dashboard/formation/ein',
+    })
+  }
+
+  if (company?.ein && !bankApp) {
+    actionItems.push({
+      id: 'bank-app',
+      title: 'Apply for Bank Account',
+      description: 'Your LLC and EIN are ready. Start your bank application.',
+      priority: 'high',
+      icon: 'payment',
+      href: '/dashboard/bank/application',
     })
   }
 
@@ -151,17 +233,6 @@ export default function DashboardPage() {
     })
   }
 
-  if (!trustScore) {
-    actionItems.push({
-      id: 'onboard',
-      title: 'Complete Onboarding',
-      description: 'Finish the onboarding process to calculate your trust score',
-      priority: 'high',
-      icon: 'alert',
-      href: '/onboarding',
-    })
-  }
-
   return (
     <div>
       <div className="mb-8">
@@ -181,11 +252,15 @@ export default function DashboardPage() {
           description={trustScore ? statusLabels[trustScore.status] : 'Complete onboarding first'}
         />
         <StatusCard
-          title="Documents"
-          icon={FileText}
-          status={documents.length > 0 ? (pendingDocs > 0 ? 'in_progress' : 'completed') : 'not_started'}
-          statusText={`${documents.length} uploaded`}
-          description={`${verifiedDocs} verified, ${pendingDocs} pending`}
+          title="Formation"
+          icon={Landmark}
+          status={
+            formationStatus === 'formed' ? 'completed' :
+            formationStatus === 'processing' || formationStatus === 'pending' ? 'in_progress' :
+            'not_started'
+          }
+          statusText={formationText}
+          description={company ? `${company.name}` : 'Start LLC formation'}
         />
         <StatusCard
           title="Compliance"
@@ -197,9 +272,14 @@ export default function DashboardPage() {
         <StatusCard
           title="Bank Account"
           icon={Building2}
-          status="not_started"
-          statusText="Coming Soon"
-          description="Available after approval"
+          status={
+            bankStatus === 'approved' || bankStatus === 'completed' ? 'completed' :
+            bankStatus === 'submitted' || bankStatus === 'under_review' ? 'in_progress' :
+            bankStatus === 'draft' ? 'pending' :
+            'not_started'
+          }
+          statusText={bankText}
+          description={bankApp ? `${bankApp.bank_name || 'Bank'}` : 'Available after EIN'}
         />
       </div>
 

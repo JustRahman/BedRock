@@ -122,13 +122,43 @@ export async function PATCH(request: Request) {
 
     const body = await request.json()
 
-    const updateData = {
-      full_name: body.fullName,
-      phone: body.phone,
-      country_of_origin: body.countryOfOrigin,
-      country_of_residence: body.countryOfResidence,
-      onboarding_completed: body.onboardingCompleted,
+    // Admin updating another founder
+    if (body.founderId) {
+      const { data: adminData } = await supabase
+        .from('founders')
+        .select('role')
+        .eq('user_id', user.id)
+        .single()
+
+      if ((adminData as FounderData | null)?.role !== 'admin') {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 403 })
+      }
+
+      const adminUpdate: Record<string, unknown> = {}
+      if (body.status) adminUpdate.status = body.status
+      if (body.tier) adminUpdate.tier = body.tier
+
+      const { data: founder, error } = await (supabase
+        .from('founders') as ReturnType<typeof supabase.from>)
+        .update(adminUpdate)
+        .eq('id', body.founderId)
+        .select()
+        .single()
+
+      if (error) {
+        return NextResponse.json({ error: error.message }, { status: 500 })
+      }
+
+      return NextResponse.json({ founder })
     }
+
+    // User updating their own profile
+    const updateData: Record<string, unknown> = {}
+    if (body.fullName !== undefined) updateData.full_name = body.fullName
+    if (body.phone !== undefined) updateData.phone = body.phone
+    if (body.countryOfOrigin !== undefined) updateData.country_of_origin = body.countryOfOrigin
+    if (body.countryOfResidence !== undefined) updateData.country_of_residence = body.countryOfResidence
+    if (body.onboardingCompleted !== undefined) updateData.onboarding_completed = body.onboardingCompleted
 
     const { data: founder, error } = await (supabase
       .from('founders') as ReturnType<typeof supabase.from>)

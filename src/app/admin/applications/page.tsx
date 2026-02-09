@@ -1,270 +1,35 @@
-'use client'
+import { createServiceClient } from '@/lib/supabase/server'
+import { ApplicationsClient } from './applications-client'
 
-import { useState } from 'react'
-import Link from 'next/link'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
-import { Input } from '@/components/ui/input'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table'
-import { Search, Filter, Eye, CheckCircle, XCircle, Clock } from 'lucide-react'
-import { format } from 'date-fns'
-
-interface Application {
+interface FounderWithScore {
   id: string
-  founderName: string
+  full_name: string
   email: string
-  country: string
-  trustScore: number
-  status: 'pending' | 'under_review' | 'approved' | 'rejected' | 'elite'
-  submittedAt: Date
-  companyName: string
+  country_of_residence: string
+  created_at: string
+  trust_scores: { total_score: number; status: string }[] | null
+  companies: { name: string }[] | null
 }
 
-const mockApplications: Application[] = [
-  {
-    id: '1',
-    founderName: 'Sarah Chen',
-    email: 'sarah@techstartup.com',
-    country: 'Singapore',
-    trustScore: 82,
-    status: 'elite',
-    submittedAt: new Date('2024-01-28'),
-    companyName: 'TechStartup Inc',
-  },
-  {
-    id: '2',
-    founderName: 'Marcus Weber',
-    email: 'marcus@webdev.de',
-    country: 'Germany',
-    trustScore: 65,
-    status: 'under_review',
-    submittedAt: new Date('2024-01-27'),
-    companyName: 'WebDev GmbH',
-  },
-  {
-    id: '3',
-    founderName: 'Priya Sharma',
-    email: 'priya@ailab.in',
-    country: 'India',
-    trustScore: 78,
-    status: 'approved',
-    submittedAt: new Date('2024-01-25'),
-    companyName: 'AI Lab Private Ltd',
-  },
-  {
-    id: '4',
-    founderName: 'João Silva',
-    email: 'joao@fintech.br',
-    country: 'Brazil',
-    trustScore: 45,
-    status: 'pending',
-    submittedAt: new Date('2024-01-29'),
-    companyName: 'FinTech Brasil',
-  },
-  {
-    id: '5',
-    founderName: 'Emma Johnson',
-    email: 'emma@saasplatform.co.uk',
-    country: 'United Kingdom',
-    trustScore: 91,
-    status: 'approved',
-    submittedAt: new Date('2024-01-20'),
-    companyName: 'SaaS Platform Ltd',
-  },
-  {
-    id: '6',
-    founderName: 'Kenji Tanaka',
-    email: 'kenji@robotics.jp',
-    country: 'Japan',
-    trustScore: 88,
-    status: 'elite',
-    submittedAt: new Date('2024-01-26'),
-    companyName: 'Robotics Japan',
-  },
-  {
-    id: '7',
-    founderName: 'Ahmed Hassan',
-    email: 'ahmed@ecommerce.eg',
-    country: 'Egypt',
-    trustScore: 52,
-    status: 'under_review',
-    submittedAt: new Date('2024-01-24'),
-    companyName: 'E-Commerce Egypt',
-  },
-  {
-    id: '8',
-    founderName: 'Li Wei',
-    email: 'liwei@cloudtech.cn',
-    country: 'China',
-    trustScore: 35,
-    status: 'rejected',
-    submittedAt: new Date('2024-01-22'),
-    companyName: 'CloudTech Ltd',
-  },
-]
+export default async function ApplicationsPage() {
+  const supabase = await createServiceClient()
 
-const statusConfig = {
-  pending: { label: 'Pending', color: 'bg-gray-100 text-gray-700', icon: Clock },
-  under_review: { label: 'Under Review', color: 'bg-yellow-100 text-yellow-700', icon: Clock },
-  approved: { label: 'Approved', color: 'bg-green-100 text-green-700', icon: CheckCircle },
-  elite: { label: 'Elite', color: 'bg-green-100 text-green-700', icon: CheckCircle },
-  rejected: { label: 'Rejected', color: 'bg-red-100 text-red-700', icon: XCircle },
-}
+  const { data, count } = await supabase
+    .from('founders')
+    .select('id, full_name, email, country_of_residence, created_at, trust_scores(total_score, status), companies(name)', { count: 'exact' })
+    .order('created_at', { ascending: false })
+    .limit(100)
 
-export default function ApplicationsPage() {
-  const [search, setSearch] = useState('')
-  const [statusFilter, setStatusFilter] = useState<string>('all')
-  const [scoreFilter, setScoreFilter] = useState<string>('all')
+  const founders = ((data || []) as FounderWithScore[]).map((f) => ({
+    id: f.id,
+    founderName: f.full_name,
+    email: f.email,
+    country: f.country_of_residence || 'N/A',
+    trustScore: Array.isArray(f.trust_scores) && f.trust_scores[0] ? f.trust_scores[0].total_score : 0,
+    status: (Array.isArray(f.trust_scores) && f.trust_scores[0] ? f.trust_scores[0].status : 'pending') as 'pending' | 'under_review' | 'approved' | 'rejected' | 'elite' | 'review_needed' | 'conditional' | 'not_eligible',
+    submittedAt: f.created_at,
+    companyName: Array.isArray(f.companies) && f.companies[0] ? f.companies[0].name : 'N/A',
+  }))
 
-  const filteredApplications = mockApplications.filter((app) => {
-    const matchesSearch =
-      app.founderName.toLowerCase().includes(search.toLowerCase()) ||
-      app.email.toLowerCase().includes(search.toLowerCase()) ||
-      app.companyName.toLowerCase().includes(search.toLowerCase())
-
-    const matchesStatus = statusFilter === 'all' || app.status === statusFilter
-
-    const matchesScore =
-      scoreFilter === 'all' ||
-      (scoreFilter === 'high' && app.trustScore >= 80) ||
-      (scoreFilter === 'medium' && app.trustScore >= 50 && app.trustScore < 80) ||
-      (scoreFilter === 'low' && app.trustScore < 50)
-
-    return matchesSearch && matchesStatus && matchesScore
-  })
-
-  return (
-    <div>
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">Applications</h1>
-        <p className="mt-1 text-sm text-gray-500">
-          Review and manage founder applications.
-        </p>
-      </div>
-
-      {/* Filters */}
-      <Card className="mb-6">
-        <CardContent className="p-4">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
-              <Input
-                placeholder="Search by name, email, or company..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="pl-10"
-              />
-            </div>
-            <div className="flex gap-4">
-              <Select value={statusFilter} onValueChange={setStatusFilter}>
-                <SelectTrigger className="w-[160px]">
-                  <SelectValue placeholder="Status" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Statuses</SelectItem>
-                  <SelectItem value="pending">Pending</SelectItem>
-                  <SelectItem value="under_review">Under Review</SelectItem>
-                  <SelectItem value="elite">Elite</SelectItem>
-                  <SelectItem value="approved">Approved</SelectItem>
-                  <SelectItem value="rejected">Rejected</SelectItem>
-                </SelectContent>
-              </Select>
-              <Select value={scoreFilter} onValueChange={setScoreFilter}>
-                <SelectTrigger className="w-[160px]">
-                  <SelectValue placeholder="Trust Score" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Scores</SelectItem>
-                  <SelectItem value="high">High (80+)</SelectItem>
-                  <SelectItem value="medium">Medium (50-79)</SelectItem>
-                  <SelectItem value="low">Low (&lt;50)</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Applications Table */}
-      <Card>
-        <CardHeader>
-          <CardTitle>All Applications</CardTitle>
-          <CardDescription>
-            {filteredApplications.length} applications found
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Founder</TableHead>
-                <TableHead>Company</TableHead>
-                <TableHead>Country</TableHead>
-                <TableHead>Trust Score</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Submitted</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filteredApplications.map((app) => {
-                const status = statusConfig[app.status]
-                return (
-                  <TableRow key={app.id}>
-                    <TableCell>
-                      <div>
-                        <p className="font-medium">{app.founderName}</p>
-                        <p className="text-sm text-gray-500">{app.email}</p>
-                      </div>
-                    </TableCell>
-                    <TableCell>{app.companyName}</TableCell>
-                    <TableCell>{app.country}</TableCell>
-                    <TableCell>
-                      <Badge className={getScoreBadgeColor(app.trustScore)}>
-                        {app.trustScore}
-                      </Badge>
-                    </TableCell>
-                    <TableCell>
-                      <Badge className={status.color}>{status.label}</Badge>
-                    </TableCell>
-                    <TableCell>{format(app.submittedAt, 'MMM d, yyyy')}</TableCell>
-                    <TableCell className="text-right">
-                      <Link href={`/admin/founders/${app.id}`}>
-                        <Button variant="ghost" size="sm" className="gap-1">
-                          <Eye className="h-4 w-4" />
-                          View
-                        </Button>
-                      </Link>
-                    </TableCell>
-                  </TableRow>
-                )
-              })}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
-    </div>
-  )
-}
-
-function getScoreBadgeColor(score: number): string {
-  if (score >= 80) return 'bg-green-100 text-green-700'
-  if (score >= 70) return 'bg-blue-100 text-blue-700'
-  if (score >= 50) return 'bg-yellow-100 text-yellow-700'
-  return 'bg-red-100 text-red-700'
+  return <ApplicationsClient applications={founders} total={count || 0} />
 }

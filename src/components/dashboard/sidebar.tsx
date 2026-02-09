@@ -11,6 +11,7 @@ import {
   LogOut,
   Building2,
   CreditCard,
+  Landmark,
 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
@@ -18,6 +19,7 @@ import { Button } from '@/components/ui/button'
 
 const navigation = [
   { name: 'Overview', href: '/dashboard', icon: LayoutDashboard },
+  { name: 'Formation', href: '/dashboard/formation', icon: Landmark },
   { name: 'Documents', href: '/dashboard/documents', icon: FileText },
   { name: 'Compliance', href: '/dashboard/compliance', icon: Calendar },
   { name: 'Bank Account', href: '/dashboard/bank', icon: Building2 },

@@ -1,7 +1,63 @@
-import { Card, CardContent } from '@/components/ui/card'
-import { Building2 } from 'lucide-react'
+'use client'
+
+import { useEffect, useState } from 'react'
+import Link from 'next/link'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
+import { Building2, ArrowRight, Check, Loader2 } from 'lucide-react'
+
+interface BankApplication {
+  id: string
+  bank_name: string | null
+  status: string
+  submitted_at: string | null
+  approved_at: string | null
+  notes: string | null
+}
+
+interface Company {
+  id: string
+  name: string
+  ein: string | null
+  formation_status: string
+}
 
 export default function BankPage() {
+  const [applications, setApplications] = useState<BankApplication[]>([])
+  const [company, setCompany] = useState<Company | null>(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    Promise.all([
+      fetch('/api/bank-applications').then((r) => r.json()),
+      fetch('/api/companies').then((r) => r.json()),
+    ])
+      .then(([appData, companyData]) => {
+        setApplications(appData.applications || [])
+        if (companyData.company) setCompany(companyData.company)
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false))
+  }, [])
+
+  if (loading) {
+    return (
+      <div>
+        <div className="mb-8">
+          <h1 className="text-2xl font-bold text-gray-900">Bank Account</h1>
+        </div>
+        <Card>
+          <CardContent className="py-12 text-center">
+            <Loader2 className="mx-auto h-8 w-8 animate-spin text-gray-400" />
+          </CardContent>
+        </Card>
+      </div>
+    )
+  }
+
+  const canApply = company?.ein && company?.formation_status === 'formed'
+
   return (
     <div>
       <div className="mb-8">
@@ -11,16 +67,110 @@ export default function BankPage() {
         </p>
       </div>
 
-      <Card>
-        <CardContent className="py-16 text-center">
-          <Building2 className="mx-auto mb-4 h-12 w-12 text-gray-300" />
-          <h2 className="text-lg font-semibold text-gray-900">Coming Soon</h2>
-          <p className="mx-auto mt-2 max-w-md text-sm text-gray-500">
-            Bank application tracking will be available once your trust score is approved.
-            Complete your onboarding and upload required documents to get started.
-          </p>
-        </CardContent>
-      </Card>
+      {applications.length > 0 ? (
+        <div className="space-y-4">
+          {applications.map((app) => (
+            <Card key={app.id}>
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <CardTitle className="flex items-center gap-2">
+                    <Building2 className="h-5 w-5" />
+                    {app.bank_name || 'Bank Application'}
+                  </CardTitle>
+                  <Badge className={getStatusColor(app.status)}>
+                    {formatStatus(app.status)}
+                  </Badge>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-3 gap-4">
+                  <div>
+                    <p className="text-sm text-gray-500">Status</p>
+                    <p className="font-medium">{formatStatus(app.status)}</p>
+                  </div>
+                  {app.submitted_at && (
+                    <div>
+                      <p className="text-sm text-gray-500">Submitted</p>
+                      <p className="font-medium">{new Date(app.submitted_at).toLocaleDateString()}</p>
+                    </div>
+                  )}
+                  {app.approved_at && (
+                    <div>
+                      <p className="text-sm text-gray-500">Approved</p>
+                      <p className="font-medium">{new Date(app.approved_at).toLocaleDateString()}</p>
+                    </div>
+                  )}
+                </div>
+                {app.status === 'draft' && (
+                  <div className="mt-4">
+                    <Link href="/dashboard/bank/application">
+                      <Button className="gap-2">
+                        Continue Application
+                        <ArrowRight className="h-4 w-4" />
+                      </Button>
+                    </Link>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      ) : (
+        <Card>
+          <CardContent className="py-16 text-center">
+            <Building2 className="mx-auto mb-4 h-12 w-12 text-gray-300" />
+            {canApply ? (
+              <>
+                <h2 className="text-lg font-semibold text-gray-900">Ready to Apply</h2>
+                <p className="mx-auto mt-2 max-w-md text-sm text-gray-500">
+                  Your LLC is formed and EIN is ready. You can now apply for a US business bank account.
+                </p>
+                <Link href="/dashboard/bank/application">
+                  <Button className="mt-4 gap-2">
+                    Start Application
+                    <ArrowRight className="h-4 w-4" />
+                  </Button>
+                </Link>
+              </>
+            ) : (
+              <>
+                <h2 className="text-lg font-semibold text-gray-900">
+                  {!company ? 'LLC Formation Required' : !company.ein ? 'EIN Required' : 'Complete Prerequisites'}
+                </h2>
+                <p className="mx-auto mt-2 max-w-md text-sm text-gray-500">
+                  {!company
+                    ? 'Complete your LLC formation before applying for a bank account.'
+                    : !company.ein
+                    ? 'Obtain your EIN before applying for a bank account.'
+                    : 'Complete your LLC formation to proceed.'}
+                </p>
+                <Link href={!company ? '/dashboard/formation' : '/dashboard/formation/ein'}>
+                  <Button variant="outline" className="mt-4">
+                    {!company ? 'Start Formation' : 'Get EIN'}
+                  </Button>
+                </Link>
+              </>
+            )}
+          </CardContent>
+        </Card>
+      )}
     </div>
   )
+}
+
+function getStatusColor(status: string): string {
+  switch (status) {
+    case 'approved': case 'completed': return 'bg-green-100 text-green-700'
+    case 'under_review': return 'bg-yellow-100 text-yellow-700'
+    case 'submitted': return 'bg-blue-100 text-blue-700'
+    case 'rejected': return 'bg-red-100 text-red-700'
+    default: return 'bg-gray-100 text-gray-700'
+  }
+}
+
+function formatStatus(status: string): string {
+  return status
+    .split('_')
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(' ')
 }

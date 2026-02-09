@@ -1,4 +1,4 @@
-import { Check } from 'lucide-react'
+import { Check, Sparkles } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 
@@ -53,51 +53,63 @@ const plans = [
 
 export function Pricing() {
   return (
-    <section id="pricing" className="bg-gray-50 py-20">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section id="pricing" className="relative py-24 sm:py-32">
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />
+
+      {/* Background glow for pricing section */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] opacity-25">
+        <div className="absolute inset-0 bg-blue-600/20 rounded-full blur-[128px]" />
+      </div>
+
+      <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            Simple, Transparent Pricing
+          <div className="inline-flex items-center gap-2 rounded-full border border-violet-400/25 bg-violet-500/[0.08] px-4 py-1.5 text-sm text-violet-300 mb-6">
+            <Sparkles className="h-3.5 w-3.5" />
+            Pricing
+          </div>
+          <h2 className="text-3xl font-bold tracking-tight text-white sm:text-5xl">
+            Simple, transparent{' '}
+            <span className="gradient-text">pricing</span>
           </h2>
-          <p className="mt-4 text-lg text-gray-600">
+          <p className="mt-5 text-lg text-zinc-300">
             Choose the plan that fits your needs. No hidden fees.
           </p>
         </div>
 
-        <div className="mt-16 grid grid-cols-1 gap-8 lg:grid-cols-3">
+        <div className="mt-16 grid grid-cols-1 gap-6 lg:grid-cols-3">
           {plans.map((plan) => (
             <div
               key={plan.name}
-              className={`relative rounded-2xl ${
+              className={`group relative rounded-2xl transition-all duration-500 ${
                 plan.highlighted
-                  ? 'border-2 border-blue-600 bg-white shadow-xl'
-                  : 'border border-gray-200 bg-white shadow-sm'
+                  ? 'border border-blue-500/40 bg-white/[0.05] shadow-[0_0_50px_rgba(59,130,246,0.1)]'
+                  : 'border border-white/[0.08] bg-white/[0.03] hover:border-white/[0.15] hover:bg-white/[0.05]'
               } p-8`}
             >
               {plan.highlighted && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                  <span className="rounded-full bg-blue-600 px-4 py-1 text-sm font-medium text-white">
+                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
+                  <span className="rounded-full bg-gradient-to-r from-blue-500 to-violet-500 px-4 py-1 text-xs font-medium text-white shadow-lg shadow-blue-500/20">
                     Most Popular
                   </span>
                 </div>
               )}
 
-              <div className="text-center">
-                <h3 className="text-xl font-bold text-gray-900">{plan.name}</h3>
-                <p className="mt-2 text-sm text-gray-600">{plan.description}</p>
-                <div className="mt-6">
-                  <span className="text-4xl font-bold text-gray-900">
+              <div>
+                <h3 className="text-lg font-semibold text-white">{plan.name}</h3>
+                <p className="mt-2 text-sm text-zinc-400">{plan.description}</p>
+                <div className="mt-6 flex items-baseline gap-1">
+                  <span className="text-4xl font-bold text-white">
                     ${plan.price.toLocaleString()}
                   </span>
-                  <span className="text-gray-600">/one-time</span>
+                  <span className="text-zinc-400 text-sm">/one-time</span>
                 </div>
               </div>
 
-              <ul className="mt-8 space-y-4">
+              <ul className="mt-8 space-y-3">
                 {plan.features.map((feature) => (
                   <li key={feature} className="flex items-start gap-3">
-                    <Check className="h-5 w-5 shrink-0 text-green-500" />
-                    <span className="text-sm text-gray-600">{feature}</span>
+                    <Check className={`h-4 w-4 shrink-0 mt-0.5 ${plan.highlighted ? 'text-blue-400' : 'text-zinc-400'}`} />
+                    <span className="text-sm text-zinc-300">{feature}</span>
                   </li>
                 ))}
               </ul>
@@ -105,8 +117,11 @@ export function Pricing() {
               <div className="mt-8">
                 <Link href="/onboarding">
                   <Button
-                    className="w-full"
-                    variant={plan.highlighted ? 'default' : 'outline'}
+                    className={`w-full rounded-xl py-5 font-medium transition-all duration-300 ${
+                      plan.highlighted
+                        ? 'bg-white text-black hover:bg-zinc-100 hover:shadow-[0_0_30px_rgba(255,255,255,0.15)]'
+                        : 'bg-white/[0.07] text-zinc-200 border border-white/[0.12] hover:bg-white/[0.12] hover:text-white'
+                    }`}
                   >
                     Get Started
                   </Button>

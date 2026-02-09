@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Shield, ArrowRight, RefreshCw } from 'lucide-react'
+import { Shield, ArrowRight, RefreshCw, CreditCard } from 'lucide-react'
 import { TrustScoreResult, calculateTrustScore } from '@/lib/trust-score'
 import {
   ScoreDisplay,
@@ -103,6 +103,14 @@ export default function OnboardingResultPage() {
               <Button className="w-full gap-2" size="lg">
                 Create Account & Continue
                 <ArrowRight className="h-4 w-4" />
+              </Button>
+            </Link>
+          )}
+          {result.totalScore >= 50 && (
+            <Link href="/onboarding/payment" className="flex-1">
+              <Button variant="default" className="w-full gap-2 bg-green-600 hover:bg-green-700" size="lg">
+                <CreditCard className="h-4 w-4" />
+                Choose Your Plan
               </Button>
             </Link>
           )}

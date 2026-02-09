@@ -1,9 +1,13 @@
 import { NextResponse } from 'next/server'
 import { calculateTrustScore, TrustScoreInput } from '@/lib/trust-score'
 import { createClient } from '@/lib/supabase/server'
+import { sendEmail } from '@/lib/email'
+import { trustScoreEmail } from '@/lib/email-templates'
 
 interface FounderData {
   id: string
+  email?: string
+  full_name?: string
 }
 
 export async function POST(request: Request) {
@@ -93,7 +97,7 @@ export async function PUT(request: Request) {
     // Get founder
     const { data: founderData } = await supabase
       .from('founders')
-      .select('id')
+      .select('id, email, full_name')
       .eq('user_id', user.id)
       .single()
 
@@ -130,6 +134,19 @@ export async function PUT(request: Request) {
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 })
+    }
+
+    // Send trust score email (non-blocking)
+    if (founder?.email && founder?.full_name) {
+      try {
+        await sendEmail(
+          founder.email,
+          'Your Trust Score is Ready - Bedrock',
+          trustScoreEmail(founder.full_name, body.totalScore, body.status)
+        )
+      } catch {
+        // Non-critical
+      }
     }
 
     return NextResponse.json({ trustScore })

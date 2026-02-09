@@ -140,6 +140,17 @@ export default function RegisterPage() {
         }
       }
 
+      // Send welcome email (non-blocking)
+      try {
+        await fetch('/api/email/welcome', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name: data.fullName, email: data.email }),
+        })
+      } catch {
+        // Non-critical — account was still created
+      }
+
       setIsSuccess(true)
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Something went wrong'
