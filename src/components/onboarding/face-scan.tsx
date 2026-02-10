@@ -36,6 +36,8 @@ export function FaceScan({ passportFile, onMatchResult }: FaceScanProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const streamRef = useRef<MediaStream | null>(null)
   const passportDescriptorRef = useRef<Float32Array | null>(null)
+  const onMatchResultRef = useRef(onMatchResult)
+  onMatchResultRef.current = onMatchResult
 
   const stopCamera = useCallback(() => {
     if (streamRef.current) {
@@ -110,13 +112,9 @@ export function FaceScan({ passportFile, onMatchResult }: FaceScanProps) {
     if (!streamRef.current) {
       startCamera()
     }
-
-    return () => {
-      // Only stop camera on unmount or final states
-    }
   }, [state])
 
-  // Stop camera on unmount or final state
+  // Stop camera on unmount
   useEffect(() => {
     return () => { stopCamera() }
   }, [stopCamera])
@@ -128,29 +126,29 @@ export function FaceScan({ passportFile, onMatchResult }: FaceScanProps) {
     }
   }, [state, stopCamera])
 
-  const startCountdown = useCallback(() => {
-    setState('countdown')
-    setCountdown(3)
-
-    let count = 3
-    const interval = setInterval(() => {
-      count--
-      setCountdown(count)
-      if (count <= 0) {
-        clearInterval(interval)
-        captureAndCompare()
-      }
-    }, 1000)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  const captureAndCompare = async () => {
+  // Use ref for captureAndCompare to avoid stale closure in countdown interval
+  const captureAndCompareRef = useRef<() => Promise<void>>(undefined)
+  captureAndCompareRef.current = async () => {
     setState('comparing')
 
     try {
       const video = videoRef.current
       const canvas = canvasRef.current
       if (!video || !canvas) throw new Error('Camera not ready')
+
+      // Wait for video to have valid dimensions
+      if (video.videoWidth === 0 || video.videoHeight === 0) {
+        await new Promise<void>((resolve) => {
+          const check = () => {
+            if (video.videoWidth > 0 && video.videoHeight > 0) {
+              resolve()
+            } else {
+              requestAnimationFrame(check)
+            }
+          }
+          check()
+        })
+      }
 
       // Capture current frame
       canvas.width = video.videoWidth
@@ -170,8 +168,14 @@ export function FaceScan({ passportFile, onMatchResult }: FaceScanProps) {
         return
       }
 
+      if (!passportDescriptorRef.current) {
+        setState('error')
+        setErrorMsg('Passport face data not available. Please re-upload your passport.')
+        return
+      }
+
       const dist = fa.euclideanDistance(
-        passportDescriptorRef.current!,
+        passportDescriptorRef.current,
         detection.descriptor
       )
 
@@ -179,7 +183,7 @@ export function FaceScan({ passportFile, onMatchResult }: FaceScanProps) {
 
       if (dist < MATCH_THRESHOLD) {
         setState('match')
-        onMatchResult({ matched: true, distance: dist })
+        onMatchResultRef.current({ matched: true, distance: dist })
       } else {
         setState('no_match')
         setErrorMsg('Faces do not match. Please try again or skip this step.')
@@ -190,6 +194,21 @@ export function FaceScan({ passportFile, onMatchResult }: FaceScanProps) {
     }
   }
 
+  const startCountdown = useCallback(() => {
+    setState('countdown')
+    setCountdown(3)
+
+    let count = 3
+    const interval = setInterval(() => {
+      count--
+      setCountdown(count)
+      if (count <= 0) {
+        clearInterval(interval)
+        captureAndCompareRef.current?.()
+      }
+    }, 1000)
+  }, [])
+
   const retry = () => {
     setErrorMsg('')
     setDistance(null)
@@ -198,7 +217,7 @@ export function FaceScan({ passportFile, onMatchResult }: FaceScanProps) {
 
   const skip = () => {
     stopCamera()
-    onMatchResult({ matched: false })
+    onMatchResultRef.current({ matched: false })
   }
 
   return (
@@ -248,7 +267,10 @@ export function FaceScan({ passportFile, onMatchResult }: FaceScanProps) {
             )}
             {state === 'comparing' && (
               <div className="absolute inset-0 flex items-center justify-center bg-black/40">
-                <Loader2 className="h-8 w-8 animate-spin text-white" />
+                <div className="text-center">
+                  <Loader2 className="mx-auto h-8 w-8 animate-spin text-white" />
+                  <p className="mt-2 text-sm text-white/70">Comparing faces...</p>
+                </div>
               </div>
             )}
           </div>

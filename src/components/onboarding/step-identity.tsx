@@ -75,6 +75,27 @@ function normalizeName(s: string): string[] {
   return s.toLowerCase().replace(/[^a-z\s]/g, '').split(/\s+/).filter(Boolean).sort()
 }
 
+function editDistance(a: string, b: string): number {
+  const m = a.length, n = b.length
+  const dp: number[][] = Array.from({ length: m + 1 }, () => Array(n + 1).fill(0))
+  for (let i = 0; i <= m; i++) dp[i][0] = i
+  for (let j = 0; j <= n; j++) dp[0][j] = j
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      dp[i][j] = a[i - 1] === b[j - 1]
+        ? dp[i - 1][j - 1]
+        : 1 + Math.min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1])
+    }
+  }
+  return dp[m][n]
+}
+
+function fuzzyWordMatch(a: string, b: string): boolean {
+  if (a === b) return true
+  const maxDist = Math.max(1, Math.floor(Math.max(a.length, b.length) * 0.3))
+  return editDistance(a, b) <= maxDist
+}
+
 function namesMatch(extracted: string, expected: string): 'match' | 'mismatch' {
   const eParts = normalizeName(extracted)
   const xParts = normalizeName(expected)
@@ -86,6 +107,11 @@ function namesMatch(extracted: string, expected: string): 'match' | 'mismatch' {
   if (xParts.every((p) => eSet.has(p)) || eParts.every((p) => xSet.has(p))) return 'match'
   // At least 2 parts overlap (first + last)
   if (xParts.filter((p) => eSet.has(p)).length >= 2) return 'match'
+  // Fuzzy match: each expected part has a close match in extracted (handles transliteration: Bazarow/Bazarov)
+  const fuzzyAllMatch = xParts.every((xp) => eParts.some((ep) => fuzzyWordMatch(xp, ep)))
+  if (fuzzyAllMatch) return 'match'
+  // Single-word input: fuzzy match against any extracted part
+  if (xParts.length === 1 && eParts.some((ep) => fuzzyWordMatch(xParts[0], ep))) return 'match'
   return 'mismatch'
 }
 
@@ -149,9 +175,11 @@ function ExtractionResult({ state, onRetry, basicInfo }: { state: ExtractionStat
           ))}
         </div>
         {basicInfo?.fullName && (() => {
-          const extractedName = state.data?.fullName || state.data?.firstName && state.data?.lastName
-            ? [state.data?.firstName, state.data?.lastName].filter(Boolean).join(' ')
-            : null
+          const extractedName = state.data?.fullName
+            ? String(state.data.fullName)
+            : (state.data?.firstName || state.data?.lastName)
+              ? [state.data?.firstName, state.data?.lastName].filter(Boolean).join(' ')
+              : null
           const extractedDob = state.data?.dateOfBirth
           if (!extractedName && !extractedDob) return null
           return (
