@@ -55,10 +55,10 @@ export async function POST(request: Request) {
           return NextResponse.json({ error: 'Missing email' }, { status: 400 })
         }
 
-        // Validate .edu domain
+        // Validate email format
         const domain = email.split('@')[1]?.toLowerCase()
-        if (!domain || !domain.endsWith('.edu')) {
-          return NextResponse.json({ error: 'Please use a .edu email address' }, { status: 400 })
+        if (!domain || !domain.includes('.')) {
+          return NextResponse.json({ error: 'Please enter a valid email address' }, { status: 400 })
         }
 
         // Generate 6-digit code

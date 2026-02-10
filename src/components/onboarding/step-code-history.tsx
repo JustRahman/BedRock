@@ -3,11 +3,8 @@
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Checkbox } from '@/components/ui/checkbox'
 import { codeHistorySchema, CodeHistoryFormData } from '@/lib/validations/onboarding'
-import { ArrowLeft, ArrowRight, Github, CheckCircle, Loader2, Search, AlertCircle } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Github, CheckCircle } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import type { GitHubProfileData } from '@/lib/oauth/github'
 
@@ -20,14 +17,10 @@ interface StepCodeHistoryProps {
 export function StepCodeHistory({ data, onNext, onBack }: StepCodeHistoryProps) {
   const [connected, setConnected] = useState(data.githubConnected ?? false)
   const [githubData, setGithubData] = useState<GitHubProfileData | null>(null)
-  const [lookingUp, setLookingUp] = useState(false)
-  const [lookupError, setLookupError] = useState('')
 
   const {
-    register,
     handleSubmit,
     setValue,
-    watch,
   } = useForm<CodeHistoryFormData>({
     resolver: zodResolver(codeHistorySchema),
     defaultValues: {
@@ -36,9 +29,6 @@ export function StepCodeHistory({ data, onNext, onBack }: StepCodeHistoryProps) 
       githubConnected: data.githubConnected ?? false,
     },
   })
-
-  const hasGithub = watch('hasGithub')
-  const githubUsername = watch('githubUsername')
 
   // Check for OAuth data in sessionStorage on mount
   useEffect(() => {
@@ -60,39 +50,6 @@ export function StepCodeHistory({ data, onNext, onBack }: StepCodeHistoryProps) 
 
   const handleOAuthConnect = () => {
     window.location.href = '/api/oauth/github/connect'
-  }
-
-  const handleUsernameLookup = async () => {
-    const username = githubUsername?.trim()
-    if (!username) {
-      setLookupError('Please enter a GitHub username.')
-      return
-    }
-
-    setLookingUp(true)
-    setLookupError('')
-
-    try {
-      const res = await fetch(`/api/oauth/github/lookup?username=${encodeURIComponent(username)}`)
-
-      if (!res.ok) {
-        const err = await res.json()
-        setLookupError(err.error || 'Lookup failed')
-        return
-      }
-
-      const profile = await res.json() as GitHubProfileData
-      setGithubData(profile)
-      setConnected(true)
-      setValue('githubConnected', true)
-      setValue('githubUsername', profile.login)
-      // Store in sessionStorage so it persists across step navigation
-      sessionStorage.setItem('oauth_github_data', JSON.stringify(profile))
-    } catch {
-      setLookupError('Failed to look up username. Please try again.')
-    } finally {
-      setLookingUp(false)
-    }
   }
 
   const handleDisconnect = () => {
@@ -174,61 +131,6 @@ export function StepCodeHistory({ data, onNext, onBack }: StepCodeHistoryProps) 
           )}
         </div>
       </div>
-
-      {!connected && (
-        <div className="rounded-lg border border-white/[0.08] bg-white/[0.03] p-4">
-          <div className="flex items-start gap-4">
-            <Checkbox
-              id="hasGithub"
-              checked={hasGithub}
-              onCheckedChange={(checked) => setValue('hasGithub', !!checked)}
-            />
-            <div className="flex-1">
-              <Label htmlFor="hasGithub" className="text-base font-medium text-zinc-200">
-                Or look up by GitHub username
-              </Label>
-              <p className="mt-1 text-sm text-zinc-400">
-                If you prefer not to connect via OAuth, enter your username and we&apos;ll fetch your public profile.
-              </p>
-              {hasGithub && (
-                <div className="mt-3 flex gap-2">
-                  <Input
-                    placeholder="github-username"
-                    {...register('githubUsername')}
-                    className="flex-1"
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter') {
-                        e.preventDefault()
-                        handleUsernameLookup()
-                      }
-                    }}
-                  />
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    className="gap-2 border border-white/[0.1] text-zinc-300 hover:text-zinc-200 hover:bg-white/[0.05]"
-                    onClick={handleUsernameLookup}
-                    disabled={lookingUp}
-                  >
-                    {lookingUp ? (
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                    ) : (
-                      <Search className="h-4 w-4" />
-                    )}
-                    {lookingUp ? 'Looking up...' : 'Lookup'}
-                  </Button>
-                </div>
-              )}
-              {lookupError && (
-                <div className="mt-2 flex items-center gap-2 text-sm text-red-400">
-                  <AlertCircle className="h-4 w-4" />
-                  {lookupError}
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
 
       <p className="text-sm text-zinc-500">
         This step is optional but significantly impacts your Digital Lineage score (up to 15 points).

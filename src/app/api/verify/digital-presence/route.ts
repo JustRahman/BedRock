@@ -20,7 +20,7 @@ export async function POST(request: Request) {
     switch (type) {
       case 'domain': {
         const data = await verifyDomain(value, founderName)
-        return NextResponse.json({ success: !data.error, data })
+        return NextResponse.json({ success: data.isLive && !data.error, data })
       }
       case 'twitter': {
         const data = verifyTwitter(value)

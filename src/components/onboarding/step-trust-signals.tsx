@@ -354,10 +354,10 @@ export function StepTrustSignals({ data, onSubmit, onBack, isSubmitting }: StepT
           />
           <div className="flex-1">
             <Label htmlFor="hasUniversityEmail" className="text-base font-medium text-zinc-200">
-              University/Educational Email
+              Secondary Email Verification
             </Label>
             <p className="mt-1 text-sm text-zinc-400">
-              Verify a .edu email address (+3 pts verified, +1 pt unverified)
+              Verify a secondary email you own (+3 pts verified, +1 pt unverified)
             </p>
             {hasUniversityEmail && (
               <div className="mt-3 space-y-3">
@@ -372,7 +372,7 @@ export function StepTrustSignals({ data, onSubmit, onBack, isSubmitting }: StepT
                   <div className="flex gap-2">
                     <Input
                       type="email"
-                      placeholder="your.name@university.edu"
+                      placeholder="your.name@example.com"
                       {...register('universityEmail')}
                       className="flex-1"
                     />

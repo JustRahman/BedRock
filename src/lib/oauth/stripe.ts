@@ -26,7 +26,7 @@ export function getStripeConnectUrl(state: string): string {
   const params = new URLSearchParams({
     response_type: 'code',
     client_id: clientId,
-    scope: 'read_only',
+    scope: 'read_write',
     state,
     redirect_uri: `${getAppUrl()}/api/oauth/stripe/callback`,
   })
