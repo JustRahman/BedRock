@@ -20,7 +20,6 @@ interface StepCodeHistoryProps {
 export function StepCodeHistory({ data, onNext, onBack }: StepCodeHistoryProps) {
   const [connected, setConnected] = useState(data.githubConnected ?? false)
   const [githubData, setGithubData] = useState<GitHubProfileData | null>(null)
-  const [oauthAvailable, setOauthAvailable] = useState(true)
   const [lookingUp, setLookingUp] = useState(false)
   const [lookupError, setLookupError] = useState('')
 
@@ -57,14 +56,6 @@ export function StepCodeHistory({ data, onNext, onBack }: StepCodeHistoryProps) 
       // Ignore parse errors
     }
 
-    // Check if OAuth is configured
-    fetch('/api/oauth/github/connect', { method: 'HEAD', redirect: 'manual' })
-      .then((res) => {
-        if (res.status === 503) setOauthAvailable(false)
-      })
-      .catch(() => {
-        // Don't hide the button on network errors — only hide on explicit 503
-      })
   }, [setValue])
 
   const handleOAuthConnect = () => {
@@ -170,7 +161,7 @@ export function StepCodeHistory({ data, onNext, onBack }: StepCodeHistoryProps) 
                 Disconnect
               </Button>
             </div>
-          ) : oauthAvailable ? (
+          ) : (
             <Button
               type="button"
               variant="ghost"
@@ -180,7 +171,7 @@ export function StepCodeHistory({ data, onNext, onBack }: StepCodeHistoryProps) 
               <Github className="h-4 w-4" />
               Connect with GitHub
             </Button>
-          ) : null}
+          )}
         </div>
       </div>
 

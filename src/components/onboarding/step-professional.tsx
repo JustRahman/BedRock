@@ -18,9 +18,8 @@ interface StepProfessionalProps {
 }
 
 export function StepProfessional({ data, onNext, onBack }: StepProfessionalProps) {
-  const [mockConnected, setMockConnected] = useState(data.linkedinConnected ?? false)
+  const [connected, setConnected] = useState(data.linkedinConnected ?? false)
   const [linkedinData, setLinkedinData] = useState<LinkedInProfileData | null>(null)
-  const [oauthAvailable, setOauthAvailable] = useState(true)
 
   const {
     register,
@@ -45,20 +44,13 @@ export function StepProfessional({ data, onNext, onBack }: StepProfessionalProps
       if (stored) {
         const parsed = JSON.parse(stored) as LinkedInProfileData
         setLinkedinData(parsed)
-        setMockConnected(true)
+        setConnected(true)
         setValue('linkedinConnected', true)
         setValue('hasLinkedin', true)
       }
     } catch {
       // Ignore parse errors
     }
-
-    // Check if OAuth is configured
-    fetch('/api/oauth/linkedin/connect', { method: 'HEAD' })
-      .then((res) => {
-        if (res.status === 503) setOauthAvailable(false)
-      })
-      .catch(() => setOauthAvailable(false))
   }, [setValue])
 
   const handleOAuthConnect = () => {
@@ -85,30 +77,44 @@ export function StepProfessional({ data, onNext, onBack }: StepProfessionalProps
             We analyze account age, connections, endorsements, and career progression.
           </p>
 
-          {mockConnected ? (
+          {connected && linkedinData ? (
             <div className="mt-4 rounded-lg bg-emerald-500/[0.1] border border-emerald-500/20 p-4 text-sm text-emerald-400">
               <div className="flex items-center justify-center gap-2">
                 <CheckCircle className="h-4 w-4" />
                 <p className="font-medium">LinkedIn Connected</p>
               </div>
-              <div className="mt-2 space-y-1 text-left text-zinc-300">
-                {linkedinData ? (
-                  <>
-                    <p>Name: {linkedinData.name}</p>
-                    {linkedinData.email && <p>Email: {linkedinData.email}</p>}
-                    <p>Profile verified</p>
-                  </>
-                ) : (
-                  <>
-                    <p>Account age: 6 years</p>
-                    <p>Connections: 500+</p>
-                    <p>Endorsements: 47</p>
-                    <p>Career positions: 4</p>
-                  </>
-                )}
+              <div className="mt-3 flex items-center gap-3 text-left">
+                {linkedinData.picture ? (
+                  <img
+                    src={linkedinData.picture}
+                    alt={linkedinData.name}
+                    className="h-10 w-10 rounded-full border border-white/10"
+                  />
+                ) : null}
+                <div>
+                  <p className="font-medium text-zinc-200">{linkedinData.name}</p>
+                  {linkedinData.email ? (
+                    <p className="text-zinc-400">{linkedinData.email}</p>
+                  ) : null}
+                </div>
               </div>
+              <p className="mt-2 text-left text-zinc-300">Profile verified</p>
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                className="mt-3 text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.05]"
+                onClick={() => {
+                  setLinkedinData(null)
+                  setConnected(false)
+                  setValue('linkedinConnected', false)
+                  sessionStorage.removeItem('oauth_linkedin_data')
+                }}
+              >
+                Disconnect
+              </Button>
             </div>
-          ) : oauthAvailable ? (
+          ) : (
             <Button
               type="button"
               variant="ghost"
@@ -118,7 +124,7 @@ export function StepProfessional({ data, onNext, onBack }: StepProfessionalProps
               <Linkedin className="h-4 w-4" />
               Connect with LinkedIn
             </Button>
-          ) : null}
+          )}
         </div>
       </div>
 
@@ -136,7 +142,7 @@ export function StepProfessional({ data, onNext, onBack }: StepProfessionalProps
             <p className="mt-1 text-sm text-zinc-400">
               If you prefer not to connect via OAuth, enter your profile URL for analysis.
             </p>
-            {hasLinkedin && !mockConnected && (
+            {hasLinkedin && !connected && (
               <div className="mt-3">
                 <Input
                   placeholder="https://linkedin.com/in/yourname"
