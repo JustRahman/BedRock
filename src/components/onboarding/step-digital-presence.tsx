@@ -87,7 +87,7 @@ export function StepDigitalPresence({ data, founderName, onNext, onBack }: StepD
         const parsed = JSON.parse(stored) as StoredVerification
         if (parsed.website) {
           setWebsiteResult(parsed.website)
-          setValue('websiteVerified', !parsed.website.error)
+          setValue('websiteVerified', parsed.website.isLive && !parsed.website.error && parsed.website.nameFound === true)
         }
         if (parsed.twitter) {
           setTwitterResult(parsed.twitter)
@@ -144,7 +144,8 @@ export function StepDigitalPresence({ data, founderName, onNext, onBack }: StepD
       const json = await res.json()
       const result = json.data as DomainVerificationResult
       setWebsiteResult(result)
-      setValue('websiteVerified', json.success)
+      // Only fully verified if site is live AND founder name found on page
+      setValue('websiteVerified', json.success && result.nameFound === true)
       persistResults(result, twitterResult, instagramResult, appStoreResult)
     } catch {
       setWebsiteResult({ isLive: false, hasSSL: false, error: 'Verification request failed' })
@@ -254,11 +255,11 @@ export function StepDigitalPresence({ data, founderName, onNext, onBack }: StepD
           Website URL
         </Label>
         {websiteResult && !websiteResult.error ? (
-          <div className="rounded-lg bg-emerald-500/[0.1] border border-emerald-500/20 p-4 text-sm">
+          <div className={`rounded-lg p-4 text-sm ${websiteResult.nameFound ? 'bg-emerald-500/[0.1] border border-emerald-500/20' : 'bg-orange-500/[0.1] border border-orange-500/20'}`}>
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 text-emerald-400">
-                <CheckCircle className="h-4 w-4" />
-                <span className="font-medium">Website Verified</span>
+              <div className={`flex items-center gap-2 ${websiteResult.nameFound ? 'text-emerald-400' : 'text-orange-400'}`}>
+                {websiteResult.nameFound ? <CheckCircle className="h-4 w-4" /> : <AlertCircle className="h-4 w-4" />}
+                <span className="font-medium">{websiteResult.nameFound ? 'Website Verified' : 'Website Found — Name Not Detected'}</span>
               </div>
               <Button type="button" variant="ghost" size="sm" onClick={clearWebsite} className="h-6 w-6 p-0 text-zinc-400 hover:text-zinc-200">
                 <X className="h-3 w-3" />
