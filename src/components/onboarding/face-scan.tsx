@@ -210,6 +210,7 @@ export function FaceScan({ passportFile, onMatchResult }: FaceScanProps) {
   }, [])
 
   const retry = () => {
+    stopCamera()
     setErrorMsg('')
     setDistance(null)
     setState('ready')
