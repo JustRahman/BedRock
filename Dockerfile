@@ -11,10 +11,10 @@ COPY .next/static ./.next/static
 # Copy public assets
 COPY public ./public
 
-EXPOSE 3000
+EXPOSE 8080
 
 ENV NODE_ENV=production
 ENV HOSTNAME=0.0.0.0
-ENV PORT=3000
+ENV PORT=8080
 
 CMD ["node", "server.js"]
