@@ -35,6 +35,7 @@ const steps = [
 ]
 
 const STEP_STORAGE_KEY = 'onboarding_current_step'
+const BASIC_INFO_STORAGE_KEY = 'onboarding_basic_info'
 
 interface OnboardingData {
   basicInfo: Partial<BasicInfoFormData>
@@ -61,7 +62,7 @@ export default function OnboardingPage() {
     trustSignals: {},
   })
 
-  // Restore step from sessionStorage on mount (for OAuth redirects)
+  // Restore step and basicInfo from sessionStorage on mount (for OAuth redirects / refreshes)
   useEffect(() => {
     try {
       const savedStep = sessionStorage.getItem(STEP_STORAGE_KEY)
@@ -70,6 +71,10 @@ export default function OnboardingPage() {
         if (step >= 1 && step <= 7) {
           setCurrentStep(step)
         }
+      }
+      const savedBasicInfo = sessionStorage.getItem(BASIC_INFO_STORAGE_KEY)
+      if (savedBasicInfo) {
+        setData((prev) => ({ ...prev, basicInfo: JSON.parse(savedBasicInfo) }))
       }
     } catch {
       // Ignore sessionStorage errors
@@ -89,6 +94,9 @@ export default function OnboardingPage() {
 
   const handleBasicInfoNext = (basicInfo: BasicInfoFormData) => {
     setData((prev) => ({ ...prev, basicInfo }))
+    try {
+      sessionStorage.setItem(BASIC_INFO_STORAGE_KEY, JSON.stringify(basicInfo))
+    } catch { /* ignore */ }
     updateStep(2)
   }
 
@@ -174,6 +182,7 @@ export default function OnboardingPage() {
         sessionStorage.removeItem('identity_extraction')
         sessionStorage.removeItem('identity_face_match')
         sessionStorage.removeItem('identity_basic_info')
+        sessionStorage.removeItem(BASIC_INFO_STORAGE_KEY)
       } catch {
         // Ignore cleanup errors
       }

@@ -297,7 +297,7 @@ export function FaceScan({ passportFile, onMatchResult }: FaceScanProps) {
           </div>
           {distance !== null && (
             <p className="mt-1 text-xs text-zinc-500">
-              Confidence: {Math.round((1 - distance / MATCH_THRESHOLD) * 100)}%
+              Similarity: {Math.round((1 - distance) * 100)}% (distance: {distance.toFixed(3)})
             </p>
           )}
         </div>
@@ -310,6 +310,11 @@ export function FaceScan({ passportFile, onMatchResult }: FaceScanProps) {
               <AlertTriangle className="h-4 w-4" />
               {errorMsg}
             </div>
+            {distance !== null && (
+              <p className="mt-1 text-xs text-zinc-500">
+                Similarity: {Math.round((1 - distance) * 100)}% (distance: {distance.toFixed(3)}, threshold: {MATCH_THRESHOLD})
+              </p>
+            )}
           </div>
           <Button
             type="button"
