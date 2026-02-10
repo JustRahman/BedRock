@@ -8,13 +8,13 @@ function baseTemplate(content: string): string {
 <body style="margin:0;padding:0;background-color:#f9fafb;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
   <div style="max-width:560px;margin:0 auto;padding:40px 20px;">
     <div style="text-align:center;margin-bottom:32px;">
-      <span style="font-size:24px;font-weight:bold;color:#1e40af;">Bedrock</span>
+      <span style="font-size:24px;font-weight:bold;color:#1e40af;">BedRock</span>
     </div>
     <div style="background:#ffffff;border-radius:8px;padding:32px;border:1px solid #e5e7eb;">
       ${content}
     </div>
     <div style="text-align:center;margin-top:32px;color:#9ca3af;font-size:12px;">
-      <p>&copy; ${new Date().getFullYear()} Bedrock. All rights reserved.</p>
+      <p>&copy; ${new Date().getFullYear()} BedRock. All rights reserved.</p>
     </div>
   </div>
 </body>
@@ -23,7 +23,7 @@ function baseTemplate(content: string): string {
 
 export function welcomeEmail(name: string): string {
   return baseTemplate(`
-    <h1 style="margin:0 0 16px;font-size:20px;color:#111827;">Welcome to Bedrock, ${name}!</h1>
+    <h1 style="margin:0 0 16px;font-size:20px;color:#111827;">Welcome to BedRock, ${name}!</h1>
     <p style="margin:0 0 16px;color:#4b5563;line-height:1.6;">
       Your account has been created. You're now on your way to getting a US business bank account.
     </p>

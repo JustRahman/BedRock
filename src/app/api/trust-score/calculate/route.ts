@@ -141,7 +141,7 @@ export async function PUT(request: Request) {
       try {
         await sendEmail(
           founder.email,
-          'Your Trust Score is Ready - Bedrock',
+          'Your Trust Score is Ready - BedRock',
           trustScoreEmail(founder.full_name, body.totalScore, body.status)
         )
       } catch {

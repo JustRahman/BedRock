@@ -1,8 +1,12 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { verifyDocument } from '@/lib/document-verification'
 
 interface FounderData {
   id: string
+  full_name?: string
+  date_of_birth?: string | null
+  country_of_origin?: string
   role?: string
 }
 
@@ -78,10 +82,10 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    // Get founder
+    // Get founder with profile fields for verification
     const { data: founderData } = await supabase
       .from('founders')
-      .select('id')
+      .select('id, full_name, date_of_birth, country_of_origin')
       .eq('user_id', user.id)
       .single()
 
@@ -99,13 +103,17 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'File and type are required' }, { status: 400 })
     }
 
+    // Read file buffer once (File stream can only be consumed once)
+    const arrayBuffer = await file.arrayBuffer()
+    const buffer = Buffer.from(arrayBuffer)
+
     // Upload file to Supabase Storage
     const fileExt = file.name.split('.').pop()
     const fileName = `${founder.id}/${Date.now()}.${fileExt}`
 
     const { data: uploadData, error: uploadError } = await supabase.storage
       .from('documents')
-      .upload(fileName, file)
+      .upload(fileName, buffer, { contentType: file.type })
 
     if (uploadError) {
       return NextResponse.json({ error: uploadError.message }, { status: 500 })
@@ -131,7 +139,64 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: error.message }, { status: 500 })
     }
 
-    return NextResponse.json({ document }, { status: 201 })
+    // Auto-verify identity documents with Claude Vision
+    let verification = null
+    const verifiableTypes = ['passport', 'local_id', 'address_proof']
+
+    if (verifiableTypes.includes(type) && founder.full_name && founder.country_of_origin) {
+      try {
+        const result = await verifyDocument({
+          fileBase64: buffer.toString('base64'),
+          mimeType: file.type,
+          documentType: type,
+          founderProfile: {
+            full_name: founder.full_name,
+            date_of_birth: founder.date_of_birth ?? null,
+            country_of_origin: founder.country_of_origin,
+          },
+        })
+
+        verification = result
+
+        // Update document record if verified
+        if (result.status === 'verified') {
+          await (supabase
+            .from('documents') as ReturnType<typeof supabase.from>)
+            .update({
+              verified: true,
+              verified_at: new Date().toISOString(),
+              verified_by: 'ai_verification',
+            })
+            .eq('id', (document as { id: string }).id)
+        }
+
+        // Upsert founder_verifications record
+        const verificationData = {
+          founder_id: founder.id,
+          verification_type: `document_${type}`,
+          status: result.status === 'review_needed' ? 'pending' as const : result.status as 'verified' | 'failed',
+          verified_at: result.status === 'verified' ? new Date().toISOString() : null,
+          metadata: {
+            document_id: (document as { id: string }).id,
+            extracted_data: result.extractedData,
+            match_results: result.matchResults,
+            confidence: result.confidence,
+            reasoning: result.reasoning,
+          },
+        }
+
+        await (supabase
+          .from('founder_verifications') as ReturnType<typeof supabase.from>)
+          .upsert(verificationData, {
+            onConflict: 'founder_id,verification_type',
+          })
+      } catch (verificationError) {
+        console.error('Document verification failed:', verificationError)
+        // Verification failure never blocks the upload
+      }
+    }
+
+    return NextResponse.json({ document, verification }, { status: 201 })
   } catch {
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }

@@ -10,7 +10,6 @@ const footerLinks = {
   company: [
     { name: 'About Us', href: '/about' },
     { name: 'Contact', href: '/contact' },
-    { name: 'Careers', href: '/careers' },
   ],
   legal: [
     { name: 'Privacy Policy', href: '/privacy' },
@@ -29,7 +28,7 @@ export function Footer() {
                 <Shield className="h-4 w-4 text-white" />
               </div>
               <span className="text-lg font-semibold tracking-tight text-white">
-                Bedrock
+                BedRock
               </span>
             </Link>
             <p className="mt-4 text-sm text-zinc-400 leading-relaxed max-w-xs">
@@ -94,7 +93,7 @@ export function Footer() {
 
         <div className="mt-16 border-t border-white/[0.06] pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-zinc-500">
-            &copy; {new Date().getFullYear()} Bedrock. All rights reserved.
+            &copy; {new Date().getFullYear()} BedRock. All rights reserved.
           </p>
           <div className="flex items-center gap-1.5">
             <div className="h-1.5 w-1.5 rounded-full bg-emerald-400" />

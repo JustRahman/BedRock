@@ -40,7 +40,7 @@ export function AdminSidebar() {
       <div className="flex h-16 items-center gap-2 border-b border-gray-800 px-6">
         <Shield className="h-8 w-8 text-blue-400" />
         <div>
-          <span className="text-xl font-bold text-white">Bedrock</span>
+          <span className="text-xl font-bold text-white">BedRock</span>
           <p className="text-xs text-gray-400">Admin Panel</p>
         </div>
       </div>

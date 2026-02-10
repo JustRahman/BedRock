@@ -10,7 +10,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Missing name or email' }, { status: 400 })
     }
 
-    await sendEmail(email, 'Welcome to Bedrock!', welcomeEmail(name))
+    await sendEmail(email, 'Welcome to BedRock!', welcomeEmail(name))
     return NextResponse.json({ success: true })
   } catch (error) {
     console.error('Failed to send welcome email:', error)

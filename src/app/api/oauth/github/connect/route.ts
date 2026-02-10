@@ -1,8 +1,16 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { generateStateToken, setStateCookie } from '@/lib/oauth/utils'
 import { getGitHubAuthUrl } from '@/lib/oauth/github'
 
-export async function GET() {
+// HEAD: check if OAuth is configured (used by frontend availability check)
+export async function HEAD() {
+  if (!process.env.GITHUB_CLIENT_ID || !process.env.GITHUB_CLIENT_SECRET) {
+    return new NextResponse(null, { status: 503 })
+  }
+  return new NextResponse(null, { status: 200 })
+}
+
+export async function GET(request: NextRequest) {
   try {
     if (!process.env.GITHUB_CLIENT_ID || !process.env.GITHUB_CLIENT_SECRET) {
       return NextResponse.json({ error: 'GitHub OAuth not configured' }, { status: 503 })

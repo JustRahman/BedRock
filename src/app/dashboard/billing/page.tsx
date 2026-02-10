@@ -84,7 +84,7 @@ export default function BillingPage() {
           {tierName ? (
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-lg font-semibold text-gray-900">Bedrock {tierName}</p>
+                <p className="text-lg font-semibold text-gray-900">BedRock {tierName}</p>
                 <p className="text-sm text-gray-500">One-time setup fee paid</p>
               </div>
               <Badge className="bg-green-100 text-green-700">Active</Badge>

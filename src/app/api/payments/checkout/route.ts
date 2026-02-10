@@ -9,9 +9,9 @@ function getStripe() {
 }
 
 const TIER_PRICES: Record<string, { amount: number; name: string }> = {
-  basic: { amount: 50000, name: 'Bedrock Basic' },
-  standard: { amount: 80000, name: 'Bedrock Standard' },
-  premium: { amount: 150000, name: 'Bedrock Premium' },
+  basic: { amount: 50000, name: 'BedRock Basic' },
+  standard: { amount: 80000, name: 'BedRock Standard' },
+  premium: { amount: 150000, name: 'BedRock Premium' },
 }
 
 export async function POST(request: Request) {

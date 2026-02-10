@@ -45,7 +45,7 @@ export function Hero() {
             <Link href="/onboarding">
               <Button
                 size="lg"
-                className="bg-white text-black hover:bg-zinc-100 rounded-xl px-8 py-6 text-base font-medium gap-2 transition-all duration-300 hover:shadow-[0_0_30px_rgba(255,255,255,0.2)]"
+                className="bg-gradient-to-r from-blue-500 to-violet-600 text-white hover:from-blue-400 hover:to-violet-500 rounded-xl px-8 py-6 text-base font-medium gap-2 transition-all duration-300 hover:shadow-[0_0_30px_rgba(99,102,241,0.3)]"
               >
                 Check Your Eligibility
                 <ArrowRight className="h-4 w-4" />
@@ -53,9 +53,9 @@ export function Hero() {
             </Link>
             <Link href="#how-it-works">
               <Button
-                variant="outline"
+                variant="ghost"
                 size="lg"
-                className="border-white/[0.12] text-zinc-200 hover:bg-white/[0.07] hover:text-white rounded-xl px-8 py-6 text-base backdrop-blur-sm"
+                className="border border-white/[0.15] text-zinc-200 hover:bg-white/[0.08] hover:border-white/[0.25] hover:text-white rounded-xl px-8 py-6 text-base backdrop-blur-sm"
               >
                 See How It Works
               </Button>

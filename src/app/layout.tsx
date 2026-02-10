@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Bedrock - US Banking Access for Founders Banks Ignore",
-  description: "Bedrock verifies founders using Digital Lineage — not just documents. Deepfake-proof verification. Automated compliance. US banking for founders from restricted countries.",
+  title: "BedRock - US Banking Access for Founders Banks Ignore",
+  description: "BedRock verifies founders using Digital Lineage — not just documents. Deepfake-proof verification. Automated compliance. US banking for founders from restricted countries.",
 };
 
 export default function RootLayout({

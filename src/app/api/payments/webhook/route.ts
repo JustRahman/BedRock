@@ -72,7 +72,7 @@ export async function POST(request: Request) {
       try {
         await sendEmail(
           f.email,
-          'Payment Confirmed - Bedrock',
+          'Payment Confirmed - BedRock',
           paymentConfirmationEmail(f.full_name, tier, amount)
         )
       } catch (emailErr) {

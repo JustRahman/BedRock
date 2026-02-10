@@ -35,7 +35,7 @@ export function Navbar() {
             <Shield className="h-5 w-5 text-white" />
           </div>
           <span className="text-lg font-semibold tracking-tight text-white">
-            Bedrock
+            BedRock
           </span>
         </Link>
 

@@ -17,10 +17,11 @@ export function CTA() {
         <div className="mx-auto max-w-3xl">
           <div className="rounded-3xl border border-white/[0.1] bg-white/[0.04] p-12 sm:p-16 text-center backdrop-blur-sm">
             <h2 className="text-3xl font-bold tracking-tight text-white sm:text-5xl">
-              Check Your Eligibility
-              <br />
-              <span className="gradient-text">Free, 2 Minutes</span>
+              Ready to get started?
             </h2>
+            <p className="mt-3 text-xl text-zinc-300">
+              Free eligibility check. Takes 2 minutes.
+            </p>
             <p className="mt-6 text-lg text-zinc-300 leading-relaxed max-w-xl mx-auto">
               Verify your Digital Lineage and get your Trust Score instantly.
               Finally, a path to US banking for founders from restricted countries.
@@ -29,7 +30,7 @@ export function CTA() {
               <Link href="/onboarding">
                 <Button
                   size="lg"
-                  className="bg-white text-black hover:bg-zinc-100 rounded-xl px-8 py-6 text-base font-medium gap-2 transition-all duration-300 hover:shadow-[0_0_30px_rgba(255,255,255,0.2)]"
+                  className="bg-gradient-to-r from-blue-500 to-violet-600 text-white hover:from-blue-400 hover:to-violet-500 rounded-xl px-8 py-6 text-base font-medium gap-2 transition-all duration-300 hover:shadow-[0_0_30px_rgba(99,102,241,0.3)]"
                 >
                   Check Your Eligibility
                   <ArrowRight className="h-4 w-4" />
@@ -37,9 +38,9 @@ export function CTA() {
               </Link>
               <Link href="#pricing">
                 <Button
-                  variant="outline"
+                  variant="ghost"
                   size="lg"
-                  className="border-white/[0.12] text-zinc-200 hover:bg-white/[0.07] hover:text-white rounded-xl px-8 py-6 text-base backdrop-blur-sm"
+                  className="border border-white/[0.15] text-zinc-200 hover:bg-white/[0.08] hover:border-white/[0.25] hover:text-white rounded-xl px-8 py-6 text-base backdrop-blur-sm"
                 >
                   View Pricing
                 </Button>

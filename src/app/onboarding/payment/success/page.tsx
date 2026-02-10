@@ -12,7 +12,7 @@ export default function PaymentSuccessPage() {
         <div className="mb-8 text-center">
           <Link href="/" className="inline-flex items-center gap-2">
             <Shield className="h-8 w-8 text-blue-600" />
-            <span className="text-xl font-bold">Bedrock</span>
+            <span className="text-xl font-bold">BedRock</span>
           </Link>
         </div>
 

@@ -265,7 +265,7 @@ export function calculateTrustScore(input: TrustScoreInput): TrustScoreResult {
     breakdown.network.total += 10
   } else {
     breakdown.network.items.push({ name: 'Verified Founder Referral', points: 10, earned: false })
-    improvements.push('Get a referral from a verified Bedrock founder to earn +10 points')
+    improvements.push('Get a referral from a verified BedRock founder to earn +10 points')
   }
 
   // University email: +3

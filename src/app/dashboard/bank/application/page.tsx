@@ -326,7 +326,7 @@ export default function BankApplicationPage() {
                 {[
                   { name: 'Articles of Organization', type: 'LLC formation document' },
                   { name: 'EIN Confirmation Letter', type: 'IRS assignment' },
-                  { name: 'Trust Score Report', type: 'Bedrock verification' },
+                  { name: 'Trust Score Report', type: 'BedRock verification' },
                   { name: 'Passport Copy', type: 'Identity document' },
                 ].map((doc) => (
                   <div key={doc.name} className="flex items-center justify-between rounded-lg border p-3">

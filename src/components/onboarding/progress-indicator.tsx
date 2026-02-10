@@ -24,10 +24,10 @@ export function ProgressIndicator({ steps, currentStep }: ProgressIndicatorProps
             <div
               className={`relative z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 ${
                 currentStep > step.id
-                  ? 'border-blue-600 bg-blue-600 text-white'
+                  ? 'border-blue-500 bg-blue-500 text-white'
                   : currentStep === step.id
-                  ? 'border-blue-600 bg-white text-blue-600'
-                  : 'border-gray-300 bg-white text-gray-500'
+                  ? 'border-blue-500 bg-blue-500/20 text-blue-400'
+                  : 'border-zinc-700 bg-zinc-800 text-zinc-500'
               }`}
             >
               {currentStep > step.id ? (
@@ -41,7 +41,7 @@ export function ProgressIndicator({ steps, currentStep }: ProgressIndicatorProps
             {index < steps.length - 1 && (
               <div
                 className={`h-0.5 flex-1 ${
-                  currentStep > step.id ? 'bg-blue-600' : 'bg-gray-200'
+                  currentStep > step.id ? 'bg-blue-500' : 'bg-zinc-700'
                 }`}
               />
             )}
@@ -59,7 +59,7 @@ export function ProgressIndicator({ steps, currentStep }: ProgressIndicatorProps
           >
             <p
               className={`text-[10px] font-medium leading-tight sm:text-xs ${
-                currentStep >= step.id ? 'text-blue-600' : 'text-gray-500'
+                currentStep >= step.id ? 'text-blue-400' : 'text-zinc-500'
               }`}
             >
               {step.name}

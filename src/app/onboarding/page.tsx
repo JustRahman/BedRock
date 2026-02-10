@@ -3,7 +3,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Shield } from 'lucide-react'
 import {
   ProgressIndicator,
@@ -190,106 +189,122 @@ export default function OnboardingPage() {
   // Don't render steps until hydrated to avoid flash of wrong step
   if (!isHydrated) {
     return (
-      <div className="min-h-screen bg-gray-50 py-12">
-        <div className="mx-auto max-w-2xl px-4">
+      <div className="dark min-h-screen bg-[#09090b] text-white py-12 relative overflow-hidden">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] opacity-40">
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-600/30 rounded-full blur-[128px]" />
+          <div className="absolute top-20 right-1/4 w-80 h-80 bg-violet-600/25 rounded-full blur-[128px]" />
+        </div>
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:64px_64px]" />
+
+        <div className="relative mx-auto max-w-2xl px-4">
           <div className="mb-8 text-center">
-            <Link href="/" className="inline-flex items-center gap-2">
-              <Shield className="h-8 w-8 text-blue-600" />
-              <span className="text-xl font-bold">Bedrock</span>
+            <Link href="/" className="inline-flex items-center gap-2.5 group">
+              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-violet-600">
+                <Shield className="h-5 w-5 text-white" />
+              </div>
+              <span className="text-lg font-semibold tracking-tight text-white">BedRock</span>
             </Link>
           </div>
-          <Card>
-            <CardHeader>
-              <CardTitle>Check Your Eligibility</CardTitle>
-              <CardDescription>Loading...</CardDescription>
-            </CardHeader>
-          </Card>
+          <div className="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-8 backdrop-blur-sm">
+            <h2 className="text-xl font-bold text-white">Check Your Eligibility</h2>
+            <p className="mt-1 text-sm text-zinc-400">Loading...</p>
+          </div>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
-      <div className="mx-auto max-w-2xl px-4">
+    <div className="dark min-h-screen bg-[#09090b] text-white py-12 relative overflow-hidden">
+      {/* Background gradient orbs */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] opacity-40">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-600/30 rounded-full blur-[128px]" />
+        <div className="absolute top-20 right-1/4 w-80 h-80 bg-violet-600/25 rounded-full blur-[128px]" />
+      </div>
+
+      {/* Grid pattern */}
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:64px_64px]" />
+
+      <div className="relative mx-auto max-w-2xl px-4">
         <div className="mb-8 text-center">
-          <Link href="/" className="inline-flex items-center gap-2">
-            <Shield className="h-8 w-8 text-blue-600" />
-            <span className="text-xl font-bold">Bedrock</span>
+          <Link href="/" className="inline-flex items-center gap-2.5 group">
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-violet-600 transition-transform duration-300 group-hover:scale-105">
+              <Shield className="h-5 w-5 text-white" />
+            </div>
+            <span className="text-lg font-semibold tracking-tight text-white">BedRock</span>
           </Link>
         </div>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Check Your Eligibility</CardTitle>
-            <CardDescription>
+        <div className="rounded-2xl border border-white/[0.08] bg-white/[0.03] p-6 sm:p-8 backdrop-blur-sm">
+          <div className="mb-6">
+            <h2 className="text-xl font-bold text-white">Check Your Eligibility</h2>
+            <p className="mt-1 text-sm text-zinc-400">
               Complete these steps to calculate your Trust Score and see your bank account options.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ProgressIndicator steps={steps} currentStep={currentStep} />
+            </p>
+          </div>
 
-            {currentStep === 1 && (
-              <StepBasicInfo
-                data={data.basicInfo}
-                onNext={handleBasicInfoNext}
-              />
-            )}
+          <ProgressIndicator steps={steps} currentStep={currentStep} />
 
-            {currentStep === 2 && (
-              <StepIdentity
-                data={data.identity}
-                onNext={handleIdentityNext}
-                onBack={handleBack}
-              />
-            )}
+          {currentStep === 1 && (
+            <StepBasicInfo
+              data={data.basicInfo}
+              onNext={handleBasicInfoNext}
+            />
+          )}
 
-            {currentStep === 3 && (
-              <StepCodeHistory
-                data={data.codeHistory}
-                onNext={handleCodeHistoryNext}
-                onBack={handleBack}
-              />
-            )}
+          {currentStep === 2 && (
+            <StepIdentity
+              data={data.identity}
+              onNext={handleIdentityNext}
+              onBack={handleBack}
+            />
+          )}
 
-            {currentStep === 4 && (
-              <StepProfessional
-                data={data.professional}
-                onNext={handleProfessionalNext}
-                onBack={handleBack}
-              />
-            )}
+          {currentStep === 3 && (
+            <StepCodeHistory
+              data={data.codeHistory}
+              onNext={handleCodeHistoryNext}
+              onBack={handleBack}
+            />
+          )}
 
-            {currentStep === 5 && (
-              <StepFinancial
-                data={data.financial}
-                onNext={handleFinancialNext}
-                onBack={handleBack}
-              />
-            )}
+          {currentStep === 4 && (
+            <StepProfessional
+              data={data.professional}
+              onNext={handleProfessionalNext}
+              onBack={handleBack}
+            />
+          )}
 
-            {currentStep === 6 && (
-              <StepDigitalPresence
-                data={data.digitalPresence}
-                onNext={handleDigitalPresenceNext}
-                onBack={handleBack}
-              />
-            )}
+          {currentStep === 5 && (
+            <StepFinancial
+              data={data.financial}
+              onNext={handleFinancialNext}
+              onBack={handleBack}
+            />
+          )}
 
-            {currentStep === 7 && (
-              <StepTrustSignals
-                data={data.trustSignals}
-                onSubmit={handleTrustSignalsSubmit}
-                onBack={handleBack}
-                isSubmitting={isSubmitting}
-              />
-            )}
-          </CardContent>
-        </Card>
+          {currentStep === 6 && (
+            <StepDigitalPresence
+              data={data.digitalPresence}
+              onNext={handleDigitalPresenceNext}
+              onBack={handleBack}
+            />
+          )}
 
-        <p className="mt-6 text-center text-sm text-gray-500">
+          {currentStep === 7 && (
+            <StepTrustSignals
+              data={data.trustSignals}
+              onSubmit={handleTrustSignalsSubmit}
+              onBack={handleBack}
+              isSubmitting={isSubmitting}
+            />
+          )}
+        </div>
+
+        <p className="mt-6 text-center text-sm text-zinc-500">
           Already have an account?{' '}
-          <Link href="/login" className="text-blue-600 hover:underline">
+          <Link href="/login" className="text-blue-400 hover:text-blue-300 transition-colors">
             Sign in
           </Link>
         </p>

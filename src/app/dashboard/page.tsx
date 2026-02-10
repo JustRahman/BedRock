@@ -1,9 +1,10 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import Link from 'next/link'
 import { FileText, Calendar, Shield, Building2, Landmark } from 'lucide-react'
 import { StatusCard, ActionItems, TrustScoreCard } from '@/components/dashboard'
+import { PendingUploadBanner } from '@/components/dashboard/pending-upload-banner'
 import { Card, CardContent } from '@/components/ui/card'
 
 interface TrustScoreData {
@@ -54,6 +55,18 @@ export default function DashboardPage() {
   const [company, setCompany] = useState<CompanyData | null>(null)
   const [bankApp, setBankApp] = useState<BankAppData | null>(null)
   const [loading, setLoading] = useState(true)
+
+  const refreshDocuments = useCallback(async () => {
+    try {
+      const res = await fetch('/api/documents')
+      if (res.ok) {
+        const data = await res.json()
+        setDocuments(data.documents ?? [])
+      }
+    } catch {
+      // silently fail
+    }
+  }, [])
 
   useEffect(() => {
     async function fetchData() {
@@ -235,6 +248,8 @@ export default function DashboardPage() {
 
   return (
     <div>
+      <PendingUploadBanner onUploadsComplete={refreshDocuments} />
+
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
         <p className="mt-1 text-sm text-gray-500">

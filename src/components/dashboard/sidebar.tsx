@@ -41,7 +41,7 @@ export function Sidebar() {
     <aside className="flex h-screen w-64 flex-col border-r border-gray-200 bg-white">
       <div className="flex h-16 items-center gap-2 border-b border-gray-200 px-6">
         <Shield className="h-8 w-8 text-blue-600" />
-        <span className="text-xl font-bold">Bedrock</span>
+        <span className="text-xl font-bold">BedRock</span>
       </div>
 
       <nav className="flex-1 space-y-1 px-3 py-4">

@@ -5,6 +5,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { PhoneInput } from '@/components/ui/phone-input'
+import { DatePicker } from '@/components/ui/date-picker'
 import {
   Select,
   SelectContent,
@@ -42,19 +44,19 @@ export function StepBasicInfo({ data, onNext }: StepBasicInfoProps) {
   return (
     <form onSubmit={handleSubmit(onNext)} className="space-y-6">
       <div className="space-y-2">
-        <Label htmlFor="fullName">Full Legal Name</Label>
+        <Label htmlFor="fullName" className="text-zinc-300">Full Legal Name</Label>
         <Input
           id="fullName"
           placeholder="As it appears on your passport"
           {...register('fullName')}
         />
         {errors.fullName && (
-          <p className="text-sm text-red-500">{errors.fullName.message}</p>
+          <p className="text-sm text-red-400">{errors.fullName.message}</p>
         )}
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="email">Email Address</Label>
+        <Label htmlFor="email" className="text-zinc-300">Email Address</Label>
         <Input
           id="email"
           type="email"
@@ -62,25 +64,24 @@ export function StepBasicInfo({ data, onNext }: StepBasicInfoProps) {
           {...register('email')}
         />
         {errors.email && (
-          <p className="text-sm text-red-500">{errors.email.message}</p>
+          <p className="text-sm text-red-400">{errors.email.message}</p>
         )}
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="phone">Phone Number</Label>
-        <Input
+        <Label htmlFor="phone" className="text-zinc-300">Phone Number</Label>
+        <PhoneInput
           id="phone"
-          type="tel"
-          placeholder="+1 234 567 8900"
-          {...register('phone')}
+          value={watch('phone') || ''}
+          onChange={(val) => setValue('phone', val, { shouldValidate: true })}
         />
         {errors.phone && (
-          <p className="text-sm text-red-500">{errors.phone.message}</p>
+          <p className="text-sm text-red-400">{errors.phone.message}</p>
         )}
       </div>
 
       <div className="space-y-2">
-        <Label>Country of Origin (Citizenship)</Label>
+        <Label className="text-zinc-300">Country of Origin (Citizenship)</Label>
         <Select
           value={countryOfOrigin}
           onValueChange={(value) => setValue('countryOfOrigin', value)}
@@ -97,12 +98,12 @@ export function StepBasicInfo({ data, onNext }: StepBasicInfoProps) {
           </SelectContent>
         </Select>
         {errors.countryOfOrigin && (
-          <p className="text-sm text-red-500">{errors.countryOfOrigin.message}</p>
+          <p className="text-sm text-red-400">{errors.countryOfOrigin.message}</p>
         )}
       </div>
 
       <div className="space-y-2">
-        <Label>Country of Residence</Label>
+        <Label className="text-zinc-300">Country of Residence</Label>
         <Select
           value={countryOfResidence}
           onValueChange={(value) => setValue('countryOfResidence', value)}
@@ -119,21 +120,22 @@ export function StepBasicInfo({ data, onNext }: StepBasicInfoProps) {
           </SelectContent>
         </Select>
         {errors.countryOfResidence && (
-          <p className="text-sm text-red-500">{errors.countryOfResidence.message}</p>
+          <p className="text-sm text-red-400">{errors.countryOfResidence.message}</p>
         )}
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="dateOfBirth">Date of Birth</Label>
-        <Input
+        <Label htmlFor="dateOfBirth" className="text-zinc-300">Date of Birth</Label>
+        <DatePicker
           id="dateOfBirth"
-          type="date"
-          {...register('dateOfBirth')}
+          value={watch('dateOfBirth') || ''}
+          onChange={(val) => setValue('dateOfBirth', val, { shouldValidate: true })}
+          placeholder="DD / MM / YYYY"
         />
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="address">Current Address</Label>
+        <Label htmlFor="address" className="text-zinc-300">Current Address</Label>
         <Input
           id="address"
           placeholder="Street address, city, country"
@@ -142,7 +144,7 @@ export function StepBasicInfo({ data, onNext }: StepBasicInfoProps) {
       </div>
 
       <div className="flex justify-end pt-4">
-        <Button type="submit" className="gap-2">
+        <Button type="submit" variant="ghost" className="gap-2 bg-gradient-to-r from-blue-500 to-violet-600 hover:from-blue-600 hover:to-violet-700 hover:text-white text-white border-0 shadow-[0_0_20px_rgba(59,130,246,0.15)] hover:shadow-[0_0_25px_rgba(59,130,246,0.3)] transition-shadow">
           Continue
           <ArrowRight className="h-4 w-4" />
         </Button>

@@ -1,8 +1,11 @@
 import {
   Navbar,
   Hero,
+  SocialProof,
   Problem,
   HowItWorks,
+  TrustScorePreview,
+  Comparison,
   Testimonials,
   Pricing,
   FAQ,
@@ -16,8 +19,11 @@ export default function Home() {
       <Navbar />
       <main>
         <Hero />
+        <SocialProof />
         <Problem />
         <HowItWorks />
+        <TrustScorePreview />
+        <Comparison />
         <Testimonials />
         <Pricing />
         <FAQ />

@@ -68,30 +68,30 @@ export function StepProfessional({ data, onNext, onBack }: StepProfessionalProps
   return (
     <form onSubmit={handleSubmit(onNext)} className="space-y-6">
       <div>
-        <h3 className="text-lg font-medium text-gray-900">Professional Graph</h3>
-        <p className="mt-1 text-sm text-gray-600">
+        <h3 className="text-lg font-medium text-white">Professional Graph</h3>
+        <p className="mt-1 text-sm text-zinc-400">
           Your professional network history proves who you are through years of connections
           and endorsements that can&apos;t be fabricated.
         </p>
       </div>
 
-      <div className="rounded-lg border border-gray-200 p-6">
+      <div className="rounded-lg border border-white/[0.08] bg-white/[0.03] p-6">
         <div className="text-center">
-          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-blue-100">
-            <Linkedin className="h-6 w-6 text-blue-700" />
+          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-blue-500/[0.15]">
+            <Linkedin className="h-6 w-6 text-blue-400" />
           </div>
-          <h4 className="mt-3 font-medium text-gray-900">Connect LinkedIn</h4>
-          <p className="mt-1 text-sm text-gray-500">
+          <h4 className="mt-3 font-medium text-white">Connect LinkedIn</h4>
+          <p className="mt-1 text-sm text-zinc-400">
             We analyze account age, connections, endorsements, and career progression.
           </p>
 
           {mockConnected ? (
-            <div className="mt-4 rounded-lg bg-green-50 p-4 text-sm text-green-700">
+            <div className="mt-4 rounded-lg bg-emerald-500/[0.1] border border-emerald-500/20 p-4 text-sm text-emerald-400">
               <div className="flex items-center justify-center gap-2">
                 <CheckCircle className="h-4 w-4" />
                 <p className="font-medium">LinkedIn Connected</p>
               </div>
-              <div className="mt-2 space-y-1 text-left">
+              <div className="mt-2 space-y-1 text-left text-zinc-300">
                 {linkedinData ? (
                   <>
                     <p>Name: {linkedinData.name}</p>
@@ -111,8 +111,8 @@ export function StepProfessional({ data, onNext, onBack }: StepProfessionalProps
           ) : oauthAvailable ? (
             <Button
               type="button"
-              variant="outline"
-              className="mt-4 gap-2"
+              variant="ghost"
+              className="mt-4 gap-2 border border-white/[0.1] text-zinc-300 hover:text-zinc-200 hover:bg-white/[0.05]"
               onClick={handleOAuthConnect}
             >
               <Linkedin className="h-4 w-4" />
@@ -122,7 +122,7 @@ export function StepProfessional({ data, onNext, onBack }: StepProfessionalProps
         </div>
       </div>
 
-      <div className="rounded-lg border border-gray-200 p-4">
+      <div className="rounded-lg border border-white/[0.08] bg-white/[0.03] p-4">
         <div className="flex items-start gap-4">
           <Checkbox
             id="hasLinkedin"
@@ -130,10 +130,10 @@ export function StepProfessional({ data, onNext, onBack }: StepProfessionalProps
             onCheckedChange={(checked) => setValue('hasLinkedin', !!checked)}
           />
           <div className="flex-1">
-            <Label htmlFor="hasLinkedin" className="text-base font-medium">
+            <Label htmlFor="hasLinkedin" className="text-base font-medium text-zinc-200">
               Or provide LinkedIn URL
             </Label>
-            <p className="mt-1 text-sm text-gray-500">
+            <p className="mt-1 text-sm text-zinc-400">
               If you prefer not to connect via OAuth, enter your profile URL for analysis.
             </p>
             {hasLinkedin && !mockConnected && (
@@ -148,16 +148,16 @@ export function StepProfessional({ data, onNext, onBack }: StepProfessionalProps
         </div>
       </div>
 
-      <p className="text-sm text-gray-500">
+      <p className="text-sm text-zinc-500">
         This step is optional but significantly impacts your Digital Lineage score (up to 15 points).
       </p>
 
       <div className="flex justify-between pt-4">
-        <Button type="button" variant="outline" onClick={onBack} className="gap-2">
+        <Button type="button" variant="ghost" onClick={onBack} className="gap-2 border border-white/[0.1] text-zinc-300 hover:text-zinc-200 hover:bg-white/[0.05]">
           <ArrowLeft className="h-4 w-4" />
           Back
         </Button>
-        <Button type="submit" className="gap-2">
+        <Button type="submit" variant="ghost" className="gap-2 bg-gradient-to-r from-blue-500 to-violet-600 hover:from-blue-600 hover:to-violet-700 hover:text-white text-white border-0 shadow-[0_0_20px_rgba(59,130,246,0.15)] hover:shadow-[0_0_25px_rgba(59,130,246,0.3)] transition-shadow">
           Continue
           <ArrowRight className="h-4 w-4" />
         </Button>
