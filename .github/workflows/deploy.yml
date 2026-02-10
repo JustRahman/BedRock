@@ -12,5 +12,5 @@ jobs:
           host: ${{ secrets.DO_HOST }}
           username: bedrock
           key: ${{ secrets.DO_SSH_KEY }}
-          command_timeout: 20m
+          command_timeout: 10m
           script: cd ~/app && ~/deploy.sh

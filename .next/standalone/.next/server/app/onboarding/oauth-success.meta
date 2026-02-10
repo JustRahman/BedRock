@@ -1,0 +1,16 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/onboarding/layout,_N_T_/onboarding/oauth-success/layout,_N_T_/onboarding/oauth-success/page,_N_T_/onboarding/oauth-success"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/onboarding/oauth-success/__PAGE__",
+    "/onboarding/oauth-success",
+    "/onboarding",
+    "/_index",
+    "/_head"
+  ]
+}

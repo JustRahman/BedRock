@@ -13,8 +13,13 @@
 # testing
 /coverage
 
-# next.js
-/.next/
+# next.js (allow .next/standalone and .next/static for pre-built deploys)
+/.next/cache/
+/.next/server/
+/.next/types/
+/.next/*.json
+/.next/*.js
+/.next/*.tsbuildinfo
 /out/
 
 # production
