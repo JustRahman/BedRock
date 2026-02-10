@@ -59,8 +59,12 @@ export type FinancialFormData = z.infer<typeof financialSchema>
 export const digitalPresenceSchema = z.object({
   website: z.string().url('Please enter a valid URL').or(z.string().length(0)).optional(),
   twitterHandle: z.string().optional(),
-  otherSocialProfiles: z.string().optional(),
+  instagramHandle: z.string().optional(),
   appStoreUrl: z.string().url('Please enter a valid URL').or(z.string().length(0)).optional(),
+  websiteVerified: z.boolean().optional(),
+  twitterVerified: z.boolean().optional(),
+  instagramVerified: z.boolean().optional(),
+  appStoreVerified: z.boolean().optional(),
 })
 
 export type DigitalPresenceFormData = z.infer<typeof digitalPresenceSchema>
@@ -69,10 +73,14 @@ export type DigitalPresenceFormData = z.infer<typeof digitalPresenceSchema>
 export const trustSignalsSchema = z.object({
   hasReferral: z.boolean(),
   referralCode: z.string().optional(),
+  referralVerified: z.boolean().optional(),
+  referrerName: z.string().optional(),
   hasUniversityEmail: z.boolean(),
   universityEmail: z.string().email().optional().or(z.string().length(0)),
+  universityEmailVerified: z.boolean().optional(),
   hasAccelerator: z.boolean(),
   acceleratorName: z.string().optional(),
+  acceleratorVerified: z.boolean().optional(),
   hasEmployerVerification: z.boolean(),
   employerName: z.string().optional(),
 })

@@ -28,14 +28,21 @@ export interface TrustScoreInput {
   }
   digitalPresence: {
     website?: string
+    websiteVerified?: boolean
     twitterHandle?: string
-    otherSocialProfiles?: string
+    twitterVerified?: boolean
+    instagramHandle?: string
+    instagramVerified?: boolean
     appStoreUrl?: string
+    appStoreVerified?: boolean
   }
   trustSignals: {
     hasReferral: boolean
+    referralVerified?: boolean
     hasUniversityEmail: boolean
+    universityEmailVerified?: boolean
     hasAccelerator: boolean
+    acceleratorVerified?: boolean
     hasEmployerVerification: boolean
   }
 }
@@ -140,30 +147,48 @@ export function calculateTrustScore(input: TrustScoreInput): TrustScoreResult {
   }
 
   // Digital Presence (10 pts)
+  // Website: +3 provided, +5 verified (max 5 total for website)
   const hasWebsite = input.digitalPresence.website && input.digitalPresence.website.length > 0
-  if (hasWebsite) {
-    breakdown.digitalLineage.digitalPresence.items.push({ name: 'Website URL', points: 5, earned: true })
+  if (hasWebsite && input.digitalPresence.websiteVerified) {
+    breakdown.digitalLineage.digitalPresence.items.push({ name: 'Website Verified', points: 5, earned: true })
     breakdown.digitalLineage.digitalPresence.total += 5
-  } else {
-    breakdown.digitalLineage.digitalPresence.items.push({ name: 'Website URL', points: 5, earned: false })
-    improvements.push('Add your website URL to earn +5 points')
-  }
-
-  const hasTwitter = input.digitalPresence.twitterHandle && input.digitalPresence.twitterHandle.length > 0
-  if (hasTwitter) {
-    breakdown.digitalLineage.digitalPresence.items.push({ name: 'Twitter/X Profile', points: 3, earned: true })
+  } else if (hasWebsite) {
+    breakdown.digitalLineage.digitalPresence.items.push({ name: 'Website URL', points: 3, earned: true })
     breakdown.digitalLineage.digitalPresence.total += 3
+    improvements.push('Verify your website to earn +2 more points')
   } else {
-    breakdown.digitalLineage.digitalPresence.items.push({ name: 'Twitter/X Profile', points: 3, earned: false })
+    breakdown.digitalLineage.digitalPresence.items.push({ name: 'Website Verified', points: 5, earned: false })
+    improvements.push('Add and verify your website URL to earn up to +5 points')
   }
 
-  const hasOtherSocial = input.digitalPresence.otherSocialProfiles && input.digitalPresence.otherSocialProfiles.length > 0
+  // Twitter: +1 provided, +2 valid format (max 2 total)
+  const hasTwitter = input.digitalPresence.twitterHandle && input.digitalPresence.twitterHandle.length > 0
+  if (hasTwitter && input.digitalPresence.twitterVerified) {
+    breakdown.digitalLineage.digitalPresence.items.push({ name: 'Twitter/X Verified', points: 2, earned: true })
+    breakdown.digitalLineage.digitalPresence.total += 2
+  } else if (hasTwitter) {
+    breakdown.digitalLineage.digitalPresence.items.push({ name: 'Twitter/X Handle', points: 1, earned: true })
+    breakdown.digitalLineage.digitalPresence.total += 1
+  } else {
+    breakdown.digitalLineage.digitalPresence.items.push({ name: 'Twitter/X Handle', points: 2, earned: false })
+  }
+
+  // Instagram: +1 if valid
+  const hasInstagram = input.digitalPresence.instagramHandle && input.digitalPresence.instagramHandle.length > 0
+  if (hasInstagram && input.digitalPresence.instagramVerified) {
+    breakdown.digitalLineage.digitalPresence.items.push({ name: 'Instagram Verified', points: 1, earned: true })
+    breakdown.digitalLineage.digitalPresence.total += 1
+  } else {
+    breakdown.digitalLineage.digitalPresence.items.push({ name: 'Instagram Handle', points: 1, earned: false })
+  }
+
+  // App Store: +2 if found
   const hasAppStore = input.digitalPresence.appStoreUrl && input.digitalPresence.appStoreUrl.length > 0
-  if (hasOtherSocial || hasAppStore) {
-    breakdown.digitalLineage.digitalPresence.items.push({ name: 'Additional Profiles', points: 2, earned: true })
+  if (hasAppStore && input.digitalPresence.appStoreVerified) {
+    breakdown.digitalLineage.digitalPresence.items.push({ name: 'App Store App', points: 2, earned: true })
     breakdown.digitalLineage.digitalPresence.total += 2
   } else {
-    breakdown.digitalLineage.digitalPresence.items.push({ name: 'Additional Profiles', points: 2, earned: false })
+    breakdown.digitalLineage.digitalPresence.items.push({ name: 'App Store App', points: 2, earned: false })
   }
 
   // Calculate Digital Lineage total
@@ -259,34 +284,51 @@ export function calculateTrustScore(input: TrustScoreInput): TrustScoreResult {
 
   // === TRUST NETWORK (15 pts) ===
 
-  // Referral: +10
+  // Referral: verified +10, unverified +3
   if (input.trustSignals.hasReferral) {
-    breakdown.network.items.push({ name: 'Verified Founder Referral', points: 10, earned: true })
-    breakdown.network.total += 10
+    if (input.trustSignals.referralVerified) {
+      breakdown.network.items.push({ name: 'Verified Founder Referral', points: 10, earned: true })
+      breakdown.network.total += 10
+    } else {
+      breakdown.network.items.push({ name: 'Referral (unverified)', points: 3, earned: true })
+      breakdown.network.total += 3
+      improvements.push('Verify your referral code to earn +7 more points')
+    }
   } else {
     breakdown.network.items.push({ name: 'Verified Founder Referral', points: 10, earned: false })
     improvements.push('Get a referral from a verified BedRock founder to earn +10 points')
   }
 
-  // University email: +3
+  // University email: verified +3, unverified +1
   if (input.trustSignals.hasUniversityEmail) {
-    breakdown.network.items.push({ name: 'University Email', points: 3, earned: true })
-    breakdown.network.total += 3
+    if (input.trustSignals.universityEmailVerified) {
+      breakdown.network.items.push({ name: 'University Email (verified)', points: 3, earned: true })
+      breakdown.network.total += 3
+    } else {
+      breakdown.network.items.push({ name: 'University Email (unverified)', points: 1, earned: true })
+      breakdown.network.total += 1
+      improvements.push('Verify your university email to earn +2 more points')
+    }
   } else {
     breakdown.network.items.push({ name: 'University Email', points: 3, earned: false })
   }
 
-  // Accelerator: +5 (capped at max, so use min)
+  // Accelerator: verified +5, unverified +2
   if (input.trustSignals.hasAccelerator) {
-    breakdown.network.items.push({ name: 'Accelerator Affiliation', points: 5, earned: true })
-    breakdown.network.total += 5
+    if (input.trustSignals.acceleratorVerified) {
+      breakdown.network.items.push({ name: 'Accelerator (verified)', points: 5, earned: true })
+      breakdown.network.total += 5
+    } else {
+      breakdown.network.items.push({ name: 'Accelerator (unverified)', points: 2, earned: true })
+      breakdown.network.total += 2
+    }
   } else {
     breakdown.network.items.push({ name: 'Accelerator Affiliation', points: 5, earned: false })
   }
 
-  // Employer verification: +2
+  // Employer: self-reported +2
   if (input.trustSignals.hasEmployerVerification) {
-    breakdown.network.items.push({ name: 'Employer Verification', points: 2, earned: true })
+    breakdown.network.items.push({ name: 'Employer (self-reported)', points: 2, earned: true })
     breakdown.network.total += 2
   } else {
     breakdown.network.items.push({ name: 'Employer Verification', points: 2, earned: false })

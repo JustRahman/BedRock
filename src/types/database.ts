@@ -438,6 +438,70 @@ export interface Database {
           updated_at?: string
         }
       }
+      referral_codes: {
+        Row: {
+          id: string
+          code: string
+          founder_id: string
+          founder_name: string
+          max_uses: number
+          times_used: number
+          is_active: boolean
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          code: string
+          founder_id: string
+          founder_name: string
+          max_uses?: number
+          times_used?: number
+          is_active?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          code?: string
+          founder_id?: string
+          founder_name?: string
+          max_uses?: number
+          times_used?: number
+          is_active?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+      }
+      university_verification_codes: {
+        Row: {
+          id: string
+          email: string
+          code: string
+          verified: boolean
+          attempts: number
+          expires_at: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          email: string
+          code: string
+          verified?: boolean
+          attempts?: number
+          expires_at: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          email?: string
+          code?: string
+          verified?: boolean
+          attempts?: number
+          expires_at?: string
+          created_at?: string
+        }
+      }
       payments: {
         Row: {
           id: string
@@ -509,3 +573,5 @@ export type BankApplication = Tables<'bank_applications'>
 export type ComplianceDeadline = Tables<'compliance_deadlines'>
 export type Document = Tables<'documents'>
 export type Payment = Tables<'payments'>
+export type ReferralCode = Tables<'referral_codes'>
+export type UniversityVerificationCode = Tables<'university_verification_codes'>

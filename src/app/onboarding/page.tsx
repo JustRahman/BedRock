@@ -169,6 +169,8 @@ export default function OnboardingPage() {
         sessionStorage.removeItem('oauth_github_data')
         sessionStorage.removeItem('oauth_linkedin_data')
         sessionStorage.removeItem('oauth_stripe_data')
+        sessionStorage.removeItem('digital_presence_verification')
+        sessionStorage.removeItem('trust_signals_verification')
       } catch {
         // Ignore cleanup errors
       }
@@ -287,6 +289,7 @@ export default function OnboardingPage() {
           {currentStep === 6 && (
             <StepDigitalPresence
               data={data.digitalPresence}
+              founderName={data.basicInfo.fullName}
               onNext={handleDigitalPresenceNext}
               onBack={handleBack}
             />

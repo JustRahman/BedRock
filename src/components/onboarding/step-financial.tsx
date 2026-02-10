@@ -30,9 +30,8 @@ interface StepFinancialProps {
 }
 
 export function StepFinancial({ data, onNext, onBack }: StepFinancialProps) {
-  const [mockConnected, setMockConnected] = useState(data.hasStripeConnected ?? false)
+  const [connected, setConnected] = useState(data.hasStripeConnected ?? false)
   const [stripeData, setStripeData] = useState<StripeProfileData | null>(null)
-  const [oauthAvailable, setOauthAvailable] = useState(true)
 
   const {
     handleSubmit,
@@ -61,7 +60,7 @@ export function StepFinancial({ data, onNext, onBack }: StepFinancialProps) {
       if (stored) {
         const parsed = JSON.parse(stored) as StripeProfileData
         setStripeData(parsed)
-        setMockConnected(true)
+        setConnected(true)
         setValue('hasStripeConnected', true)
         // Auto-fill form fields from real data
         if (parsed.revenueRange) setValue('monthlyRevenue', parsed.revenueRange)
@@ -70,13 +69,6 @@ export function StepFinancial({ data, onNext, onBack }: StepFinancialProps) {
     } catch {
       // Ignore parse errors
     }
-
-    // Check if OAuth is configured
-    fetch('/api/oauth/stripe/connect', { method: 'HEAD' })
-      .then((res) => {
-        if (res.status === 503) setOauthAvailable(false)
-      })
-      .catch(() => setOauthAvailable(false))
   }, [setValue])
 
   const handleOAuthConnect = () => {
@@ -103,29 +95,33 @@ export function StepFinancial({ data, onNext, onBack }: StepFinancialProps) {
             Verify your revenue history, customer geography, and chargeback rate.
           </p>
 
-          {mockConnected ? (
+          {connected && stripeData ? (
             <div className="mt-4 rounded-lg bg-emerald-500/[0.1] border border-emerald-500/20 p-4 text-sm text-emerald-400">
               <div className="flex items-center justify-center gap-2">
                 <CheckCircle className="h-4 w-4" />
                 <p className="font-medium">Stripe Connected</p>
               </div>
               <div className="mt-2 space-y-1 text-left text-zinc-300">
-                {stripeData ? (
-                  <>
-                    <p>Monthly revenue: {stripeData.monthlyRevenueFormatted}</p>
-                    <p>Account age: {stripeData.accountAgeMonths} month{stripeData.accountAgeMonths !== 1 ? 's' : ''}</p>
-                    <p>Chargeback rate: {stripeData.chargebackRate}%</p>
-                  </>
-                ) : (
-                  <>
-                    <p>Monthly revenue: $2,400</p>
-                    <p>Active since: March 2024</p>
-                    <p>Chargeback rate: 0.1%</p>
-                  </>
-                )}
+                <p>Monthly revenue: {stripeData.monthlyRevenueFormatted}</p>
+                <p>Account age: {stripeData.accountAgeMonths} month{stripeData.accountAgeMonths !== 1 ? 's' : ''}</p>
+                <p>Chargeback rate: {stripeData.chargebackRate}%</p>
               </div>
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                className="mt-3 text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.05]"
+                onClick={() => {
+                  setStripeData(null)
+                  setConnected(false)
+                  setValue('hasStripeConnected', false)
+                  sessionStorage.removeItem('oauth_stripe_data')
+                }}
+              >
+                Disconnect
+              </Button>
             </div>
-          ) : oauthAvailable ? (
+          ) : (
             <Button
               type="button"
               variant="ghost"
@@ -135,7 +131,7 @@ export function StepFinancial({ data, onNext, onBack }: StepFinancialProps) {
               <CreditCard className="h-4 w-4" />
               Connect with Stripe
             </Button>
-          ) : null}
+          )}
         </div>
       </div>
 

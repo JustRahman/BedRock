@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Checkbox } from '@/components/ui/checkbox'
 import { professionalSchema, ProfessionalFormData } from '@/lib/validations/onboarding'
-import { ArrowLeft, ArrowRight, Linkedin, CheckCircle } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Linkedin, CheckCircle, AlertCircle, Link } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import type { LinkedInProfileData } from '@/lib/oauth/linkedin'
 
@@ -17,9 +17,17 @@ interface StepProfessionalProps {
   onBack: () => void
 }
 
+function extractLinkedInUsername(url: string): string | null {
+  const match = url.match(/linkedin\.com\/in\/([a-zA-Z0-9_-]+)/)
+  return match ? match[1] : null
+}
+
 export function StepProfessional({ data, onNext, onBack }: StepProfessionalProps) {
   const [connected, setConnected] = useState(data.linkedinConnected ?? false)
   const [linkedinData, setLinkedinData] = useState<LinkedInProfileData | null>(null)
+  const [urlVerified, setUrlVerified] = useState(false)
+  const [verifiedUsername, setVerifiedUsername] = useState('')
+  const [urlError, setUrlError] = useState('')
 
   const {
     register,
@@ -36,6 +44,7 @@ export function StepProfessional({ data, onNext, onBack }: StepProfessionalProps
   })
 
   const hasLinkedin = watch('hasLinkedin')
+  const linkedinUrl = watch('linkedinUrl')
 
   // Check for OAuth data in sessionStorage on mount
   useEffect(() => {
@@ -55,6 +64,36 @@ export function StepProfessional({ data, onNext, onBack }: StepProfessionalProps
 
   const handleOAuthConnect = () => {
     window.location.href = '/api/oauth/linkedin/connect'
+  }
+
+  const handleUrlVerify = () => {
+    const url = linkedinUrl?.trim()
+    if (!url) {
+      setUrlError('Please enter a LinkedIn URL.')
+      return
+    }
+
+    const username = extractLinkedInUsername(url)
+    if (!username) {
+      setUrlError('Please enter a valid LinkedIn profile URL (e.g. linkedin.com/in/yourname).')
+      return
+    }
+
+    setUrlError('')
+    setUrlVerified(true)
+    setVerifiedUsername(username)
+    setValue('linkedinConnected', true)
+    setValue('hasLinkedin', true)
+  }
+
+  const handleDisconnect = () => {
+    setLinkedinData(null)
+    setConnected(false)
+    setUrlVerified(false)
+    setVerifiedUsername('')
+    setValue('linkedinConnected', false)
+    setValue('linkedinUrl', '')
+    sessionStorage.removeItem('oauth_linkedin_data')
   }
 
   return (
@@ -104,14 +143,29 @@ export function StepProfessional({ data, onNext, onBack }: StepProfessionalProps
                 variant="ghost"
                 size="sm"
                 className="mt-3 text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.05]"
-                onClick={() => {
-                  setLinkedinData(null)
-                  setConnected(false)
-                  setValue('linkedinConnected', false)
-                  sessionStorage.removeItem('oauth_linkedin_data')
-                }}
+                onClick={handleDisconnect}
               >
                 Disconnect
+              </Button>
+            </div>
+          ) : urlVerified ? (
+            <div className="mt-4 rounded-lg bg-emerald-500/[0.1] border border-emerald-500/20 p-4 text-sm text-emerald-400">
+              <div className="flex items-center justify-center gap-2">
+                <CheckCircle className="h-4 w-4" />
+                <p className="font-medium">LinkedIn Profile Provided</p>
+              </div>
+              <div className="mt-2 text-left text-zinc-300">
+                <p>Profile: linkedin.com/in/{verifiedUsername}</p>
+                <p className="text-zinc-400 text-xs mt-1">URL saved — will be reviewed during trust score calculation.</p>
+              </div>
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                className="mt-3 text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.05]"
+                onClick={handleDisconnect}
+              >
+                Remove
               </Button>
             </div>
           ) : (
@@ -128,31 +182,55 @@ export function StepProfessional({ data, onNext, onBack }: StepProfessionalProps
         </div>
       </div>
 
-      <div className="rounded-lg border border-white/[0.08] bg-white/[0.03] p-4">
-        <div className="flex items-start gap-4">
-          <Checkbox
-            id="hasLinkedin"
-            checked={hasLinkedin}
-            onCheckedChange={(checked) => setValue('hasLinkedin', !!checked)}
-          />
-          <div className="flex-1">
-            <Label htmlFor="hasLinkedin" className="text-base font-medium text-zinc-200">
-              Or provide LinkedIn URL
-            </Label>
-            <p className="mt-1 text-sm text-zinc-400">
-              If you prefer not to connect via OAuth, enter your profile URL for analysis.
-            </p>
-            {hasLinkedin && !connected && (
-              <div className="mt-3">
-                <Input
-                  placeholder="https://linkedin.com/in/yourname"
-                  {...register('linkedinUrl')}
-                />
-              </div>
-            )}
+      {!connected && !urlVerified && (
+        <div className="rounded-lg border border-white/[0.08] bg-white/[0.03] p-4">
+          <div className="flex items-start gap-4">
+            <Checkbox
+              id="hasLinkedin"
+              checked={hasLinkedin}
+              onCheckedChange={(checked) => setValue('hasLinkedin', !!checked)}
+            />
+            <div className="flex-1">
+              <Label htmlFor="hasLinkedin" className="text-base font-medium text-zinc-200">
+                Or provide LinkedIn URL
+              </Label>
+              <p className="mt-1 text-sm text-zinc-400">
+                If you prefer not to connect via OAuth, enter your profile URL.
+              </p>
+              {hasLinkedin && (
+                <div className="mt-3 flex gap-2">
+                  <Input
+                    placeholder="https://linkedin.com/in/yourname"
+                    {...register('linkedinUrl')}
+                    className="flex-1"
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault()
+                        handleUrlVerify()
+                      }
+                    }}
+                  />
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    className="gap-2 border border-white/[0.1] text-zinc-300 hover:text-zinc-200 hover:bg-white/[0.05]"
+                    onClick={handleUrlVerify}
+                  >
+                    <Link className="h-4 w-4" />
+                    Verify
+                  </Button>
+                </div>
+              )}
+              {urlError && (
+                <div className="mt-2 flex items-center gap-2 text-sm text-red-400">
+                  <AlertCircle className="h-4 w-4" />
+                  {urlError}
+                </div>
+              )}
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       <p className="text-sm text-zinc-500">
         This step is optional but significantly impacts your Digital Lineage score (up to 15 points).

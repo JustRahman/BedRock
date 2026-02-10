@@ -89,6 +89,23 @@ export function complianceReminderEmail(name: string, deadline: string): string 
   `)
 }
 
+export function universityVerificationEmail(code: string): string {
+  return baseTemplate(`
+    <h1 style="margin:0 0 16px;font-size:20px;color:#111827;">Verify Your University Email</h1>
+    <p style="margin:0 0 24px;color:#4b5563;line-height:1.6;">
+      Use the code below to verify your university email address on BedRock.
+    </p>
+    <div style="text-align:center;margin:0 0 24px;">
+      <div style="display:inline-block;background:#f0fdf4;border:2px solid #bbf7d0;border-radius:12px;padding:24px 48px;">
+        <span style="font-size:36px;font-weight:bold;letter-spacing:8px;color:#166534;font-family:monospace;">${code}</span>
+      </div>
+    </div>
+    <p style="margin:0;color:#9ca3af;font-size:13px;text-align:center;">
+      This code expires in 10 minutes. Do not share it with anyone.
+    </p>
+  `)
+}
+
 export function trustScoreEmail(name: string, score: number, status: string): string {
   const statusColors: Record<string, { bg: string; border: string; text: string }> = {
     elite: { bg: '#f0fdf4', border: '#bbf7d0', text: '#166534' },

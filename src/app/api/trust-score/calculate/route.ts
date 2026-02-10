@@ -59,14 +59,21 @@ export async function POST(request: Request) {
       },
       digitalPresence: {
         website: body.digitalPresence.website || '',
+        websiteVerified: body.digitalPresence.websiteVerified || false,
         twitterHandle: body.digitalPresence.twitterHandle || '',
-        otherSocialProfiles: body.digitalPresence.otherSocialProfiles || '',
+        twitterVerified: body.digitalPresence.twitterVerified || false,
+        instagramHandle: body.digitalPresence.instagramHandle || '',
+        instagramVerified: body.digitalPresence.instagramVerified || false,
         appStoreUrl: body.digitalPresence.appStoreUrl || '',
+        appStoreVerified: body.digitalPresence.appStoreVerified || false,
       },
       trustSignals: {
         hasReferral: body.trustSignals.hasReferral || false,
+        referralVerified: body.trustSignals.referralVerified || false,
         hasUniversityEmail: body.trustSignals.hasUniversityEmail || false,
+        universityEmailVerified: body.trustSignals.universityEmailVerified || false,
         hasAccelerator: body.trustSignals.hasAccelerator || false,
+        acceleratorVerified: body.trustSignals.acceleratorVerified || false,
         hasEmployerVerification: body.trustSignals.hasEmployerVerification || false,
       },
     }
