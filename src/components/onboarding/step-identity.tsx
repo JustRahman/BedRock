@@ -6,14 +6,120 @@ import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Checkbox } from '@/components/ui/checkbox'
 import { identitySchema, IdentityFormData } from '@/lib/validations/onboarding'
-import { ArrowLeft, ArrowRight, Upload, FileCheck } from 'lucide-react'
-import { useState } from 'react'
+import { ArrowLeft, ArrowRight, Upload, FileCheck, Loader2, AlertTriangle } from 'lucide-react'
+import { useState, useEffect, useCallback } from 'react'
 import { storePendingUpload, type DocumentType } from '@/lib/pending-uploads'
 
 const docTypeMap: Record<'passport' | 'localId' | 'addressProof', DocumentType> = {
   passport: 'passport',
   localId: 'local_id',
   addressProof: 'address_proof',
+}
+
+type DocField = 'passport' | 'localId' | 'addressProof'
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type ExtractedData = Record<string, any>
+
+interface ExtractionState {
+  loading: boolean
+  data: ExtractedData | null
+  error: string | null
+}
+
+const STORAGE_KEY = 'identity_extraction'
+
+const FIELD_LABELS: Record<string, string> = {
+  fullName: 'Full Name',
+  firstName: 'First Name',
+  lastName: 'Last Name',
+  middleName: 'Middle Name',
+  dateOfBirth: 'Date of Birth',
+  gender: 'Gender',
+  placeOfBirth: 'Place of Birth',
+  nationality: 'Nationality',
+  passportNumber: 'Passport Number',
+  expiryDate: 'Expiry Date',
+  issuingCountry: 'Issuing Country',
+  idNumber: 'ID Number',
+  address: 'Address',
+  issuingAuthority: 'Issuing Authority',
+  city: 'City',
+  state: 'State',
+  postalCode: 'Postal Code',
+  country: 'Country',
+  documentDate: 'Document Date',
+  issuingCompany: 'Issuing Company',
+}
+
+function loadSavedExtractions(): Record<DocField, ExtractedData | null> {
+  try {
+    const saved = sessionStorage.getItem(STORAGE_KEY)
+    if (saved) return JSON.parse(saved)
+  } catch {
+    // ignore
+  }
+  return { passport: null, localId: null, addressProof: null }
+}
+
+function saveExtractions(extractions: Record<DocField, ExtractedData | null>) {
+  try {
+    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(extractions))
+  } catch {
+    // ignore
+  }
+}
+
+function ExtractionResult({ state, onRetry }: { state: ExtractionState; onRetry: () => void }) {
+  if (state.loading) {
+    return (
+      <div className="mt-3 flex items-center gap-2 rounded-md border border-blue-500/20 bg-blue-500/5 px-4 py-3 text-sm text-blue-300">
+        <Loader2 className="h-4 w-4 animate-spin" />
+        Analyzing document...
+      </div>
+    )
+  }
+
+  if (state.error) {
+    return (
+      <div className="mt-3 rounded-md border border-orange-500/20 bg-orange-500/5 p-4">
+        <div className="flex items-center gap-2 text-sm text-orange-300">
+          <AlertTriangle className="h-4 w-4 flex-shrink-0" />
+          {state.error}
+        </div>
+        <button
+          type="button"
+          onClick={onRetry}
+          className="mt-2 text-xs text-orange-400 underline hover:text-orange-300"
+        >
+          Try uploading a different image
+        </button>
+      </div>
+    )
+  }
+
+  if (state.data) {
+    const entries = Object.entries(state.data).filter(([, v]) => v != null && v !== '')
+    if (entries.length === 0) return null
+
+    return (
+      <div className="mt-3 rounded-md border border-emerald-500/20 bg-emerald-500/5 p-4">
+        <p className="mb-2 text-xs font-medium uppercase tracking-wider text-emerald-400">
+          Extracted Information
+        </p>
+        <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
+          {entries.map(([key, value]) => (
+            <div key={key} className="min-w-0">
+              <span className="text-[11px] text-zinc-500">{FIELD_LABELS[key] || key}</span>
+              <p className="truncate text-sm text-zinc-200">{String(value)}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    )
+  }
+
+  return null
 }
 
 interface StepIdentityProps {
@@ -28,6 +134,22 @@ export function StepIdentity({ data, onNext, onBack }: StepIdentityProps) {
     localId?: File
     addressProof?: File
   }>({})
+
+  const [extractions, setExtractions] = useState<Record<DocField, ExtractionState>>({
+    passport: { loading: false, data: null, error: null },
+    localId: { loading: false, data: null, error: null },
+    addressProof: { loading: false, data: null, error: null },
+  })
+
+  // Restore saved extractions on mount
+  useEffect(() => {
+    const saved = loadSavedExtractions()
+    setExtractions((prev) => ({
+      passport: saved.passport ? { loading: false, data: saved.passport, error: null } : prev.passport,
+      localId: saved.localId ? { loading: false, data: saved.localId, error: null } : prev.localId,
+      addressProof: saved.addressProof ? { loading: false, data: saved.addressProof, error: null } : prev.addressProof,
+    }))
+  }, [])
 
   const {
     setValue,
@@ -47,7 +169,52 @@ export function StepIdentity({ data, onNext, onBack }: StepIdentityProps) {
   const hasLocalId = watch('hasLocalId')
   const hasAddressProof = watch('hasAddressProof')
 
-  const handleFileChange = (field: 'passport' | 'localId' | 'addressProof') => (
+  const extractDocument = useCallback(async (file: File, field: DocField) => {
+    setExtractions((prev) => ({
+      ...prev,
+      [field]: { loading: true, data: null, error: null },
+    }))
+
+    try {
+      const formData = new FormData()
+      formData.append('file', file)
+      formData.append('documentType', docTypeMap[field])
+
+      const res = await fetch('/api/verify/document-extract', {
+        method: 'POST',
+        body: formData,
+      })
+
+      if (!res.ok) {
+        const body = await res.json()
+        throw new Error(body.error || 'Extraction failed')
+      }
+
+      const { extracted } = await res.json()
+
+      setExtractions((prev) => {
+        const updated = {
+          ...prev,
+          [field]: { loading: false, data: extracted, error: null },
+        }
+        // Persist to sessionStorage
+        saveExtractions({
+          passport: updated.passport.data,
+          localId: updated.localId.data,
+          addressProof: updated.addressProof.data,
+        })
+        return updated
+      })
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Failed to analyze document'
+      setExtractions((prev) => ({
+        ...prev,
+        [field]: { loading: false, data: null, error: message },
+      }))
+    }
+  }, [])
+
+  const handleFileChange = (field: DocField) => (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     const file = e.target.files?.[0]
@@ -55,6 +222,30 @@ export function StepIdentity({ data, onNext, onBack }: StepIdentityProps) {
       setFiles((prev) => ({ ...prev, [field]: file }))
       setValue(`${field}File` as keyof IdentityFormData, file)
       storePendingUpload(docTypeMap[field], file)
+
+      // Only extract from images, not PDFs
+      if (file.type.startsWith('image/')) {
+        extractDocument(file, field)
+      }
+    }
+  }
+
+  const handleRetry = (field: DocField) => {
+    // Clear current extraction state and trigger file input click
+    setExtractions((prev) => ({
+      ...prev,
+      [field]: { loading: false, data: null, error: null },
+    }))
+    setFiles((prev) => {
+      const updated = { ...prev }
+      delete updated[field]
+      return updated
+    })
+    // Reset the file input
+    const input = document.getElementById(`${field}File`) as HTMLInputElement
+    if (input) {
+      input.value = ''
+      input.click()
     }
   }
 
@@ -64,8 +255,14 @@ export function StepIdentity({ data, onNext, onBack }: StepIdentityProps) {
       passportFile: files.passport,
       localIdFile: files.localId,
       addressProofFile: files.addressProof,
+      passportData: extractions.passport.data,
+      localIdData: extractions.localId.data,
+      addressProofData: extractions.addressProof.data,
     })
   }
+
+  // Suppress unused-vars — errors object is required by react-hook-form but we display no field errors
+  void errors
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -107,6 +304,10 @@ export function StepIdentity({ data, onNext, onBack }: StepIdentityProps) {
                   accept="image/*,.pdf"
                   onChange={handleFileChange('passport')}
                   className="hidden"
+                />
+                <ExtractionResult
+                  state={extractions.passport}
+                  onRetry={() => handleRetry('passport')}
                 />
               </div>
             )}
@@ -153,6 +354,10 @@ export function StepIdentity({ data, onNext, onBack }: StepIdentityProps) {
                   onChange={handleFileChange('localId')}
                   className="hidden"
                 />
+                <ExtractionResult
+                  state={extractions.localId}
+                  onRetry={() => handleRetry('localId')}
+                />
               </div>
             )}
           </div>
@@ -197,6 +402,10 @@ export function StepIdentity({ data, onNext, onBack }: StepIdentityProps) {
                   accept="image/*,.pdf"
                   onChange={handleFileChange('addressProof')}
                   className="hidden"
+                />
+                <ExtractionResult
+                  state={extractions.addressProof}
+                  onRetry={() => handleRetry('addressProof')}
                 />
               </div>
             )}

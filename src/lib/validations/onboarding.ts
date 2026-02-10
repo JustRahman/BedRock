@@ -22,6 +22,9 @@ export const identitySchema = z.object({
   passportFile: z.any().optional(),
   localIdFile: z.any().optional(),
   addressProofFile: z.any().optional(),
+  passportData: z.any().optional(),
+  localIdData: z.any().optional(),
+  addressProofData: z.any().optional(),
 })
 
 export type IdentityFormData = z.infer<typeof identitySchema>

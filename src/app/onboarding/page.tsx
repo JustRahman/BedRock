@@ -171,6 +171,7 @@ export default function OnboardingPage() {
         sessionStorage.removeItem('oauth_stripe_data')
         sessionStorage.removeItem('digital_presence_verification')
         sessionStorage.removeItem('trust_signals_verification')
+        sessionStorage.removeItem('identity_extraction')
       } catch {
         // Ignore cleanup errors
       }
