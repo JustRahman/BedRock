@@ -172,6 +172,8 @@ export default function OnboardingPage() {
         sessionStorage.removeItem('digital_presence_verification')
         sessionStorage.removeItem('trust_signals_verification')
         sessionStorage.removeItem('identity_extraction')
+        sessionStorage.removeItem('identity_face_match')
+        sessionStorage.removeItem('identity_basic_info')
       } catch {
         // Ignore cleanup errors
       }
@@ -258,6 +260,7 @@ export default function OnboardingPage() {
           {currentStep === 2 && (
             <StepIdentity
               data={data.identity}
+              basicInfo={data.basicInfo}
               onNext={handleIdentityNext}
               onBack={handleBack}
             />
@@ -266,6 +269,7 @@ export default function OnboardingPage() {
           {currentStep === 3 && (
             <StepCodeHistory
               data={data.codeHistory}
+              founderName={data.basicInfo.fullName}
               onNext={handleCodeHistoryNext}
               onBack={handleBack}
             />
@@ -274,6 +278,7 @@ export default function OnboardingPage() {
           {currentStep === 4 && (
             <StepProfessional
               data={data.professional}
+              founderName={data.basicInfo.fullName}
               onNext={handleProfessionalNext}
               onBack={handleBack}
             />

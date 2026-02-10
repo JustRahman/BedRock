@@ -29,6 +29,8 @@ interface ExtractionState {
 }
 
 const STORAGE_KEY = 'identity_extraction'
+const BASIC_INFO_KEY = 'identity_basic_info'
+const FACE_MATCH_KEY = 'identity_face_match'
 
 const FIELD_LABELS: Record<string, string> = {
   fullName: 'Full Name',
@@ -227,7 +229,7 @@ interface StepIdentityProps {
   onBack: () => void
 }
 
-export function StepIdentity({ data, basicInfo, onNext, onBack }: StepIdentityProps) {
+export function StepIdentity({ data, basicInfo: basicInfoProp, onNext, onBack }: StepIdentityProps) {
   const [files, setFiles] = useState<{
     passport?: File
     localId?: File
@@ -240,12 +242,29 @@ export function StepIdentity({ data, basicInfo, onNext, onBack }: StepIdentityPr
     addressProof: { loading: false, data: null, error: null },
   })
 
-  const [faceMatchResult, setFaceMatchResult] = useState<FaceMatchResult | null>(() => {
-    try {
-      const saved = sessionStorage.getItem('identity_face_match')
-      return saved ? JSON.parse(saved) : null
-    } catch { return null }
-  })
+  const [faceMatchResult, setFaceMatchResult] = useState<FaceMatchResult | null>(null)
+
+  // Resolve basicInfo: prefer prop, fall back to sessionStorage (survives refresh)
+  const [basicInfo, setBasicInfo] = useState<BasicInfoForComparison | undefined>(basicInfoProp)
+
+  // Persist basicInfo from prop to sessionStorage, and load fallback
+  useEffect(() => {
+    if (basicInfoProp?.fullName) {
+      setBasicInfo(basicInfoProp)
+      try {
+        sessionStorage.setItem(BASIC_INFO_KEY, JSON.stringify({
+          fullName: basicInfoProp.fullName,
+          dateOfBirth: basicInfoProp.dateOfBirth,
+        }))
+      } catch { /* ignore */ }
+    } else {
+      // Prop is empty (page refresh) — load from sessionStorage
+      try {
+        const saved = sessionStorage.getItem(BASIC_INFO_KEY)
+        if (saved) setBasicInfo(JSON.parse(saved))
+      } catch { /* ignore */ }
+    }
+  }, [basicInfoProp])
 
   // Restore saved extractions on mount
   useEffect(() => {
@@ -330,6 +349,13 @@ export function StepIdentity({ data, basicInfo, onNext, onBack }: StepIdentityPr
       setValue(`${field}File` as keyof IdentityFormData, file)
       storePendingUpload(docTypeMap[field], file)
 
+      // New passport upload → reset face match so scan runs again
+      if (field === 'passport') {
+        setFaceMatchResult(null)
+        setValue('hasLivenessCheck', false)
+        try { sessionStorage.removeItem(FACE_MATCH_KEY) } catch { /* ignore */ }
+      }
+
       // Only extract from images, not PDFs
       if (file.type.startsWith('image/')) {
         extractDocument(file, field)
@@ -360,7 +386,7 @@ export function StepIdentity({ data, basicInfo, onNext, onBack }: StepIdentityPr
     setFaceMatchResult(result)
     setValue('hasLivenessCheck', result.matched)
     try {
-      sessionStorage.setItem('identity_face_match', JSON.stringify(result))
+      sessionStorage.setItem(FACE_MATCH_KEY, JSON.stringify(result))
     } catch { /* ignore */ }
   }, [setValue])
 
