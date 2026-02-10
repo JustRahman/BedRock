@@ -6,9 +6,10 @@ import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Checkbox } from '@/components/ui/checkbox'
 import { identitySchema, IdentityFormData } from '@/lib/validations/onboarding'
-import { ArrowLeft, ArrowRight, Upload, FileCheck, Loader2, AlertTriangle } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Upload, FileCheck, Loader2, AlertTriangle, CheckCircle, AlertCircle } from 'lucide-react'
 import { useState, useEffect, useCallback } from 'react'
 import { storePendingUpload, type DocumentType } from '@/lib/pending-uploads'
+import { FaceScan, type FaceMatchResult } from './face-scan'
 
 const docTypeMap: Record<'passport' | 'localId' | 'addressProof', DocumentType> = {
   passport: 'passport',
@@ -70,7 +71,39 @@ function saveExtractions(extractions: Record<DocField, ExtractedData | null>) {
   }
 }
 
-function ExtractionResult({ state, onRetry }: { state: ExtractionState; onRetry: () => void }) {
+function normalizeName(s: string): string[] {
+  return s.toLowerCase().replace(/[^a-z\s]/g, '').split(/\s+/).filter(Boolean).sort()
+}
+
+function namesMatch(extracted: string, expected: string): 'match' | 'mismatch' {
+  const eParts = normalizeName(extracted)
+  const xParts = normalizeName(expected)
+  // Exact match (sorted parts)
+  if (eParts.join(' ') === xParts.join(' ')) return 'match'
+  // All parts of one contained in the other (handles middle names)
+  const eSet = new Set(eParts)
+  const xSet = new Set(xParts)
+  if (xParts.every((p) => eSet.has(p)) || eParts.every((p) => xSet.has(p))) return 'match'
+  // At least 2 parts overlap (first + last)
+  if (xParts.filter((p) => eSet.has(p)).length >= 2) return 'match'
+  return 'mismatch'
+}
+
+function datesMatch(extracted: string, expected: string): 'match' | 'mismatch' {
+  const norm = (d: string) => {
+    const date = new Date(d)
+    if (isNaN(date.getTime())) return d.trim()
+    return date.toISOString().split('T')[0]
+  }
+  return norm(extracted) === norm(expected) ? 'match' : 'mismatch'
+}
+
+interface BasicInfoForComparison {
+  fullName?: string
+  dateOfBirth?: string
+}
+
+function ExtractionResult({ state, onRetry, basicInfo }: { state: ExtractionState; onRetry: () => void; basicInfo?: BasicInfoForComparison }) {
   if (state.loading) {
     return (
       <div className="mt-3 flex items-center gap-2 rounded-md border border-blue-500/20 bg-blue-500/5 px-4 py-3 text-sm text-blue-300">
@@ -115,6 +148,43 @@ function ExtractionResult({ state, onRetry }: { state: ExtractionState; onRetry:
             </div>
           ))}
         </div>
+        {basicInfo?.fullName && (() => {
+          const extractedName = state.data?.fullName || state.data?.firstName && state.data?.lastName
+            ? [state.data?.firstName, state.data?.lastName].filter(Boolean).join(' ')
+            : null
+          const extractedDob = state.data?.dateOfBirth
+          if (!extractedName && !extractedDob) return null
+          return (
+            <div className="mt-3 space-y-1.5 border-t border-white/[0.06] pt-3">
+              {extractedName ? (
+                namesMatch(String(extractedName), basicInfo.fullName!) === 'match' ? (
+                  <div className="flex items-center gap-1.5 text-xs text-emerald-400">
+                    <CheckCircle className="h-3.5 w-3.5" />
+                    Name matches your profile
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-1.5 text-xs text-orange-400">
+                    <AlertCircle className="h-3.5 w-3.5" />
+                    Name does not match your profile
+                  </div>
+                )
+              ) : null}
+              {extractedDob && basicInfo.dateOfBirth ? (
+                datesMatch(String(extractedDob), basicInfo.dateOfBirth) === 'match' ? (
+                  <div className="flex items-center gap-1.5 text-xs text-emerald-400">
+                    <CheckCircle className="h-3.5 w-3.5" />
+                    Date of birth matches
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-1.5 text-xs text-orange-400">
+                    <AlertCircle className="h-3.5 w-3.5" />
+                    Date of birth does not match
+                  </div>
+                )
+              ) : null}
+            </div>
+          )
+        })()}
       </div>
     )
   }
@@ -124,11 +194,12 @@ function ExtractionResult({ state, onRetry }: { state: ExtractionState; onRetry:
 
 interface StepIdentityProps {
   data: Partial<IdentityFormData>
+  basicInfo?: { fullName?: string; dateOfBirth?: string }
   onNext: (data: IdentityFormData) => void
   onBack: () => void
 }
 
-export function StepIdentity({ data, onNext, onBack }: StepIdentityProps) {
+export function StepIdentity({ data, basicInfo, onNext, onBack }: StepIdentityProps) {
   const [files, setFiles] = useState<{
     passport?: File
     localId?: File
@@ -139,6 +210,13 @@ export function StepIdentity({ data, onNext, onBack }: StepIdentityProps) {
     passport: { loading: false, data: null, error: null },
     localId: { loading: false, data: null, error: null },
     addressProof: { loading: false, data: null, error: null },
+  })
+
+  const [faceMatchResult, setFaceMatchResult] = useState<FaceMatchResult | null>(() => {
+    try {
+      const saved = sessionStorage.getItem('identity_face_match')
+      return saved ? JSON.parse(saved) : null
+    } catch { return null }
   })
 
   // Restore saved extractions on mount
@@ -162,6 +240,7 @@ export function StepIdentity({ data, onNext, onBack }: StepIdentityProps) {
       hasPassport: data.hasPassport ?? false,
       hasLocalId: data.hasLocalId ?? false,
       hasAddressProof: data.hasAddressProof ?? false,
+      hasLivenessCheck: data.hasLivenessCheck ?? faceMatchResult?.matched ?? false,
     },
   })
 
@@ -249,9 +328,18 @@ export function StepIdentity({ data, onNext, onBack }: StepIdentityProps) {
     }
   }
 
+  const handleFaceMatchResult = useCallback((result: FaceMatchResult) => {
+    setFaceMatchResult(result)
+    setValue('hasLivenessCheck', result.matched)
+    try {
+      sessionStorage.setItem('identity_face_match', JSON.stringify(result))
+    } catch { /* ignore */ }
+  }, [setValue])
+
   const onSubmit = (formData: IdentityFormData) => {
     onNext({
       ...formData,
+      hasLivenessCheck: formData.hasLivenessCheck ?? faceMatchResult?.matched ?? false,
       passportFile: files.passport,
       localIdFile: files.localId,
       addressProofFile: files.addressProof,
@@ -308,7 +396,20 @@ export function StepIdentity({ data, onNext, onBack }: StepIdentityProps) {
                 <ExtractionResult
                   state={extractions.passport}
                   onRetry={() => handleRetry('passport')}
+                  basicInfo={basicInfo}
                 />
+                {files.passport && files.passport.type.startsWith('image/') && extractions.passport.data && !faceMatchResult && (
+                  <FaceScan
+                    passportFile={files.passport}
+                    onMatchResult={handleFaceMatchResult}
+                  />
+                )}
+                {faceMatchResult?.matched && (
+                  <div className="mt-3 flex items-center gap-2 rounded-md border border-emerald-500/20 bg-emerald-500/5 px-4 py-3 text-sm text-emerald-400">
+                    <CheckCircle className="h-4 w-4" />
+                    Face verification complete (+4 trust points)
+                  </div>
+                )}
               </div>
             )}
           </div>
@@ -357,6 +458,7 @@ export function StepIdentity({ data, onNext, onBack }: StepIdentityProps) {
                 <ExtractionResult
                   state={extractions.localId}
                   onRetry={() => handleRetry('localId')}
+                  basicInfo={basicInfo}
                 />
               </div>
             )}
@@ -406,6 +508,7 @@ export function StepIdentity({ data, onNext, onBack }: StepIdentityProps) {
                 <ExtractionResult
                   state={extractions.addressProof}
                   onRetry={() => handleRetry('addressProof')}
+                  basicInfo={basicInfo}
                 />
               </div>
             )}
