@@ -49,6 +49,8 @@ export function StepTrustSignals({ data, onSubmit, onBack, isSubmitting }: StepT
   const [uniVerifyLoading, setUniVerifyLoading] = useState(false)
   const [uniError, setUniError] = useState('')
   const [uniCode, setUniCode] = useState('')
+  const [uniToken, setUniToken] = useState('')
+  const [uniExpiresAt, setUniExpiresAt] = useState('')
   const [accelQuery, setAccelQuery] = useState(data.acceleratorName ?? '')
   const [accelSuggestions, setAccelSuggestions] = useState<string[]>([])
   const [showAccelDropdown, setShowAccelDropdown] = useState(false)
@@ -170,6 +172,8 @@ export function StepTrustSignals({ data, onSubmit, onBack, isSubmitting }: StepT
         setUniError(data.error)
         return
       }
+      setUniToken(data.token)
+      setUniExpiresAt(data.expiresAt)
       setUniCodeSent(true)
     } catch {
       setUniError('Failed to send code. Please try again.')
@@ -186,7 +190,7 @@ export function StepTrustSignals({ data, onSubmit, onBack, isSubmitting }: StepT
       const res = await fetch('/api/verify/trust-signals', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type: 'university-verify', email: universityEmail.trim(), code: uniCode.trim() }),
+        body: JSON.stringify({ type: 'university-verify', email: universityEmail.trim(), code: uniCode.trim(), token: uniToken, expiresAt: uniExpiresAt }),
       })
       const data = await res.json()
       if (!res.ok) {

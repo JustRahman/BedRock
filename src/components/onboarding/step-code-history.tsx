@@ -4,48 +4,9 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '@/components/ui/button'
 import { codeHistorySchema, CodeHistoryFormData } from '@/lib/validations/onboarding'
-import { ArrowLeft, ArrowRight, Github, CheckCircle, AlertCircle } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Github, CheckCircle } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import type { GitHubProfileData } from '@/lib/oauth/github'
-
-function normalizeName(s: string): string[] {
-  return s.toLowerCase().replace(/[^a-z\s]/g, '').split(/\s+/).filter(Boolean).sort()
-}
-
-function editDistance(a: string, b: string): number {
-  const m = a.length, n = b.length
-  const dp: number[][] = Array.from({ length: m + 1 }, () => Array(n + 1).fill(0))
-  for (let i = 0; i <= m; i++) dp[i][0] = i
-  for (let j = 0; j <= n; j++) dp[0][j] = j
-  for (let i = 1; i <= m; i++) {
-    for (let j = 1; j <= n; j++) {
-      dp[i][j] = a[i - 1] === b[j - 1]
-        ? dp[i - 1][j - 1]
-        : 1 + Math.min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1])
-    }
-  }
-  return dp[m][n]
-}
-
-function fuzzyWordMatch(a: string, b: string): boolean {
-  if (a === b) return true
-  const maxDist = Math.max(1, Math.floor(Math.max(a.length, b.length) * 0.3))
-  return editDistance(a, b) <= maxDist
-}
-
-function nameMatches(a: string, b: string): boolean {
-  const aParts = normalizeName(a)
-  const bParts = normalizeName(b)
-  if (aParts.join(' ') === bParts.join(' ')) return true
-  const aSet = new Set(aParts)
-  const bSet = new Set(bParts)
-  if (bParts.every((p) => aSet.has(p)) || aParts.every((p) => bSet.has(p))) return true
-  if (bParts.filter((p) => aSet.has(p)).length >= 2) return true
-  // Fuzzy match for transliteration variants
-  if (bParts.every((bp) => aParts.some((ap) => fuzzyWordMatch(bp, ap)))) return true
-  if (bParts.length === 1 && aParts.some((ap) => fuzzyWordMatch(bParts[0], ap))) return true
-  return false
-}
 
 interface StepCodeHistoryProps {
   data: Partial<CodeHistoryFormData>
@@ -54,7 +15,7 @@ interface StepCodeHistoryProps {
   onBack: () => void
 }
 
-export function StepCodeHistory({ data, founderName, onNext, onBack }: StepCodeHistoryProps) {
+export function StepCodeHistory({ data, onNext, onBack }: StepCodeHistoryProps) {
   const [connected, setConnected] = useState(data.githubConnected ?? false)
   const [githubData, setGithubData] = useState<GitHubProfileData | null>(null)
 
@@ -148,19 +109,6 @@ export function StepCodeHistory({ data, founderName, onNext, onBack }: StepCodeH
                   <p className="col-span-2">Languages: {githubData.topLanguages.join(', ')}</p>
                 )}
               </div>
-              {founderName && githubData.name ? (
-                nameMatches(githubData.name, founderName) ? (
-                  <div className="mt-3 flex items-center gap-1.5 text-xs text-emerald-400">
-                    <CheckCircle className="h-3.5 w-3.5" />
-                    Name matches your profile
-                  </div>
-                ) : (
-                  <div className="mt-3 flex items-center gap-1.5 text-xs text-orange-400">
-                    <AlertCircle className="h-3.5 w-3.5" />
-                    Name does not match your profile
-                  </div>
-                )
-              ) : null}
               <Button
                 type="button"
                 variant="ghost"
