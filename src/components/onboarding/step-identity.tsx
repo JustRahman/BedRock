@@ -5,7 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Checkbox } from '@/components/ui/checkbox'
-import { identitySchema, IdentityFormData } from '@/lib/validations/onboarding'
+import { identitySchema, IdentityFormData, countries } from '@/lib/validations/onboarding'
 import { ArrowLeft, ArrowRight, Upload, FileCheck, Loader2, AlertTriangle, CheckCircle, AlertCircle } from 'lucide-react'
 import { useState, useEffect, useCallback } from 'react'
 import { storePendingUpload, type DocumentType } from '@/lib/pending-uploads'
@@ -126,9 +126,34 @@ function datesMatch(extracted: string, expected: string): 'match' | 'mismatch' {
   return norm(extracted) === norm(expected) ? 'match' : 'mismatch'
 }
 
+function genderMatches(extracted: string, expected: string): 'match' | 'mismatch' {
+  const norm = extracted.trim().toLowerCase()
+  if (expected === 'male' && (norm === 'm' || norm === 'male')) return 'match'
+  if (expected === 'female' && (norm === 'f' || norm === 'female')) return 'match'
+  return 'mismatch'
+}
+
+function nationalityMatches(extracted: string, countryCode: string): 'match' | 'mismatch' {
+  const norm = extracted.trim().toLowerCase()
+  // Find country name by code
+  const country = countries.find((c) => c.code === countryCode)
+  if (!country) return 'mismatch'
+  const countryName = country.name.toLowerCase()
+  // Exact match or substring (e.g., "TURKMENISTAN" matches "Turkmenistan")
+  if (norm === countryName || countryName.includes(norm) || norm.includes(countryName)) return 'match'
+  // Also match code directly (e.g., "TM" or "TKM")
+  if (norm === countryCode.toLowerCase()) return 'match'
+  // Fuzzy: first 3+ chars match
+  if (norm.length >= 3 && countryName.startsWith(norm.slice(0, 3))) return 'match'
+  if (countryName.length >= 3 && norm.startsWith(countryName.slice(0, 3))) return 'match'
+  return 'mismatch'
+}
+
 interface BasicInfoForComparison {
   fullName?: string
   dateOfBirth?: string
+  gender?: string
+  countryOfOrigin?: string
 }
 
 function ExtractionResult({ state, onRetry, basicInfo }: { state: ExtractionState; onRetry: () => void; basicInfo?: BasicInfoForComparison }) {
@@ -183,7 +208,9 @@ function ExtractionResult({ state, onRetry, basicInfo }: { state: ExtractionStat
               ? [state.data?.firstName, state.data?.lastName].filter(Boolean).join(' ')
               : null
           const extractedDob = state.data?.dateOfBirth
-          if (!extractedName && !extractedDob) return null
+          const extractedGender = state.data?.gender
+          const extractedNationality = state.data?.nationality
+          if (!extractedName && !extractedDob && !extractedGender && !extractedNationality) return null
           return (
             <div className="mt-3 space-y-1.5 border-t border-white/[0.06] pt-3">
               {extractedName ? (
@@ -212,6 +239,32 @@ function ExtractionResult({ state, onRetry, basicInfo }: { state: ExtractionStat
                   </div>
                 )
               ) : null}
+              {extractedGender && basicInfo.gender ? (
+                genderMatches(String(extractedGender), basicInfo.gender) === 'match' ? (
+                  <div className="flex items-center gap-1.5 text-xs text-emerald-400">
+                    <CheckCircle className="h-3.5 w-3.5" />
+                    Gender matches
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-1.5 text-xs text-orange-400">
+                    <AlertCircle className="h-3.5 w-3.5" />
+                    Gender does not match
+                  </div>
+                )
+              ) : null}
+              {extractedNationality && basicInfo.countryOfOrigin ? (
+                nationalityMatches(String(extractedNationality), basicInfo.countryOfOrigin) === 'match' ? (
+                  <div className="flex items-center gap-1.5 text-xs text-emerald-400">
+                    <CheckCircle className="h-3.5 w-3.5" />
+                    Nationality matches
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-1.5 text-xs text-orange-400">
+                    <AlertCircle className="h-3.5 w-3.5" />
+                    Nationality does not match
+                  </div>
+                )
+              ) : null}
             </div>
           )
         })()}
@@ -224,7 +277,7 @@ function ExtractionResult({ state, onRetry, basicInfo }: { state: ExtractionStat
 
 interface StepIdentityProps {
   data: Partial<IdentityFormData>
-  basicInfo?: { fullName?: string; dateOfBirth?: string }
+  basicInfo?: { fullName?: string; dateOfBirth?: string; gender?: string; countryOfOrigin?: string }
   onNext: (data: IdentityFormData) => void
   onBack: () => void
 }
@@ -255,6 +308,8 @@ export function StepIdentity({ data, basicInfo: basicInfoProp, onNext, onBack }:
         sessionStorage.setItem(BASIC_INFO_KEY, JSON.stringify({
           fullName: basicInfoProp.fullName,
           dateOfBirth: basicInfoProp.dateOfBirth,
+          gender: basicInfoProp.gender,
+          countryOfOrigin: basicInfoProp.countryOfOrigin,
         }))
       } catch { /* ignore */ }
     } else {

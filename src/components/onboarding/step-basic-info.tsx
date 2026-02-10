@@ -38,6 +38,7 @@ export function StepBasicInfo({ data, onNext }: StepBasicInfoProps) {
     defaultValues: data,
   })
 
+  const gender = watch('gender')
   const countryOfOrigin = watch('countryOfOrigin')
   const countryOfResidence = watch('countryOfResidence')
 
@@ -78,6 +79,22 @@ export function StepBasicInfo({ data, onNext }: StepBasicInfoProps) {
         {errors.phone && (
           <p className="text-sm text-red-400">{errors.phone.message}</p>
         )}
+      </div>
+
+      <div className="space-y-2">
+        <Label className="text-zinc-300">Gender</Label>
+        <Select
+          value={gender}
+          onValueChange={(value) => setValue('gender', value as 'male' | 'female')}
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="Select your gender" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="male">Male</SelectItem>
+            <SelectItem value="female">Female</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
 
       <div className="space-y-2">

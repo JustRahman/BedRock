@@ -5,6 +5,7 @@ export const basicInfoSchema = z.object({
   fullName: z.string().min(2, 'Name must be at least 2 characters'),
   email: z.string().email('Please enter a valid email address'),
   phone: z.string().min(6, 'Please enter a valid phone number'),
+  gender: z.enum(['male', 'female']).optional(),
   countryOfOrigin: z.string().min(1, 'Please select your country of origin'),
   countryOfResidence: z.string().min(1, 'Please select your country of residence'),
   dateOfBirth: z.string().optional(),
