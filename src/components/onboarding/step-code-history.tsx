@@ -57,12 +57,14 @@ export function StepCodeHistory({ data, onNext, onBack }: StepCodeHistoryProps) 
       // Ignore parse errors
     }
 
-    // Check if OAuth is configured by trying a preflight
-    fetch('/api/oauth/github/connect', { method: 'HEAD' })
+    // Check if OAuth is configured
+    fetch('/api/oauth/github/connect', { method: 'HEAD', redirect: 'manual' })
       .then((res) => {
         if (res.status === 503) setOauthAvailable(false)
       })
-      .catch(() => setOauthAvailable(false))
+      .catch(() => {
+        // Don't hide the button on network errors — only hide on explicit 503
+      })
   }, [setValue])
 
   const handleOAuthConnect = () => {
