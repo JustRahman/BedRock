@@ -1,47 +1,63 @@
 # BedRock
 
-Trust scoring and banking platform for international founders. BedRock helps non-US entrepreneurs establish financial credibility, form US LLCs, and open bank accounts through a data-driven trust score.
+BedRock is a trust scoring and banking infrastructure platform for international founders. It enables non-US entrepreneurs to establish financial credibility, incorporate US LLCs, and access US banking — all driven by a composite trust score built from verified identity, digital lineage, and financial signals.
 
-## Features
+## Overview
 
-- **Onboarding & Trust Score** — 7-step eligibility flow collecting identity, code history, professional network, financial signals, digital presence, and trust signals to compute a composite trust score
-- **Document Verification** — Upload passport, government ID, or proof of address and get instant AI-powered data extraction (name, DOB, passport number, address) via Claude Vision during onboarding
-- **OAuth Integrations** — Connect GitHub, LinkedIn, and Stripe accounts to verify digital lineage
-- **Digital Presence Verification** — Verify website ownership, Twitter, Instagram, and App Store presence
-- **LLC Formation** — Multi-step guided workflow to form a US LLC, with auto-generated compliance deadlines
-- **EIN Acquisition** — SS-4 information collection and manual EIN entry
-- **Bank Application Prep** — Bank selection, package review, and application status tracking
-- **Payments** — Stripe Checkout for service packages with webhook-driven status updates
-- **Email Notifications** — Welcome, payment confirmation, trust score, and compliance reminder emails via Resend
-- **Admin Dashboard** — Manage founders, applications, documents, and compliance with real Supabase data
-- **Dashboard** — Formation status, bank status, billing history, compliance deadlines, and dynamic action items
+International founders face a cold-start problem when entering the US financial system: no credit history, no SSN, no existing banking relationship. BedRock solves this by aggregating verifiable trust signals — government-issued documents, code contribution history, professional networks, revenue data, and digital presence — into a single score that banks can underwrite against.
 
-## Tech Stack
+### How It Works
 
-- **Framework**: Next.js 16 (App Router)
-- **Database**: Supabase (Postgres + Auth + Storage)
-- **Payments**: Stripe
-- **Email**: Resend
-- **AI**: Claude Vision (document extraction & verification)
-- **Styling**: Tailwind CSS v4
+1. **Trust Score Assessment** — A 7-step onboarding flow collects and verifies identity documents (with AI-powered data extraction), GitHub/LinkedIn/Stripe OAuth connections, revenue signals, and digital presence to compute a composite trust score.
+2. **LLC Formation** — Guided workflow for US LLC incorporation with automated compliance deadline tracking (annual reports, franchise tax, registered agent renewals).
+3. **EIN Acquisition** — SS-4 form preparation and EIN registration support.
+4. **Bank Account Opening** — Curated bank matching based on trust score tier, with application prep and status tracking.
 
-## Getting Started
+## Architecture
+
+| Layer | Technology |
+|-------|-----------|
+| Framework | Next.js 16 (App Router) |
+| Database | Supabase (Postgres + Auth + Storage) |
+| Payments | Stripe (Checkout + Webhooks) |
+| Email | Resend |
+| AI | Anthropic Claude Vision (document extraction & verification) |
+| Styling | Tailwind CSS v4 |
+
+## Setup
+
+### Prerequisites
+
+- Node.js 18+
+- Supabase project
+- Stripe account
+- Resend account
+- Anthropic API key
+- GitHub & LinkedIn OAuth apps
+
+### Installation
 
 ```bash
 npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+### Environment Variables
 
-## Environment Variables
+Copy `.env.local.example` to `.env.local` and configure:
 
-Copy `.env.local.example` to `.env.local` and fill in your keys:
+| Variable | Description |
+|----------|-------------|
+| `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anonymous key |
+| `SUPABASE_SERVICE_ROLE_KEY` | Supabase service role key (server-side only) |
+| `RESEND_API_KEY` | Resend API key for transactional email |
+| `STRIPE_SECRET_KEY` | Stripe secret key |
+| `STRIPE_CONNECT_CLIENT_ID` | Stripe Connect OAuth client ID |
+| `GITHUB_CLIENT_ID` / `GITHUB_CLIENT_SECRET` | GitHub OAuth app credentials |
+| `ANTHROPIC_API_KEY` | Anthropic API key for Claude Vision |
+| `OAUTH_STATE_SECRET` | Secret for signing OAuth state parameters |
 
-- `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-- `SUPABASE_SERVICE_ROLE_KEY`
-- `RESEND_API_KEY`
-- `STRIPE_SECRET_KEY` / `STRIPE_CONNECT_CLIENT_ID`
-- `GITHUB_CLIENT_ID` / `GITHUB_CLIENT_SECRET`
-- `ANTHROPIC_API_KEY`
-- `OAUTH_STATE_SECRET`
+## License
+
+Proprietary. All rights reserved.
