@@ -4,17 +4,33 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '@/components/ui/button'
 import { professionalSchema, ProfessionalFormData } from '@/lib/validations/onboarding'
-import { ArrowLeft, ArrowRight, Linkedin, CheckCircle } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Linkedin, CheckCircle, AlertCircle } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import type { LinkedInProfileData } from '@/lib/oauth/linkedin'
 
+function normalizeName(s: string): string[] {
+  return s.toLowerCase().replace(/[^a-z\s]/g, '').split(/\s+/).filter(Boolean).sort()
+}
+
+function nameMatches(a: string, b: string): boolean {
+  const aParts = normalizeName(a)
+  const bParts = normalizeName(b)
+  if (aParts.join(' ') === bParts.join(' ')) return true
+  const aSet = new Set(aParts)
+  const bSet = new Set(bParts)
+  if (bParts.every((p) => aSet.has(p)) || aParts.every((p) => bSet.has(p))) return true
+  if (bParts.filter((p) => aSet.has(p)).length >= 2) return true
+  return false
+}
+
 interface StepProfessionalProps {
   data: Partial<ProfessionalFormData>
+  founderName?: string
   onNext: (data: ProfessionalFormData) => void
   onBack: () => void
 }
 
-export function StepProfessional({ data, onNext, onBack }: StepProfessionalProps) {
+export function StepProfessional({ data, founderName, onNext, onBack }: StepProfessionalProps) {
   const [connected, setConnected] = useState(data.linkedinConnected ?? false)
   const [linkedinData, setLinkedinData] = useState<LinkedInProfileData | null>(null)
 
@@ -100,6 +116,19 @@ export function StepProfessional({ data, onNext, onBack }: StepProfessionalProps
                 </div>
               </div>
               <p className="mt-2 text-left text-zinc-300">Profile verified</p>
+              {founderName && linkedinData.name ? (
+                nameMatches(linkedinData.name, founderName) ? (
+                  <div className="mt-2 flex items-center gap-1.5 text-xs text-emerald-400">
+                    <CheckCircle className="h-3.5 w-3.5" />
+                    Name matches your profile
+                  </div>
+                ) : (
+                  <div className="mt-2 flex items-center gap-1.5 text-xs text-orange-400">
+                    <AlertCircle className="h-3.5 w-3.5" />
+                    Name does not match your profile
+                  </div>
+                )
+              ) : null}
               <Button
                 type="button"
                 variant="ghost"

@@ -133,14 +133,19 @@ export async function verifyDomain(url: string, founderName?: string): Promise<D
         $('meta[property="og:image"]').attr('content')?.trim() ||
         undefined
 
-      // Check if founder's name appears on the page
+      // Check if founder's name appears on the page (body, title, meta tags)
       if (founderName && founderName.trim().length >= 2) {
-        const pageText = $('body').text().toLowerCase()
+        const searchText = [
+          $('body').text(),
+          result.title || '',
+          result.description || '',
+          $('meta[property="og:title"]').attr('content') || '',
+        ].join(' ').toLowerCase()
         const nameLower = founderName.trim().toLowerCase()
         // Check full name and also individual parts (first/last)
         const nameParts = nameLower.split(/\s+/).filter((p) => p.length >= 2)
-        result.nameFound = pageText.includes(nameLower) ||
-          (nameParts.length >= 2 && nameParts.every((part) => pageText.includes(part)))
+        result.nameFound = searchText.includes(nameLower) ||
+          (nameParts.length >= 2 && nameParts.every((part) => searchText.includes(part)))
       }
     }
   } catch {
