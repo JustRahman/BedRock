@@ -1,0 +1,8 @@
+{
+  "/api/oauth/github/connect/route": "app/api/oauth/github/connect/route.js",
+  "/api/oauth/linkedin/connect/route": "app/api/oauth/linkedin/connect/route.js",
+  "/api/oauth/stripe/connect/route": "app/api/oauth/stripe/connect/route.js",
+  "/api/verify/digital-presence/route": "app/api/verify/digital-presence/route.js",
+  "/onboarding/page": "app/onboarding/page.js",
+  "/page": "app/page.js"
+}

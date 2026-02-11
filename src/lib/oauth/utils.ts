@@ -85,5 +85,7 @@ export function generateSessionId(): string {
 }
 
 export function getAppUrl(): string {
-  return process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
+  // APP_URL is a runtime env var (read from .env.production by Docker at start)
+  // NEXT_PUBLIC_APP_URL is baked at build time — wrong when building locally
+  return process.env.APP_URL || process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
 }

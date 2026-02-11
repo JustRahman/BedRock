@@ -1,0 +1,3 @@
+{
+  "/api/trust-score/calculate/route": "app/api/trust-score/calculate/route.js"
+}

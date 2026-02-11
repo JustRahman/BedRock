@@ -113,8 +113,10 @@ export default function RegisterPage() {
               .single()
 
             if (founder) {
+              const founderId = (founder as { id: string }).id
+
               await (supabase.from('trust_scores') as ReturnType<typeof supabase.from>).insert({
-                founder_id: (founder as { id: string }).id,
+                founder_id: founderId,
                 total_score: trustScore.totalScore || 0,
                 identity_score: trustScore.identityScore || 0,
                 business_score: trustScore.businessScore || 0,
@@ -125,6 +127,32 @@ export default function RegisterPage() {
                 score_breakdown: trustScore.breakdown || {},
                 version: 2,
               })
+
+              // Save OAuth verification data
+              const oauthEntries: { type: string; key: string }[] = [
+                { type: 'github_oauth', key: 'oauth_github_data' },
+                { type: 'linkedin_oauth', key: 'oauth_linkedin_data' },
+                { type: 'stripe_oauth', key: 'oauth_stripe_data' },
+              ]
+
+              for (const entry of oauthEntries) {
+                const raw = sessionStorage.getItem(entry.key)
+                if (raw) {
+                  try {
+                    const oauthData = JSON.parse(raw)
+                    await (supabase.from('founder_verifications') as ReturnType<typeof supabase.from>)
+                      .upsert({
+                        founder_id: founderId,
+                        verification_type: entry.type,
+                        status: 'verified',
+                        verified_at: new Date().toISOString(),
+                        metadata: oauthData,
+                      }, { onConflict: 'founder_id,verification_type' })
+                  } catch {
+                    // Non-critical
+                  }
+                }
+              }
             }
           }
 

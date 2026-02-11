@@ -1,0 +1,108 @@
+(globalThis.TURBOPACK || (globalThis.TURBOPACK = [])).push(["chunks/[root-of-the-server]__8978dbac._.js",
+"[externals]/node:buffer [external] (node:buffer, cjs)", ((__turbopack_context__, module, exports) => {
+
+const mod = __turbopack_context__.x("node:buffer", () => require("node:buffer"));
+
+module.exports = mod;
+}),
+"[externals]/node:async_hooks [external] (node:async_hooks, cjs)", ((__turbopack_context__, module, exports) => {
+
+const mod = __turbopack_context__.x("node:async_hooks", () => require("node:async_hooks"));
+
+module.exports = mod;
+}),
+"[project]/src/middleware.ts [middleware-edge] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "config",
+    ()=>config,
+    "middleware",
+    ()=>middleware
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$supabase$2f$ssr$2f$dist$2f$module$2f$index$2e$js__$5b$middleware$2d$edge$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i("[project]/node_modules/@supabase/ssr/dist/module/index.js [middleware-edge] (ecmascript) <locals>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$supabase$2f$ssr$2f$dist$2f$module$2f$createServerClient$2e$js__$5b$middleware$2d$edge$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/@supabase/ssr/dist/module/createServerClient.js [middleware-edge] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$api$2f$server$2e$js__$5b$middleware$2d$edge$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i("[project]/node_modules/next/dist/esm/api/server.js [middleware-edge] (ecmascript) <locals>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$exports$2f$index$2e$js__$5b$middleware$2d$edge$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/esm/server/web/exports/index.js [middleware-edge] (ecmascript)");
+;
+;
+async function middleware(request) {
+    const pathname = request.nextUrl.pathname;
+    // Public routes — no auth needed
+    const isPublicRoute = pathname === '/' || pathname === '/login' || pathname === '/register' || pathname.startsWith('/onboarding') || pathname.startsWith('/api/');
+    // Skip Supabase entirely if credentials aren't configured
+    const supabaseUrl = ("TURBOPACK compile-time value", "https://raqqortimspvahtnujqa.supabase.co");
+    const supabaseKey = ("TURBOPACK compile-time value", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJhcXFvcnRpbXNwdmFodG51anFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAyMzk1MjksImV4cCI6MjA4NTgxNTUyOX0.uP2tUmSrGY5AhT6NJnX57w3QEPSOwXStAEaO4aztcu8");
+    if (!supabaseUrl || !supabaseKey || supabaseUrl.includes('your-') || supabaseKey.includes('your_')) {
+        // No real Supabase configured — let public routes through, block protected
+        if (!isPublicRoute) {
+            const url = request.nextUrl.clone();
+            url.pathname = '/login';
+            return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$exports$2f$index$2e$js__$5b$middleware$2d$edge$5d$__$28$ecmascript$29$__["NextResponse"].redirect(url);
+        }
+        return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$exports$2f$index$2e$js__$5b$middleware$2d$edge$5d$__$28$ecmascript$29$__["NextResponse"].next();
+    }
+    let supabaseResponse = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$exports$2f$index$2e$js__$5b$middleware$2d$edge$5d$__$28$ecmascript$29$__["NextResponse"].next({
+        request
+    });
+    const supabase = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$supabase$2f$ssr$2f$dist$2f$module$2f$createServerClient$2e$js__$5b$middleware$2d$edge$5d$__$28$ecmascript$29$__["createServerClient"])(supabaseUrl, supabaseKey, {
+        cookies: {
+            getAll () {
+                return request.cookies.getAll();
+            },
+            setAll (cookiesToSet) {
+                cookiesToSet.forEach(({ name, value })=>request.cookies.set(name, value));
+                supabaseResponse = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$exports$2f$index$2e$js__$5b$middleware$2d$edge$5d$__$28$ecmascript$29$__["NextResponse"].next({
+                    request
+                });
+                cookiesToSet.forEach(({ name, value, options })=>supabaseResponse.cookies.set(name, value, options));
+            }
+        }
+    });
+    let user = null;
+    try {
+        const { data } = await supabase.auth.getUser();
+        user = data.user;
+    } catch  {
+        // Supabase unreachable — let public routes through
+        if (isPublicRoute) return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$exports$2f$index$2e$js__$5b$middleware$2d$edge$5d$__$28$ecmascript$29$__["NextResponse"].next();
+        const url = request.nextUrl.clone();
+        url.pathname = '/login';
+        return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$exports$2f$index$2e$js__$5b$middleware$2d$edge$5d$__$28$ecmascript$29$__["NextResponse"].redirect(url);
+    }
+    // Protected routes that require authentication
+    const isProtectedRoute = pathname.startsWith('/dashboard') || pathname.startsWith('/admin');
+    // Redirect unauthenticated users from protected routes
+    if (isProtectedRoute && !user) {
+        const url = request.nextUrl.clone();
+        url.pathname = '/login';
+        url.searchParams.set('redirectTo', pathname);
+        return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$exports$2f$index$2e$js__$5b$middleware$2d$edge$5d$__$28$ecmascript$29$__["NextResponse"].redirect(url);
+    }
+    // Redirect authenticated users away from auth pages
+    if (user && (pathname === '/login' || pathname === '/register')) {
+        const redirectTo = request.nextUrl.searchParams.get('redirectTo') || '/dashboard';
+        const url = request.nextUrl.clone();
+        url.pathname = redirectTo;
+        return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$exports$2f$index$2e$js__$5b$middleware$2d$edge$5d$__$28$ecmascript$29$__["NextResponse"].redirect(url);
+    }
+    // Check admin access
+    if (pathname.startsWith('/admin') && user) {
+        const { data: founder } = await supabase.from('founders').select('role').eq('user_id', user.id).single();
+        if (!founder || founder.role !== 'admin') {
+            const url = request.nextUrl.clone();
+            url.pathname = '/dashboard';
+            return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$exports$2f$index$2e$js__$5b$middleware$2d$edge$5d$__$28$ecmascript$29$__["NextResponse"].redirect(url);
+        }
+    }
+    return supabaseResponse;
+}
+const config = {
+    matcher: [
+        '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)'
+    ]
+};
+}),
+]);
+
+//# sourceMappingURL=%5Broot-of-the-server%5D__8978dbac._.js.map
