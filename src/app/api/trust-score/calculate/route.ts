@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { calculateTrustScore, TrustScoreInput } from '@/lib/trust-score'
-import { createClient } from '@/lib/supabase/server'
+import { createClient, createServiceClient } from '@/lib/supabase/server'
 import { sendEmail } from '@/lib/email'
 import { trustScoreEmail } from '@/lib/email-templates'
 
@@ -98,10 +98,11 @@ export async function POST(request: Request) {
 // Save trust score for authenticated user
 export async function PUT(request: Request) {
   try {
-    const supabase = await createClient()
+    const authClient = await createClient()
+    const supabase = createServiceClient()
 
     // Get current user
-    const { data: { user }, error: userError } = await supabase.auth.getUser()
+    const { data: { user }, error: userError } = await authClient.auth.getUser()
     if (userError || !user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
@@ -121,18 +122,17 @@ export async function PUT(request: Request) {
 
     const body = await request.json()
 
-    // Upsert trust score with new field names
+    // Upsert trust score — use actual DB column names
     const upsertData = {
       founder_id: founder.id,
       total_score: body.totalScore,
       identity_score: body.identityScore,
       business_score: body.businessScore,
-      digital_lineage_score: body.digitalLineageScore,
-      network_score: body.networkScore,
-      country_adjustment: body.countryAdjustment,
+      financial_score: body.businessScore || 0,
+      social_score: body.networkScore || 0,
+      country_adjustment: body.countryAdjustment || 0,
       status: body.status,
       score_breakdown: body.breakdown,
-      version: 2,
       calculated_at: new Date().toISOString(),
     }
 

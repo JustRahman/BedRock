@@ -305,14 +305,17 @@ export default function CompliancePage() {
       {/* Filter Tabs */}
       <div className="mb-6 flex gap-2">
         {(['all', 'upcoming', 'completed'] as const).map((f) => (
-          <Button
+          <button
             key={f}
-            variant={filter === f ? 'default' : 'outline'}
-            size="sm"
             onClick={() => setFilter(f)}
+            className={`rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
+              filter === f
+                ? 'bg-white/[0.1] text-white border border-white/[0.15]'
+                : 'text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.05] border border-transparent'
+            }`}
           >
             {f.charAt(0).toUpperCase() + f.slice(1)}
-          </Button>
+          </button>
         ))}
       </div>
 

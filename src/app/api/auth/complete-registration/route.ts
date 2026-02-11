@@ -10,7 +10,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Email and full name are required' }, { status: 400 })
     }
 
-    const supabase = await createServiceClient()
+    const supabase = createServiceClient()
 
     // Find the auth user — prefer userId if provided, otherwise look up by email
     let authUserId = userId
@@ -72,12 +72,11 @@ export async function POST(request: Request) {
         total_score: trustScore.totalScore || 0,
         identity_score: trustScore.identityScore || 0,
         business_score: trustScore.businessScore || 0,
-        digital_lineage_score: trustScore.digitalLineageScore || 0,
-        network_score: trustScore.networkScore || 0,
+        financial_score: trustScore.businessScore || 0,
+        social_score: trustScore.networkScore || 0,
         country_adjustment: trustScore.countryAdjustment || 0,
         status: trustScore.status || 'review_needed',
         score_breakdown: trustScore.breakdown || {},
-        version: 2,
       })
 
       if (tsError) {

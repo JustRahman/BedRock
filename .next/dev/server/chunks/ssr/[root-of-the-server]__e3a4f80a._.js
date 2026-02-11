@@ -30,83 +30,149 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$re
 ;
 ;
 function ProgressIndicator({ steps, currentStep }) {
+    const currentStepData = steps.find((s)=>s.id === currentStep);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("nav", {
         "aria-label": "Progress",
         className: "mb-8",
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "flex items-center",
-                children: steps.map((step, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "flex flex-1 items-center last:flex-none",
+                className: "sm:hidden",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "flex items-center justify-between mb-2",
                         children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: `relative z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 ${currentStep > step.id ? 'border-blue-500 bg-blue-500 text-white' : currentStep === step.id ? 'border-blue-500 bg-blue-500/20 text-blue-400' : 'border-zinc-700 bg-zinc-800 text-zinc-500'}`,
-                                children: currentStep > step.id ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$check$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Check$3e$__["Check"], {
-                                    className: "h-4 w-4"
-                                }, void 0, false, {
-                                    fileName: "[project]/src/components/onboarding/progress-indicator.tsx",
-                                    lineNumber: 34,
-                                    columnNumber: 17
-                                }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                    className: "text-xs font-medium",
-                                    children: step.id
-                                }, void 0, false, {
-                                    fileName: "[project]/src/components/onboarding/progress-indicator.tsx",
-                                    lineNumber: 36,
-                                    columnNumber: 17
-                                }, this)
-                            }, void 0, false, {
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                className: "text-sm font-medium text-blue-400",
+                                children: [
+                                    "Step ",
+                                    currentStep,
+                                    " of ",
+                                    steps.length
+                                ]
+                            }, void 0, true, {
                                 fileName: "[project]/src/components/onboarding/progress-indicator.tsx",
                                 lineNumber: 24,
-                                columnNumber: 13
+                                columnNumber: 11
                             }, this),
-                            index < steps.length - 1 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: `h-0.5 flex-1 ${currentStep > step.id ? 'bg-blue-500' : 'bg-zinc-700'}`
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                className: "text-sm text-zinc-400",
+                                children: currentStepData?.name
                             }, void 0, false, {
                                 fileName: "[project]/src/components/onboarding/progress-indicator.tsx",
-                                lineNumber: 42,
-                                columnNumber: 15
+                                lineNumber: 27,
+                                columnNumber: 11
                             }, this)
                         ]
-                    }, step.id, true, {
+                    }, void 0, true, {
                         fileName: "[project]/src/components/onboarding/progress-indicator.tsx",
-                        lineNumber: 22,
-                        columnNumber: 11
-                    }, this))
-            }, void 0, false, {
+                        lineNumber: 23,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "h-1.5 w-full overflow-hidden rounded-full bg-zinc-800",
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "h-full rounded-full bg-blue-500 transition-all duration-300",
+                            style: {
+                                width: `${(currentStep - 1) / (steps.length - 1) * 100}%`
+                            }
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/onboarding/progress-indicator.tsx",
+                            lineNumber: 32,
+                            columnNumber: 11
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/onboarding/progress-indicator.tsx",
+                        lineNumber: 31,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
                 fileName: "[project]/src/components/onboarding/progress-indicator.tsx",
-                lineNumber: 20,
+                lineNumber: 22,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "mt-2 flex",
-                children: steps.map((step, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: `text-center ${index < steps.length - 1 ? 'flex-1' : ''}`,
-                        style: {
-                            minWidth: 32
-                        },
-                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                            className: `text-[10px] font-medium leading-tight sm:text-xs ${currentStep >= step.id ? 'text-blue-400' : 'text-zinc-500'}`,
-                            children: step.name
-                        }, void 0, false, {
-                            fileName: "[project]/src/components/onboarding/progress-indicator.tsx",
-                            lineNumber: 60,
-                            columnNumber: 13
-                        }, this)
-                    }, step.id, false, {
+                className: "hidden sm:block",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "flex items-center",
+                        children: steps.map((step, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "flex flex-1 items-center last:flex-none",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: `relative z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 ${currentStep > step.id ? 'border-blue-500 bg-blue-500 text-white' : currentStep === step.id ? 'border-blue-500 bg-blue-500/20 text-blue-400' : 'border-zinc-700 bg-zinc-800 text-zinc-500'}`,
+                                        children: currentStep > step.id ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$check$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Check$3e$__["Check"], {
+                                            className: "h-4 w-4"
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/onboarding/progress-indicator.tsx",
+                                            lineNumber: 56,
+                                            columnNumber: 19
+                                        }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                            className: "text-xs font-medium",
+                                            children: step.id
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/onboarding/progress-indicator.tsx",
+                                            lineNumber: 58,
+                                            columnNumber: 19
+                                        }, this)
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/onboarding/progress-indicator.tsx",
+                                        lineNumber: 46,
+                                        columnNumber: 15
+                                    }, this),
+                                    index < steps.length - 1 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: `h-0.5 flex-1 ${currentStep > step.id ? 'bg-blue-500' : 'bg-zinc-700'}`
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/onboarding/progress-indicator.tsx",
+                                        lineNumber: 64,
+                                        columnNumber: 17
+                                    }, this)
+                                ]
+                            }, step.id, true, {
+                                fileName: "[project]/src/components/onboarding/progress-indicator.tsx",
+                                lineNumber: 44,
+                                columnNumber: 13
+                            }, this))
+                    }, void 0, false, {
                         fileName: "[project]/src/components/onboarding/progress-indicator.tsx",
-                        lineNumber: 55,
-                        columnNumber: 11
-                    }, this))
-            }, void 0, false, {
+                        lineNumber: 42,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "mt-2 flex",
+                        children: steps.map((step, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: `text-center ${index < steps.length - 1 ? 'flex-1' : ''}`,
+                                style: {
+                                    minWidth: 32
+                                },
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                    className: `text-[10px] font-medium leading-tight sm:text-xs ${currentStep >= step.id ? 'text-blue-400' : 'text-zinc-500'}`,
+                                    children: step.name
+                                }, void 0, false, {
+                                    fileName: "[project]/src/components/onboarding/progress-indicator.tsx",
+                                    lineNumber: 82,
+                                    columnNumber: 15
+                                }, this)
+                            }, step.id, false, {
+                                fileName: "[project]/src/components/onboarding/progress-indicator.tsx",
+                                lineNumber: 77,
+                                columnNumber: 13
+                            }, this))
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/onboarding/progress-indicator.tsx",
+                        lineNumber: 75,
+                        columnNumber: 9
+                    }, this)
+                ]
+            }, void 0, true, {
                 fileName: "[project]/src/components/onboarding/progress-indicator.tsx",
-                lineNumber: 53,
+                lineNumber: 40,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/onboarding/progress-indicator.tsx",
-        lineNumber: 18,
+        lineNumber: 20,
         columnNumber: 5
     }, this);
 }
@@ -3360,7 +3426,9 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$re
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$x$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__X$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/x.js [app-ssr] (ecmascript) <export default as X>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/ui/button.tsx [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$face$2d$api$2d$loader$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/lib/face-api-loader.ts [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$pending$2d$uploads$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/lib/pending-uploads.ts [app-ssr] (ecmascript)");
 'use client';
+;
 ;
 ;
 ;
@@ -3511,6 +3579,20 @@ function FaceScan({ passportFile, onMatchResult }) {
             setDistance(dist);
             if (dist < MATCH_THRESHOLD) {
                 setState('match');
+                // Save selfie image to pending uploads for later storage
+                try {
+                    const blob = await new Promise((resolve)=>canvas.toBlob(resolve, 'image/jpeg', 0.85));
+                    if (blob) {
+                        const selfieFile = new File([
+                            blob
+                        ], 'face-verification-selfie.jpg', {
+                            type: 'image/jpeg'
+                        });
+                        await (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$pending$2d$uploads$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["storePendingUpload"])('selfie', selfieFile);
+                    }
+                } catch  {
+                // Non-critical — selfie saving is optional
+                }
                 onMatchResultRef.current({
                     matched: true,
                     distance: dist
@@ -3562,7 +3644,7 @@ function FaceScan({ passportFile, onMatchResult }) {
                                 className: "h-4 w-4 text-blue-400"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/onboarding/face-scan.tsx",
-                                lineNumber: 228,
+                                lineNumber: 241,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -3570,13 +3652,13 @@ function FaceScan({ passportFile, onMatchResult }) {
                                 children: "Face Verification"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/onboarding/face-scan.tsx",
-                                lineNumber: 229,
+                                lineNumber: 242,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/onboarding/face-scan.tsx",
-                        lineNumber: 227,
+                        lineNumber: 240,
                         columnNumber: 9
                     }, this),
                     state !== 'match' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -3588,20 +3670,20 @@ function FaceScan({ passportFile, onMatchResult }) {
                                 className: "h-3 w-3"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/onboarding/face-scan.tsx",
-                                lineNumber: 237,
+                                lineNumber: 250,
                                 columnNumber: 13
                             }, this),
                             "Skip"
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/onboarding/face-scan.tsx",
-                        lineNumber: 232,
+                        lineNumber: 245,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/onboarding/face-scan.tsx",
-                lineNumber: 226,
+                lineNumber: 239,
                 columnNumber: 7
             }, this),
             state === 'loading_models' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3611,14 +3693,14 @@ function FaceScan({ passportFile, onMatchResult }) {
                         className: "h-4 w-4 animate-spin"
                     }, void 0, false, {
                         fileName: "[project]/src/components/onboarding/face-scan.tsx",
-                        lineNumber: 245,
+                        lineNumber: 258,
                         columnNumber: 11
                     }, this),
                     "Loading face recognition models..."
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/onboarding/face-scan.tsx",
-                lineNumber: 244,
+                lineNumber: 257,
                 columnNumber: 9
             }, this),
             (state === 'ready' || state === 'countdown' || state === 'comparing') && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3629,7 +3711,7 @@ function FaceScan({ passportFile, onMatchResult }) {
                         children: "Position your face in the camera and take a selfie to verify it matches your passport photo."
                     }, void 0, false, {
                         fileName: "[project]/src/components/onboarding/face-scan.tsx",
-                        lineNumber: 252,
+                        lineNumber: 265,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3646,7 +3728,7 @@ function FaceScan({ passportFile, onMatchResult }) {
                                 }
                             }, void 0, false, {
                                 fileName: "[project]/src/components/onboarding/face-scan.tsx",
-                                lineNumber: 256,
+                                lineNumber: 269,
                                 columnNumber: 13
                             }, this),
                             state === 'countdown' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3656,12 +3738,12 @@ function FaceScan({ passportFile, onMatchResult }) {
                                     children: countdown
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/onboarding/face-scan.tsx",
-                                    lineNumber: 266,
+                                    lineNumber: 279,
                                     columnNumber: 17
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/onboarding/face-scan.tsx",
-                                lineNumber: 265,
+                                lineNumber: 278,
                                 columnNumber: 15
                             }, this),
                             state === 'comparing' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3673,7 +3755,7 @@ function FaceScan({ passportFile, onMatchResult }) {
                                             className: "mx-auto h-8 w-8 animate-spin text-white"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/onboarding/face-scan.tsx",
-                                            lineNumber: 272,
+                                            lineNumber: 285,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3681,24 +3763,24 @@ function FaceScan({ passportFile, onMatchResult }) {
                                             children: "Comparing faces..."
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/onboarding/face-scan.tsx",
-                                            lineNumber: 273,
+                                            lineNumber: 286,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/onboarding/face-scan.tsx",
-                                    lineNumber: 271,
+                                    lineNumber: 284,
                                     columnNumber: 17
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/onboarding/face-scan.tsx",
-                                lineNumber: 270,
+                                lineNumber: 283,
                                 columnNumber: 15
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/onboarding/face-scan.tsx",
-                        lineNumber: 255,
+                        lineNumber: 268,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("canvas", {
@@ -3706,7 +3788,7 @@ function FaceScan({ passportFile, onMatchResult }) {
                         className: "hidden"
                     }, void 0, false, {
                         fileName: "[project]/src/components/onboarding/face-scan.tsx",
-                        lineNumber: 278,
+                        lineNumber: 291,
                         columnNumber: 11
                     }, this),
                     state === 'ready' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -3719,20 +3801,20 @@ function FaceScan({ passportFile, onMatchResult }) {
                                 className: "h-4 w-4"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/onboarding/face-scan.tsx",
-                                lineNumber: 286,
+                                lineNumber: 299,
                                 columnNumber: 15
                             }, this),
                             "Take Selfie"
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/onboarding/face-scan.tsx",
-                        lineNumber: 280,
+                        lineNumber: 293,
                         columnNumber: 13
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/onboarding/face-scan.tsx",
-                lineNumber: 251,
+                lineNumber: 264,
                 columnNumber: 9
             }, this),
             state === 'match' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3745,14 +3827,14 @@ function FaceScan({ passportFile, onMatchResult }) {
                                 className: "h-4 w-4"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/onboarding/face-scan.tsx",
-                                lineNumber: 296,
+                                lineNumber: 309,
                                 columnNumber: 13
                             }, this),
                             "Face match confirmed"
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/onboarding/face-scan.tsx",
-                        lineNumber: 295,
+                        lineNumber: 308,
                         columnNumber: 11
                     }, this),
                     distance !== null && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3766,13 +3848,13 @@ function FaceScan({ passportFile, onMatchResult }) {
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/onboarding/face-scan.tsx",
-                        lineNumber: 300,
+                        lineNumber: 313,
                         columnNumber: 13
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/onboarding/face-scan.tsx",
-                lineNumber: 294,
+                lineNumber: 307,
                 columnNumber: 9
             }, this),
             state === 'no_match' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3788,14 +3870,14 @@ function FaceScan({ passportFile, onMatchResult }) {
                                         className: "h-4 w-4"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/onboarding/face-scan.tsx",
-                                        lineNumber: 311,
+                                        lineNumber: 324,
                                         columnNumber: 15
                                     }, this),
                                     errorMsg
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/onboarding/face-scan.tsx",
-                                lineNumber: 310,
+                                lineNumber: 323,
                                 columnNumber: 13
                             }, this),
                             distance !== null && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -3811,13 +3893,13 @@ function FaceScan({ passportFile, onMatchResult }) {
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/onboarding/face-scan.tsx",
-                                lineNumber: 315,
+                                lineNumber: 328,
                                 columnNumber: 15
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/onboarding/face-scan.tsx",
-                        lineNumber: 309,
+                        lineNumber: 322,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -3830,20 +3912,20 @@ function FaceScan({ passportFile, onMatchResult }) {
                                 className: "h-4 w-4"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/onboarding/face-scan.tsx",
-                                lineNumber: 326,
+                                lineNumber: 339,
                                 columnNumber: 13
                             }, this),
                             "Try Again"
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/onboarding/face-scan.tsx",
-                        lineNumber: 320,
+                        lineNumber: 333,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/onboarding/face-scan.tsx",
-                lineNumber: 308,
+                lineNumber: 321,
                 columnNumber: 9
             }, this),
             state === 'error' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -3856,14 +3938,14 @@ function FaceScan({ passportFile, onMatchResult }) {
                                 className: "h-4 w-4"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/onboarding/face-scan.tsx",
-                                lineNumber: 335,
+                                lineNumber: 348,
                                 columnNumber: 13
                             }, this),
                             errorMsg
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/onboarding/face-scan.tsx",
-                        lineNumber: 334,
+                        lineNumber: 347,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -3873,19 +3955,19 @@ function FaceScan({ passportFile, onMatchResult }) {
                         children: "Skip face verification"
                     }, void 0, false, {
                         fileName: "[project]/src/components/onboarding/face-scan.tsx",
-                        lineNumber: 338,
+                        lineNumber: 351,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/onboarding/face-scan.tsx",
-                lineNumber: 333,
+                lineNumber: 346,
                 columnNumber: 9
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/onboarding/face-scan.tsx",
-        lineNumber: 225,
+        lineNumber: 238,
         columnNumber: 5
     }, this);
 }
@@ -9024,6 +9106,7 @@ function OnboardingPage() {
         }
         try {
             sessionStorage.setItem('onboardingData', JSON.stringify(finalData));
+            localStorage.setItem('onboardingData', JSON.stringify(finalData));
             const response = await fetch('/api/trust-score/calculate', {
                 method: 'POST',
                 headers: {
@@ -9033,6 +9116,7 @@ function OnboardingPage() {
             });
             const result = await response.json();
             sessionStorage.setItem('trustScoreResult', JSON.stringify(result));
+            localStorage.setItem('trustScoreResult', JSON.stringify(result));
             // Clean up OAuth and step storage
             try {
                 sessionStorage.removeItem(STEP_STORAGE_KEY);
@@ -9072,27 +9156,27 @@ function OnboardingPage() {
                             className: "absolute top-0 left-1/4 w-96 h-96 bg-blue-600/30 rounded-full blur-[128px]"
                         }, void 0, false, {
                             fileName: "[project]/src/app/onboarding/page.tsx",
-                            lineNumber: 239,
+                            lineNumber: 241,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "absolute top-20 right-1/4 w-80 h-80 bg-violet-600/25 rounded-full blur-[128px]"
                         }, void 0, false, {
                             fileName: "[project]/src/app/onboarding/page.tsx",
-                            lineNumber: 240,
+                            lineNumber: 242,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/onboarding/page.tsx",
-                    lineNumber: 238,
+                    lineNumber: 240,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:64px_64px]"
                 }, void 0, false, {
                     fileName: "[project]/src/app/onboarding/page.tsx",
-                    lineNumber: 242,
+                    lineNumber: 244,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -9110,12 +9194,12 @@ function OnboardingPage() {
                                             className: "h-5 w-5 text-white"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/onboarding/page.tsx",
-                                            lineNumber: 248,
+                                            lineNumber: 250,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/onboarding/page.tsx",
-                                        lineNumber: 247,
+                                        lineNumber: 249,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -9123,18 +9207,18 @@ function OnboardingPage() {
                                         children: "BedRock"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/onboarding/page.tsx",
-                                        lineNumber: 250,
+                                        lineNumber: 252,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/onboarding/page.tsx",
-                                lineNumber: 246,
+                                lineNumber: 248,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/app/onboarding/page.tsx",
-                            lineNumber: 245,
+                            lineNumber: 247,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -9145,7 +9229,7 @@ function OnboardingPage() {
                                     children: "Check Your Eligibility"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/onboarding/page.tsx",
-                                    lineNumber: 254,
+                                    lineNumber: 256,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -9153,25 +9237,25 @@ function OnboardingPage() {
                                     children: "Loading..."
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/onboarding/page.tsx",
-                                    lineNumber: 255,
+                                    lineNumber: 257,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/onboarding/page.tsx",
-                            lineNumber: 253,
+                            lineNumber: 255,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/onboarding/page.tsx",
-                    lineNumber: 244,
+                    lineNumber: 246,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/app/onboarding/page.tsx",
-            lineNumber: 237,
+            lineNumber: 239,
             columnNumber: 7
         }, this);
     }
@@ -9185,27 +9269,27 @@ function OnboardingPage() {
                         className: "absolute top-0 left-1/4 w-96 h-96 bg-blue-600/30 rounded-full blur-[128px]"
                     }, void 0, false, {
                         fileName: "[project]/src/app/onboarding/page.tsx",
-                        lineNumber: 266,
+                        lineNumber: 268,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "absolute top-20 right-1/4 w-80 h-80 bg-violet-600/25 rounded-full blur-[128px]"
                     }, void 0, false, {
                         fileName: "[project]/src/app/onboarding/page.tsx",
-                        lineNumber: 267,
+                        lineNumber: 269,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/onboarding/page.tsx",
-                lineNumber: 265,
+                lineNumber: 267,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:64px_64px]"
             }, void 0, false, {
                 fileName: "[project]/src/app/onboarding/page.tsx",
-                lineNumber: 271,
+                lineNumber: 273,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -9223,12 +9307,12 @@ function OnboardingPage() {
                                         className: "h-5 w-5 text-white"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/onboarding/page.tsx",
-                                        lineNumber: 277,
+                                        lineNumber: 279,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/onboarding/page.tsx",
-                                    lineNumber: 276,
+                                    lineNumber: 278,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -9236,18 +9320,18 @@ function OnboardingPage() {
                                     children: "BedRock"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/onboarding/page.tsx",
-                                    lineNumber: 279,
+                                    lineNumber: 281,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/onboarding/page.tsx",
-                            lineNumber: 275,
+                            lineNumber: 277,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/app/onboarding/page.tsx",
-                        lineNumber: 274,
+                        lineNumber: 276,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -9261,7 +9345,7 @@ function OnboardingPage() {
                                         children: "Check Your Eligibility"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/onboarding/page.tsx",
-                                        lineNumber: 285,
+                                        lineNumber: 287,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -9269,13 +9353,13 @@ function OnboardingPage() {
                                         children: "Complete these steps to calculate your Trust Score and see your bank account options."
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/onboarding/page.tsx",
-                                        lineNumber: 286,
+                                        lineNumber: 288,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/onboarding/page.tsx",
-                                lineNumber: 284,
+                                lineNumber: 286,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$onboarding$2f$progress$2d$indicator$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["ProgressIndicator"], {
@@ -9283,7 +9367,7 @@ function OnboardingPage() {
                                 currentStep: currentStep
                             }, void 0, false, {
                                 fileName: "[project]/src/app/onboarding/page.tsx",
-                                lineNumber: 291,
+                                lineNumber: 293,
                                 columnNumber: 11
                             }, this),
                             currentStep === 1 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$onboarding$2f$step$2d$basic$2d$info$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["StepBasicInfo"], {
@@ -9291,7 +9375,7 @@ function OnboardingPage() {
                                 onNext: handleBasicInfoNext
                             }, void 0, false, {
                                 fileName: "[project]/src/app/onboarding/page.tsx",
-                                lineNumber: 294,
+                                lineNumber: 296,
                                 columnNumber: 13
                             }, this),
                             currentStep === 2 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$onboarding$2f$step$2d$identity$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["StepIdentity"], {
@@ -9301,7 +9385,7 @@ function OnboardingPage() {
                                 onBack: handleBack
                             }, void 0, false, {
                                 fileName: "[project]/src/app/onboarding/page.tsx",
-                                lineNumber: 301,
+                                lineNumber: 303,
                                 columnNumber: 13
                             }, this),
                             currentStep === 3 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$onboarding$2f$step$2d$code$2d$history$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["StepCodeHistory"], {
@@ -9311,7 +9395,7 @@ function OnboardingPage() {
                                 onBack: handleBack
                             }, void 0, false, {
                                 fileName: "[project]/src/app/onboarding/page.tsx",
-                                lineNumber: 310,
+                                lineNumber: 312,
                                 columnNumber: 13
                             }, this),
                             currentStep === 4 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$onboarding$2f$step$2d$professional$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["StepProfessional"], {
@@ -9321,7 +9405,7 @@ function OnboardingPage() {
                                 onBack: handleBack
                             }, void 0, false, {
                                 fileName: "[project]/src/app/onboarding/page.tsx",
-                                lineNumber: 319,
+                                lineNumber: 321,
                                 columnNumber: 13
                             }, this),
                             currentStep === 5 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$onboarding$2f$step$2d$financial$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["StepFinancial"], {
@@ -9330,7 +9414,7 @@ function OnboardingPage() {
                                 onBack: handleBack
                             }, void 0, false, {
                                 fileName: "[project]/src/app/onboarding/page.tsx",
-                                lineNumber: 328,
+                                lineNumber: 330,
                                 columnNumber: 13
                             }, this),
                             currentStep === 6 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$onboarding$2f$step$2d$digital$2d$presence$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["StepDigitalPresence"], {
@@ -9340,7 +9424,7 @@ function OnboardingPage() {
                                 onBack: handleBack
                             }, void 0, false, {
                                 fileName: "[project]/src/app/onboarding/page.tsx",
-                                lineNumber: 336,
+                                lineNumber: 338,
                                 columnNumber: 13
                             }, this),
                             currentStep === 7 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$onboarding$2f$step$2d$trust$2d$signals$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["StepTrustSignals"], {
@@ -9350,13 +9434,13 @@ function OnboardingPage() {
                                 isSubmitting: isSubmitting
                             }, void 0, false, {
                                 fileName: "[project]/src/app/onboarding/page.tsx",
-                                lineNumber: 345,
+                                lineNumber: 347,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/onboarding/page.tsx",
-                        lineNumber: 283,
+                        lineNumber: 285,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -9370,25 +9454,25 @@ function OnboardingPage() {
                                 children: "Sign in"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/onboarding/page.tsx",
-                                lineNumber: 356,
+                                lineNumber: 358,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/onboarding/page.tsx",
-                        lineNumber: 354,
+                        lineNumber: 356,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/onboarding/page.tsx",
-                lineNumber: 273,
+                lineNumber: 275,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/app/onboarding/page.tsx",
-        lineNumber: 263,
+        lineNumber: 265,
         columnNumber: 5
     }, this);
 }

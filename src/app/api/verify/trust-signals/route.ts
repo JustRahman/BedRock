@@ -24,7 +24,7 @@ export async function POST(request: Request) {
 
     switch (type) {
       case 'referral': {
-        const supabase = await createServiceClient()
+        const supabase = createServiceClient()
         const { code } = body
         if (!code || typeof code !== 'string') {
           return NextResponse.json({ error: 'Missing referral code' }, { status: 400 })

@@ -12,7 +12,7 @@ interface DeadlineRow {
 }
 
 export default async function AdminCompliancePage() {
-  const supabase = await createServiceClient()
+  const supabase = createServiceClient()
 
   const { data } = await supabase
     .from('compliance_deadlines')

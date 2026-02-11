@@ -12,7 +12,7 @@ interface FounderWithScore {
 }
 
 export default async function ApplicationsPage() {
-  const supabase = await createServiceClient()
+  const supabase = createServiceClient()
 
   const { data, count } = await supabase
     .from('founders')

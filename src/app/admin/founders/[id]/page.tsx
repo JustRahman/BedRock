@@ -8,7 +8,7 @@ interface PageProps {
 
 export default async function FounderDetailPage({ params }: PageProps) {
   const { id } = await params
-  const supabase = await createServiceClient()
+  const supabase = createServiceClient()
 
   const { data: founder } = await supabase
     .from('founders')

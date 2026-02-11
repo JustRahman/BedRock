@@ -2,7 +2,7 @@ const DB_NAME = 'bedrock_pending_uploads'
 const STORE_NAME = 'uploads'
 const DB_VERSION = 1
 
-export type DocumentType = 'passport' | 'local_id' | 'address_proof'
+export type DocumentType = 'passport' | 'local_id' | 'address_proof' | 'selfie'
 
 interface PendingUpload {
   type: DocumentType

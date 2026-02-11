@@ -49,6 +49,24 @@ const COUNTRY_ALIASES: Record<string, string[]> = {
 
 function normalizeCountry(country: string): string {
   const lower = country.toLowerCase().trim()
+
+  // Resolve ISO 2/3-letter codes (e.g. "TM" → "turkmenistan", "US" → "united states")
+  if (lower.length <= 3) {
+    try {
+      const displayName = new Intl.DisplayNames(['en'], { type: 'region' }).of(country.toUpperCase())
+      if (displayName) {
+        const resolved = displayName.toLowerCase()
+        // Check if resolved name has a canonical alias
+        for (const [canonical, aliases] of Object.entries(COUNTRY_ALIASES)) {
+          if (resolved === canonical || aliases.includes(resolved)) {
+            return canonical
+          }
+        }
+        return resolved
+      }
+    } catch { /* fall through to manual lookup */ }
+  }
+
   for (const [canonical, aliases] of Object.entries(COUNTRY_ALIASES)) {
     if (lower === canonical || aliases.includes(lower)) {
       return canonical

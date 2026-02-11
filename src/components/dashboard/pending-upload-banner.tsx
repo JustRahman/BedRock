@@ -9,6 +9,7 @@ const typeLabels: Record<DocumentType, string> = {
   passport: 'Passport',
   local_id: 'Local ID',
   address_proof: 'Address Proof',
+  selfie: 'Face Verification Selfie',
 }
 
 interface UploadedDoc {
@@ -36,6 +37,13 @@ export function PendingUploadBanner({ onUploadsComplete }: PendingUploadBannerPr
         setStatus('idle')
         return
       }
+
+      // Ensure founder exists before uploading documents
+      await fetch('/api/founders/ensure', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({}),
+      })
 
       const results: UploadedDoc[] = []
 

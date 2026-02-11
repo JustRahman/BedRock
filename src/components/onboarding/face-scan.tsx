@@ -4,6 +4,7 @@ import { useState, useRef, useEffect, useCallback } from 'react'
 import { Camera, CheckCircle, AlertTriangle, Loader2, RefreshCw, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { loadFaceModels, getFaceApi } from '@/lib/face-api-loader'
+import { storePendingUpload } from '@/lib/pending-uploads'
 
 type ScanState =
   | 'loading_models'
@@ -183,6 +184,18 @@ export function FaceScan({ passportFile, onMatchResult }: FaceScanProps) {
 
       if (dist < MATCH_THRESHOLD) {
         setState('match')
+        // Save selfie image to pending uploads for later storage
+        try {
+          const blob = await new Promise<Blob | null>((resolve) =>
+            canvas.toBlob(resolve, 'image/jpeg', 0.85)
+          )
+          if (blob) {
+            const selfieFile = new File([blob], 'face-verification-selfie.jpg', { type: 'image/jpeg' })
+            await storePendingUpload('selfie', selfieFile)
+          }
+        } catch {
+          // Non-critical — selfie saving is optional
+        }
         onMatchResultRef.current({ matched: true, distance: dist })
       } else {
         setState('no_match')

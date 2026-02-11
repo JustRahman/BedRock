@@ -10,8 +10,8 @@ interface TrustScoreData {
   total_score: number
   identity_score: number
   business_score: number
-  digital_lineage_score: number
-  network_score: number
+  financial_score: number
+  social_score: number
   status: 'elite' | 'approved' | 'review_needed' | 'conditional' | 'not_eligible'
 }
 
@@ -71,26 +71,32 @@ export default function DashboardPage() {
     async function fetchData() {
       try {
         // Step 1: Ensure founder exists (auto-create if missing)
-        // Also pass any unsaved trust score from localStorage
+        // Also pass any unsaved onboarding data from localStorage
         let trustScorePayload = undefined
+        let onboardingPayload = undefined
         try {
           const storedScore = localStorage.getItem('trustScoreResult')
           if (storedScore) trustScorePayload = JSON.parse(storedScore)
+          const storedData = localStorage.getItem('onboardingData')
+          if (storedData) onboardingPayload = JSON.parse(storedData)
         } catch { /* ignore */ }
 
-        await fetch('/api/founders/ensure', {
+        const ensureRes = await fetch('/api/founders/ensure', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             trustScore: trustScorePayload,
+            onboardingData: onboardingPayload,
           }),
         })
 
-        // Clean up localStorage after saving
-        try {
-          localStorage.removeItem('trustScoreResult')
-          localStorage.removeItem('onboardingData')
-        } catch { /* ignore */ }
+        // Only clean up after confirmed save
+        if (ensureRes.ok) {
+          try {
+            localStorage.removeItem('trustScoreResult')
+            localStorage.removeItem('onboardingData')
+          } catch { /* ignore */ }
+        }
 
         // Step 2: Fetch all dashboard data
         const [tsRes, docRes, compRes, coRes, bankRes] = await Promise.all([
@@ -328,10 +334,10 @@ export default function DashboardPage() {
               status={trustScore.status}
               statusLabel={statusLabels[trustScore.status]}
               breakdown={{
-                digitalLineage: trustScore.digital_lineage_score,
+                digitalLineage: trustScore.financial_score,
                 business: trustScore.business_score,
                 identity: trustScore.identity_score,
-                network: trustScore.network_score,
+                network: trustScore.social_score,
               }}
             />
           ) : (

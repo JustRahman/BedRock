@@ -282,14 +282,14 @@ function SettingsPage() {
                     className: "mb-8",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "h-8 w-32 animate-pulse rounded bg-gray-200"
+                            className: "h-8 w-32 animate-pulse rounded bg-muted"
                         }, void 0, false, {
                             fileName: "[project]/src/app/dashboard/settings/page.tsx",
                             lineNumber: 93,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "mt-2 h-4 w-64 animate-pulse rounded bg-gray-200"
+                            className: "mt-2 h-4 w-64 animate-pulse rounded bg-muted"
                         }, void 0, false, {
                             fileName: "[project]/src/app/dashboard/settings/page.tsx",
                             lineNumber: 94,
@@ -305,7 +305,7 @@ function SettingsPage() {
                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
                         className: "p-6",
                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "h-64 animate-pulse rounded bg-gray-100"
+                            className: "h-64 animate-pulse rounded bg-muted"
                         }, void 0, false, {
                             fileName: "[project]/src/app/dashboard/settings/page.tsx",
                             lineNumber: 98,
@@ -335,7 +335,7 @@ function SettingsPage() {
                     className: "mb-8",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-                            className: "text-2xl font-bold text-gray-900",
+                            className: "text-xl sm:text-2xl font-bold text-foreground",
                             children: "Settings"
                         }, void 0, false, {
                             fileName: "[project]/src/app/dashboard/settings/page.tsx",
@@ -343,7 +343,7 @@ function SettingsPage() {
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                            className: "mt-1 text-sm text-gray-500",
+                            className: "mt-1 text-sm text-muted-foreground",
                             children: "Manage your account settings."
                         }, void 0, false, {
                             fileName: "[project]/src/app/dashboard/settings/page.tsx",
@@ -361,14 +361,14 @@ function SettingsPage() {
                         className: "py-12 text-center",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$settings$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Settings$3e$__["Settings"], {
-                                className: "mx-auto mb-3 h-10 w-10 text-gray-300"
+                                className: "mx-auto mb-3 h-10 w-10 text-muted-foreground/50"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/dashboard/settings/page.tsx",
                                 lineNumber: 114,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                className: "font-medium text-gray-900",
+                                className: "font-medium text-foreground",
                                 children: "Profile not found"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/dashboard/settings/page.tsx",
@@ -376,7 +376,7 @@ function SettingsPage() {
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                className: "mt-1 text-sm text-gray-500",
+                                className: "mt-1 text-sm text-muted-foreground",
                                 children: "Complete the onboarding process to set up your profile."
                             }, void 0, false, {
                                 fileName: "[project]/src/app/dashboard/settings/page.tsx",
@@ -407,7 +407,7 @@ function SettingsPage() {
                 className: "mb-8",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-                        className: "text-2xl font-bold text-gray-900",
+                        className: "text-2xl font-bold text-foreground",
                         children: "Settings"
                     }, void 0, false, {
                         fileName: "[project]/src/app/dashboard/settings/page.tsx",
@@ -415,7 +415,7 @@ function SettingsPage() {
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                        className: "mt-1 text-sm text-gray-500",
+                        className: "mt-1 text-sm text-muted-foreground",
                         children: "Manage your account settings and profile information."
                     }, void 0, false, {
                         fileName: "[project]/src/app/dashboard/settings/page.tsx",
@@ -498,14 +498,14 @@ function SettingsPage() {
                                             id: "email",
                                             value: profile.email,
                                             disabled: true,
-                                            className: "bg-gray-50"
+                                            className: "bg-muted/50"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/dashboard/settings/page.tsx",
                                             lineNumber: 155,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                            className: "text-xs text-gray-400",
+                                            className: "text-xs text-muted-foreground",
                                             children: "Email cannot be changed here. Contact support if needed."
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/dashboard/settings/page.tsx",
@@ -558,7 +558,7 @@ function SettingsPage() {
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
                                             value: profile.country_of_origin,
                                             disabled: true,
-                                            className: "bg-gray-50"
+                                            className: "bg-muted/50"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/dashboard/settings/page.tsx",
                                             lineNumber: 178,
@@ -583,7 +583,7 @@ function SettingsPage() {
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
                                             value: profile.country_of_residence,
                                             disabled: true,
-                                            className: "bg-gray-50"
+                                            className: "bg-muted/50"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/dashboard/settings/page.tsx",
                                             lineNumber: 183,
@@ -596,7 +596,7 @@ function SettingsPage() {
                                     columnNumber: 13
                                 }, this),
                                 error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                    className: "text-sm text-red-600",
+                                    className: "text-sm text-red-400",
                                     children: error
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/dashboard/settings/page.tsx",

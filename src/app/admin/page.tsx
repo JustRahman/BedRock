@@ -24,7 +24,7 @@ interface DeadlineRow {
 }
 
 export default async function AdminDashboardPage() {
-  const supabase = await createServiceClient()
+  const supabase = createServiceClient()
 
   // Fetch stats in parallel
   const [

@@ -281,6 +281,15 @@ type RouteHandlerConfig<Route extends AppRouteHandlerRoutes = AppRouteHandlerRou
   type __Unused = __Check
 }
 
+// Validate ../../../src/app/api/auth/complete-registration/route.ts
+{
+  type __IsExpected<Specific extends RouteHandlerConfig<"/api/auth/complete-registration">> = Specific
+  const handler = {} as typeof import("../../../src/app/api/auth/complete-registration/route.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
 // Validate ../../../src/app/api/bank-applications/route.ts
 {
   type __IsExpected<Specific extends RouteHandlerConfig<"/api/bank-applications">> = Specific
@@ -321,6 +330,15 @@ type RouteHandlerConfig<Route extends AppRouteHandlerRoutes = AppRouteHandlerRou
 {
   type __IsExpected<Specific extends RouteHandlerConfig<"/api/email/welcome">> = Specific
   const handler = {} as typeof import("../../../src/app/api/email/welcome/route.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../../src/app/api/founders/ensure/route.ts
+{
+  type __IsExpected<Specific extends RouteHandlerConfig<"/api/founders/ensure">> = Specific
+  const handler = {} as typeof import("../../../src/app/api/founders/ensure/route.js")
   type __Check = __IsExpected<typeof handler>
   // @ts-ignore
   type __Unused = __Check

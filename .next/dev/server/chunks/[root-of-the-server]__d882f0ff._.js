@@ -145,7 +145,9 @@ function generateSessionId() {
     return (0, __TURBOPACK__imported__module__$5b$externals$5d2f$crypto__$5b$external$5d$__$28$crypto$2c$__cjs$29$__["randomBytes"])(32).toString('hex');
 }
 function getAppUrl() {
-    return ("TURBOPACK compile-time value", "http://localhost:3000") || 'http://localhost:3000';
+    // APP_URL is a runtime env var (read from .env.production by Docker at start)
+    // NEXT_PUBLIC_APP_URL is baked at build time — wrong when building locally
+    return process.env.APP_URL || ("TURBOPACK compile-time value", "http://localhost:3000") || 'http://localhost:3000';
 }
 }),
 "[project]/src/lib/oauth/github.ts [app-route] (ecmascript)", ((__turbopack_context__) => {

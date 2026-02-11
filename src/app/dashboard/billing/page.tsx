@@ -75,6 +75,13 @@ export default function BillingPage() {
         </p>
       </div>
 
+      {/* Test Mode Banner */}
+      <div className="mb-6 rounded-lg border border-yellow-500/20 bg-yellow-500/5 px-4 py-3">
+        <p className="text-sm text-yellow-300">
+          <span className="font-medium">Test Mode</span> — Payments are running in Stripe sandbox. No real charges will be made.
+        </p>
+      </div>
+
       {/* Current Plan */}
       <Card className="mb-6">
         <CardHeader>

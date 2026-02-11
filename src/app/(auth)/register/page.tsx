@@ -109,9 +109,10 @@ export default function RegisterPage() {
       }
 
       // Create founder record via server API (bypasses RLS — no session after signUp)
+      let registrationSaved = false
       try {
         const userId = signUpData?.user?.id
-        await fetch('/api/auth/complete-registration', {
+        const regRes = await fetch('/api/auth/complete-registration', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -125,18 +126,21 @@ export default function RegisterPage() {
             oauthVerifications: oauthVerifications.length > 0 ? oauthVerifications : undefined,
           }),
         })
+        registrationSaved = regRes.ok
       } catch {
-        // Non-critical — account was still created, data can be saved later
         console.error('Failed to save registration data')
       }
 
-      // Clean up storage
-      try {
-        localStorage.removeItem('onboardingData')
-        localStorage.removeItem('trustScoreResult')
-        sessionStorage.removeItem('onboardingData')
-        sessionStorage.removeItem('trustScoreResult')
-      } catch { /* ignore */ }
+      // Only clean up storage if server confirmed the save — otherwise
+      // the dashboard ensure endpoint will retry from localStorage
+      if (registrationSaved) {
+        try {
+          localStorage.removeItem('onboardingData')
+          localStorage.removeItem('trustScoreResult')
+          sessionStorage.removeItem('onboardingData')
+          sessionStorage.removeItem('trustScoreResult')
+        } catch { /* ignore */ }
+      }
 
       // Send welcome email (non-blocking)
       try {

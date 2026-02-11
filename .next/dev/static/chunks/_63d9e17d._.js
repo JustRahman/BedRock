@@ -29,13 +29,13 @@ const statusConfig = {
 function StatusCard({ title, icon: Icon, status, statusText, description }) {
     const config = statusConfig[status];
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "rounded-xl border border-border bg-card p-5",
+        className: "rounded-xl border border-border bg-card p-3 sm:p-5",
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "flex items-center justify-between mb-3",
+                className: "flex items-center justify-between mb-2 sm:mb-3",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                        className: "text-sm font-medium text-zinc-400",
+                        className: "text-xs sm:text-sm font-medium text-zinc-400",
                         children: title
                     }, void 0, false, {
                         fileName: "[project]/src/components/dashboard/status-card.tsx",
@@ -43,7 +43,7 @@ function StatusCard({ title, icon: Icon, status, statusText, description }) {
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(Icon, {
-                        className: "h-5 w-5 text-zinc-600"
+                        className: "h-4 w-4 sm:h-5 sm:w-5 text-zinc-600"
                     }, void 0, false, {
                         fileName: "[project]/src/components/dashboard/status-card.tsx",
                         lineNumber: 43,
@@ -56,9 +56,9 @@ function StatusCard({ title, icon: Icon, status, statusText, description }) {
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "flex items-center gap-2 mb-2",
+                className: "flex items-center gap-2 mb-1.5 sm:mb-2",
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                    className: `inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium ${config.badge}`,
+                    className: `inline-flex items-center rounded-full border px-2 py-0.5 text-[10px] sm:text-xs font-medium ${config.badge}`,
                     children: config.label
                 }, void 0, false, {
                     fileName: "[project]/src/components/dashboard/status-card.tsx",
@@ -71,7 +71,7 @@ function StatusCard({ title, icon: Icon, status, statusText, description }) {
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                className: "text-lg font-semibold text-white",
+                className: "text-sm sm:text-lg font-semibold text-white truncate",
                 children: statusText
             }, void 0, false, {
                 fileName: "[project]/src/components/dashboard/status-card.tsx",
@@ -79,7 +79,7 @@ function StatusCard({ title, icon: Icon, status, statusText, description }) {
                 columnNumber: 7
             }, this),
             description ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                className: "mt-1 text-sm text-zinc-500",
+                className: "mt-1 text-xs sm:text-sm text-zinc-500 truncate",
                 children: description
             }, void 0, false, {
                 fileName: "[project]/src/components/dashboard/status-card.tsx",
@@ -178,13 +178,13 @@ function ActionItems({ items }) {
                     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: `rounded-lg border border-border border-l-4 bg-muted/40 p-4 ${priorityColors[item.priority]}`,
                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "flex items-start justify-between gap-4",
+                            className: "flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4",
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     className: "flex items-start gap-3",
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(Icon, {
-                                            className: "mt-0.5 h-5 w-5 text-zinc-500"
+                                            className: "mt-0.5 h-5 w-5 shrink-0 text-zinc-500"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/action-items.tsx",
                                             lineNumber: 56,
@@ -225,7 +225,7 @@ function ActionItems({ items }) {
                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
                                         size: "sm",
                                         variant: "ghost",
-                                        className: "shrink-0 gap-1 text-blue-400 hover:text-blue-300 hover:bg-blue-500/10",
+                                        className: "shrink-0 gap-1 text-blue-400 hover:text-blue-300 hover:bg-blue-500/10 w-full sm:w-auto",
                                         children: [
                                             "Take Action",
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$arrow$2d$right$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ArrowRight$3e$__["ArrowRight"], {
@@ -642,7 +642,8 @@ var _s = __turbopack_context__.k.signature();
 const typeLabels = {
     passport: 'Passport',
     local_id: 'Local ID',
-    address_proof: 'Address Proof'
+    address_proof: 'Address Proof',
+    selfie: 'Face Verification Selfie'
 };
 function PendingUploadBanner({ onUploadsComplete }) {
     _s();
@@ -660,6 +661,14 @@ function PendingUploadBanner({ onUploadsComplete }) {
                     setStatus('idle');
                     return;
                 }
+                // Ensure founder exists before uploading documents
+                await fetch('/api/founders/ensure', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({})
+                });
                 const results = [];
                 for (const upload of uploads){
                     const formData = new FormData();
@@ -676,6 +685,12 @@ function PendingUploadBanner({ onUploadsComplete }) {
                     });
                     if (!res.ok) {
                         const data = await res.json();
+                        // If founder doesn't exist yet, silently clear pending uploads — they'll upload manually later
+                        if (res.status === 404 || data.error?.includes('not found') || data.error?.includes('Founder')) {
+                            await (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$pending$2d$uploads$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["clearPendingUploads"])();
+                            setStatus('idle');
+                            return;
+                        }
                         throw new Error(data.error || `Failed to upload ${typeLabels[upload.type]}`);
                     }
                     const data = await res.json();
@@ -728,7 +743,7 @@ function PendingUploadBanner({ onUploadsComplete }) {
                         className: "h-5 w-5 animate-spin text-blue-400"
                     }, void 0, false, {
                         fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                        lineNumber: 93,
+                        lineNumber: 107,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -738,7 +753,7 @@ function PendingUploadBanner({ onUploadsComplete }) {
                                 children: "Uploading and verifying your documents..."
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                                lineNumber: 95,
+                                lineNumber: 109,
                                 columnNumber: 13
                             }, this),
                             uploadedDocs.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -749,142 +764,8 @@ function PendingUploadBanner({ onUploadsComplete }) {
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                                lineNumber: 97,
+                                lineNumber: 111,
                                 columnNumber: 15
-                            }, this)
-                        ]
-                    }, void 0, true, {
-                        fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                        lineNumber: 94,
-                        columnNumber: 11
-                    }, this)
-                ]
-            }, void 0, true, {
-                fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                lineNumber: 92,
-                columnNumber: 9
-            }, this),
-            status === 'success' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "flex items-start gap-3",
-                children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$check$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckCircle2$3e$__["CheckCircle2"], {
-                        className: "mt-0.5 h-5 w-5 text-emerald-400"
-                    }, void 0, false, {
-                        fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                        lineNumber: 107,
-                        columnNumber: 11
-                    }, this),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                className: "font-medium text-zinc-200",
-                                children: "Documents uploaded successfully!"
-                            }, void 0, false, {
-                                fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                                lineNumber: 109,
-                                columnNumber: 13
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "mt-1 space-y-1",
-                                children: uploadedDocs.map((doc, i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "flex items-center gap-2 text-sm",
-                                        children: [
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                className: "text-zinc-300",
-                                                children: doc.label
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                                                lineNumber: 113,
-                                                columnNumber: 19
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                className: "text-zinc-600",
-                                                children: "—"
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                                                lineNumber: 114,
-                                                columnNumber: 19
-                                            }, this),
-                                            doc.verificationStatus === 'verified' ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                className: "flex items-center gap-1 text-emerald-400",
-                                                children: [
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$check$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckCircle2$3e$__["CheckCircle2"], {
-                                                        className: "h-3.5 w-3.5"
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                                                        lineNumber: 117,
-                                                        columnNumber: 23
-                                                    }, this),
-                                                    "Verified"
-                                                ]
-                                            }, void 0, true, {
-                                                fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                                                lineNumber: 116,
-                                                columnNumber: 21
-                                            }, this) : doc.verificationStatus === 'review_needed' ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                className: "flex items-center gap-1 text-orange-400",
-                                                children: [
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$triangle$2d$alert$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__AlertTriangle$3e$__["AlertTriangle"], {
-                                                        className: "h-3.5 w-3.5"
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                                                        lineNumber: 122,
-                                                        columnNumber: 23
-                                                    }, this),
-                                                    "Review needed"
-                                                ]
-                                            }, void 0, true, {
-                                                fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                                                lineNumber: 121,
-                                                columnNumber: 21
-                                            }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                className: "flex items-center gap-1 text-zinc-500",
-                                                children: [
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$clock$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Clock$3e$__["Clock"], {
-                                                        className: "h-3.5 w-3.5"
-                                                    }, void 0, false, {
-                                                        fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                                                        lineNumber: 127,
-                                                        columnNumber: 23
-                                                    }, this),
-                                                    "Pending review"
-                                                ]
-                                            }, void 0, true, {
-                                                fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                                                lineNumber: 126,
-                                                columnNumber: 21
-                                            }, this)
-                                        ]
-                                    }, i, true, {
-                                        fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                                        lineNumber: 112,
-                                        columnNumber: 17
-                                    }, this))
-                            }, void 0, false, {
-                                fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                                lineNumber: 110,
-                                columnNumber: 13
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                className: "mt-2 text-sm text-zinc-500",
-                                children: [
-                                    "View them on the",
-                                    ' ',
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
-                                        href: "/dashboard/documents",
-                                        className: "text-blue-400 underline hover:text-blue-300",
-                                        children: "Documents page"
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                                        lineNumber: 136,
-                                        columnNumber: 15
-                                    }, this),
-                                    "."
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                                lineNumber: 134,
-                                columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
@@ -898,6 +779,140 @@ function PendingUploadBanner({ onUploadsComplete }) {
                 lineNumber: 106,
                 columnNumber: 9
             }, this),
+            status === 'success' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "flex items-start gap-3",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$check$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckCircle2$3e$__["CheckCircle2"], {
+                        className: "mt-0.5 h-5 w-5 text-emerald-400"
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
+                        lineNumber: 121,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                className: "font-medium text-zinc-200",
+                                children: "Documents uploaded successfully!"
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
+                                lineNumber: 123,
+                                columnNumber: 13
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "mt-1 space-y-1",
+                                children: uploadedDocs.map((doc, i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "flex items-center gap-2 text-sm",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                className: "text-zinc-300",
+                                                children: doc.label
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
+                                                lineNumber: 127,
+                                                columnNumber: 19
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                className: "text-zinc-600",
+                                                children: "—"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
+                                                lineNumber: 128,
+                                                columnNumber: 19
+                                            }, this),
+                                            doc.verificationStatus === 'verified' ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                className: "flex items-center gap-1 text-emerald-400",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$check$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckCircle2$3e$__["CheckCircle2"], {
+                                                        className: "h-3.5 w-3.5"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
+                                                        lineNumber: 131,
+                                                        columnNumber: 23
+                                                    }, this),
+                                                    "Verified"
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
+                                                lineNumber: 130,
+                                                columnNumber: 21
+                                            }, this) : doc.verificationStatus === 'review_needed' ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                className: "flex items-center gap-1 text-orange-400",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$triangle$2d$alert$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__AlertTriangle$3e$__["AlertTriangle"], {
+                                                        className: "h-3.5 w-3.5"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
+                                                        lineNumber: 136,
+                                                        columnNumber: 23
+                                                    }, this),
+                                                    "Review needed"
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
+                                                lineNumber: 135,
+                                                columnNumber: 21
+                                            }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                className: "flex items-center gap-1 text-zinc-500",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$clock$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Clock$3e$__["Clock"], {
+                                                        className: "h-3.5 w-3.5"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
+                                                        lineNumber: 141,
+                                                        columnNumber: 23
+                                                    }, this),
+                                                    "Pending review"
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
+                                                lineNumber: 140,
+                                                columnNumber: 21
+                                            }, this)
+                                        ]
+                                    }, i, true, {
+                                        fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
+                                        lineNumber: 126,
+                                        columnNumber: 17
+                                    }, this))
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
+                                lineNumber: 124,
+                                columnNumber: 13
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                className: "mt-2 text-sm text-zinc-500",
+                                children: [
+                                    "View them on the",
+                                    ' ',
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
+                                        href: "/dashboard/documents",
+                                        className: "text-blue-400 underline hover:text-blue-300",
+                                        children: "Documents page"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
+                                        lineNumber: 150,
+                                        columnNumber: 15
+                                    }, this),
+                                    "."
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
+                                lineNumber: 148,
+                                columnNumber: 13
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
+                        lineNumber: 122,
+                        columnNumber: 11
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
+                lineNumber: 120,
+                columnNumber: 9
+            }, this),
             status === 'error' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "flex items-center justify-between gap-3",
                 children: [
@@ -908,7 +923,7 @@ function PendingUploadBanner({ onUploadsComplete }) {
                                 className: "h-5 w-5 text-orange-400"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                                lineNumber: 145,
+                                lineNumber: 159,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -918,7 +933,7 @@ function PendingUploadBanner({ onUploadsComplete }) {
                                         children: "Upload failed"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                                        lineNumber: 147,
+                                        lineNumber: 161,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -926,19 +941,19 @@ function PendingUploadBanner({ onUploadsComplete }) {
                                         children: errorMsg
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                                        lineNumber: 148,
+                                        lineNumber: 162,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                                lineNumber: 146,
+                                lineNumber: 160,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                        lineNumber: 144,
+                        lineNumber: 158,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -951,26 +966,26 @@ function PendingUploadBanner({ onUploadsComplete }) {
                                 className: "h-4 w-4"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                                lineNumber: 157,
+                                lineNumber: 171,
                                 columnNumber: 13
                             }, this),
                             "Retry"
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                        lineNumber: 151,
+                        lineNumber: 165,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                lineNumber: 143,
+                lineNumber: 157,
                 columnNumber: 9
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-        lineNumber: 90,
+        lineNumber: 104,
         columnNumber: 5
     }, this);
 }
@@ -1039,6 +1054,34 @@ function DashboardPage() {
         "DashboardPage.useEffect": ()=>{
             async function fetchData() {
                 try {
+                    // Step 1: Ensure founder exists (auto-create if missing)
+                    // Also pass any unsaved onboarding data from localStorage
+                    let trustScorePayload = undefined;
+                    let onboardingPayload = undefined;
+                    try {
+                        const storedScore = localStorage.getItem('trustScoreResult');
+                        if (storedScore) trustScorePayload = JSON.parse(storedScore);
+                        const storedData = localStorage.getItem('onboardingData');
+                        if (storedData) onboardingPayload = JSON.parse(storedData);
+                    } catch  {}
+                    const ensureRes = await fetch('/api/founders/ensure', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            trustScore: trustScorePayload,
+                            onboardingData: onboardingPayload
+                        })
+                    });
+                    // Only clean up after confirmed save
+                    if (ensureRes.ok) {
+                        try {
+                            localStorage.removeItem('trustScoreResult');
+                            localStorage.removeItem('onboardingData');
+                        } catch  {}
+                    }
+                    // Step 2: Fetch all dashboard data
                     const [tsRes, docRes, compRes, coRes, bankRes] = await Promise.all([
                         fetch('/api/trust-score'),
                         fetch('/api/documents'),
@@ -1087,20 +1130,20 @@ function DashboardPage() {
                             className: "h-8 w-48 animate-pulse rounded bg-muted"
                         }, void 0, false, {
                             fileName: "[project]/src/app/dashboard/page.tsx",
-                            lineNumber: 116,
+                            lineNumber: 145,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "mt-2 h-4 w-72 animate-pulse rounded bg-muted"
                         }, void 0, false, {
                             fileName: "[project]/src/app/dashboard/page.tsx",
-                            lineNumber: 117,
+                            lineNumber: 146,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/dashboard/page.tsx",
-                    lineNumber: 115,
+                    lineNumber: 144,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1113,23 +1156,23 @@ function DashboardPage() {
                                 className: "h-24 animate-pulse rounded bg-muted"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/dashboard/page.tsx",
-                                lineNumber: 122,
+                                lineNumber: 151,
                                 columnNumber: 15
                             }, this)
                         }, i, false, {
                             fileName: "[project]/src/app/dashboard/page.tsx",
-                            lineNumber: 121,
+                            lineNumber: 150,
                             columnNumber: 13
                         }, this))
                 }, void 0, false, {
                     fileName: "[project]/src/app/dashboard/page.tsx",
-                    lineNumber: 119,
+                    lineNumber: 148,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/app/dashboard/page.tsx",
-            lineNumber: 114,
+            lineNumber: 143,
             columnNumber: 7
         }, this);
     }
@@ -1221,18 +1264,18 @@ function DashboardPage() {
                 onUploadsComplete: refreshDocuments
             }, void 0, false, {
                 fileName: "[project]/src/app/dashboard/page.tsx",
-                lineNumber: 248,
+                lineNumber: 277,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "mb-8",
+                className: "mb-6 sm:mb-8",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-                        className: "text-2xl font-bold text-white",
+                        className: "text-xl sm:text-2xl font-bold text-white",
                         children: "Dashboard"
                     }, void 0, false, {
                         fileName: "[project]/src/app/dashboard/page.tsx",
-                        lineNumber: 251,
+                        lineNumber: 280,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1240,17 +1283,17 @@ function DashboardPage() {
                         children: "Welcome back! Here's an overview of your account status."
                     }, void 0, false, {
                         fileName: "[project]/src/app/dashboard/page.tsx",
-                        lineNumber: 252,
+                        lineNumber: 281,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/dashboard/page.tsx",
-                lineNumber: 250,
+                lineNumber: 279,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "mb-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4",
+                className: "mb-6 sm:mb-8 grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-4",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$dashboard$2f$status$2d$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["StatusCard"], {
                         title: "Trust Score",
@@ -1260,7 +1303,7 @@ function DashboardPage() {
                         description: trustScore ? statusLabels[trustScore.status] : 'Complete onboarding first'
                     }, void 0, false, {
                         fileName: "[project]/src/app/dashboard/page.tsx",
-                        lineNumber: 259,
+                        lineNumber: 288,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$dashboard$2f$status$2d$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["StatusCard"], {
@@ -1271,7 +1314,7 @@ function DashboardPage() {
                         description: company ? `${company.name}` : 'Start LLC formation'
                     }, void 0, false, {
                         fileName: "[project]/src/app/dashboard/page.tsx",
-                        lineNumber: 266,
+                        lineNumber: 295,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$dashboard$2f$status$2d$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["StatusCard"], {
@@ -1282,7 +1325,7 @@ function DashboardPage() {
                         description: overdueDeadlines > 0 ? `${overdueDeadlines} overdue` : 'All on track'
                     }, void 0, false, {
                         fileName: "[project]/src/app/dashboard/page.tsx",
-                        lineNumber: 277,
+                        lineNumber: 306,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$dashboard$2f$status$2d$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["StatusCard"], {
@@ -1293,13 +1336,13 @@ function DashboardPage() {
                         description: bankApp ? `${bankApp.bank_name || 'Bank'}` : 'Available after EIN'
                     }, void 0, false, {
                         fileName: "[project]/src/app/dashboard/page.tsx",
-                        lineNumber: 284,
+                        lineNumber: 313,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/dashboard/page.tsx",
-                lineNumber: 258,
+                lineNumber: 287,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1312,14 +1355,14 @@ function DashboardPage() {
                             status: trustScore.status,
                             statusLabel: statusLabels[trustScore.status],
                             breakdown: {
-                                digitalLineage: trustScore.digital_lineage_score,
+                                digitalLineage: trustScore.financial_score,
                                 business: trustScore.business_score,
                                 identity: trustScore.identity_score,
-                                network: trustScore.network_score
+                                network: trustScore.social_score
                             }
                         }, void 0, false, {
                             fileName: "[project]/src/app/dashboard/page.tsx",
-                            lineNumber: 303,
+                            lineNumber: 332,
                             columnNumber: 13
                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "rounded-xl border border-border bg-card py-12 text-center",
@@ -1328,7 +1371,7 @@ function DashboardPage() {
                                     className: "mx-auto mb-3 h-10 w-10 text-zinc-600"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/dashboard/page.tsx",
-                                    lineNumber: 316,
+                                    lineNumber: 345,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1336,7 +1379,7 @@ function DashboardPage() {
                                     children: "No Trust Score Yet"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/dashboard/page.tsx",
-                                    lineNumber: 317,
+                                    lineNumber: 346,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1344,18 +1387,18 @@ function DashboardPage() {
                                     children: "Complete the onboarding process to calculate your score."
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/dashboard/page.tsx",
-                                    lineNumber: 318,
+                                    lineNumber: 347,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/dashboard/page.tsx",
-                            lineNumber: 315,
+                            lineNumber: 344,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/app/dashboard/page.tsx",
-                        lineNumber: 301,
+                        lineNumber: 330,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1364,24 +1407,24 @@ function DashboardPage() {
                             items: actionItems
                         }, void 0, false, {
                             fileName: "[project]/src/app/dashboard/page.tsx",
-                            lineNumber: 327,
+                            lineNumber: 356,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/app/dashboard/page.tsx",
-                        lineNumber: 326,
+                        lineNumber: 355,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/dashboard/page.tsx",
-                lineNumber: 299,
+                lineNumber: 328,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/app/dashboard/page.tsx",
-        lineNumber: 247,
+        lineNumber: 276,
         columnNumber: 5
     }, this);
 }

@@ -35,8 +35,8 @@ export default function OnboardingResultPage() {
         try {
           const parsed = JSON.parse(storedResult)
           setResult(parsed)
-          // Auto-save for logged-in users
-          if (user) await saveTrustScore(supabase, user.id, parsed)
+          // Auto-save for logged-in users via server API (bypasses RLS)
+          if (user) await saveTrustScoreViaAPI(parsed)
           setIsLoading(false)
           return
         } catch {
@@ -50,8 +50,8 @@ export default function OnboardingResultPage() {
           const data = JSON.parse(storedData)
           const calculated = calculateTrustScore(data)
           setResult(calculated)
-          // Auto-save for logged-in users
-          if (user) await saveTrustScore(supabase, user.id, calculated)
+          // Auto-save for logged-in users via server API (bypasses RLS)
+          if (user) await saveTrustScoreViaAPI(calculated)
           setIsLoading(false)
           return
         } catch {
@@ -62,48 +62,46 @@ export default function OnboardingResultPage() {
       router.push('/onboarding')
     }
 
-    async function saveTrustScore(supabase: ReturnType<typeof createClient>, userId: string, score: TrustScoreResult) {
+    async function saveTrustScoreViaAPI(score: TrustScoreResult) {
       setSavingScore(true)
       try {
-        // Get or create founder
-        const { data: founder } = await (supabase
-          .from('founders') as ReturnType<typeof supabase.from>)
-          .select('id')
-          .eq('user_id', userId)
-          .single()
+        // Load the full onboarding data to save all verifications
+        const onboardingRaw = sessionStorage.getItem('onboardingData') || localStorage.getItem('onboardingData')
+        const onboardingData = onboardingRaw ? JSON.parse(onboardingRaw) : null
 
-        if (!founder) {
-          setSavingScore(false)
-          return
+        // Collect OAuth data from sessionStorage
+        const oauthData: Record<string, unknown> = {}
+        try {
+          const gh = sessionStorage.getItem('oauth_github_data') || localStorage.getItem('oauth_github_data')
+          const li = sessionStorage.getItem('oauth_linkedin_data') || localStorage.getItem('oauth_linkedin_data')
+          const st = sessionStorage.getItem('oauth_stripe_data') || localStorage.getItem('oauth_stripe_data')
+          if (gh) oauthData.github = JSON.parse(gh)
+          if (li) oauthData.linkedin = JSON.parse(li)
+          if (st) oauthData.stripe = JSON.parse(st)
+        } catch { /* ignore */ }
+
+        const res = await fetch('/api/founders/ensure', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            trustScore: score,
+            onboardingData,
+            oauthData: Object.keys(oauthData).length > 0 ? oauthData : undefined,
+          }),
+        })
+
+        if (res.ok) {
+          setScoreSaved(true)
+          // Clean up storage only after confirmed save
+          try {
+            sessionStorage.removeItem('onboardingData')
+            sessionStorage.removeItem('trustScoreResult')
+            localStorage.removeItem('onboardingData')
+            localStorage.removeItem('trustScoreResult')
+          } catch { /* ignore */ }
         }
-
-        const founderId = (founder as { id: string }).id
-
-        // Upsert trust score
-        await (supabase.from('trust_scores') as ReturnType<typeof supabase.from>)
-          .upsert({
-            founder_id: founderId,
-            total_score: score.totalScore || 0,
-            identity_score: score.identityScore || 0,
-            business_score: score.businessScore || 0,
-            digital_lineage_score: score.digitalLineageScore || 0,
-            network_score: score.networkScore || 0,
-            country_adjustment: score.countryAdjustment || 0,
-            status: score.status || 'review_needed',
-            score_breakdown: score.breakdown || {},
-            version: 2,
-          }, { onConflict: 'founder_id' })
-
-        // Mark onboarding as completed
-        await (supabase.from('founders') as ReturnType<typeof supabase.from>)
-          .update({ onboarding_completed: true })
-          .eq('user_id', userId)
-
-        setScoreSaved(true)
-        sessionStorage.removeItem('onboardingData')
-        sessionStorage.removeItem('trustScoreResult')
       } catch {
-        // Non-critical
+        // Non-critical — dashboard will retry from localStorage
       } finally {
         setSavingScore(false)
       }
