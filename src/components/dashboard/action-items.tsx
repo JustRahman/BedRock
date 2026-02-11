@@ -1,4 +1,3 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { ArrowRight, AlertCircle, FileText, Calendar, CreditCard } from 'lucide-react'
 import Link from 'next/link'
@@ -20,9 +19,9 @@ const iconMap = {
 }
 
 const priorityColors = {
-  high: 'border-l-red-500',
-  medium: 'border-l-yellow-500',
-  low: 'border-l-blue-500',
+  high: 'border-l-red-500/60',
+  medium: 'border-l-yellow-500/60',
+  low: 'border-l-blue-500/60',
 }
 
 interface ActionItemsProps {
@@ -32,42 +31,40 @@ interface ActionItemsProps {
 export function ActionItems({ items }: ActionItemsProps) {
   if (items.length === 0) {
     return (
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg">Action Items</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-sm text-gray-500">
-            You&apos;re all caught up! No pending actions.
-          </p>
-        </CardContent>
-      </Card>
+      <div className="rounded-xl border border-zinc-800 bg-zinc-900/60 p-6">
+        <h3 className="text-lg font-semibold text-white mb-3">Action Items</h3>
+        <p className="text-sm text-zinc-500">
+          You&apos;re all caught up! No pending actions.
+        </p>
+      </div>
     )
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="text-lg">Action Items</CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
+    <div className="rounded-xl border border-zinc-800 bg-zinc-900/60 p-6">
+      <h3 className="text-lg font-semibold text-white mb-4">Action Items</h3>
+      <div className="space-y-3">
         {items.map((item) => {
           const Icon = iconMap[item.icon]
           return (
             <div
               key={item.id}
-              className={`rounded-lg border border-l-4 bg-gray-50 p-4 ${priorityColors[item.priority]}`}
+              className={`rounded-lg border border-zinc-800/80 border-l-4 bg-zinc-800/30 p-4 ${priorityColors[item.priority]}`}
             >
               <div className="flex items-start justify-between gap-4">
                 <div className="flex items-start gap-3">
-                  <Icon className="mt-0.5 h-5 w-5 text-gray-400" />
+                  <Icon className="mt-0.5 h-5 w-5 text-zinc-500" />
                   <div>
-                    <p className="font-medium text-gray-900">{item.title}</p>
-                    <p className="mt-1 text-sm text-gray-500">{item.description}</p>
+                    <p className="font-medium text-zinc-200">{item.title}</p>
+                    <p className="mt-1 text-sm text-zinc-500">{item.description}</p>
                   </div>
                 </div>
                 <Link href={item.href}>
-                  <Button size="sm" variant="ghost" className="shrink-0 gap-1">
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    className="shrink-0 gap-1 text-blue-400 hover:text-blue-300 hover:bg-blue-500/10"
+                  >
                     Take Action
                     <ArrowRight className="h-4 w-4" />
                   </Button>
@@ -76,12 +73,11 @@ export function ActionItems({ items }: ActionItemsProps) {
             </div>
           )
         })}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   )
 }
 
-// Mock data for demonstration
 export const mockActionItems: ActionItem[] = [
   {
     id: '1',

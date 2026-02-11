@@ -5,7 +5,6 @@ import Link from 'next/link'
 import { FileText, Calendar, Shield, Building2, Landmark } from 'lucide-react'
 import { StatusCard, ActionItems, TrustScoreCard } from '@/components/dashboard'
 import { PendingUploadBanner } from '@/components/dashboard/pending-upload-banner'
-import { Card, CardContent } from '@/components/ui/card'
 
 interface TrustScoreData {
   total_score: number
@@ -114,16 +113,14 @@ export default function DashboardPage() {
     return (
       <div>
         <div className="mb-8">
-          <div className="h-8 w-48 animate-pulse rounded bg-gray-200" />
-          <div className="mt-2 h-4 w-72 animate-pulse rounded bg-gray-200" />
+          <div className="h-8 w-48 animate-pulse rounded bg-zinc-800" />
+          <div className="mt-2 h-4 w-72 animate-pulse rounded bg-zinc-800" />
         </div>
         <div className="mb-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {[...Array(4)].map((_, i) => (
-            <Card key={i}>
-              <CardContent className="p-6">
-                <div className="h-24 animate-pulse rounded bg-gray-100" />
-              </CardContent>
-            </Card>
+            <div key={i} className="rounded-xl border border-zinc-800 bg-zinc-900/60 p-6">
+              <div className="h-24 animate-pulse rounded bg-zinc-800" />
+            </div>
           ))}
         </div>
       </div>
@@ -251,8 +248,8 @@ export default function DashboardPage() {
       <PendingUploadBanner onUploadsComplete={refreshDocuments} />
 
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-        <p className="mt-1 text-sm text-gray-500">
+        <h1 className="text-2xl font-bold text-white">Dashboard</h1>
+        <p className="mt-1 text-sm text-zinc-500">
           Welcome back! Here&apos;s an overview of your account status.
         </p>
       </div>
@@ -315,15 +312,13 @@ export default function DashboardPage() {
               }}
             />
           ) : (
-            <Card>
-              <CardContent className="py-12 text-center">
-                <Shield className="mx-auto mb-3 h-10 w-10 text-gray-300" />
-                <p className="font-medium text-gray-900">No Trust Score Yet</p>
-                <p className="mt-1 text-sm text-gray-500">
-                  Complete the onboarding process to calculate your score.
-                </p>
-              </CardContent>
-            </Card>
+            <div className="rounded-xl border border-zinc-800 bg-zinc-900/60 py-12 text-center">
+              <Shield className="mx-auto mb-3 h-10 w-10 text-zinc-600" />
+              <p className="font-medium text-white">No Trust Score Yet</p>
+              <p className="mt-1 text-sm text-zinc-500">
+                Complete the onboarding process to calculate your score.
+              </p>
+            </div>
           )}
         </div>
 

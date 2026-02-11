@@ -1,8 +1,8 @@
 {
-  "/api/oauth/github/connect/route": "app/api/oauth/github/connect/route.js",
-  "/api/oauth/linkedin/connect/route": "app/api/oauth/linkedin/connect/route.js",
-  "/api/oauth/stripe/connect/route": "app/api/oauth/stripe/connect/route.js",
-  "/api/verify/digital-presence/route": "app/api/verify/digital-presence/route.js",
-  "/onboarding/page": "app/onboarding/page.js",
-  "/page": "app/page.js"
+  "/api/bank-applications/route": "app/api/bank-applications/route.js",
+  "/api/companies/route": "app/api/companies/route.js",
+  "/api/compliance/route": "app/api/compliance/route.js",
+  "/api/documents/route": "app/api/documents/route.js",
+  "/api/trust-score/route": "app/api/trust-score/route.js",
+  "/dashboard/page": "app/dashboard/page.js"
 }

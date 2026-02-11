@@ -446,9 +446,41 @@ export function StepIdentity({ data, basicInfo: basicInfoProp, onNext, onBack }:
   }, [setValue])
 
   const onSubmit = (formData: IdentityFormData) => {
+    // Compute passport field match results
+    let passportNameMatch: boolean | undefined
+    let passportDobMatch: boolean | undefined
+    let passportGenderMatch: boolean | undefined
+    let passportNationalityMatch: boolean | undefined
+
+    if (formData.hasPassport && extractions.passport.data && basicInfo) {
+      const pd = extractions.passport.data
+      if (pd.fullName && basicInfo.fullName) {
+        passportNameMatch = namesMatch(String(pd.fullName), basicInfo.fullName) === 'match'
+      }
+      if (pd.dateOfBirth && basicInfo.dateOfBirth) {
+        passportDobMatch = datesMatch(String(pd.dateOfBirth), basicInfo.dateOfBirth) === 'match'
+      }
+      if (pd.gender && basicInfo.gender) {
+        passportGenderMatch = genderMatches(String(pd.gender), basicInfo.gender) === 'match'
+      }
+      if (pd.nationality && basicInfo.countryOfOrigin) {
+        passportNationalityMatch = nationalityMatches(String(pd.nationality), basicInfo.countryOfOrigin) === 'match'
+      }
+    }
+
+    // Determine if face was explicitly skipped (had passport but no match and not attempted)
+    const faceWasSkipped = formData.hasPassport &&
+      !faceMatchResult?.matched &&
+      faceMatchResult !== null // null = never shown, non-null with matched=false = skipped
+
     onNext({
       ...formData,
       hasLivenessCheck: formData.hasLivenessCheck ?? faceMatchResult?.matched ?? false,
+      faceSkipped: faceWasSkipped,
+      passportNameMatch,
+      passportDobMatch,
+      passportGenderMatch,
+      passportNationalityMatch,
       passportFile: files.passport,
       localIdFile: files.localId,
       addressProofFile: files.addressProof,

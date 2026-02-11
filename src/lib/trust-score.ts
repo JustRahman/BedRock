@@ -10,6 +10,11 @@ export interface TrustScoreInput {
     hasLocalId: boolean
     hasAddressProof: boolean
     hasLivenessCheck?: boolean
+    faceSkipped?: boolean
+    passportNameMatch?: boolean
+    passportDobMatch?: boolean
+    passportGenderMatch?: boolean
+    passportNationalityMatch?: boolean
   }
   codeHistory: {
     hasGithub: boolean
@@ -248,13 +253,45 @@ export function calculateTrustScore(input: TrustScoreInput): TrustScoreResult {
 
   // === IDENTITY VERIFICATION (20 pts) ===
 
-  // Passport: +8
+  // Passport: +2 base + up to +6 for matching fields (total 8)
   if (input.identity.hasPassport) {
-    breakdown.identity.items.push({ name: 'Passport Verified', points: 8, earned: true })
-    breakdown.identity.total += 8
+    breakdown.identity.items.push({ name: 'Passport Uploaded', points: 2, earned: true })
+    breakdown.identity.total += 2
+
+    const nameMatch = input.identity.passportNameMatch ?? true
+    const dobMatch = input.identity.passportDobMatch ?? true
+    const genderMatch = input.identity.passportGenderMatch ?? true
+    const nationalityMatch = input.identity.passportNationalityMatch ?? true
+
+    if (nameMatch) {
+      breakdown.identity.items.push({ name: 'Name Matches Passport', points: 2, earned: true })
+      breakdown.identity.total += 2
+    } else {
+      breakdown.identity.items.push({ name: 'Name Matches Passport', points: 2, earned: false })
+      improvements.push('Your name doesn\u2019t match your passport \u2014 update your profile or re-upload')
+    }
+    if (dobMatch) {
+      breakdown.identity.items.push({ name: 'DOB Matches Passport', points: 2, earned: true })
+      breakdown.identity.total += 2
+    } else {
+      breakdown.identity.items.push({ name: 'DOB Matches Passport', points: 2, earned: false })
+      improvements.push('Your date of birth doesn\u2019t match your passport')
+    }
+    if (genderMatch) {
+      breakdown.identity.items.push({ name: 'Gender Matches', points: 1, earned: true })
+      breakdown.identity.total += 1
+    } else {
+      breakdown.identity.items.push({ name: 'Gender Matches', points: 1, earned: false })
+    }
+    if (nationalityMatch) {
+      breakdown.identity.items.push({ name: 'Nationality Matches', points: 1, earned: true })
+      breakdown.identity.total += 1
+    } else {
+      breakdown.identity.items.push({ name: 'Nationality Matches', points: 1, earned: false })
+    }
   } else {
-    breakdown.identity.items.push({ name: 'Passport Verified', points: 8, earned: false })
-    improvements.push('Upload your passport to earn +8 points')
+    breakdown.identity.items.push({ name: 'Passport Uploaded', points: 8, earned: false })
+    improvements.push('Upload your passport to earn up to +8 points')
   }
 
   // Local ID: +5
@@ -266,12 +303,16 @@ export function calculateTrustScore(input: TrustScoreInput): TrustScoreResult {
     improvements.push('Upload a local ID to earn +5 points')
   }
 
-  // Liveness check: +4
+  // Liveness check: +4 matched, -2 if skipped
   if (input.identity.hasLivenessCheck) {
-    breakdown.identity.items.push({ name: 'Liveness Check', points: 4, earned: true })
+    breakdown.identity.items.push({ name: 'Face Verification', points: 4, earned: true })
     breakdown.identity.total += 4
+  } else if (input.identity.faceSkipped) {
+    breakdown.identity.items.push({ name: 'Face Verification Skipped', points: -2, earned: true })
+    breakdown.identity.total -= 2
+    improvements.push('Complete face verification to earn +4 points instead of -2 penalty')
   } else {
-    breakdown.identity.items.push({ name: 'Liveness Check', points: 4, earned: false })
+    breakdown.identity.items.push({ name: 'Face Verification', points: 4, earned: false })
   }
 
   // Address proof: +3
@@ -376,12 +417,12 @@ export function calculateTrustScore(input: TrustScoreInput): TrustScoreResult {
     statusDescription = 'Your application requires manual review. We may schedule a brief video call to verify your information.'
   } else if (totalScore >= 30) {
     status = 'conditional'
-    statusLabel = 'Conditional'
-    statusDescription = 'Significant additional verification is needed. Consider improving your Digital Lineage score.'
+    statusLabel = 'Almost There'
+    statusDescription = 'You\u2019re making progress! A few more verification steps will strengthen your application significantly.'
   } else {
     status = 'not_eligible'
-    statusLabel = 'Not Eligible'
-    statusDescription = 'You don\'t currently meet our minimum requirements. Build your Digital Lineage and try again.'
+    statusLabel = 'Getting Started'
+    statusDescription = 'Your trust profile needs more verification signals. Complete the steps below to strengthen your application \u2014 we\u2019re here to help you get approved.'
   }
 
   const topImprovements = improvements.slice(0, 5)

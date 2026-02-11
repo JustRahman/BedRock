@@ -36,6 +36,7 @@ const steps = [
 
 const STEP_STORAGE_KEY = 'onboarding_current_step'
 const BASIC_INFO_STORAGE_KEY = 'onboarding_basic_info'
+const STEP_DATA_STORAGE_KEY = 'onboarding_step_data'
 
 interface OnboardingData {
   basicInfo: Partial<BasicInfoFormData>
@@ -62,7 +63,7 @@ export default function OnboardingPage() {
     trustSignals: {},
   })
 
-  // Restore step and basicInfo from sessionStorage on mount (for OAuth redirects / refreshes)
+  // Restore all step data from sessionStorage on mount (survives OAuth redirects / refreshes)
   useEffect(() => {
     try {
       const savedStep = sessionStorage.getItem(STEP_STORAGE_KEY)
@@ -75,6 +76,18 @@ export default function OnboardingPage() {
       const savedBasicInfo = sessionStorage.getItem(BASIC_INFO_STORAGE_KEY)
       if (savedBasicInfo) {
         setData((prev) => ({ ...prev, basicInfo: JSON.parse(savedBasicInfo) }))
+      }
+      const savedStepData = sessionStorage.getItem(STEP_DATA_STORAGE_KEY)
+      if (savedStepData) {
+        const parsed = JSON.parse(savedStepData)
+        setData((prev) => ({
+          ...prev,
+          identity: parsed.identity ?? prev.identity,
+          codeHistory: parsed.codeHistory ?? prev.codeHistory,
+          professional: parsed.professional ?? prev.professional,
+          financial: parsed.financial ?? prev.financial,
+          digitalPresence: parsed.digitalPresence ?? prev.digitalPresence,
+        }))
       }
     } catch {
       // Ignore sessionStorage errors
@@ -92,6 +105,18 @@ export default function OnboardingPage() {
     }
   }, [])
 
+  // Persist step data to sessionStorage (survives OAuth redirects)
+  const saveStepData = useCallback((key: string, value: unknown) => {
+    try {
+      const existing = sessionStorage.getItem(STEP_DATA_STORAGE_KEY)
+      const parsed = existing ? JSON.parse(existing) : {}
+      // Strip File objects before saving (not serializable)
+      const serializable = JSON.parse(JSON.stringify(value))
+      parsed[key] = serializable
+      sessionStorage.setItem(STEP_DATA_STORAGE_KEY, JSON.stringify(parsed))
+    } catch { /* ignore */ }
+  }, [])
+
   const handleBasicInfoNext = (basicInfo: BasicInfoFormData) => {
     setData((prev) => ({ ...prev, basicInfo }))
     try {
@@ -102,26 +127,31 @@ export default function OnboardingPage() {
 
   const handleIdentityNext = (identity: IdentityFormData) => {
     setData((prev) => ({ ...prev, identity }))
+    saveStepData('identity', identity)
     updateStep(3)
   }
 
   const handleCodeHistoryNext = (codeHistory: CodeHistoryFormData) => {
     setData((prev) => ({ ...prev, codeHistory }))
+    saveStepData('codeHistory', codeHistory)
     updateStep(4)
   }
 
   const handleProfessionalNext = (professional: ProfessionalFormData) => {
     setData((prev) => ({ ...prev, professional }))
+    saveStepData('professional', professional)
     updateStep(5)
   }
 
   const handleFinancialNext = (financial: FinancialFormData) => {
     setData((prev) => ({ ...prev, financial }))
+    saveStepData('financial', financial)
     updateStep(6)
   }
 
   const handleDigitalPresenceNext = (digitalPresence: DigitalPresenceFormData) => {
     setData((prev) => ({ ...prev, digitalPresence }))
+    saveStepData('digitalPresence', digitalPresence)
     updateStep(7)
   }
 
@@ -183,6 +213,7 @@ export default function OnboardingPage() {
         sessionStorage.removeItem('identity_face_match')
         sessionStorage.removeItem('identity_basic_info')
         sessionStorage.removeItem(BASIC_INFO_STORAGE_KEY)
+        sessionStorage.removeItem(STEP_DATA_STORAGE_KEY)
       } catch {
         // Ignore cleanup errors
       }

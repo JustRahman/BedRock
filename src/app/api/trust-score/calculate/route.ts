@@ -41,6 +41,11 @@ export async function POST(request: Request) {
         hasLocalId: body.identity.hasLocalId || false,
         hasAddressProof: body.identity.hasAddressProof || false,
         hasLivenessCheck: body.identity.hasLivenessCheck || false,
+        faceSkipped: body.identity.faceSkipped || false,
+        passportNameMatch: body.identity.passportNameMatch,
+        passportDobMatch: body.identity.passportDobMatch,
+        passportGenderMatch: body.identity.passportGenderMatch,
+        passportNationalityMatch: body.identity.passportNationalityMatch,
       },
       codeHistory: {
         hasGithub: body.codeHistory.hasGithub || false,

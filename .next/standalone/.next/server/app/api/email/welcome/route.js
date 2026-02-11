@@ -31,7 +31,7 @@
       <li>Apply for your US bank account</li>
     </ol>
     <div style="text-align:center;">
-      <a href="https://trustlayer.app/dashboard"
+      <a href="http://localhost:3000/dashboard"
          style="display:inline-block;background:#2563eb;color:#ffffff;padding:12px 24px;border-radius:6px;text-decoration:none;font-weight:500;">
         Go to Dashboard
       </a>
@@ -50,7 +50,7 @@
       Your account is now active. You can begin the LLC formation process from your dashboard.
     </p>
     <div style="text-align:center;">
-      <a href="https://trustlayer.app/dashboard/formation"
+      <a href="http://localhost:3000/dashboard/formation"
          style="display:inline-block;background:#2563eb;color:#ffffff;padding:12px 24px;border-radius:6px;text-decoration:none;font-weight:500;">
         Start LLC Formation
       </a>
@@ -83,7 +83,7 @@
       Log in to your dashboard to see the full breakdown and next steps.
     </p>
     <div style="text-align:center;">
-      <a href="https://trustlayer.app/dashboard"
+      <a href="http://localhost:3000/dashboard"
          style="display:inline-block;background:#2563eb;color:#ffffff;padding:12px 24px;border-radius:6px;text-decoration:none;font-weight:500;">
         View Dashboard
       </a>

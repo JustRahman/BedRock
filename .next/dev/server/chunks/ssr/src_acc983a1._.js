@@ -662,6 +662,10 @@ const basicInfoSchema = __TURBOPACK__imported__module__$5b$project$5d2f$node_mod
     fullName: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["string"]().min(2, 'Name must be at least 2 characters'),
     email: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["string"]().email('Please enter a valid email address'),
     phone: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["string"]().min(6, 'Please enter a valid phone number'),
+    gender: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["enum"]([
+        'male',
+        'female'
+    ]).optional(),
     countryOfOrigin: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["string"]().min(1, 'Please select your country of origin'),
     countryOfResidence: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["string"]().min(1, 'Please select your country of residence'),
     dateOfBirth: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["string"]().optional(),
@@ -672,9 +676,17 @@ const identitySchema = __TURBOPACK__imported__module__$5b$project$5d2f$node_modu
     hasLocalId: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["boolean"](),
     hasAddressProof: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["boolean"](),
     hasLivenessCheck: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["boolean"]().optional(),
+    faceSkipped: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["boolean"]().optional(),
+    passportNameMatch: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["boolean"]().optional(),
+    passportDobMatch: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["boolean"]().optional(),
+    passportGenderMatch: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["boolean"]().optional(),
+    passportNationalityMatch: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["boolean"]().optional(),
     passportFile: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["any"]().optional(),
     localIdFile: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["any"]().optional(),
-    addressProofFile: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["any"]().optional()
+    addressProofFile: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["any"]().optional(),
+    passportData: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["any"]().optional(),
+    localIdData: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["any"]().optional(),
+    addressProofData: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["any"]().optional()
 });
 const codeHistorySchema = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["object"]({
     hasGithub: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["boolean"](),
@@ -696,16 +708,24 @@ const financialSchema = __TURBOPACK__imported__module__$5b$project$5d2f$node_mod
 const digitalPresenceSchema = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["object"]({
     website: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["string"]().url('Please enter a valid URL').or(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["string"]().length(0)).optional(),
     twitterHandle: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["string"]().optional(),
-    otherSocialProfiles: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["string"]().optional(),
-    appStoreUrl: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["string"]().url('Please enter a valid URL').or(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["string"]().length(0)).optional()
+    instagramHandle: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["string"]().optional(),
+    appStoreUrl: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["string"]().url('Please enter a valid URL').or(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["string"]().length(0)).optional(),
+    websiteVerified: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["boolean"]().optional(),
+    twitterVerified: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["boolean"]().optional(),
+    instagramVerified: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["boolean"]().optional(),
+    appStoreVerified: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["boolean"]().optional()
 });
 const trustSignalsSchema = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["object"]({
     hasReferral: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["boolean"](),
     referralCode: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["string"]().optional(),
+    referralVerified: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["boolean"]().optional(),
+    referrerName: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["string"]().optional(),
     hasUniversityEmail: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["boolean"](),
     universityEmail: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["string"]().email().optional().or(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["string"]().length(0)),
+    universityEmailVerified: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["boolean"]().optional(),
     hasAccelerator: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["boolean"](),
     acceleratorName: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["string"]().optional(),
+    acceleratorVerified: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["boolean"]().optional(),
     hasEmployerVerification: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["boolean"](),
     employerName: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["string"]().optional()
 });
@@ -1945,49 +1965,82 @@ function calculateTrustScore(input) {
         improvements.push('Connect your LinkedIn profile to earn up to +15 points');
     }
     // Digital Presence (10 pts)
+    // Website: +3 provided, +5 verified (max 5 total for website)
     const hasWebsite = input.digitalPresence.website && input.digitalPresence.website.length > 0;
-    if (hasWebsite) {
+    if (hasWebsite && input.digitalPresence.websiteVerified) {
         breakdown.digitalLineage.digitalPresence.items.push({
-            name: 'Website URL',
+            name: 'Website Verified',
             points: 5,
             earned: true
         });
         breakdown.digitalLineage.digitalPresence.total += 5;
-    } else {
+    } else if (hasWebsite) {
         breakdown.digitalLineage.digitalPresence.items.push({
             name: 'Website URL',
-            points: 5,
-            earned: false
-        });
-        improvements.push('Add your website URL to earn +5 points');
-    }
-    const hasTwitter = input.digitalPresence.twitterHandle && input.digitalPresence.twitterHandle.length > 0;
-    if (hasTwitter) {
-        breakdown.digitalLineage.digitalPresence.items.push({
-            name: 'Twitter/X Profile',
             points: 3,
             earned: true
         });
         breakdown.digitalLineage.digitalPresence.total += 3;
+        improvements.push('Verify your website to earn +2 more points');
     } else {
         breakdown.digitalLineage.digitalPresence.items.push({
-            name: 'Twitter/X Profile',
-            points: 3,
+            name: 'Website Verified',
+            points: 5,
+            earned: false
+        });
+        improvements.push('Add and verify your website URL to earn up to +5 points');
+    }
+    // Twitter: +1 provided, +2 valid format (max 2 total)
+    const hasTwitter = input.digitalPresence.twitterHandle && input.digitalPresence.twitterHandle.length > 0;
+    if (hasTwitter && input.digitalPresence.twitterVerified) {
+        breakdown.digitalLineage.digitalPresence.items.push({
+            name: 'Twitter/X Verified',
+            points: 2,
+            earned: true
+        });
+        breakdown.digitalLineage.digitalPresence.total += 2;
+    } else if (hasTwitter) {
+        breakdown.digitalLineage.digitalPresence.items.push({
+            name: 'Twitter/X Handle',
+            points: 1,
+            earned: true
+        });
+        breakdown.digitalLineage.digitalPresence.total += 1;
+    } else {
+        breakdown.digitalLineage.digitalPresence.items.push({
+            name: 'Twitter/X Handle',
+            points: 2,
             earned: false
         });
     }
-    const hasOtherSocial = input.digitalPresence.otherSocialProfiles && input.digitalPresence.otherSocialProfiles.length > 0;
-    const hasAppStore = input.digitalPresence.appStoreUrl && input.digitalPresence.appStoreUrl.length > 0;
-    if (hasOtherSocial || hasAppStore) {
+    // Instagram: +1 if valid
+    const hasInstagram = input.digitalPresence.instagramHandle && input.digitalPresence.instagramHandle.length > 0;
+    if (hasInstagram && input.digitalPresence.instagramVerified) {
         breakdown.digitalLineage.digitalPresence.items.push({
-            name: 'Additional Profiles',
+            name: 'Instagram Verified',
+            points: 1,
+            earned: true
+        });
+        breakdown.digitalLineage.digitalPresence.total += 1;
+    } else {
+        breakdown.digitalLineage.digitalPresence.items.push({
+            name: 'Instagram Handle',
+            points: 1,
+            earned: false
+        });
+    }
+    // App Store: +2 if found
+    const hasAppStore = input.digitalPresence.appStoreUrl && input.digitalPresence.appStoreUrl.length > 0;
+    if (hasAppStore && input.digitalPresence.appStoreVerified) {
+        breakdown.digitalLineage.digitalPresence.items.push({
+            name: 'App Store App',
             points: 2,
             earned: true
         });
         breakdown.digitalLineage.digitalPresence.total += 2;
     } else {
         breakdown.digitalLineage.digitalPresence.items.push({
-            name: 'Additional Profiles',
+            name: 'App Store App',
             points: 2,
             earned: false
         });
@@ -2087,21 +2140,83 @@ function calculateTrustScore(input) {
         improvements.push('Connect Stripe or upload bank statements to earn +2 points');
     }
     // === IDENTITY VERIFICATION (20 pts) ===
-    // Passport: +8
+    // Passport: +2 base + up to +6 for matching fields (total 8)
     if (input.identity.hasPassport) {
         breakdown.identity.items.push({
-            name: 'Passport Verified',
-            points: 8,
+            name: 'Passport Uploaded',
+            points: 2,
             earned: true
         });
-        breakdown.identity.total += 8;
+        breakdown.identity.total += 2;
+        const nameMatch = input.identity.passportNameMatch ?? true;
+        const dobMatch = input.identity.passportDobMatch ?? true;
+        const genderMatch = input.identity.passportGenderMatch ?? true;
+        const nationalityMatch = input.identity.passportNationalityMatch ?? true;
+        if (nameMatch) {
+            breakdown.identity.items.push({
+                name: 'Name Matches Passport',
+                points: 2,
+                earned: true
+            });
+            breakdown.identity.total += 2;
+        } else {
+            breakdown.identity.items.push({
+                name: 'Name Matches Passport',
+                points: 2,
+                earned: false
+            });
+            improvements.push('Your name doesn\u2019t match your passport \u2014 update your profile or re-upload');
+        }
+        if (dobMatch) {
+            breakdown.identity.items.push({
+                name: 'DOB Matches Passport',
+                points: 2,
+                earned: true
+            });
+            breakdown.identity.total += 2;
+        } else {
+            breakdown.identity.items.push({
+                name: 'DOB Matches Passport',
+                points: 2,
+                earned: false
+            });
+            improvements.push('Your date of birth doesn\u2019t match your passport');
+        }
+        if (genderMatch) {
+            breakdown.identity.items.push({
+                name: 'Gender Matches',
+                points: 1,
+                earned: true
+            });
+            breakdown.identity.total += 1;
+        } else {
+            breakdown.identity.items.push({
+                name: 'Gender Matches',
+                points: 1,
+                earned: false
+            });
+        }
+        if (nationalityMatch) {
+            breakdown.identity.items.push({
+                name: 'Nationality Matches',
+                points: 1,
+                earned: true
+            });
+            breakdown.identity.total += 1;
+        } else {
+            breakdown.identity.items.push({
+                name: 'Nationality Matches',
+                points: 1,
+                earned: false
+            });
+        }
     } else {
         breakdown.identity.items.push({
-            name: 'Passport Verified',
+            name: 'Passport Uploaded',
             points: 8,
             earned: false
         });
-        improvements.push('Upload your passport to earn +8 points');
+        improvements.push('Upload your passport to earn up to +8 points');
     }
     // Local ID: +5
     if (input.identity.hasLocalId) {
@@ -2119,17 +2234,25 @@ function calculateTrustScore(input) {
         });
         improvements.push('Upload a local ID to earn +5 points');
     }
-    // Liveness check: +4
+    // Liveness check: +4 matched, -2 if skipped
     if (input.identity.hasLivenessCheck) {
         breakdown.identity.items.push({
-            name: 'Liveness Check',
+            name: 'Face Verification',
             points: 4,
             earned: true
         });
         breakdown.identity.total += 4;
+    } else if (input.identity.faceSkipped) {
+        breakdown.identity.items.push({
+            name: 'Face Verification Skipped',
+            points: -2,
+            earned: true
+        });
+        breakdown.identity.total -= 2;
+        improvements.push('Complete face verification to earn +4 points instead of -2 penalty');
     } else {
         breakdown.identity.items.push({
-            name: 'Liveness Check',
+            name: 'Face Verification',
             points: 4,
             earned: false
         });
@@ -2150,14 +2273,24 @@ function calculateTrustScore(input) {
         });
     }
     // === TRUST NETWORK (15 pts) ===
-    // Referral: +10
+    // Referral: verified +10, unverified +3
     if (input.trustSignals.hasReferral) {
-        breakdown.network.items.push({
-            name: 'Verified Founder Referral',
-            points: 10,
-            earned: true
-        });
-        breakdown.network.total += 10;
+        if (input.trustSignals.referralVerified) {
+            breakdown.network.items.push({
+                name: 'Verified Founder Referral',
+                points: 10,
+                earned: true
+            });
+            breakdown.network.total += 10;
+        } else {
+            breakdown.network.items.push({
+                name: 'Referral (unverified)',
+                points: 3,
+                earned: true
+            });
+            breakdown.network.total += 3;
+            improvements.push('Verify your referral code to earn +7 more points');
+        }
     } else {
         breakdown.network.items.push({
             name: 'Verified Founder Referral',
@@ -2166,14 +2299,24 @@ function calculateTrustScore(input) {
         });
         improvements.push('Get a referral from a verified BedRock founder to earn +10 points');
     }
-    // University email: +3
+    // University email: verified +3, unverified +1
     if (input.trustSignals.hasUniversityEmail) {
-        breakdown.network.items.push({
-            name: 'University Email',
-            points: 3,
-            earned: true
-        });
-        breakdown.network.total += 3;
+        if (input.trustSignals.universityEmailVerified) {
+            breakdown.network.items.push({
+                name: 'University Email (verified)',
+                points: 3,
+                earned: true
+            });
+            breakdown.network.total += 3;
+        } else {
+            breakdown.network.items.push({
+                name: 'University Email (unverified)',
+                points: 1,
+                earned: true
+            });
+            breakdown.network.total += 1;
+            improvements.push('Verify your university email to earn +2 more points');
+        }
     } else {
         breakdown.network.items.push({
             name: 'University Email',
@@ -2181,14 +2324,23 @@ function calculateTrustScore(input) {
             earned: false
         });
     }
-    // Accelerator: +5 (capped at max, so use min)
+    // Accelerator: verified +5, unverified +2
     if (input.trustSignals.hasAccelerator) {
-        breakdown.network.items.push({
-            name: 'Accelerator Affiliation',
-            points: 5,
-            earned: true
-        });
-        breakdown.network.total += 5;
+        if (input.trustSignals.acceleratorVerified) {
+            breakdown.network.items.push({
+                name: 'Accelerator (verified)',
+                points: 5,
+                earned: true
+            });
+            breakdown.network.total += 5;
+        } else {
+            breakdown.network.items.push({
+                name: 'Accelerator (unverified)',
+                points: 2,
+                earned: true
+            });
+            breakdown.network.total += 2;
+        }
     } else {
         breakdown.network.items.push({
             name: 'Accelerator Affiliation',
@@ -2196,10 +2348,10 @@ function calculateTrustScore(input) {
             earned: false
         });
     }
-    // Employer verification: +2
+    // Employer: self-reported +2
     if (input.trustSignals.hasEmployerVerification) {
         breakdown.network.items.push({
-            name: 'Employer Verification',
+            name: 'Employer (self-reported)',
             points: 2,
             earned: true
         });
@@ -2247,12 +2399,12 @@ function calculateTrustScore(input) {
         statusDescription = 'Your application requires manual review. We may schedule a brief video call to verify your information.';
     } else if (totalScore >= 30) {
         status = 'conditional';
-        statusLabel = 'Conditional';
-        statusDescription = 'Significant additional verification is needed. Consider improving your Digital Lineage score.';
+        statusLabel = 'Almost There';
+        statusDescription = 'You\u2019re making progress! A few more verification steps will strengthen your application significantly.';
     } else {
         status = 'not_eligible';
-        statusLabel = 'Not Eligible';
-        statusDescription = 'You don\'t currently meet our minimum requirements. Build your Digital Lineage and try again.';
+        statusLabel = 'Getting Started';
+        statusDescription = 'Your trust profile needs more verification signals. Complete the steps below to strengthen your application \u2014 we\u2019re here to help you get approved.';
     }
     const topImprovements = improvements.slice(0, 5);
     return {
@@ -2517,7 +2669,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$dashboa
 ;
 function DashboardLayout({ children }) {
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "flex min-h-screen bg-gray-50",
+        className: "dark flex min-h-screen bg-[#09090b]",
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$dashboard$2f$sidebar$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["Sidebar"], {}, void 0, false, {
                 fileName: "[project]/src/app/dashboard/layout.tsx",

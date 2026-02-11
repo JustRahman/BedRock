@@ -31,7 +31,7 @@
       <li>Apply for your US bank account</li>
     </ol>
     <div style="text-align:center;">
-      <a href="https://trustlayer.app/dashboard"
+      <a href="http://localhost:3000/dashboard"
          style="display:inline-block;background:#2563eb;color:#ffffff;padding:12px 24px;border-radius:6px;text-decoration:none;font-weight:500;">
         Go to Dashboard
       </a>
@@ -50,7 +50,7 @@
       Your account is now active. You can begin the LLC formation process from your dashboard.
     </p>
     <div style="text-align:center;">
-      <a href="https://trustlayer.app/dashboard/formation"
+      <a href="http://localhost:3000/dashboard/formation"
          style="display:inline-block;background:#2563eb;color:#ffffff;padding:12px 24px;border-radius:6px;text-decoration:none;font-weight:500;">
         Start LLC Formation
       </a>
@@ -83,9 +83,9 @@
       Log in to your dashboard to see the full breakdown and next steps.
     </p>
     <div style="text-align:center;">
-      <a href="https://trustlayer.app/dashboard"
+      <a href="http://localhost:3000/dashboard"
          style="display:inline-block;background:#2563eb;color:#ffffff;padding:12px 24px;border-radius:6px;text-decoration:none;font-weight:500;">
         View Dashboard
       </a>
     </div>
-  `)}c.d(b,{Ly:()=>h,go:()=>g,pg:()=>e,yK:()=>f})},44870:a=>{"use strict";a.exports=require("next/dist/compiled/next-server/app-route.runtime.prod.js")},55511:a=>{"use strict";a.exports=require("crypto")},55591:a=>{"use strict";a.exports=require("https")},57075:a=>{"use strict";a.exports=require("node:stream")},63033:a=>{"use strict";a.exports=require("next/dist/server/app-render/work-unit-async-storage.external.js")},68681:(a,b,c)=>{"use strict";c.d(b,{Z:()=>e});var d=c(59307);async function e(a,b,c){let e=new d.u(process.env.RESEND_API_KEY),{data:f,error:g}=await e.emails.send({from:"BedRock <noreply@bedrockhq.co>",to:a,subject:b,html:c});if(g)throw console.error("Failed to send email:",g),g;return f}},77598:a=>{"use strict";a.exports=require("node:crypto")},78335:()=>{},79428:a=>{"use strict";a.exports=require("buffer")},79646:a=>{"use strict";a.exports=require("child_process")},79933:(a,b,c)=>{"use strict";c.d(b,{U:()=>f,r:()=>g});var d=c(49980),e=c(65573);async function f(){let a=await (0,e.UL)();return(0,d.createServerClient)("https://your-prod-project.supabase.co","your_prod_supabase_anon_key",{cookies:{getAll:()=>a.getAll(),setAll(b){try{b.forEach(({name:b,value:c,options:d})=>a.set(b,c,d))}catch{}}}})}async function g(){let a=await (0,e.UL)();return(0,d.createServerClient)("https://your-prod-project.supabase.co",process.env.SUPABASE_SERVICE_ROLE_KEY,{cookies:{getAll:()=>a.getAll(),setAll(b){try{b.forEach(({name:b,value:c,options:d})=>a.set(b,c,d))}catch{}}}})}},81630:a=>{"use strict";a.exports=require("http")},86439:a=>{"use strict";a.exports=require("next/dist/shared/lib/no-fallback-error.external")},94735:a=>{"use strict";a.exports=require("events")},96487:()=>{}};var b=require("../../../../webpack-runtime.js");b.C(a);var c=b.X(0,[3445,1813,5573,9980,9307,97],()=>b(b.s=13380));module.exports=c})();
+  `)}c.d(b,{Ly:()=>h,go:()=>g,pg:()=>e,yK:()=>f})},44870:a=>{"use strict";a.exports=require("next/dist/compiled/next-server/app-route.runtime.prod.js")},55511:a=>{"use strict";a.exports=require("crypto")},55591:a=>{"use strict";a.exports=require("https")},57075:a=>{"use strict";a.exports=require("node:stream")},63033:a=>{"use strict";a.exports=require("next/dist/server/app-render/work-unit-async-storage.external.js")},68681:(a,b,c)=>{"use strict";c.d(b,{Z:()=>e});var d=c(59307);async function e(a,b,c){let e=new d.u(process.env.RESEND_API_KEY),{data:f,error:g}=await e.emails.send({from:"BedRock <noreply@bedrockhq.co>",to:a,subject:b,html:c});if(g)throw console.error("Failed to send email:",g),g;return f}},77598:a=>{"use strict";a.exports=require("node:crypto")},78335:()=>{},79428:a=>{"use strict";a.exports=require("buffer")},79646:a=>{"use strict";a.exports=require("child_process")},79933:(a,b,c)=>{"use strict";c.d(b,{U:()=>f,r:()=>g});var d=c(49980),e=c(65573);async function f(){let a=await (0,e.UL)();return(0,d.createServerClient)("https://raqqortimspvahtnujqa.supabase.co","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJhcXFvcnRpbXNwdmFodG51anFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAyMzk1MjksImV4cCI6MjA4NTgxNTUyOX0.uP2tUmSrGY5AhT6NJnX57w3QEPSOwXStAEaO4aztcu8",{cookies:{getAll:()=>a.getAll(),setAll(b){try{b.forEach(({name:b,value:c,options:d})=>a.set(b,c,d))}catch{}}}})}async function g(){let a=await (0,e.UL)();return(0,d.createServerClient)("https://raqqortimspvahtnujqa.supabase.co",process.env.SUPABASE_SERVICE_ROLE_KEY,{cookies:{getAll:()=>a.getAll(),setAll(b){try{b.forEach(({name:b,value:c,options:d})=>a.set(b,c,d))}catch{}}}})}},81630:a=>{"use strict";a.exports=require("http")},86439:a=>{"use strict";a.exports=require("next/dist/shared/lib/no-fallback-error.external")},94735:a=>{"use strict";a.exports=require("events")},96487:()=>{}};var b=require("../../../../webpack-runtime.js");b.C(a);var c=b.X(0,[3445,1813,5573,9980,9307,97],()=>b(b.s=13380));module.exports=c})();
