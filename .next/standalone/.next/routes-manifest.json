@@ -116,6 +116,12 @@
       "namedRegex": "^/api/founders(?:/)?$"
     },
     {
+      "page": "/api/founders/ensure",
+      "regex": "^/api/founders/ensure(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/founders/ensure(?:/)?$"
+    },
+    {
       "page": "/api/oauth/github/callback",
       "regex": "^/api/oauth/github/callback(?:/)?$",
       "routeKeys": {},

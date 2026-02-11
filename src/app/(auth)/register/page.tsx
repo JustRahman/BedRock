@@ -68,7 +68,7 @@ export default function RegisterPage() {
       const supabase = createClient()
 
       const siteUrl = window.location.origin
-      const { error: signUpError } = await supabase.auth.signUp({
+      const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
         email: data.email,
         password: data.password,
         options: {
@@ -110,10 +110,12 @@ export default function RegisterPage() {
 
       // Create founder record via server API (bypasses RLS — no session after signUp)
       try {
+        const userId = signUpData?.user?.id
         await fetch('/api/auth/complete-registration', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
+            userId,
             email: data.email,
             fullName: data.fullName,
             phone: basicInfo.phone || null,

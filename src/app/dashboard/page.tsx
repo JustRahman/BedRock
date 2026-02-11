@@ -70,6 +70,29 @@ export default function DashboardPage() {
   useEffect(() => {
     async function fetchData() {
       try {
+        // Step 1: Ensure founder exists (auto-create if missing)
+        // Also pass any unsaved trust score from localStorage
+        let trustScorePayload = undefined
+        try {
+          const storedScore = localStorage.getItem('trustScoreResult')
+          if (storedScore) trustScorePayload = JSON.parse(storedScore)
+        } catch { /* ignore */ }
+
+        await fetch('/api/founders/ensure', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            trustScore: trustScorePayload,
+          }),
+        })
+
+        // Clean up localStorage after saving
+        try {
+          localStorage.removeItem('trustScoreResult')
+          localStorage.removeItem('onboardingData')
+        } catch { /* ignore */ }
+
+        // Step 2: Fetch all dashboard data
         const [tsRes, docRes, compRes, coRes, bankRes] = await Promise.all([
           fetch('/api/trust-score'),
           fetch('/api/documents'),

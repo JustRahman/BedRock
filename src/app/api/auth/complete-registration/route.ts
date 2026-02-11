@@ -4,7 +4,7 @@ import { createServiceClient } from '@/lib/supabase/server'
 export async function POST(request: Request) {
   try {
     const body = await request.json()
-    const { email, fullName, phone, countryOfOrigin, countryOfResidence, trustScore, oauthVerifications } = body
+    const { userId, email, fullName, phone, countryOfOrigin, countryOfResidence, trustScore, oauthVerifications } = body
 
     if (!email || !fullName) {
       return NextResponse.json({ error: 'Email and full name are required' }, { status: 400 })
@@ -12,49 +12,43 @@ export async function POST(request: Request) {
 
     const supabase = await createServiceClient()
 
-    // Verify the user actually exists in auth.users
-    const { data: { users }, error: listError } = await supabase.auth.admin.listUsers()
-    if (listError) {
-      return NextResponse.json({ error: 'Failed to verify user' }, { status: 500 })
-    }
+    // Find the auth user — prefer userId if provided, otherwise look up by email
+    let authUserId = userId
 
-    const authUser = users.find((u) => u.email === email)
-    if (!authUser) {
-      return NextResponse.json({ error: 'User not found' }, { status: 404 })
-    }
-
-    // Check user was created recently (within 10 minutes) to prevent abuse
-    const createdAt = new Date(authUser.created_at)
-    const tenMinutesAgo = new Date(Date.now() - 10 * 60 * 1000)
-    if (createdAt < tenMinutesAgo) {
-      // User exists but wasn't just created — check if founder already exists
-      const { data: existingFounder } = await (supabase
-        .from('founders') as ReturnType<typeof supabase.from>)
-        .select('id')
-        .eq('user_id', authUser.id)
-        .single()
-
-      if (existingFounder) {
-        return NextResponse.json({ message: 'Founder already exists' })
+    if (authUserId) {
+      // Verify the user exists
+      const { data: { user }, error } = await supabase.auth.admin.getUserById(authUserId)
+      if (error || !user) {
+        authUserId = null // Fall through to email lookup
       }
+    }
+
+    if (!authUserId) {
+      // Fallback: find user by email using admin API with page size 1
+      const { data: { users } } = await supabase.auth.admin.listUsers({ page: 1, perPage: 1000 })
+      const authUser = users?.find((u) => u.email === email)
+      if (!authUser) {
+        return NextResponse.json({ error: 'User not found in auth' }, { status: 404 })
+      }
+      authUserId = authUser.id
     }
 
     // Check if founder already exists
     const { data: existingFounder } = await (supabase
       .from('founders') as ReturnType<typeof supabase.from>)
       .select('id')
-      .eq('user_id', authUser.id)
+      .eq('user_id', authUserId)
       .single()
 
     if (existingFounder) {
-      return NextResponse.json({ message: 'Founder already exists' })
+      return NextResponse.json({ message: 'Founder already exists', founderId: (existingFounder as { id: string }).id })
     }
 
     // Create founder record
     const { data: founder, error: founderError } = await (supabase
       .from('founders') as ReturnType<typeof supabase.from>)
       .insert({
-        user_id: authUser.id,
+        user_id: authUserId,
         email,
         full_name: fullName,
         phone: phone || null,
@@ -66,14 +60,14 @@ export async function POST(request: Request) {
       .single()
 
     if (founderError) {
-      return NextResponse.json({ error: founderError.message }, { status: 500 })
+      return NextResponse.json({ error: `Founder creation failed: ${founderError.message}` }, { status: 500 })
     }
 
     const founderId = (founder as { id: string }).id
 
     // Save trust score if provided
     if (trustScore && founderId) {
-      await (supabase.from('trust_scores') as ReturnType<typeof supabase.from>).insert({
+      const { error: tsError } = await (supabase.from('trust_scores') as ReturnType<typeof supabase.from>).insert({
         founder_id: founderId,
         total_score: trustScore.totalScore || 0,
         identity_score: trustScore.identityScore || 0,
@@ -85,6 +79,10 @@ export async function POST(request: Request) {
         score_breakdown: trustScore.breakdown || {},
         version: 2,
       })
+
+      if (tsError) {
+        console.error('Trust score insert failed:', tsError.message)
+      }
     }
 
     // Save OAuth verifications if provided
@@ -106,7 +104,8 @@ export async function POST(request: Request) {
     }
 
     return NextResponse.json({ success: true, founderId })
-  } catch {
+  } catch (err) {
+    console.error('complete-registration error:', err)
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 }
