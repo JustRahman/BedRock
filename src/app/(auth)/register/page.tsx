@@ -29,11 +29,11 @@ export default function RegisterPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
 
-  // Pre-fill from onboarding data if available
+  // Pre-fill from onboarding data if available (check both localStorage and sessionStorage)
   const getDefaults = () => {
     if (typeof window === 'undefined') return {}
     try {
-      const raw = sessionStorage.getItem('onboardingData')
+      const raw = localStorage.getItem('onboardingData') || sessionStorage.getItem('onboardingData')
       if (raw) {
         const data = JSON.parse(raw)
         return {
@@ -68,7 +68,7 @@ export default function RegisterPage() {
       const supabase = createClient()
 
       const siteUrl = window.location.origin
-      const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
+      const { error: signUpError } = await supabase.auth.signUp({
         email: data.email,
         password: data.password,
         options: {
@@ -85,87 +85,56 @@ export default function RegisterPage() {
         return
       }
 
-      if (signUpData.user) {
-        try {
-          // Read onboarding data if available (from eligibility check flow)
-          const onboardingRaw = sessionStorage.getItem('onboardingData')
-          const trustScoreRaw = sessionStorage.getItem('trustScoreResult')
-          const onboardingData = onboardingRaw ? JSON.parse(onboardingRaw) : null
-          const basicInfo = onboardingData?.basicInfo || {}
+      // Read onboarding data from both localStorage and sessionStorage
+      const onboardingRaw = localStorage.getItem('onboardingData') || sessionStorage.getItem('onboardingData')
+      const trustScoreRaw = localStorage.getItem('trustScoreResult') || sessionStorage.getItem('trustScoreResult')
+      const onboardingData = onboardingRaw ? JSON.parse(onboardingRaw) : null
+      const basicInfo = onboardingData?.basicInfo || {}
+      const trustScore = trustScoreRaw ? JSON.parse(trustScoreRaw) : null
 
-          // Always create founder row
-          await (supabase.from('founders') as ReturnType<typeof supabase.from>).insert({
-            user_id: signUpData.user.id,
-            email: data.email,
-            full_name: data.fullName,
-            phone: basicInfo.phone || null,
-            country_of_origin: basicInfo.countryOfOrigin || '',
-            country_of_residence: basicInfo.countryOfResidence || '',
-            onboarding_completed: !!onboardingData,
-          })
-
-          // Get the founder ID for subsequent inserts
-          const { data: founder } = await (supabase
-            .from('founders') as ReturnType<typeof supabase.from>)
-            .select('id')
-            .eq('user_id', signUpData.user.id)
-            .single()
-
-          if (founder) {
-            const founderId = (founder as { id: string }).id
-
-            // Save trust score if calculated
-            if (trustScoreRaw) {
-              const trustScore = JSON.parse(trustScoreRaw)
-              await (supabase.from('trust_scores') as ReturnType<typeof supabase.from>).insert({
-                founder_id: founderId,
-                total_score: trustScore.totalScore || 0,
-                identity_score: trustScore.identityScore || 0,
-                business_score: trustScore.businessScore || 0,
-                digital_lineage_score: trustScore.digitalLineageScore || 0,
-                network_score: trustScore.networkScore || 0,
-                country_adjustment: trustScore.countryAdjustment || 0,
-                status: trustScore.status || 'review_needed',
-                score_breakdown: trustScore.breakdown || {},
-                version: 2,
-              })
-            }
-
-            // Save OAuth verification data
-            const oauthEntries: { type: string; key: string }[] = [
-              { type: 'github_oauth', key: 'oauth_github_data' },
-              { type: 'linkedin_oauth', key: 'oauth_linkedin_data' },
-              { type: 'stripe_oauth', key: 'oauth_stripe_data' },
-            ]
-
-            for (const entry of oauthEntries) {
-              const raw = sessionStorage.getItem(entry.key)
-              if (raw) {
-                try {
-                  const oauthData = JSON.parse(raw)
-                  await (supabase.from('founder_verifications') as ReturnType<typeof supabase.from>)
-                    .upsert({
-                      founder_id: founderId,
-                      verification_type: entry.type,
-                      status: 'verified',
-                      verified_at: new Date().toISOString(),
-                      metadata: oauthData,
-                    }, { onConflict: 'founder_id,verification_type' })
-                } catch {
-                  // Non-critical
-                }
-              }
-            }
-          }
-
-          // Clean up session storage
-          sessionStorage.removeItem('onboardingData')
-          sessionStorage.removeItem('trustScoreResult')
-        } catch {
-          // Non-critical — account was still created
-          console.error('Failed to save onboarding data')
+      // Collect OAuth verifications
+      const oauthVerifications: { type: string; data: unknown }[] = []
+      const oauthEntries = [
+        { type: 'github_oauth', key: 'oauth_github_data' },
+        { type: 'linkedin_oauth', key: 'oauth_linkedin_data' },
+        { type: 'stripe_oauth', key: 'oauth_stripe_data' },
+      ]
+      for (const entry of oauthEntries) {
+        const raw = localStorage.getItem(entry.key) || sessionStorage.getItem(entry.key)
+        if (raw) {
+          try {
+            oauthVerifications.push({ type: entry.type, data: JSON.parse(raw) })
+          } catch { /* ignore */ }
         }
       }
+
+      // Create founder record via server API (bypasses RLS — no session after signUp)
+      try {
+        await fetch('/api/auth/complete-registration', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: data.email,
+            fullName: data.fullName,
+            phone: basicInfo.phone || null,
+            countryOfOrigin: basicInfo.countryOfOrigin || '',
+            countryOfResidence: basicInfo.countryOfResidence || '',
+            trustScore,
+            oauthVerifications: oauthVerifications.length > 0 ? oauthVerifications : undefined,
+          }),
+        })
+      } catch {
+        // Non-critical — account was still created, data can be saved later
+        console.error('Failed to save registration data')
+      }
+
+      // Clean up storage
+      try {
+        localStorage.removeItem('onboardingData')
+        localStorage.removeItem('trustScoreResult')
+        sessionStorage.removeItem('onboardingData')
+        sessionStorage.removeItem('trustScoreResult')
+      } catch { /* ignore */ }
 
       // Send welcome email (non-blocking)
       try {
@@ -175,7 +144,7 @@ export default function RegisterPage() {
           body: JSON.stringify({ name: data.fullName, email: data.email }),
         })
       } catch {
-        // Non-critical — account was still created
+        // Non-critical
       }
 
       setIsSuccess(true)

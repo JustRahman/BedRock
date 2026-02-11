@@ -29,7 +29,8 @@ export default function OnboardingResultPage() {
       const { data: { user } } = await supabase.auth.getUser()
       if (user) setIsLoggedIn(true)
 
-      const storedResult = sessionStorage.getItem('trustScoreResult')
+      // Check both sessionStorage and localStorage
+      const storedResult = sessionStorage.getItem('trustScoreResult') || localStorage.getItem('trustScoreResult')
       if (storedResult) {
         try {
           const parsed = JSON.parse(storedResult)
@@ -43,7 +44,7 @@ export default function OnboardingResultPage() {
         }
       }
 
-      const storedData = sessionStorage.getItem('onboardingData')
+      const storedData = sessionStorage.getItem('onboardingData') || localStorage.getItem('onboardingData')
       if (storedData) {
         try {
           const data = JSON.parse(storedData)

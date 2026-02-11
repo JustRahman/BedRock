@@ -191,6 +191,7 @@ export default function OnboardingPage() {
 
     try {
       sessionStorage.setItem('onboardingData', JSON.stringify(finalData))
+      localStorage.setItem('onboardingData', JSON.stringify(finalData))
 
       const response = await fetch('/api/trust-score/calculate', {
         method: 'POST',
@@ -200,6 +201,7 @@ export default function OnboardingPage() {
 
       const result = await response.json()
       sessionStorage.setItem('trustScoreResult', JSON.stringify(result))
+      localStorage.setItem('trustScoreResult', JSON.stringify(result))
 
       // Clean up OAuth and step storage
       try {

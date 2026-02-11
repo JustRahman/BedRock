@@ -74,6 +74,12 @@
       "namedRegex": "^/admin/compliance(?:/)?$"
     },
     {
+      "page": "/api/auth/complete-registration",
+      "regex": "^/api/auth/complete\\-registration(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/auth/complete\\-registration(?:/)?$"
+    },
+    {
       "page": "/api/bank-applications",
       "regex": "^/api/bank\\-applications(?:/)?$",
       "routeKeys": {},

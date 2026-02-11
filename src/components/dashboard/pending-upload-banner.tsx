@@ -48,6 +48,12 @@ export function PendingUploadBanner({ onUploadsComplete }: PendingUploadBannerPr
         const res = await fetch('/api/documents', { method: 'POST', body: formData })
         if (!res.ok) {
           const data = await res.json()
+          // If founder doesn't exist yet, silently clear pending uploads — they'll upload manually later
+          if (res.status === 404 || data.error?.includes('not found') || data.error?.includes('Founder')) {
+            await clearPendingUploads()
+            setStatus('idle')
+            return
+          }
           throw new Error(data.error || `Failed to upload ${typeLabels[upload.type]}`)
         }
 
