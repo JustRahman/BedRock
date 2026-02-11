@@ -537,6 +537,32 @@ export interface Database {
           updated_at?: string
         }
       }
+      company_updates: {
+        Row: {
+          id: string
+          company_id: string
+          status: string
+          note: string | null
+          created_by: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          company_id: string
+          status: string
+          note?: string | null
+          created_by?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          company_id?: string
+          status?: string
+          note?: string | null
+          created_by?: string | null
+          created_at?: string
+        }
+      }
     }
     Views: {
       [_ in never]: never
@@ -575,3 +601,4 @@ export type Document = Tables<'documents'>
 export type Payment = Tables<'payments'>
 export type ReferralCode = Tables<'referral_codes'>
 export type UniversityVerificationCode = Tables<'university_verification_codes'>
+export type CompanyUpdate = Tables<'company_updates'>

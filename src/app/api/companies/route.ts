@@ -37,7 +37,19 @@ export async function GET() {
       return NextResponse.json({ error: error.message }, { status: 500 })
     }
 
-    return NextResponse.json({ company: company || null })
+    // Fetch company updates timeline if company exists
+    let updates = null
+    if (company) {
+      const companyRecord = company as { id: string }
+      const { data: updatesData } = await supabase
+        .from('company_updates')
+        .select('*')
+        .eq('company_id', companyRecord.id)
+        .order('created_at', { ascending: true })
+      updates = updatesData
+    }
+
+    return NextResponse.json({ company: company || null, updates: updates || [] })
   } catch {
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
@@ -161,6 +173,18 @@ export async function PATCH(request: Request) {
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 })
+    }
+
+    // Log status change to company_updates if status was changed
+    if (body.formationStatus && company) {
+      const companyRecord = company as { id: string }
+      await (supabase.from('company_updates') as ReturnType<typeof supabase.from>)
+        .insert({
+          company_id: companyRecord.id,
+          status: body.formationStatus,
+          note: body.note || null,
+          created_by: founder.id,
+        })
     }
 
     return NextResponse.json({ company })

@@ -30,9 +30,17 @@ interface Company {
   description: string | null
 }
 
+interface CompanyUpdateEntry {
+  id: string
+  status: string
+  note: string | null
+  created_at: string
+}
+
 export default function FormationPage() {
   const router = useRouter()
   const [company, setCompany] = useState<Company | null>(null)
+  const [updates, setUpdates] = useState<CompanyUpdateEntry[]>([])
   const [loading, setLoading] = useState(true)
   const [step, setStep] = useState(1)
   const [submitting, setSubmitting] = useState(false)
@@ -53,6 +61,7 @@ export default function FormationPage() {
       .then((r) => r.json())
       .then((data) => {
         if (data.company) setCompany(data.company)
+        if (data.updates) setUpdates(data.updates)
       })
       .catch(() => {})
       .finally(() => setLoading(false))
@@ -148,34 +157,56 @@ export default function FormationPage() {
             <CardTitle className="text-base">Formation Progress</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
-              {formationSteps.map((s, i) => {
-                const isComplete = getStepComplete(company.formation_status, i)
-                const isCurrent = getStepCurrent(company.formation_status, i)
-
-                return (
-                  <div key={s.id} className="flex items-center gap-4">
-                    <div
-                      className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${
-                        isComplete
-                          ? 'bg-emerald-500/15 text-emerald-400'
-                          : isCurrent
-                          ? 'bg-blue-500/15 text-blue-400'
-                          : 'bg-muted text-muted-foreground'
-                      }`}
-                    >
-                      {isComplete ? <Check className="h-4 w-4" /> : <span className="text-sm font-medium">{i + 1}</span>}
-                    </div>
-                    <div>
-                      <p className={`font-medium ${isComplete ? 'text-emerald-400' : isCurrent ? 'text-blue-400' : 'text-muted-foreground'}`}>
-                        {s.title}
-                      </p>
-                      <p className="text-sm text-muted-foreground">{s.description}</p>
+            {updates.length > 0 ? (
+              <div className="space-y-4">
+                {updates.map((update) => (
+                  <div key={update.id} className="flex gap-3 border-l-2 border-border pl-4">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2">
+                        <Badge className={getFormationStatusColor(update.status)}>
+                          {formatFormationStatus(update.status)}
+                        </Badge>
+                        <span className="text-xs text-muted-foreground">
+                          {new Date(update.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' })}
+                        </span>
+                      </div>
+                      {update.note ? (
+                        <p className="mt-1 text-sm text-muted-foreground">{update.note}</p>
+                      ) : null}
                     </div>
                   </div>
-                )
-              })}
-            </div>
+                ))}
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {formationSteps.map((s, i) => {
+                  const isComplete = getStepComplete(company.formation_status, i)
+                  const isCurrent = getStepCurrent(company.formation_status, i)
+
+                  return (
+                    <div key={s.id} className="flex items-center gap-4">
+                      <div
+                        className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${
+                          isComplete
+                            ? 'bg-emerald-500/15 text-emerald-400'
+                            : isCurrent
+                            ? 'bg-blue-500/15 text-blue-400'
+                            : 'bg-muted text-muted-foreground'
+                        }`}
+                      >
+                        {isComplete ? <Check className="h-4 w-4" /> : <span className="text-sm font-medium">{i + 1}</span>}
+                      </div>
+                      <div>
+                        <p className={`font-medium ${isComplete ? 'text-emerald-400' : isCurrent ? 'text-blue-400' : 'text-muted-foreground'}`}>
+                          {s.title}
+                        </p>
+                        <p className="text-sm text-muted-foreground">{s.description}</p>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            )}
           </CardContent>
         </Card>
 
