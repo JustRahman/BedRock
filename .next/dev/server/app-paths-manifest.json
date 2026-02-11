@@ -1,8 +1,14 @@
 {
+  "/(auth)/login/page": "app/(auth)/login/page.js",
   "/api/bank-applications/route": "app/api/bank-applications/route.js",
   "/api/companies/route": "app/api/companies/route.js",
   "/api/compliance/route": "app/api/compliance/route.js",
   "/api/documents/route": "app/api/documents/route.js",
   "/api/trust-score/route": "app/api/trust-score/route.js",
+  "/api/verifications/route": "app/api/verifications/route.js",
+  "/dashboard/bank/page": "app/dashboard/bank/page.js",
+  "/dashboard/compliance/page": "app/dashboard/compliance/page.js",
+  "/dashboard/documents/page": "app/dashboard/documents/page.js",
+  "/dashboard/formation/page": "app/dashboard/formation/page.js",
   "/dashboard/page": "app/dashboard/page.js"
 }

@@ -31,7 +31,7 @@ interface ActionItemsProps {
 export function ActionItems({ items }: ActionItemsProps) {
   if (items.length === 0) {
     return (
-      <div className="rounded-xl border border-zinc-800 bg-zinc-900/60 p-6">
+      <div className="rounded-xl border border-border bg-card p-6">
         <h3 className="text-lg font-semibold text-white mb-3">Action Items</h3>
         <p className="text-sm text-zinc-500">
           You&apos;re all caught up! No pending actions.
@@ -41,7 +41,7 @@ export function ActionItems({ items }: ActionItemsProps) {
   }
 
   return (
-    <div className="rounded-xl border border-zinc-800 bg-zinc-900/60 p-6">
+    <div className="rounded-xl border border-border bg-card p-6">
       <h3 className="text-lg font-semibold text-white mb-4">Action Items</h3>
       <div className="space-y-3">
         {items.map((item) => {
@@ -49,7 +49,7 @@ export function ActionItems({ items }: ActionItemsProps) {
           return (
             <div
               key={item.id}
-              className={`rounded-lg border border-zinc-800/80 border-l-4 bg-zinc-800/30 p-4 ${priorityColors[item.priority]}`}
+              className={`rounded-lg border border-border border-l-4 bg-muted/40 p-4 ${priorityColors[item.priority]}`}
             >
               <div className="flex items-start justify-between gap-4">
                 <div className="flex items-start gap-3">

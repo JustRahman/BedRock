@@ -193,7 +193,7 @@ function BankPage() {
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "mb-8",
                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-                        className: "text-2xl font-bold text-gray-900",
+                        className: "text-2xl font-bold text-foreground",
                         children: "Bank Account"
                     }, void 0, false, {
                         fileName: "[project]/src/app/dashboard/bank/page.tsx",
@@ -209,7 +209,7 @@ function BankPage() {
                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["CardContent"], {
                         className: "py-12 text-center",
                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$loader$2d$circle$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Loader2$3e$__["Loader2"], {
-                            className: "mx-auto h-8 w-8 animate-spin text-gray-400"
+                            className: "mx-auto h-8 w-8 animate-spin text-muted-foreground"
                         }, void 0, false, {
                             fileName: "[project]/src/app/dashboard/bank/page.tsx",
                             lineNumber: 52,
@@ -239,7 +239,7 @@ function BankPage() {
                 className: "mb-8",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-                        className: "text-2xl font-bold text-gray-900",
+                        className: "text-2xl font-bold text-foreground",
                         children: "Bank Account"
                     }, void 0, false, {
                         fileName: "[project]/src/app/dashboard/bank/page.tsx",
@@ -247,7 +247,7 @@ function BankPage() {
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                        className: "mt-1 text-sm text-gray-500",
+                        className: "mt-1 text-sm text-muted-foreground",
                         children: "Apply for and manage your US business bank account."
                     }, void 0, false, {
                         fileName: "[project]/src/app/dashboard/bank/page.tsx",
@@ -312,7 +312,7 @@ function BankPage() {
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                 children: [
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                        className: "text-sm text-gray-500",
+                                                        className: "text-sm text-muted-foreground",
                                                         children: "Status"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/dashboard/bank/page.tsx",
@@ -336,7 +336,7 @@ function BankPage() {
                                             app.submitted_at && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                 children: [
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                        className: "text-sm text-gray-500",
+                                                        className: "text-sm text-muted-foreground",
                                                         children: "Submitted"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/dashboard/bank/page.tsx",
@@ -360,7 +360,7 @@ function BankPage() {
                                             app.approved_at && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                 children: [
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                        className: "text-sm text-gray-500",
+                                                        className: "text-sm text-muted-foreground",
                                                         children: "Approved"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/dashboard/bank/page.tsx",
@@ -439,7 +439,7 @@ function BankPage() {
                     className: "py-16 text-center",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$building$2d$2$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Building2$3e$__["Building2"], {
-                            className: "mx-auto mb-4 h-12 w-12 text-gray-300"
+                            className: "mx-auto mb-4 h-12 w-12 text-muted-foreground/50"
                         }, void 0, false, {
                             fileName: "[project]/src/app/dashboard/bank/page.tsx",
                             lineNumber: 121,
@@ -448,7 +448,7 @@ function BankPage() {
                         canApply ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                                    className: "text-lg font-semibold text-gray-900",
+                                    className: "text-lg font-semibold text-foreground",
                                     children: "Ready to Apply"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/dashboard/bank/page.tsx",
@@ -456,7 +456,7 @@ function BankPage() {
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                    className: "mx-auto mt-2 max-w-md text-sm text-gray-500",
+                                    className: "mx-auto mt-2 max-w-md text-sm text-muted-foreground",
                                     children: "Your LLC is formed and EIN is ready. You can now apply for a US business bank account."
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/dashboard/bank/page.tsx",
@@ -491,7 +491,7 @@ function BankPage() {
                         }, void 0, true) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                                    className: "text-lg font-semibold text-gray-900",
+                                    className: "text-lg font-semibold text-foreground",
                                     children: !company ? 'LLC Formation Required' : !company.ein ? 'EIN Required' : 'Complete Prerequisites'
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/dashboard/bank/page.tsx",
@@ -499,7 +499,7 @@ function BankPage() {
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                    className: "mx-auto mt-2 max-w-md text-sm text-gray-500",
+                                    className: "mx-auto mt-2 max-w-md text-sm text-muted-foreground",
                                     children: !company ? 'Complete your LLC formation before applying for a bank account.' : !company.ein ? 'Obtain your EIN before applying for a bank account.' : 'Complete your LLC formation to proceed.'
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/dashboard/bank/page.tsx",
@@ -546,15 +546,15 @@ function getStatusColor(status) {
     switch(status){
         case 'approved':
         case 'completed':
-            return 'bg-green-100 text-green-700';
+            return 'bg-emerald-500/15 text-emerald-400';
         case 'under_review':
-            return 'bg-yellow-100 text-yellow-700';
+            return 'bg-yellow-500/15 text-yellow-400';
         case 'submitted':
-            return 'bg-blue-100 text-blue-700';
+            return 'bg-blue-500/15 text-blue-400';
         case 'rejected':
-            return 'bg-red-100 text-red-700';
+            return 'bg-red-500/15 text-red-400';
         default:
-            return 'bg-gray-100 text-gray-700';
+            return 'bg-muted text-muted-foreground';
     }
 }
 function formatStatus(status) {

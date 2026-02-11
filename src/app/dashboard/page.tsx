@@ -113,13 +113,13 @@ export default function DashboardPage() {
     return (
       <div>
         <div className="mb-8">
-          <div className="h-8 w-48 animate-pulse rounded bg-zinc-800" />
-          <div className="mt-2 h-4 w-72 animate-pulse rounded bg-zinc-800" />
+          <div className="h-8 w-48 animate-pulse rounded bg-muted" />
+          <div className="mt-2 h-4 w-72 animate-pulse rounded bg-muted" />
         </div>
         <div className="mb-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {[...Array(4)].map((_, i) => (
-            <div key={i} className="rounded-xl border border-zinc-800 bg-zinc-900/60 p-6">
-              <div className="h-24 animate-pulse rounded bg-zinc-800" />
+            <div key={i} className="rounded-xl border border-border bg-card p-6">
+              <div className="h-24 animate-pulse rounded bg-muted" />
             </div>
           ))}
         </div>
@@ -312,7 +312,7 @@ export default function DashboardPage() {
               }}
             />
           ) : (
-            <div className="rounded-xl border border-zinc-800 bg-zinc-900/60 py-12 text-center">
+            <div className="rounded-xl border border-border bg-card py-12 text-center">
               <Shield className="mx-auto mb-3 h-10 w-10 text-zinc-600" />
               <p className="font-medium text-white">No Trust Score Yet</p>
               <p className="mt-1 text-sm text-zinc-500">

@@ -227,21 +227,21 @@ export default function DocumentsPage() {
     return (
       <div>
         <div className="mb-8">
-          <div className="h-8 w-48 animate-pulse rounded bg-gray-200" />
-          <div className="mt-2 h-4 w-72 animate-pulse rounded bg-gray-200" />
+          <div className="h-8 w-48 animate-pulse rounded bg-muted" />
+          <div className="mt-2 h-4 w-72 animate-pulse rounded bg-muted" />
         </div>
         <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-4">
           {[...Array(4)].map((_, i) => (
             <Card key={i}>
               <CardContent className="p-6">
-                <div className="h-16 animate-pulse rounded bg-gray-100" />
+                <div className="h-16 animate-pulse rounded bg-muted" />
               </CardContent>
             </Card>
           ))}
         </div>
         <Card>
           <CardContent className="p-6">
-            <div className="h-48 animate-pulse rounded bg-gray-100" />
+            <div className="h-48 animate-pulse rounded bg-muted" />
           </CardContent>
         </Card>
       </div>
@@ -258,8 +258,8 @@ export default function DocumentsPage() {
     <div>
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Document Vault</h1>
-          <p className="mt-1 text-sm text-gray-500">
+          <h1 className="text-2xl font-bold text-foreground">Document Vault</h1>
+          <p className="mt-1 text-sm text-muted-foreground">
             Securely store and manage your verification documents.
           </p>
         </div>
@@ -289,16 +289,16 @@ export default function DocumentsPage() {
               {uploadResult ? (
                 <div className={`rounded-lg border p-4 ${
                   uploadResult.status === 'verified'
-                    ? 'border-green-200 bg-green-50'
+                    ? 'border-emerald-500/20 bg-emerald-500/10'
                     : uploadResult.status === 'review_needed'
-                    ? 'border-orange-200 bg-orange-50'
-                    : 'border-yellow-200 bg-yellow-50'
+                    ? 'border-orange-500/20 bg-orange-500/10'
+                    : 'border-yellow-500/20 bg-yellow-500/10'
                 }`}>
                   <div className="flex items-center gap-2 mb-2">
                     {uploadResult.status === 'verified' ? (
-                      <CheckCircle className="h-5 w-5 text-green-600" />
+                      <CheckCircle className="h-5 w-5 text-emerald-400" />
                     ) : (
-                      <AlertTriangle className="h-5 w-5 text-orange-500" />
+                      <AlertTriangle className="h-5 w-5 text-orange-400" />
                     )}
                     <span className="font-medium">
                       {uploadResult.status === 'verified'
@@ -308,7 +308,7 @@ export default function DocumentsPage() {
                         : 'Verification Failed'}
                     </span>
                   </div>
-                  <p className="text-sm text-gray-600">{uploadResult.reasoning}</p>
+                  <p className="text-sm text-muted-foreground">{uploadResult.reasoning}</p>
                   <Button
                     variant="outline"
                     size="sm"
@@ -341,18 +341,18 @@ export default function DocumentsPage() {
                   <div className="space-y-2">
                     <Label>File</Label>
                     <div
-                      className="flex cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 p-6 hover:bg-gray-100"
+                      className="flex cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-border bg-muted/50 p-6 hover:bg-muted"
                       onClick={() => fileInputRef.current?.click()}
                     >
-                      <Upload className="mb-2 h-8 w-8 text-gray-400" />
+                      <Upload className="mb-2 h-8 w-8 text-muted-foreground" />
                       {selectedFile ? (
-                        <p className="text-sm font-medium text-gray-900">{selectedFile.name}</p>
+                        <p className="text-sm font-medium text-foreground">{selectedFile.name}</p>
                       ) : (
                         <>
-                          <p className="text-sm text-gray-600">
+                          <p className="text-sm text-muted-foreground">
                             Click to upload or drag and drop
                           </p>
-                          <p className="mt-1 text-xs text-gray-400">
+                          <p className="mt-1 text-xs text-muted-foreground">
                             PDF, PNG, JPG up to 10MB
                           </p>
                         </>
@@ -367,7 +367,7 @@ export default function DocumentsPage() {
                     </div>
                   </div>
                   {error && (
-                    <p className="text-sm text-red-600">{error}</p>
+                    <p className="text-sm text-red-400">{error}</p>
                   )}
                   <Button onClick={handleUpload} className="w-full" disabled={uploading}>
                     {uploading ? (
@@ -390,42 +390,42 @@ export default function DocumentsPage() {
       <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-4">
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-gray-500">
+            <CardTitle className="text-sm font-medium text-muted-foreground">
               Total Documents
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-3xl font-bold text-gray-900">{documents.length}</p>
+            <p className="text-3xl font-bold text-foreground">{documents.length}</p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-gray-500">
+            <CardTitle className="text-sm font-medium text-muted-foreground">
               Verified
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-3xl font-bold text-green-600">{verifiedCount}</p>
+            <p className="text-3xl font-bold text-emerald-400">{verifiedCount}</p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-gray-500">
+            <CardTitle className="text-sm font-medium text-muted-foreground">
               Review Needed
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-3xl font-bold text-orange-600">{reviewNeededCount}</p>
+            <p className="text-3xl font-bold text-orange-400">{reviewNeededCount}</p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-gray-500">
+            <CardTitle className="text-sm font-medium text-muted-foreground">
               Pending
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-3xl font-bold text-yellow-600">{pendingCount}</p>
+            <p className="text-3xl font-bold text-yellow-400">{pendingCount}</p>
           </CardContent>
         </Card>
       </div>
@@ -441,9 +441,9 @@ export default function DocumentsPage() {
         <CardContent>
           {documents.length === 0 ? (
             <div className="py-12 text-center">
-              <FileText className="mx-auto mb-3 h-10 w-10 text-gray-300" />
-              <p className="font-medium text-gray-900">No documents yet</p>
-              <p className="mt-1 text-sm text-gray-500">
+              <FileText className="mx-auto mb-3 h-10 w-10 text-muted-foreground/50" />
+              <p className="font-medium text-foreground">No documents yet</p>
+              <p className="mt-1 text-sm text-muted-foreground">
                 Upload your first document to get started.
               </p>
             </div>
@@ -466,7 +466,7 @@ export default function DocumentsPage() {
                     <TableRow key={doc.id}>
                       <TableCell>
                         <div className="flex items-center gap-2">
-                          <FileText className="h-5 w-5 text-gray-400" />
+                          <FileText className="h-5 w-5 text-muted-foreground" />
                           <span className="font-medium">{doc.file_name}</span>
                         </div>
                       </TableCell>
@@ -479,17 +479,17 @@ export default function DocumentsPage() {
                       <TableCell>{formatFileSize(doc.file_size)}</TableCell>
                       <TableCell>
                         {status === 'verified' ? (
-                          <Badge className="bg-green-100 text-green-600">
+                          <Badge className="bg-emerald-500/15 text-emerald-400">
                             <CheckCircle className="mr-1 h-3 w-3" />
                             Verified
                           </Badge>
                         ) : status === 'review_needed' ? (
-                          <Badge className="bg-orange-100 text-orange-600">
+                          <Badge className="bg-orange-500/15 text-orange-400">
                             <AlertTriangle className="mr-1 h-3 w-3" />
                             Review Needed
                           </Badge>
                         ) : (
-                          <Badge className="bg-yellow-100 text-yellow-600">
+                          <Badge className="bg-yellow-500/15 text-yellow-400">
                             <Clock className="mr-1 h-3 w-3" />
                             Pending
                           </Badge>
@@ -522,7 +522,7 @@ export default function DocumentsPage() {
                             {deleting === doc.id ? (
                               <Loader2 className="h-4 w-4 animate-spin" />
                             ) : (
-                              <Trash2 className="h-4 w-4 text-red-500" />
+                              <Trash2 className="h-4 w-4 text-red-400" />
                             )}
                           </Button>
                         </div>
@@ -548,38 +548,38 @@ export default function DocumentsPage() {
           {detailsVerification?.metadata ? (
             <div className="space-y-4 py-2">
               <div className="rounded-lg border p-4 space-y-3">
-                <h4 className="font-medium text-sm text-gray-500">Match Results</h4>
+                <h4 className="font-medium text-sm text-muted-foreground">Match Results</h4>
                 <div className="grid grid-cols-2 gap-3 text-sm">
                   <div>
-                    <span className="text-gray-500">Name:</span>
+                    <span className="text-muted-foreground">Name:</span>
                     <MatchBadge result={detailsVerification.metadata.match_results?.name} />
                   </div>
                   <div>
-                    <span className="text-gray-500">Extracted:</span>{' '}
+                    <span className="text-muted-foreground">Extracted:</span>{' '}
                     <span className="font-medium">{detailsVerification.metadata.extracted_data?.fullName ?? 'N/A'}</span>
                   </div>
                   <div>
-                    <span className="text-gray-500">Date of Birth:</span>
+                    <span className="text-muted-foreground">Date of Birth:</span>
                     <MatchBadge result={detailsVerification.metadata.match_results?.dateOfBirth} />
                   </div>
                   <div>
-                    <span className="text-gray-500">Extracted:</span>{' '}
+                    <span className="text-muted-foreground">Extracted:</span>{' '}
                     <span className="font-medium">{detailsVerification.metadata.extracted_data?.dateOfBirth ?? 'N/A'}</span>
                   </div>
                   <div>
-                    <span className="text-gray-500">Country:</span>
+                    <span className="text-muted-foreground">Country:</span>
                     <MatchBadge result={detailsVerification.metadata.match_results?.country} />
                   </div>
                   <div>
-                    <span className="text-gray-500">Extracted:</span>{' '}
+                    <span className="text-muted-foreground">Extracted:</span>{' '}
                     <span className="font-medium">{detailsVerification.metadata.extracted_data?.nationality ?? 'N/A'}</span>
                   </div>
                 </div>
               </div>
               <div className="rounded-lg border p-4 space-y-2">
-                <h4 className="font-medium text-sm text-gray-500">Confidence</h4>
+                <h4 className="font-medium text-sm text-muted-foreground">Confidence</h4>
                 <div className="flex items-center gap-3">
-                  <div className="h-2 flex-1 rounded-full bg-gray-200">
+                  <div className="h-2 flex-1 rounded-full bg-muted">
                     <div
                       className="h-2 rounded-full bg-blue-500"
                       style={{ width: `${detailsVerification.metadata.confidence ?? 0}%` }}
@@ -590,24 +590,24 @@ export default function DocumentsPage() {
               </div>
               {detailsVerification.metadata.extracted_data?.documentNumber ? (
                 <div className="rounded-lg border p-4 space-y-2">
-                  <h4 className="font-medium text-sm text-gray-500">Document Details</h4>
+                  <h4 className="font-medium text-sm text-muted-foreground">Document Details</h4>
                   <div className="text-sm space-y-1">
-                    <p><span className="text-gray-500">Document #:</span> {detailsVerification.metadata.extracted_data.documentNumber}</p>
+                    <p><span className="text-muted-foreground">Document #:</span> {detailsVerification.metadata.extracted_data.documentNumber}</p>
                     {detailsVerification.metadata.extracted_data.expiryDate ? (
-                      <p><span className="text-gray-500">Expiry:</span> {detailsVerification.metadata.extracted_data.expiryDate}</p>
+                      <p><span className="text-muted-foreground">Expiry:</span> {detailsVerification.metadata.extracted_data.expiryDate}</p>
                     ) : null}
                     {detailsVerification.metadata.extracted_data.documentTypeConfirmed ? (
-                      <p><span className="text-gray-500">Type confirmed:</span> {detailsVerification.metadata.extracted_data.documentTypeConfirmed}</p>
+                      <p><span className="text-muted-foreground">Type confirmed:</span> {detailsVerification.metadata.extracted_data.documentTypeConfirmed}</p>
                     ) : null}
                   </div>
                 </div>
               ) : null}
               {detailsVerification.metadata.reasoning ? (
-                <p className="text-xs text-gray-500">{detailsVerification.metadata.reasoning}</p>
+                <p className="text-xs text-muted-foreground">{detailsVerification.metadata.reasoning}</p>
               ) : null}
             </div>
           ) : (
-            <p className="py-4 text-sm text-gray-500">No verification data available for this document.</p>
+            <p className="py-4 text-sm text-muted-foreground">No verification data available for this document.</p>
           )}
         </DialogContent>
       </Dialog>
@@ -618,13 +618,13 @@ export default function DocumentsPage() {
 function MatchBadge({ result }: { result?: string }) {
   if (!result) return null
   const styles: Record<string, string> = {
-    exact: 'bg-green-100 text-green-700',
-    partial: 'bg-blue-100 text-blue-700',
-    mismatch: 'bg-red-100 text-red-700',
-    unavailable: 'bg-gray-100 text-gray-500',
+    exact: 'bg-emerald-500/15 text-emerald-400',
+    partial: 'bg-blue-500/15 text-blue-400',
+    mismatch: 'bg-red-500/15 text-red-400',
+    unavailable: 'bg-muted text-muted-foreground',
   }
   return (
-    <Badge className={`ml-2 text-xs ${styles[result] ?? 'bg-gray-100 text-gray-500'}`}>
+    <Badge className={`ml-2 text-xs ${styles[result] ?? 'bg-muted text-muted-foreground'}`}>
       {result}
     </Badge>
   )

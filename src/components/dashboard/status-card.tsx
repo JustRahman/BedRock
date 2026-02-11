@@ -37,7 +37,7 @@ export function StatusCard({
   const config = statusConfig[status]
 
   return (
-    <div className="rounded-xl border border-zinc-800 bg-zinc-900/60 p-5">
+    <div className="rounded-xl border border-border bg-card p-5">
       <div className="flex items-center justify-between mb-3">
         <span className="text-sm font-medium text-zinc-400">{title}</span>
         <Icon className="h-5 w-5 text-zinc-600" />

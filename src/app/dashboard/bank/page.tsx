@@ -45,11 +45,11 @@ export default function BankPage() {
     return (
       <div>
         <div className="mb-8">
-          <h1 className="text-2xl font-bold text-gray-900">Bank Account</h1>
+          <h1 className="text-2xl font-bold text-foreground">Bank Account</h1>
         </div>
         <Card>
           <CardContent className="py-12 text-center">
-            <Loader2 className="mx-auto h-8 w-8 animate-spin text-gray-400" />
+            <Loader2 className="mx-auto h-8 w-8 animate-spin text-muted-foreground" />
           </CardContent>
         </Card>
       </div>
@@ -61,8 +61,8 @@ export default function BankPage() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">Bank Account</h1>
-        <p className="mt-1 text-sm text-gray-500">
+        <h1 className="text-2xl font-bold text-foreground">Bank Account</h1>
+        <p className="mt-1 text-sm text-muted-foreground">
           Apply for and manage your US business bank account.
         </p>
       </div>
@@ -85,18 +85,18 @@ export default function BankPage() {
               <CardContent>
                 <div className="grid grid-cols-3 gap-4">
                   <div>
-                    <p className="text-sm text-gray-500">Status</p>
+                    <p className="text-sm text-muted-foreground">Status</p>
                     <p className="font-medium">{formatStatus(app.status)}</p>
                   </div>
                   {app.submitted_at && (
                     <div>
-                      <p className="text-sm text-gray-500">Submitted</p>
+                      <p className="text-sm text-muted-foreground">Submitted</p>
                       <p className="font-medium">{new Date(app.submitted_at).toLocaleDateString()}</p>
                     </div>
                   )}
                   {app.approved_at && (
                     <div>
-                      <p className="text-sm text-gray-500">Approved</p>
+                      <p className="text-sm text-muted-foreground">Approved</p>
                       <p className="font-medium">{new Date(app.approved_at).toLocaleDateString()}</p>
                     </div>
                   )}
@@ -118,11 +118,11 @@ export default function BankPage() {
       ) : (
         <Card>
           <CardContent className="py-16 text-center">
-            <Building2 className="mx-auto mb-4 h-12 w-12 text-gray-300" />
+            <Building2 className="mx-auto mb-4 h-12 w-12 text-muted-foreground/50" />
             {canApply ? (
               <>
-                <h2 className="text-lg font-semibold text-gray-900">Ready to Apply</h2>
-                <p className="mx-auto mt-2 max-w-md text-sm text-gray-500">
+                <h2 className="text-lg font-semibold text-foreground">Ready to Apply</h2>
+                <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">
                   Your LLC is formed and EIN is ready. You can now apply for a US business bank account.
                 </p>
                 <Link href="/dashboard/bank/application">
@@ -134,10 +134,10 @@ export default function BankPage() {
               </>
             ) : (
               <>
-                <h2 className="text-lg font-semibold text-gray-900">
+                <h2 className="text-lg font-semibold text-foreground">
                   {!company ? 'LLC Formation Required' : !company.ein ? 'EIN Required' : 'Complete Prerequisites'}
                 </h2>
-                <p className="mx-auto mt-2 max-w-md text-sm text-gray-500">
+                <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">
                   {!company
                     ? 'Complete your LLC formation before applying for a bank account.'
                     : !company.ein
@@ -160,11 +160,11 @@ export default function BankPage() {
 
 function getStatusColor(status: string): string {
   switch (status) {
-    case 'approved': case 'completed': return 'bg-green-100 text-green-700'
-    case 'under_review': return 'bg-yellow-100 text-yellow-700'
-    case 'submitted': return 'bg-blue-100 text-blue-700'
-    case 'rejected': return 'bg-red-100 text-red-700'
-    default: return 'bg-gray-100 text-gray-700'
+    case 'approved': case 'completed': return 'bg-emerald-500/15 text-emerald-400'
+    case 'under_review': return 'bg-yellow-500/15 text-yellow-400'
+    case 'submitted': return 'bg-blue-500/15 text-blue-400'
+    case 'rejected': return 'bg-red-500/15 text-red-400'
+    default: return 'bg-muted text-muted-foreground'
   }
 }
 

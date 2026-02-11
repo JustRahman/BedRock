@@ -83,16 +83,15 @@ export default function RegisterPage() {
         return
       }
 
-      // Save onboarding data if available (from eligibility check flow)
-      const onboardingRaw = sessionStorage.getItem('onboardingData')
-      const trustScoreRaw = sessionStorage.getItem('trustScoreResult')
-
-      if (signUpData.user && onboardingRaw) {
+      if (signUpData.user) {
         try {
-          const onboardingData = JSON.parse(onboardingRaw)
-          const basicInfo = onboardingData.basicInfo || {}
+          // Read onboarding data if available (from eligibility check flow)
+          const onboardingRaw = sessionStorage.getItem('onboardingData')
+          const trustScoreRaw = sessionStorage.getItem('trustScoreResult')
+          const onboardingData = onboardingRaw ? JSON.parse(onboardingRaw) : null
+          const basicInfo = onboardingData?.basicInfo || {}
 
-          // Create founder row
+          // Always create founder row
           await (supabase.from('founders') as ReturnType<typeof supabase.from>).insert({
             user_id: signUpData.user.id,
             email: data.email,
@@ -100,21 +99,22 @@ export default function RegisterPage() {
             phone: basicInfo.phone || null,
             country_of_origin: basicInfo.countryOfOrigin || '',
             country_of_residence: basicInfo.countryOfResidence || '',
-            onboarding_completed: true,
+            onboarding_completed: !!onboardingData,
           })
 
-          // Save trust score if calculated
-          if (trustScoreRaw) {
-            const trustScore = JSON.parse(trustScoreRaw)
-            const { data: founder } = await (supabase
-              .from('founders') as ReturnType<typeof supabase.from>)
-              .select('id')
-              .eq('user_id', signUpData.user.id)
-              .single()
+          // Get the founder ID for subsequent inserts
+          const { data: founder } = await (supabase
+            .from('founders') as ReturnType<typeof supabase.from>)
+            .select('id')
+            .eq('user_id', signUpData.user.id)
+            .single()
 
-            if (founder) {
-              const founderId = (founder as { id: string }).id
+          if (founder) {
+            const founderId = (founder as { id: string }).id
 
+            // Save trust score if calculated
+            if (trustScoreRaw) {
+              const trustScore = JSON.parse(trustScoreRaw)
               await (supabase.from('trust_scores') as ReturnType<typeof supabase.from>).insert({
                 founder_id: founderId,
                 total_score: trustScore.totalScore || 0,
@@ -127,30 +127,30 @@ export default function RegisterPage() {
                 score_breakdown: trustScore.breakdown || {},
                 version: 2,
               })
+            }
 
-              // Save OAuth verification data
-              const oauthEntries: { type: string; key: string }[] = [
-                { type: 'github_oauth', key: 'oauth_github_data' },
-                { type: 'linkedin_oauth', key: 'oauth_linkedin_data' },
-                { type: 'stripe_oauth', key: 'oauth_stripe_data' },
-              ]
+            // Save OAuth verification data
+            const oauthEntries: { type: string; key: string }[] = [
+              { type: 'github_oauth', key: 'oauth_github_data' },
+              { type: 'linkedin_oauth', key: 'oauth_linkedin_data' },
+              { type: 'stripe_oauth', key: 'oauth_stripe_data' },
+            ]
 
-              for (const entry of oauthEntries) {
-                const raw = sessionStorage.getItem(entry.key)
-                if (raw) {
-                  try {
-                    const oauthData = JSON.parse(raw)
-                    await (supabase.from('founder_verifications') as ReturnType<typeof supabase.from>)
-                      .upsert({
-                        founder_id: founderId,
-                        verification_type: entry.type,
-                        status: 'verified',
-                        verified_at: new Date().toISOString(),
-                        metadata: oauthData,
-                      }, { onConflict: 'founder_id,verification_type' })
-                  } catch {
-                    // Non-critical
-                  }
+            for (const entry of oauthEntries) {
+              const raw = sessionStorage.getItem(entry.key)
+              if (raw) {
+                try {
+                  const oauthData = JSON.parse(raw)
+                  await (supabase.from('founder_verifications') as ReturnType<typeof supabase.from>)
+                    .upsert({
+                      founder_id: founderId,
+                      verification_type: entry.type,
+                      status: 'verified',
+                      verified_at: new Date().toISOString(),
+                      metadata: oauthData,
+                    }, { onConflict: 'founder_id,verification_type' })
+                } catch {
+                  // Non-critical
                 }
               }
             }

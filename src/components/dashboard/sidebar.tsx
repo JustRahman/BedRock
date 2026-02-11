@@ -38,8 +38,8 @@ export function Sidebar() {
   }
 
   return (
-    <aside className="flex h-screen w-64 flex-col border-r border-zinc-800 bg-[#18181b]">
-      <div className="flex h-16 items-center gap-2.5 border-b border-zinc-800 px-6">
+    <aside className="flex h-screen w-64 flex-col border-r border-border bg-sidebar">
+      <div className="flex h-16 items-center gap-2.5 border-b border-border px-6">
         <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-violet-600">
           <Shield className="h-4 w-4 text-white" />
         </div>
@@ -66,7 +66,7 @@ export function Sidebar() {
         })}
       </nav>
 
-      <div className="border-t border-zinc-800 p-4">
+      <div className="border-t border-border p-4">
         <Button
           variant="ghost"
           className="w-full justify-start gap-2 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-700/25"

@@ -697,14 +697,14 @@ function CompliancePage() {
                     className: "mb-8",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "h-8 w-56 animate-pulse rounded bg-gray-200"
+                            className: "h-8 w-56 animate-pulse rounded bg-muted"
                         }, void 0, false, {
                             fileName: "[project]/src/app/dashboard/compliance/page.tsx",
                             lineNumber: 146,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "mt-2 h-4 w-72 animate-pulse rounded bg-gray-200"
+                            className: "mt-2 h-4 w-72 animate-pulse rounded bg-muted"
                         }, void 0, false, {
                             fileName: "[project]/src/app/dashboard/compliance/page.tsx",
                             lineNumber: 147,
@@ -724,7 +724,7 @@ function CompliancePage() {
                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
                                 className: "p-6",
                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "h-16 animate-pulse rounded bg-gray-100"
+                                    className: "h-16 animate-pulse rounded bg-muted"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/dashboard/compliance/page.tsx",
                                     lineNumber: 153,
@@ -753,7 +753,7 @@ function CompliancePage() {
                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
                                 className: "p-6",
                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "h-16 animate-pulse rounded bg-gray-100"
+                                    className: "h-16 animate-pulse rounded bg-muted"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/dashboard/compliance/page.tsx",
                                     lineNumber: 162,
@@ -800,7 +800,7 @@ function CompliancePage() {
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-                                className: "text-2xl font-bold text-gray-900",
+                                className: "text-2xl font-bold text-foreground",
                                 children: "Compliance Calendar"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/dashboard/compliance/page.tsx",
@@ -808,7 +808,7 @@ function CompliancePage() {
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                className: "mt-1 text-sm text-gray-500",
+                                className: "mt-1 text-sm text-muted-foreground",
                                 children: "Track important deadlines and stay compliant."
                             }, void 0, false, {
                                 fileName: "[project]/src/app/dashboard/compliance/page.tsx",
@@ -961,7 +961,7 @@ function CompliancePage() {
                                                 columnNumber: 15
                                             }, this),
                                             formError && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                className: "text-sm text-red-600",
+                                                className: "text-sm text-red-400",
                                                 children: formError
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/dashboard/compliance/page.tsx",
@@ -1021,7 +1021,7 @@ function CompliancePage() {
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardHeader"], {
                                 className: "pb-2",
                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardTitle"], {
-                                    className: "text-sm font-medium text-gray-500",
+                                    className: "text-sm font-medium text-muted-foreground",
                                     children: "Upcoming"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/dashboard/compliance/page.tsx",
@@ -1038,14 +1038,14 @@ function CompliancePage() {
                                     className: "flex items-center gap-2",
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$clock$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Clock$3e$__["Clock"], {
-                                            className: "h-5 w-5 text-blue-500"
+                                            className: "h-5 w-5 text-blue-400"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/dashboard/compliance/page.tsx",
                                             lineNumber: 272,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                            className: "text-3xl font-bold text-gray-900",
+                                            className: "text-3xl font-bold text-foreground",
                                             children: upcomingCount
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/dashboard/compliance/page.tsx",
@@ -1074,7 +1074,7 @@ function CompliancePage() {
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardHeader"], {
                                 className: "pb-2",
                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardTitle"], {
-                                    className: "text-sm font-medium text-gray-500",
+                                    className: "text-sm font-medium text-muted-foreground",
                                     children: "Overdue"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/dashboard/compliance/page.tsx",
@@ -1091,14 +1091,14 @@ function CompliancePage() {
                                     className: "flex items-center gap-2",
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$alert$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__AlertCircle$3e$__["AlertCircle"], {
-                                            className: "h-5 w-5 text-red-500"
+                                            className: "h-5 w-5 text-red-400"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/dashboard/compliance/page.tsx",
                                             lineNumber: 285,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                            className: "text-3xl font-bold text-red-600",
+                                            className: "text-3xl font-bold text-red-400",
                                             children: overdueCount
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/dashboard/compliance/page.tsx",
@@ -1127,7 +1127,7 @@ function CompliancePage() {
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardHeader"], {
                                 className: "pb-2",
                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardTitle"], {
-                                    className: "text-sm font-medium text-gray-500",
+                                    className: "text-sm font-medium text-muted-foreground",
                                     children: "Completed"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/dashboard/compliance/page.tsx",
@@ -1144,14 +1144,14 @@ function CompliancePage() {
                                     className: "flex items-center gap-2",
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$check$2d$big$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckCircle$3e$__["CheckCircle"], {
-                                            className: "h-5 w-5 text-green-500"
+                                            className: "h-5 w-5 text-emerald-400"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/dashboard/compliance/page.tsx",
                                             lineNumber: 298,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                            className: "text-3xl font-bold text-green-600",
+                                            className: "text-3xl font-bold text-emerald-400",
                                             children: completedCount
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/dashboard/compliance/page.tsx",
@@ -1207,14 +1207,14 @@ function CompliancePage() {
                     className: "py-12 text-center",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$calendar$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Calendar$3e$__["Calendar"], {
-                            className: "mx-auto mb-3 h-10 w-10 text-gray-300"
+                            className: "mx-auto mb-3 h-10 w-10 text-muted-foreground/50"
                         }, void 0, false, {
                             fileName: "[project]/src/app/dashboard/compliance/page.tsx",
                             lineNumber: 323,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                            className: "font-medium text-gray-900",
+                            className: "font-medium text-foreground",
                             children: "No deadlines found"
                         }, void 0, false, {
                             fileName: "[project]/src/app/dashboard/compliance/page.tsx",
@@ -1222,7 +1222,7 @@ function CompliancePage() {
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                            className: "mt-1 text-sm text-gray-500",
+                            className: "mt-1 text-sm text-muted-foreground",
                             children: filter === 'all' ? 'Add your first compliance deadline to get started.' : `No ${filter} deadlines.`
                         }, void 0, false, {
                             fileName: "[project]/src/app/dashboard/compliance/page.tsx",
@@ -1269,7 +1269,7 @@ function CompliancePage() {
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                     children: [
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                                            className: `font-medium ${deadline.completed ? 'text-gray-500 line-through' : 'text-gray-900'}`,
+                                                            className: `font-medium ${deadline.completed ? 'text-muted-foreground line-through' : 'text-foreground'}`,
                                                             children: deadline.title
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/dashboard/compliance/page.tsx",
@@ -1277,7 +1277,7 @@ function CompliancePage() {
                                                             columnNumber: 25
                                                         }, this),
                                                         deadline.description && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                                            className: "mt-1 text-sm text-gray-500",
+                                                            className: "mt-1 text-sm text-muted-foreground",
                                                             children: deadline.description
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/dashboard/compliance/page.tsx",
@@ -1291,7 +1291,7 @@ function CompliancePage() {
                                                     columnNumber: 23
                                                 }, this),
                                                 isOverdue && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Badge"], {
-                                                    className: "bg-red-100 text-red-700",
+                                                    className: "bg-red-500/15 text-red-400 border-red-500/20",
                                                     children: "Overdue"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/dashboard/compliance/page.tsx",
@@ -1308,7 +1308,7 @@ function CompliancePage() {
                                             className: "mt-3 flex items-center gap-4 text-sm",
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                    className: "flex items-center gap-1 text-gray-500",
+                                                    className: "flex items-center gap-1 text-muted-foreground",
                                                     children: [
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$calendar$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Calendar$3e$__["Calendar"], {
                                                             className: "h-4 w-4"
@@ -1325,7 +1325,7 @@ function CompliancePage() {
                                                     columnNumber: 23
                                                 }, this),
                                                 !deadline.completed && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                    className: `font-medium ${isOverdue ? 'text-red-600' : daysUntil <= 7 ? 'text-yellow-600' : 'text-gray-600'}`,
+                                                    className: `font-medium ${isOverdue ? 'text-red-400' : daysUntil <= 7 ? 'text-yellow-400' : 'text-muted-foreground'}`,
                                                     children: isOverdue ? `${Math.abs(daysUntil)} days overdue` : daysUntil === 0 ? 'Due today' : `${daysUntil} days remaining`
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/dashboard/compliance/page.tsx",
@@ -1333,7 +1333,7 @@ function CompliancePage() {
                                                     columnNumber: 25
                                                 }, this),
                                                 deadline.completed && deadline.completed_at && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                    className: "text-green-600",
+                                                    className: "text-emerald-400",
                                                     children: [
                                                         "Completed ",
                                                         (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$date$2d$fns$2f$format$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["format"])(new Date(deadline.completed_at), 'MMM d, yyyy')
@@ -1367,7 +1367,7 @@ function CompliancePage() {
                                         lineNumber: 409,
                                         columnNumber: 23
                                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trash$2d$2$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Trash2$3e$__["Trash2"], {
-                                        className: "h-4 w-4 text-red-500"
+                                        className: "h-4 w-4 text-red-400"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/dashboard/compliance/page.tsx",
                                         lineNumber: 411,

@@ -143,14 +143,14 @@ export default function CompliancePage() {
     return (
       <div>
         <div className="mb-8">
-          <div className="h-8 w-56 animate-pulse rounded bg-gray-200" />
-          <div className="mt-2 h-4 w-72 animate-pulse rounded bg-gray-200" />
+          <div className="h-8 w-56 animate-pulse rounded bg-muted" />
+          <div className="mt-2 h-4 w-72 animate-pulse rounded bg-muted" />
         </div>
         <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
           {[...Array(3)].map((_, i) => (
             <Card key={i}>
               <CardContent className="p-6">
-                <div className="h-16 animate-pulse rounded bg-gray-100" />
+                <div className="h-16 animate-pulse rounded bg-muted" />
               </CardContent>
             </Card>
           ))}
@@ -159,7 +159,7 @@ export default function CompliancePage() {
           {[...Array(3)].map((_, i) => (
             <Card key={i}>
               <CardContent className="p-6">
-                <div className="h-16 animate-pulse rounded bg-gray-100" />
+                <div className="h-16 animate-pulse rounded bg-muted" />
               </CardContent>
             </Card>
           ))}
@@ -188,8 +188,8 @@ export default function CompliancePage() {
     <div>
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Compliance Calendar</h1>
-          <p className="mt-1 text-sm text-gray-500">
+          <h1 className="text-2xl font-bold text-foreground">Compliance Calendar</h1>
+          <p className="mt-1 text-sm text-muted-foreground">
             Track important deadlines and stay compliant.
           </p>
         </div>
@@ -242,7 +242,7 @@ export default function CompliancePage() {
                 />
               </div>
               {formError && (
-                <p className="text-sm text-red-600">{formError}</p>
+                <p className="text-sm text-red-400">{formError}</p>
               )}
               <Button className="w-full" onClick={handleAdd} disabled={saving}>
                 {saving ? (
@@ -263,40 +263,40 @@ export default function CompliancePage() {
       <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-gray-500">
+            <CardTitle className="text-sm font-medium text-muted-foreground">
               Upcoming
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-2">
-              <Clock className="h-5 w-5 text-blue-500" />
-              <p className="text-3xl font-bold text-gray-900">{upcomingCount}</p>
+              <Clock className="h-5 w-5 text-blue-400" />
+              <p className="text-3xl font-bold text-foreground">{upcomingCount}</p>
             </div>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-gray-500">
+            <CardTitle className="text-sm font-medium text-muted-foreground">
               Overdue
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-2">
-              <AlertCircle className="h-5 w-5 text-red-500" />
-              <p className="text-3xl font-bold text-red-600">{overdueCount}</p>
+              <AlertCircle className="h-5 w-5 text-red-400" />
+              <p className="text-3xl font-bold text-red-400">{overdueCount}</p>
             </div>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-gray-500">
+            <CardTitle className="text-sm font-medium text-muted-foreground">
               Completed
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-2">
-              <CheckCircle className="h-5 w-5 text-green-500" />
-              <p className="text-3xl font-bold text-green-600">{completedCount}</p>
+              <CheckCircle className="h-5 w-5 text-emerald-400" />
+              <p className="text-3xl font-bold text-emerald-400">{completedCount}</p>
             </div>
           </CardContent>
         </Card>
@@ -320,9 +320,9 @@ export default function CompliancePage() {
       {filteredDeadlines.length === 0 ? (
         <Card>
           <CardContent className="py-12 text-center">
-            <Calendar className="mx-auto mb-3 h-10 w-10 text-gray-300" />
-            <p className="font-medium text-gray-900">No deadlines found</p>
-            <p className="mt-1 text-sm text-gray-500">
+            <Calendar className="mx-auto mb-3 h-10 w-10 text-muted-foreground/50" />
+            <p className="font-medium text-foreground">No deadlines found</p>
+            <p className="mt-1 text-sm text-muted-foreground">
               {filter === 'all'
                 ? 'Add your first compliance deadline to get started.'
                 : `No ${filter} deadlines.`}
@@ -354,24 +354,24 @@ export default function CompliancePage() {
                         <h3
                           className={`font-medium ${
                             deadline.completed
-                              ? 'text-gray-500 line-through'
-                              : 'text-gray-900'
+                              ? 'text-muted-foreground line-through'
+                              : 'text-foreground'
                           }`}
                         >
                           {deadline.title}
                         </h3>
                         {deadline.description && (
-                          <p className="mt-1 text-sm text-gray-500">
+                          <p className="mt-1 text-sm text-muted-foreground">
                             {deadline.description}
                           </p>
                         )}
                       </div>
                       {isOverdue && (
-                        <Badge className="bg-red-100 text-red-700">Overdue</Badge>
+                        <Badge className="bg-red-500/15 text-red-400 border-red-500/20">Overdue</Badge>
                       )}
                     </div>
                     <div className="mt-3 flex items-center gap-4 text-sm">
-                      <div className="flex items-center gap-1 text-gray-500">
+                      <div className="flex items-center gap-1 text-muted-foreground">
                         <Calendar className="h-4 w-4" />
                         {format(dueDate, 'MMM d, yyyy')}
                       </div>
@@ -379,10 +379,10 @@ export default function CompliancePage() {
                         <span
                           className={`font-medium ${
                             isOverdue
-                              ? 'text-red-600'
+                              ? 'text-red-400'
                               : daysUntil <= 7
-                              ? 'text-yellow-600'
-                              : 'text-gray-600'
+                              ? 'text-yellow-400'
+                              : 'text-muted-foreground'
                           }`}
                         >
                           {isOverdue
@@ -393,7 +393,7 @@ export default function CompliancePage() {
                         </span>
                       )}
                       {deadline.completed && deadline.completed_at && (
-                        <span className="text-green-600">
+                        <span className="text-emerald-400">
                           Completed {format(new Date(deadline.completed_at), 'MMM d, yyyy')}
                         </span>
                       )}
@@ -408,7 +408,7 @@ export default function CompliancePage() {
                     {deleting === deadline.id ? (
                       <Loader2 className="h-4 w-4 animate-spin" />
                     ) : (
-                      <Trash2 className="h-4 w-4 text-red-500" />
+                      <Trash2 className="h-4 w-4 text-red-400" />
                     )}
                   </Button>
                 </CardContent>

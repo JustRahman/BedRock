@@ -90,11 +90,11 @@ export default function FormationPage() {
     return (
       <div>
         <div className="mb-8">
-          <h1 className="text-2xl font-bold text-gray-900">LLC Formation</h1>
+          <h1 className="text-2xl font-bold text-foreground">LLC Formation</h1>
         </div>
         <Card>
           <CardContent className="py-12 text-center">
-            <Loader2 className="mx-auto h-8 w-8 animate-spin text-gray-400" />
+            <Loader2 className="mx-auto h-8 w-8 animate-spin text-muted-foreground" />
           </CardContent>
         </Card>
       </div>
@@ -106,8 +106,8 @@ export default function FormationPage() {
     return (
       <div>
         <div className="mb-8">
-          <h1 className="text-2xl font-bold text-gray-900">LLC Formation</h1>
-          <p className="mt-1 text-sm text-gray-500">Track your LLC formation progress.</p>
+          <h1 className="text-2xl font-bold text-foreground">LLC Formation</h1>
+          <p className="mt-1 text-sm text-muted-foreground">Track your LLC formation progress.</p>
         </div>
 
         <Card className="mb-6">
@@ -121,21 +121,21 @@ export default function FormationPage() {
           <CardContent>
             <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
               <div>
-                <p className="text-sm text-gray-500">State</p>
+                <p className="text-sm text-muted-foreground">State</p>
                 <p className="font-medium">{company.state === 'DE' ? 'Delaware' : company.state === 'WY' ? 'Wyoming' : company.state}</p>
               </div>
               <div>
-                <p className="text-sm text-gray-500">Formation Status</p>
+                <p className="text-sm text-muted-foreground">Formation Status</p>
                 <Badge className={getFormationStatusColor(company.formation_status)}>
                   {formatFormationStatus(company.formation_status)}
                 </Badge>
               </div>
               <div>
-                <p className="text-sm text-gray-500">EIN</p>
+                <p className="text-sm text-muted-foreground">EIN</p>
                 <p className="font-medium">{company.ein || 'Not assigned'}</p>
               </div>
               <div>
-                <p className="text-sm text-gray-500">Formation Date</p>
+                <p className="text-sm text-muted-foreground">Formation Date</p>
                 <p className="font-medium">{company.formation_date || 'Pending'}</p>
               </div>
             </div>
@@ -158,19 +158,19 @@ export default function FormationPage() {
                     <div
                       className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${
                         isComplete
-                          ? 'bg-green-100 text-green-600'
+                          ? 'bg-emerald-500/15 text-emerald-400'
                           : isCurrent
-                          ? 'bg-blue-100 text-blue-600'
-                          : 'bg-gray-100 text-gray-400'
+                          ? 'bg-blue-500/15 text-blue-400'
+                          : 'bg-muted text-muted-foreground'
                       }`}
                     >
                       {isComplete ? <Check className="h-4 w-4" /> : <span className="text-sm font-medium">{i + 1}</span>}
                     </div>
                     <div>
-                      <p className={`font-medium ${isComplete ? 'text-green-700' : isCurrent ? 'text-blue-700' : 'text-gray-500'}`}>
+                      <p className={`font-medium ${isComplete ? 'text-emerald-400' : isCurrent ? 'text-blue-400' : 'text-muted-foreground'}`}>
                         {s.title}
                       </p>
-                      <p className="text-sm text-gray-500">{s.description}</p>
+                      <p className="text-sm text-muted-foreground">{s.description}</p>
                     </div>
                   </div>
                 )
@@ -185,8 +185,8 @@ export default function FormationPage() {
             <CardContent className="py-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="font-medium text-gray-900">Next: Obtain Your EIN</p>
-                  <p className="text-sm text-gray-500">Your LLC is formed. Now get your Employer Identification Number.</p>
+                  <p className="font-medium text-foreground">Next: Obtain Your EIN</p>
+                  <p className="text-sm text-muted-foreground">Your LLC is formed. Now get your Employer Identification Number.</p>
                 </div>
                 <Link href="/dashboard/formation/ein">
                   <Button className="gap-2">
@@ -204,8 +204,8 @@ export default function FormationPage() {
             <CardContent className="py-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="font-medium text-gray-900">Next: Apply for Bank Account</p>
-                  <p className="text-sm text-gray-500">Your LLC and EIN are ready. Start your bank application.</p>
+                  <p className="font-medium text-foreground">Next: Apply for Bank Account</p>
+                  <p className="text-sm text-muted-foreground">Your LLC and EIN are ready. Start your bank application.</p>
                 </div>
                 <Link href="/dashboard/bank/application">
                   <Button className="gap-2">
@@ -225,8 +225,8 @@ export default function FormationPage() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">LLC Formation</h1>
-        <p className="mt-1 text-sm text-gray-500">
+        <h1 className="text-2xl font-bold text-foreground">LLC Formation</h1>
+        <p className="mt-1 text-sm text-muted-foreground">
           Set up your US LLC. Step {step} of 4.
         </p>
       </div>
@@ -236,7 +236,7 @@ export default function FormationPage() {
         {[1, 2, 3, 4].map((s) => (
           <div
             key={s}
-            className={`h-2 flex-1 rounded-full ${s <= step ? 'bg-blue-600' : 'bg-gray-200'}`}
+            className={`h-2 flex-1 rounded-full ${s <= step ? 'bg-blue-500' : 'bg-muted'}`}
           />
         ))}
       </div>
@@ -247,7 +247,7 @@ export default function FormationPage() {
             <div className="space-y-6">
               <div>
                 <h2 className="text-lg font-semibold">Company Name & State</h2>
-                <p className="text-sm text-gray-500">Choose your LLC name and state of formation.</p>
+                <p className="text-sm text-muted-foreground">Choose your LLC name and state of formation.</p>
               </div>
               <div className="space-y-4">
                 <div className="space-y-2">
@@ -257,7 +257,7 @@ export default function FormationPage() {
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     placeholder="My Company"
                   />
-                  <p className="text-xs text-gray-500">&quot;LLC&quot; will be appended automatically.</p>
+                  <p className="text-xs text-muted-foreground">&quot;LLC&quot; will be appended automatically.</p>
                 </div>
                 <div className="space-y-2">
                   <Label>Backup Name (2nd Choice)</Label>
@@ -286,7 +286,7 @@ export default function FormationPage() {
                       <SelectItem value="WY">Wyoming</SelectItem>
                     </SelectContent>
                   </Select>
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-muted-foreground">
                     {formData.state === 'DE'
                       ? 'Delaware: Preferred by tech startups and VCs. Well-established corporate law. Annual franchise tax required.'
                       : 'Wyoming: No state income tax, strong privacy protections, lower annual fees. Great for small businesses.'}
@@ -300,7 +300,7 @@ export default function FormationPage() {
             <div className="space-y-6">
               <div>
                 <h2 className="text-lg font-semibold">Business Address</h2>
-                <p className="text-sm text-gray-500">Your LLC needs a registered address in the state of formation.</p>
+                <p className="text-sm text-muted-foreground">Your LLC needs a registered address in the state of formation.</p>
               </div>
               <div className="space-y-4">
                 <div className="flex gap-4">
@@ -320,7 +320,7 @@ export default function FormationPage() {
                   </Button>
                 </div>
                 {formData.useRegisteredAgent ? (
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-muted-foreground">
                     We&apos;ll provide a registered agent address in {formData.state === 'DE' ? 'Delaware' : 'Wyoming'}.
                     This is included in Standard and Premium plans.
                   </p>
@@ -343,11 +343,11 @@ export default function FormationPage() {
             <div className="space-y-6">
               <div>
                 <h2 className="text-lg font-semibold">Management Structure</h2>
-                <p className="text-sm text-gray-500">Define how your LLC will be managed.</p>
+                <p className="text-sm text-muted-foreground">Define how your LLC will be managed.</p>
               </div>
-              <div className="rounded-lg border border-blue-200 bg-blue-50 p-4">
-                <p className="font-medium text-blue-800">Single-Member LLC</p>
-                <p className="mt-1 text-sm text-blue-700">
+              <div className="rounded-lg border border-blue-500/20 bg-blue-500/10 p-4">
+                <p className="font-medium text-blue-300">Single-Member LLC</p>
+                <p className="mt-1 text-sm text-blue-400">
                   Your LLC will be set up as a single-member LLC with you as the sole owner and manager.
                   This is the simplest structure and is ideal for most international founders.
                 </p>
@@ -368,30 +368,30 @@ export default function FormationPage() {
             <div className="space-y-6">
               <div>
                 <h2 className="text-lg font-semibold">Review & Submit</h2>
-                <p className="text-sm text-gray-500">Review your LLC formation details before submitting.</p>
+                <p className="text-sm text-muted-foreground">Review your LLC formation details before submitting.</p>
               </div>
-              <div className="space-y-4 rounded-lg bg-gray-50 p-4">
+              <div className="space-y-4 rounded-lg bg-muted/50 p-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <p className="text-sm text-gray-500">Company Name</p>
+                    <p className="text-sm text-muted-foreground">Company Name</p>
                     <p className="font-medium">{formData.name} LLC</p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-500">State</p>
+                    <p className="text-sm text-muted-foreground">State</p>
                     <p className="font-medium">{formData.state === 'DE' ? 'Delaware' : 'Wyoming'}</p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-500">Address</p>
+                    <p className="text-sm text-muted-foreground">Address</p>
                     <p className="font-medium">{formData.useRegisteredAgent ? 'Registered Agent (provided)' : formData.address}</p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-500">Structure</p>
+                    <p className="text-sm text-muted-foreground">Structure</p>
                     <p className="font-medium">Single-Member LLC</p>
                   </div>
                 </div>
                 {formData.description && (
                   <div>
-                    <p className="text-sm text-gray-500">Description</p>
+                    <p className="text-sm text-muted-foreground">Description</p>
                     <p className="font-medium">{formData.description}</p>
                   </div>
                 )}
@@ -464,10 +464,10 @@ function getStepCurrent(status: string, index: number): boolean {
 
 function getFormationStatusColor(status: string): string {
   switch (status) {
-    case 'formed': return 'bg-green-100 text-green-700'
-    case 'processing': return 'bg-blue-100 text-blue-700'
-    case 'pending': return 'bg-yellow-100 text-yellow-700'
-    default: return 'bg-gray-100 text-gray-700'
+    case 'formed': return 'bg-emerald-500/15 text-emerald-400'
+    case 'processing': return 'bg-blue-500/15 text-blue-400'
+    case 'pending': return 'bg-yellow-500/15 text-yellow-400'
+    default: return 'bg-muted text-muted-foreground'
   }
 }
 

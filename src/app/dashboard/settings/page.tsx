@@ -90,12 +90,12 @@ export default function SettingsPage() {
     return (
       <div>
         <div className="mb-8">
-          <div className="h-8 w-32 animate-pulse rounded bg-gray-200" />
-          <div className="mt-2 h-4 w-64 animate-pulse rounded bg-gray-200" />
+          <div className="h-8 w-32 animate-pulse rounded bg-muted" />
+          <div className="mt-2 h-4 w-64 animate-pulse rounded bg-muted" />
         </div>
         <Card>
           <CardContent className="p-6">
-            <div className="h-64 animate-pulse rounded bg-gray-100" />
+            <div className="h-64 animate-pulse rounded bg-muted" />
           </CardContent>
         </Card>
       </div>
@@ -106,14 +106,14 @@ export default function SettingsPage() {
     return (
       <div>
         <div className="mb-8">
-          <h1 className="text-2xl font-bold text-gray-900">Settings</h1>
-          <p className="mt-1 text-sm text-gray-500">Manage your account settings.</p>
+          <h1 className="text-2xl font-bold text-foreground">Settings</h1>
+          <p className="mt-1 text-sm text-muted-foreground">Manage your account settings.</p>
         </div>
         <Card>
           <CardContent className="py-12 text-center">
-            <Settings className="mx-auto mb-3 h-10 w-10 text-gray-300" />
-            <p className="font-medium text-gray-900">Profile not found</p>
-            <p className="mt-1 text-sm text-gray-500">
+            <Settings className="mx-auto mb-3 h-10 w-10 text-muted-foreground/50" />
+            <p className="font-medium text-foreground">Profile not found</p>
+            <p className="mt-1 text-sm text-muted-foreground">
               Complete the onboarding process to set up your profile.
             </p>
           </CardContent>
@@ -125,8 +125,8 @@ export default function SettingsPage() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">Settings</h1>
-        <p className="mt-1 text-sm text-gray-500">
+        <h1 className="text-2xl font-bold text-foreground">Settings</h1>
+        <p className="mt-1 text-sm text-muted-foreground">
           Manage your account settings and profile information.
         </p>
       </div>
@@ -156,9 +156,9 @@ export default function SettingsPage() {
                 id="email"
                 value={profile.email}
                 disabled
-                className="bg-gray-50"
+                className="bg-muted/50"
               />
-              <p className="text-xs text-gray-400">
+              <p className="text-xs text-muted-foreground">
                 Email cannot be changed here. Contact support if needed.
               </p>
             </div>
@@ -175,15 +175,15 @@ export default function SettingsPage() {
 
             <div className="space-y-2">
               <Label>Country of Origin</Label>
-              <Input value={profile.country_of_origin} disabled className="bg-gray-50" />
+              <Input value={profile.country_of_origin} disabled className="bg-muted/50" />
             </div>
 
             <div className="space-y-2">
               <Label>Country of Residence</Label>
-              <Input value={profile.country_of_residence} disabled className="bg-gray-50" />
+              <Input value={profile.country_of_residence} disabled className="bg-muted/50" />
             </div>
 
-            {error && <p className="text-sm text-red-600">{error}</p>}
+            {error && <p className="text-sm text-red-400">{error}</p>}
 
             <Button onClick={handleSave} disabled={saving}>
               {saving ? (

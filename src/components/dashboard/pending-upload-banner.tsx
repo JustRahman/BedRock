@@ -87,7 +87,7 @@ export function PendingUploadBanner({ onUploadsComplete }: PendingUploadBannerPr
   if (status === 'idle' || status === 'checking') return null
 
   return (
-    <div className="mb-6 rounded-xl border border-zinc-800 bg-zinc-900/60 p-4">
+    <div className="mb-6 rounded-xl border border-border bg-card p-4">
       {status === 'uploading' && (
         <div className="flex items-center gap-3">
           <Loader2 className="h-5 w-5 animate-spin text-blue-400" />

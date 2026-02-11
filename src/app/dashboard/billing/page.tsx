@@ -51,11 +51,11 @@ export default function BillingPage() {
     return (
       <div>
         <div className="mb-8">
-          <h1 className="text-2xl font-bold text-gray-900">Billing</h1>
+          <h1 className="text-2xl font-bold text-foreground">Billing</h1>
         </div>
         <Card>
           <CardContent className="py-12 text-center">
-            <Loader2 className="mx-auto h-8 w-8 animate-spin text-gray-400" />
+            <Loader2 className="mx-auto h-8 w-8 animate-spin text-muted-foreground" />
           </CardContent>
         </Card>
       </div>
@@ -69,8 +69,8 @@ export default function BillingPage() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">Billing</h1>
-        <p className="mt-1 text-sm text-gray-500">
+        <h1 className="text-2xl font-bold text-foreground">Billing</h1>
+        <p className="mt-1 text-sm text-muted-foreground">
           View your payment history and plan details.
         </p>
       </div>
@@ -84,16 +84,16 @@ export default function BillingPage() {
           {tierName ? (
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-lg font-semibold text-gray-900">BedRock {tierName}</p>
-                <p className="text-sm text-gray-500">One-time setup fee paid</p>
+                <p className="text-lg font-semibold text-foreground">BedRock {tierName}</p>
+                <p className="text-sm text-muted-foreground">One-time setup fee paid</p>
               </div>
-              <Badge className="bg-green-100 text-green-700">Active</Badge>
+              <Badge className="bg-emerald-500/15 text-emerald-400">Active</Badge>
             </div>
           ) : (
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-lg font-semibold text-gray-900">No Plan Selected</p>
-                <p className="text-sm text-gray-500">Choose a plan to get started</p>
+                <p className="text-lg font-semibold text-foreground">No Plan Selected</p>
+                <p className="text-sm text-muted-foreground">Choose a plan to get started</p>
               </div>
               <Link href="/onboarding/payment">
                 <Button>Choose Plan</Button>
@@ -145,8 +145,8 @@ export default function BillingPage() {
             </Table>
           ) : (
             <div className="py-8 text-center">
-              <CreditCard className="mx-auto mb-3 h-10 w-10 text-gray-300" />
-              <p className="text-sm text-gray-500">No payments recorded yet.</p>
+              <CreditCard className="mx-auto mb-3 h-10 w-10 text-muted-foreground/50" />
+              <p className="text-sm text-muted-foreground">No payments recorded yet.</p>
             </div>
           )}
         </CardContent>
@@ -157,11 +157,11 @@ export default function BillingPage() {
 
 function getPaymentStatusColor(status: string): string {
   switch (status) {
-    case 'completed': return 'bg-green-100 text-green-700'
-    case 'processing': return 'bg-blue-100 text-blue-700'
-    case 'pending': return 'bg-yellow-100 text-yellow-700'
-    case 'failed': return 'bg-red-100 text-red-700'
-    case 'refunded': return 'bg-gray-100 text-gray-700'
-    default: return 'bg-gray-100 text-gray-700'
+    case 'completed': return 'bg-emerald-500/15 text-emerald-400'
+    case 'processing': return 'bg-blue-500/15 text-blue-400'
+    case 'pending': return 'bg-yellow-500/15 text-yellow-400'
+    case 'failed': return 'bg-red-500/15 text-red-400'
+    case 'refunded': return 'bg-muted text-muted-foreground'
+    default: return 'bg-muted text-muted-foreground'
   }
 }

@@ -42,7 +42,7 @@ function getBarColor(value: number, max: number): string {
 
 export function TrustScoreCard({ score, status, statusLabel, breakdown }: TrustScoreCardProps) {
   return (
-    <div className="rounded-xl border border-zinc-800 bg-zinc-900/60 p-6">
+    <div className="rounded-xl border border-border bg-card p-6">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-semibold text-white">Trust Score</h3>
         <TrendingUp className="h-5 w-5 text-zinc-600" />
@@ -81,7 +81,7 @@ function ScoreBar({ label, value, max }: { label: string; value: number; max: nu
           {value}/{max}
         </span>
       </div>
-      <div className="h-1.5 w-full overflow-hidden rounded-full bg-zinc-800">
+      <div className="h-1.5 w-full overflow-hidden rounded-full bg-muted">
         <div
           className={`h-full rounded-full transition-all ${getBarColor(value, max)}`}
           style={{ width: `${percentage}%` }}

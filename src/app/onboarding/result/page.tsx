@@ -4,46 +4,111 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
-import { Shield, ArrowRight, CreditCard, Loader2 } from 'lucide-react'
+import { Shield, ArrowRight, CreditCard, Loader2, CheckCircle } from 'lucide-react'
 import { TrustScoreResult, calculateTrustScore } from '@/lib/trust-score'
 import {
   ScoreDisplay,
   ScoreBreakdownDetail,
   ImprovementSuggestions,
 } from '@/components/trust-score'
+import { createClient } from '@/lib/supabase/client'
 
 export default function OnboardingResultPage() {
   const router = useRouter()
   const [result, setResult] = useState<TrustScoreResult | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [activeTab, setActiveTab] = useState<'breakdown' | 'next-steps'>('breakdown')
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [scoreSaved, setScoreSaved] = useState(false)
+  const [savingScore, setSavingScore] = useState(false)
 
   useEffect(() => {
-    const storedResult = sessionStorage.getItem('trustScoreResult')
-    if (storedResult) {
+    async function init() {
+      // Check if user is logged in
+      const supabase = createClient()
+      const { data: { user } } = await supabase.auth.getUser()
+      if (user) setIsLoggedIn(true)
+
+      const storedResult = sessionStorage.getItem('trustScoreResult')
+      if (storedResult) {
+        try {
+          const parsed = JSON.parse(storedResult)
+          setResult(parsed)
+          // Auto-save for logged-in users
+          if (user) await saveTrustScore(supabase, user.id, parsed)
+          setIsLoading(false)
+          return
+        } catch {
+          // Continue to calculate from onboarding data
+        }
+      }
+
+      const storedData = sessionStorage.getItem('onboardingData')
+      if (storedData) {
+        try {
+          const data = JSON.parse(storedData)
+          const calculated = calculateTrustScore(data)
+          setResult(calculated)
+          // Auto-save for logged-in users
+          if (user) await saveTrustScore(supabase, user.id, calculated)
+          setIsLoading(false)
+          return
+        } catch {
+          // Redirect to onboarding if data is invalid
+        }
+      }
+
+      router.push('/onboarding')
+    }
+
+    async function saveTrustScore(supabase: ReturnType<typeof createClient>, userId: string, score: TrustScoreResult) {
+      setSavingScore(true)
       try {
-        setResult(JSON.parse(storedResult))
-        setIsLoading(false)
-        return
+        // Get or create founder
+        const { data: founder } = await (supabase
+          .from('founders') as ReturnType<typeof supabase.from>)
+          .select('id')
+          .eq('user_id', userId)
+          .single()
+
+        if (!founder) {
+          setSavingScore(false)
+          return
+        }
+
+        const founderId = (founder as { id: string }).id
+
+        // Upsert trust score
+        await (supabase.from('trust_scores') as ReturnType<typeof supabase.from>)
+          .upsert({
+            founder_id: founderId,
+            total_score: score.totalScore || 0,
+            identity_score: score.identityScore || 0,
+            business_score: score.businessScore || 0,
+            digital_lineage_score: score.digitalLineageScore || 0,
+            network_score: score.networkScore || 0,
+            country_adjustment: score.countryAdjustment || 0,
+            status: score.status || 'review_needed',
+            score_breakdown: score.breakdown || {},
+            version: 2,
+          }, { onConflict: 'founder_id' })
+
+        // Mark onboarding as completed
+        await (supabase.from('founders') as ReturnType<typeof supabase.from>)
+          .update({ onboarding_completed: true })
+          .eq('user_id', userId)
+
+        setScoreSaved(true)
+        sessionStorage.removeItem('onboardingData')
+        sessionStorage.removeItem('trustScoreResult')
       } catch {
-        // Continue to calculate from onboarding data
+        // Non-critical
+      } finally {
+        setSavingScore(false)
       }
     }
 
-    const storedData = sessionStorage.getItem('onboardingData')
-    if (storedData) {
-      try {
-        const data = JSON.parse(storedData)
-        const calculated = calculateTrustScore(data)
-        setResult(calculated)
-        setIsLoading(false)
-        return
-      } catch {
-        // Redirect to onboarding if data is invalid
-      }
-    }
-
-    router.push('/onboarding')
+    init()
   }, [router])
 
   if (isLoading || !result) {
@@ -125,17 +190,43 @@ export default function OnboardingResultPage() {
           </div>
         </div>
 
+        {/* Score saved confirmation */}
+        {scoreSaved && (
+          <div className="mb-6 flex items-center gap-3 rounded-xl border border-emerald-500/20 bg-emerald-500/10 p-4">
+            <CheckCircle className="h-5 w-5 text-emerald-400 shrink-0" />
+            <p className="text-sm text-emerald-300">Your trust score has been saved to your account.</p>
+          </div>
+        )}
+        {savingScore && (
+          <div className="mb-6 flex items-center gap-3 rounded-xl border border-blue-500/20 bg-blue-500/10 p-4">
+            <Loader2 className="h-5 w-5 text-blue-400 shrink-0 animate-spin" />
+            <p className="text-sm text-blue-300">Saving trust score to your account...</p>
+          </div>
+        )}
+
         {/* Action Buttons */}
         <div className="flex flex-col gap-3 sm:flex-row">
-          <Link href="/register" className="flex-1">
-            <Button
-              className="w-full gap-2 bg-gradient-to-r from-blue-500 to-violet-600 text-white hover:from-blue-400 hover:to-violet-500 rounded-xl py-6 text-base font-medium transition-all duration-300 hover:shadow-[0_0_30px_rgba(99,102,241,0.3)]"
-              size="lg"
-            >
-              Create Account & Continue
-              <ArrowRight className="h-4 w-4" />
-            </Button>
-          </Link>
+          {isLoggedIn ? (
+            <Link href="/dashboard" className="flex-1">
+              <Button
+                className="w-full gap-2 bg-gradient-to-r from-blue-500 to-violet-600 text-white hover:from-blue-400 hover:to-violet-500 rounded-xl py-6 text-base font-medium transition-all duration-300 hover:shadow-[0_0_30px_rgba(99,102,241,0.3)]"
+                size="lg"
+              >
+                Go to Dashboard
+                <ArrowRight className="h-4 w-4" />
+              </Button>
+            </Link>
+          ) : (
+            <Link href="/register" className="flex-1">
+              <Button
+                className="w-full gap-2 bg-gradient-to-r from-blue-500 to-violet-600 text-white hover:from-blue-400 hover:to-violet-500 rounded-xl py-6 text-base font-medium transition-all duration-300 hover:shadow-[0_0_30px_rgba(99,102,241,0.3)]"
+                size="lg"
+              >
+                Create Account & Continue
+                <ArrowRight className="h-4 w-4" />
+              </Button>
+            </Link>
+          )}
           {result.totalScore >= 50 && (
             <Link href="/onboarding/payment" className="flex-1">
               <Button
@@ -158,12 +249,14 @@ export default function OnboardingResultPage() {
           </Link>
         </div>
 
-        <p className="mt-6 text-center text-sm text-zinc-500">
-          Already have an account?{' '}
-          <Link href="/login" className="text-blue-400 hover:text-blue-300 transition-colors">
-            Sign in
-          </Link>
-        </p>
+        {!isLoggedIn && (
+          <p className="mt-6 text-center text-sm text-zinc-500">
+            Already have an account?{' '}
+            <Link href="/login" className="text-blue-400 hover:text-blue-300 transition-colors">
+              Sign in
+            </Link>
+          </p>
+        )}
       </div>
     </div>
   )
