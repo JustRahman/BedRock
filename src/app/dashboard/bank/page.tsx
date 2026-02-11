@@ -45,7 +45,7 @@ export default function BankPage() {
     return (
       <div>
         <div className="mb-8">
-          <h1 className="text-2xl font-bold text-foreground">Bank Account</h1>
+          <h1 className="text-xl sm:text-2xl font-bold text-foreground">Bank Account</h1>
         </div>
         <Card>
           <CardContent className="py-12 text-center">
@@ -61,7 +61,7 @@ export default function BankPage() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-foreground">Bank Account</h1>
+        <h1 className="text-xl sm:text-2xl font-bold text-foreground">Bank Account</h1>
         <p className="mt-1 text-sm text-muted-foreground">
           Apply for and manage your US business bank account.
         </p>
@@ -83,7 +83,7 @@ export default function BankPage() {
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-4">
                   <div>
                     <p className="text-sm text-muted-foreground">Status</p>
                     <p className="font-medium">{formatStatus(app.status)}</p>

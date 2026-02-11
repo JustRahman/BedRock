@@ -51,9 +51,9 @@ export function ActionItems({ items }: ActionItemsProps) {
               key={item.id}
               className={`rounded-lg border border-border border-l-4 bg-muted/40 p-4 ${priorityColors[item.priority]}`}
             >
-              <div className="flex items-start justify-between gap-4">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
                 <div className="flex items-start gap-3">
-                  <Icon className="mt-0.5 h-5 w-5 text-zinc-500" />
+                  <Icon className="mt-0.5 h-5 w-5 shrink-0 text-zinc-500" />
                   <div>
                     <p className="font-medium text-zinc-200">{item.title}</p>
                     <p className="mt-1 text-sm text-zinc-500">{item.description}</p>
@@ -63,7 +63,7 @@ export function ActionItems({ items }: ActionItemsProps) {
                   <Button
                     size="sm"
                     variant="ghost"
-                    className="shrink-0 gap-1 text-blue-400 hover:text-blue-300 hover:bg-blue-500/10"
+                    className="shrink-0 gap-1 text-blue-400 hover:text-blue-300 hover:bg-blue-500/10 w-full sm:w-auto"
                   >
                     Take Action
                     <ArrowRight className="h-4 w-4" />

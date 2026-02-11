@@ -51,7 +51,7 @@ export default function BillingPage() {
     return (
       <div>
         <div className="mb-8">
-          <h1 className="text-2xl font-bold text-foreground">Billing</h1>
+          <h1 className="text-xl sm:text-2xl font-bold text-foreground">Billing</h1>
         </div>
         <Card>
           <CardContent className="py-12 text-center">
@@ -69,7 +69,7 @@ export default function BillingPage() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-foreground">Billing</h1>
+        <h1 className="text-xl sm:text-2xl font-bold text-foreground">Billing</h1>
         <p className="mt-1 text-sm text-muted-foreground">
           View your payment history and plan details.
         </p>
@@ -115,34 +115,54 @@ export default function BillingPage() {
         </CardHeader>
         <CardContent>
           {payments.length > 0 ? (
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Date</TableHead>
-                  <TableHead>Description</TableHead>
-                  <TableHead>Amount</TableHead>
-                  <TableHead>Status</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
+            <>
+              {/* Mobile: card list */}
+              <div className="space-y-3 md:hidden">
                 {payments.map((payment) => (
-                  <TableRow key={payment.id}>
-                    <TableCell>
-                      {new Date(payment.created_at).toLocaleDateString()}
-                    </TableCell>
-                    <TableCell>{payment.description || 'Payment'}</TableCell>
-                    <TableCell className="font-medium">
-                      ${payment.amount.toFixed(2)} {payment.currency.toUpperCase()}
-                    </TableCell>
-                    <TableCell>
+                  <div key={payment.id} className="rounded-lg border border-border p-3">
+                    <div className="flex items-center justify-between">
+                      <span className="font-medium text-sm">${payment.amount.toFixed(2)} {payment.currency.toUpperCase()}</span>
                       <Badge className={getPaymentStatusColor(payment.status)}>
                         {payment.status.charAt(0).toUpperCase() + payment.status.slice(1)}
                       </Badge>
-                    </TableCell>
-                  </TableRow>
+                    </div>
+                    <p className="mt-1 text-xs text-muted-foreground">{payment.description || 'Payment'}</p>
+                    <p className="text-xs text-muted-foreground">{new Date(payment.created_at).toLocaleDateString()}</p>
+                  </div>
                 ))}
-              </TableBody>
-            </Table>
+              </div>
+              {/* Desktop: table */}
+              <div className="hidden md:block">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Date</TableHead>
+                      <TableHead>Description</TableHead>
+                      <TableHead>Amount</TableHead>
+                      <TableHead>Status</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {payments.map((payment) => (
+                      <TableRow key={payment.id}>
+                        <TableCell>
+                          {new Date(payment.created_at).toLocaleDateString()}
+                        </TableCell>
+                        <TableCell>{payment.description || 'Payment'}</TableCell>
+                        <TableCell className="font-medium">
+                          ${payment.amount.toFixed(2)} {payment.currency.toUpperCase()}
+                        </TableCell>
+                        <TableCell>
+                          <Badge className={getPaymentStatusColor(payment.status)}>
+                            {payment.status.charAt(0).toUpperCase() + payment.status.slice(1)}
+                          </Badge>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+            </>
           ) : (
             <div className="py-8 text-center">
               <CreditCard className="mx-auto mb-3 h-10 w-10 text-muted-foreground/50" />

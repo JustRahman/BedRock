@@ -186,9 +186,9 @@ export default function CompliancePage() {
 
   return (
     <div>
-      <div className="mb-8 flex items-center justify-between">
+      <div className="mb-6 sm:mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-foreground">Compliance Calendar</h1>
+          <h1 className="text-xl sm:text-2xl font-bold text-foreground">Compliance Calendar</h1>
           <p className="mt-1 text-sm text-muted-foreground">
             Track important deadlines and stay compliant.
           </p>
@@ -260,7 +260,7 @@ export default function CompliancePage() {
       </div>
 
       {/* Stats */}
-      <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
+      <div className="mb-6 sm:mb-8 grid grid-cols-3 gap-3 sm:gap-4">
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">
@@ -341,7 +341,7 @@ export default function CompliancePage() {
                 key={deadline.id}
                 className={`transition-opacity ${deadline.completed ? 'opacity-60' : ''}`}
               >
-                <CardContent className="flex items-start gap-4 p-4">
+                <CardContent className="flex items-start gap-3 p-3 sm:gap-4 sm:p-4">
                   <Checkbox
                     checked={deadline.completed}
                     onCheckedChange={() => toggleComplete(deadline)}

@@ -247,15 +247,15 @@ export default function DashboardPage() {
     <div>
       <PendingUploadBanner onUploadsComplete={refreshDocuments} />
 
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-white">Dashboard</h1>
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-xl sm:text-2xl font-bold text-white">Dashboard</h1>
         <p className="mt-1 text-sm text-zinc-500">
           Welcome back! Here&apos;s an overview of your account status.
         </p>
       </div>
 
       {/* Status Overview */}
-      <div className="mb-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mb-6 sm:mb-8 grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-4">
         <StatusCard
           title="Trust Score"
           icon={Shield}

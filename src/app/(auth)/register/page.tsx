@@ -67,6 +67,7 @@ export default function RegisterPage() {
     try {
       const supabase = createClient()
 
+      const siteUrl = window.location.origin
       const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
         email: data.email,
         password: data.password,
@@ -74,6 +75,7 @@ export default function RegisterPage() {
           data: {
             full_name: data.fullName,
           },
+          emailRedirectTo: `${siteUrl}/login`,
         },
       })
 

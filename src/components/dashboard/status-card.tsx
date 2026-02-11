@@ -37,19 +37,19 @@ export function StatusCard({
   const config = statusConfig[status]
 
   return (
-    <div className="rounded-xl border border-border bg-card p-5">
-      <div className="flex items-center justify-between mb-3">
-        <span className="text-sm font-medium text-zinc-400">{title}</span>
-        <Icon className="h-5 w-5 text-zinc-600" />
+    <div className="rounded-xl border border-border bg-card p-3 sm:p-5">
+      <div className="flex items-center justify-between mb-2 sm:mb-3">
+        <span className="text-xs sm:text-sm font-medium text-zinc-400">{title}</span>
+        <Icon className="h-4 w-4 sm:h-5 sm:w-5 text-zinc-600" />
       </div>
-      <div className="flex items-center gap-2 mb-2">
-        <span className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium ${config.badge}`}>
+      <div className="flex items-center gap-2 mb-1.5 sm:mb-2">
+        <span className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[10px] sm:text-xs font-medium ${config.badge}`}>
           {config.label}
         </span>
       </div>
-      <p className="text-lg font-semibold text-white">{statusText}</p>
+      <p className="text-sm sm:text-lg font-semibold text-white truncate">{statusText}</p>
       {description ? (
-        <p className="mt-1 text-sm text-zinc-500">{description}</p>
+        <p className="mt-1 text-xs sm:text-sm text-zinc-500 truncate">{description}</p>
       ) : null}
     </div>
   )

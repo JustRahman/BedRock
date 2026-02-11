@@ -256,9 +256,9 @@ export default function DocumentsPage() {
 
   return (
     <div>
-      <div className="mb-8 flex items-center justify-between">
+      <div className="mb-6 sm:mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-foreground">Document Vault</h1>
+          <h1 className="text-xl sm:text-2xl font-bold text-foreground">Document Vault</h1>
           <p className="mt-1 text-sm text-muted-foreground">
             Securely store and manage your verification documents.
           </p>
@@ -387,7 +387,7 @@ export default function DocumentsPage() {
       </div>
 
       {/* Stats */}
-      <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-4">
+      <div className="mb-6 sm:mb-8 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">
@@ -448,90 +448,138 @@ export default function DocumentsPage() {
               </p>
             </div>
           ) : (
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Document</TableHead>
-                  <TableHead>Type</TableHead>
-                  <TableHead>Uploaded</TableHead>
-                  <TableHead>Size</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {documents.map((doc) => {
-                  const status = getDocVerificationStatus(doc, verificationMap)
-                  return (
-                    <TableRow key={doc.id}>
-                      <TableCell>
-                        <div className="flex items-center gap-2">
-                          <FileText className="h-5 w-5 text-muted-foreground" />
-                          <span className="font-medium">{doc.file_name}</span>
+            <>
+            {/* Mobile: card list */}
+            <div className="space-y-3 md:hidden">
+              {documents.map((doc) => {
+                const status = getDocVerificationStatus(doc, verificationMap)
+                return (
+                  <div key={doc.id} className="rounded-lg border border-border p-3">
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex items-start gap-2 min-w-0">
+                        <FileText className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" />
+                        <div className="min-w-0">
+                          <p className="font-medium text-sm truncate">{doc.file_name}</p>
+                          <p className="text-xs text-muted-foreground capitalize">{doc.type.replace('_', ' ')} &middot; {formatFileSize(doc.file_size)}</p>
                         </div>
-                      </TableCell>
-                      <TableCell className="capitalize">
-                        {doc.type.replace('_', ' ')}
-                      </TableCell>
-                      <TableCell>
-                        {format(new Date(doc.created_at), 'MMM d, yyyy')}
-                      </TableCell>
-                      <TableCell>{formatFileSize(doc.file_size)}</TableCell>
-                      <TableCell>
-                        {status === 'verified' ? (
-                          <Badge className="bg-emerald-500/15 text-emerald-400">
-                            <CheckCircle className="mr-1 h-3 w-3" />
-                            Verified
-                          </Badge>
-                        ) : status === 'review_needed' ? (
-                          <Badge className="bg-orange-500/15 text-orange-400">
-                            <AlertTriangle className="mr-1 h-3 w-3" />
-                            Review Needed
-                          </Badge>
-                        ) : (
-                          <Badge className="bg-yellow-500/15 text-yellow-400">
-                            <Clock className="mr-1 h-3 w-3" />
-                            Pending
-                          </Badge>
+                      </div>
+                      {status === 'verified' ? (
+                        <Badge className="bg-emerald-500/15 text-emerald-400 shrink-0 text-[10px]">Verified</Badge>
+                      ) : status === 'review_needed' ? (
+                        <Badge className="bg-orange-500/15 text-orange-400 shrink-0 text-[10px]">Review</Badge>
+                      ) : (
+                        <Badge className="bg-yellow-500/15 text-yellow-400 shrink-0 text-[10px]">Pending</Badge>
+                      )}
+                    </div>
+                    <div className="mt-2 flex items-center justify-between">
+                      <span className="text-xs text-muted-foreground">{format(new Date(doc.created_at), 'MMM d, yyyy')}</span>
+                      <div className="flex gap-1">
+                        {verificationMap[doc.id] && (
+                          <Button variant="ghost" size="sm" className="h-7 w-7 p-0" onClick={() => setDetailsDoc(doc)}>
+                            <Eye className="h-3.5 w-3.5" />
+                          </Button>
                         )}
-                      </TableCell>
-                      <TableCell className="text-right">
-                        <div className="flex justify-end gap-2">
-                          {verificationMap[doc.id] && (
+                        <Button variant="ghost" size="sm" className="h-7 w-7 p-0" onClick={() => handleDownload(doc)}>
+                          <Download className="h-3.5 w-3.5" />
+                        </Button>
+                        <Button variant="ghost" size="sm" className="h-7 w-7 p-0" onClick={() => handleDelete(doc.id)} disabled={deleting === doc.id}>
+                          {deleting === doc.id ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Trash2 className="h-3.5 w-3.5 text-red-400" />}
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+
+            {/* Desktop: table */}
+            <div className="hidden md:block">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Document</TableHead>
+                    <TableHead>Type</TableHead>
+                    <TableHead>Uploaded</TableHead>
+                    <TableHead>Size</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead className="text-right">Actions</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {documents.map((doc) => {
+                    const status = getDocVerificationStatus(doc, verificationMap)
+                    return (
+                      <TableRow key={doc.id}>
+                        <TableCell>
+                          <div className="flex items-center gap-2">
+                            <FileText className="h-5 w-5 text-muted-foreground" />
+                            <span className="font-medium">{doc.file_name}</span>
+                          </div>
+                        </TableCell>
+                        <TableCell className="capitalize">
+                          {doc.type.replace('_', ' ')}
+                        </TableCell>
+                        <TableCell>
+                          {format(new Date(doc.created_at), 'MMM d, yyyy')}
+                        </TableCell>
+                        <TableCell>{formatFileSize(doc.file_size)}</TableCell>
+                        <TableCell>
+                          {status === 'verified' ? (
+                            <Badge className="bg-emerald-500/15 text-emerald-400">
+                              <CheckCircle className="mr-1 h-3 w-3" />
+                              Verified
+                            </Badge>
+                          ) : status === 'review_needed' ? (
+                            <Badge className="bg-orange-500/15 text-orange-400">
+                              <AlertTriangle className="mr-1 h-3 w-3" />
+                              Review Needed
+                            </Badge>
+                          ) : (
+                            <Badge className="bg-yellow-500/15 text-yellow-400">
+                              <Clock className="mr-1 h-3 w-3" />
+                              Pending
+                            </Badge>
+                          )}
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <div className="flex justify-end gap-2">
+                            {verificationMap[doc.id] && (
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => setDetailsDoc(doc)}
+                              >
+                                <Eye className="h-4 w-4" />
+                              </Button>
+                            )}
                             <Button
                               variant="ghost"
                               size="sm"
-                              onClick={() => setDetailsDoc(doc)}
+                              onClick={() => handleDownload(doc)}
                             >
-                              <Eye className="h-4 w-4" />
+                              <Download className="h-4 w-4" />
                             </Button>
-                          )}
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => handleDownload(doc)}
-                          >
-                            <Download className="h-4 w-4" />
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => handleDelete(doc.id)}
-                            disabled={deleting === doc.id}
-                          >
-                            {deleting === doc.id ? (
-                              <Loader2 className="h-4 w-4 animate-spin" />
-                            ) : (
-                              <Trash2 className="h-4 w-4 text-red-400" />
-                            )}
-                          </Button>
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  )
-                })}
-              </TableBody>
-            </Table>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleDelete(doc.id)}
+                              disabled={deleting === doc.id}
+                            >
+                              {deleting === doc.id ? (
+                                <Loader2 className="h-4 w-4 animate-spin" />
+                              ) : (
+                                <Trash2 className="h-4 w-4 text-red-400" />
+                              )}
+                            </Button>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    )
+                  })}
+                </TableBody>
+              </Table>
+            </div>
+            </>
           )}
         </CardContent>
       </Card>

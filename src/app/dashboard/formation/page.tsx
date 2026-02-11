@@ -90,7 +90,7 @@ export default function FormationPage() {
     return (
       <div>
         <div className="mb-8">
-          <h1 className="text-2xl font-bold text-foreground">LLC Formation</h1>
+          <h1 className="text-xl sm:text-2xl font-bold text-foreground">LLC Formation</h1>
         </div>
         <Card>
           <CardContent className="py-12 text-center">
@@ -106,7 +106,7 @@ export default function FormationPage() {
     return (
       <div>
         <div className="mb-8">
-          <h1 className="text-2xl font-bold text-foreground">LLC Formation</h1>
+          <h1 className="text-xl sm:text-2xl font-bold text-foreground">LLC Formation</h1>
           <p className="mt-1 text-sm text-muted-foreground">Track your LLC formation progress.</p>
         </div>
 
@@ -119,7 +119,7 @@ export default function FormationPage() {
             <CardDescription>{company.legal_name || company.name} LLC</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+            <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4">
               <div>
                 <p className="text-sm text-muted-foreground">State</p>
                 <p className="font-medium">{company.state === 'DE' ? 'Delaware' : company.state === 'WY' ? 'Wyoming' : company.state}</p>
