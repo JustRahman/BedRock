@@ -22,6 +22,14 @@
   },
   "dynamicRoutes": [
     {
+      "page": "/admin/formations/[id]",
+      "regex": "^/admin/formations/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/admin/formations/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
       "page": "/admin/founders/[id]",
       "regex": "^/admin/founders/([^/]+?)(?:/)?$",
       "routeKeys": {
@@ -72,6 +80,12 @@
       "regex": "^/admin/compliance(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/admin/compliance(?:/)?$"
+    },
+    {
+      "page": "/admin/formations",
+      "regex": "^/admin/formations(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/formations(?:/)?$"
     },
     {
       "page": "/api/auth/complete-registration",
