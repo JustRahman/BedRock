@@ -46,7 +46,7 @@ function LoginForm() {
     try {
       const supabase = createClient()
 
-      const { error: signInError } = await supabase.auth.signInWithPassword({
+      const { data: authData, error: signInError } = await supabase.auth.signInWithPassword({
         email: data.email,
         password: data.password,
       })
@@ -54,6 +54,12 @@ function LoginForm() {
       if (signInError) {
         setError(signInError.message)
         setIsLoading(false)
+        return
+      }
+
+      // Check if user is admin via auth metadata
+      if (authData.user?.app_metadata?.is_admin) {
+        window.location.href = '/admin'
         return
       }
 

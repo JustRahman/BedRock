@@ -120,6 +120,7 @@ export default function RegisterPage() {
             email: data.email,
             fullName: data.fullName,
             phone: basicInfo.phone || null,
+            dateOfBirth: basicInfo.dateOfBirth || null,
             countryOfOrigin: basicInfo.countryOfOrigin || '',
             countryOfResidence: basicInfo.countryOfResidence || '',
             trustScore,

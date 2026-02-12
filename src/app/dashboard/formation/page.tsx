@@ -81,12 +81,13 @@ export default function FormationPage() {
         }),
       })
 
+      const data = await res.json()
       if (res.ok) {
-        const data = await res.json()
         setCompany(data.company)
         toast.success('LLC formation request submitted!')
       } else {
-        toast.error('Failed to submit formation request')
+        console.error('Formation error:', data)
+        toast.error(data.error || 'Failed to submit formation request')
       }
     } catch {
       toast.error('Something went wrong')

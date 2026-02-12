@@ -12,6 +12,7 @@ interface FounderProfile {
   email: string
   full_name: string
   phone: string | null
+  date_of_birth: string | null
   country_of_origin: string
   country_of_residence: string
 }
@@ -171,6 +172,11 @@ export default function SettingsPage() {
                 onChange={(e) => setPhone(e.target.value)}
                 placeholder="+1 (555) 000-0000"
               />
+            </div>
+
+            <div className="space-y-2">
+              <Label>Date of Birth</Label>
+              <Input value={profile.date_of_birth || 'Not set'} disabled className="bg-muted/50" />
             </div>
 
             <div className="space-y-2">

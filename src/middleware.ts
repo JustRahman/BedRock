@@ -75,28 +75,30 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url)
   }
 
+  // Check if user is admin via auth metadata
+  const isAdmin = !!user?.app_metadata?.is_admin
+
   // Redirect authenticated users away from auth pages
   if (user && (pathname === '/login' || pathname === '/register')) {
-    const redirectTo =
-      request.nextUrl.searchParams.get('redirectTo') || '/dashboard'
+    const explicit = request.nextUrl.searchParams.get('redirectTo')
+    const redirectTo = explicit || (isAdmin ? '/admin' : '/dashboard')
     const url = request.nextUrl.clone()
     url.pathname = redirectTo
     return NextResponse.redirect(url)
   }
 
-  // Check admin access
-  if (pathname.startsWith('/admin') && user) {
-    const { data: founder } = await supabase
-      .from('founders')
-      .select('role')
-      .eq('user_id', user.id)
-      .single()
+  // Redirect admins from /dashboard to /admin
+  if (user && isAdmin && pathname === '/dashboard') {
+    const url = request.nextUrl.clone()
+    url.pathname = '/admin'
+    return NextResponse.redirect(url)
+  }
 
-    if (!founder || founder.role !== 'admin') {
-      const url = request.nextUrl.clone()
-      url.pathname = '/dashboard'
-      return NextResponse.redirect(url)
-    }
+  // Block non-admins from /admin
+  if (pathname.startsWith('/admin') && user && !isAdmin) {
+    const url = request.nextUrl.clone()
+    url.pathname = '/dashboard'
+    return NextResponse.redirect(url)
   }
 
   return supabaseResponse

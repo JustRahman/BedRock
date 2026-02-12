@@ -4,7 +4,7 @@ import { createServiceClient } from '@/lib/supabase/server'
 export async function POST(request: Request) {
   try {
     const body = await request.json()
-    const { userId, email, fullName, phone, countryOfOrigin, countryOfResidence, trustScore, oauthVerifications } = body
+    const { userId, email, fullName, phone, dateOfBirth, countryOfOrigin, countryOfResidence, trustScore, oauthVerifications } = body
 
     if (!email || !fullName) {
       return NextResponse.json({ error: 'Email and full name are required' }, { status: 400 })
@@ -52,6 +52,7 @@ export async function POST(request: Request) {
         email,
         full_name: fullName,
         phone: phone || null,
+        date_of_birth: dateOfBirth || null,
         country_of_origin: countryOfOrigin || '',
         country_of_residence: countryOfResidence || '',
         onboarding_completed: !!trustScore,
