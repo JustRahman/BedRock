@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { Users, CheckCircle, Clock, TrendingUp, AlertTriangle, FileText } from 'lucide-react'
 import { StatsCard } from '@/components/admin'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'

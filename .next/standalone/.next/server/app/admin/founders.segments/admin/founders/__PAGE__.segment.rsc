@@ -1,6 +1,0 @@
-1:"$Sreact.fragment"
-2:I[7906,["850","static/chunks/850-00ed7afd16ced281.js","8500","static/chunks/8500-41fa79ac743d83f1.js","5899","static/chunks/5899-0ed75c9f23512423.js","4687","static/chunks/app/admin/founders/page-83816725fc9ff3fa.js"],"FoundersClient"]
-3:I[484,[],"OutletBoundary"]
-4:"$Sreact.suspense"
-0:{"buildId":"3_QuX85Qa8pXDxYkrL8jV","rsc":["$","$1","c",{"children":[["$","$L2",null,{"founders":[{"id":"7a8b1103-1e38-46f3-ab80-723f1865f5ef","full_name":"Azat","email":"pupsikazada@gmail.com","country_of_origin":"UZ","country_of_residence":"UZ","role":"admin","onboarding_completed":true,"created_at":"2026-02-12T01:02:04.781449+00:00","trust_scores":null,"companies":[]},{"id":"0eaae56a-aa9d-4bd9-ae1d-45b7fa7bc680","full_name":"Rahman Bazarov","email":"rahmanbazarov4567@gmail.com","country_of_origin":"TM","country_of_residence":"US","role":"founder","onboarding_completed":true,"created_at":"2026-02-11T23:42:47.086821+00:00","trust_scores":{"status":"not_eligible","total_score":12},"companies":[{"id":"447ceb0c-d5e3-4b20-a1f1-64ef2644f4d8","name":"asdasdad asdasdasd","formation_status":"pending"}]}]}],null,["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
-5:null
