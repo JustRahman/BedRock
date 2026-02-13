@@ -16,8 +16,28 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { Building2, Check, ArrowRight, ArrowLeft, Loader2, FileText, Clock, CheckCircle } from 'lucide-react'
+import { Building2, Check, ArrowRight, ArrowLeft, Loader2, FileText, Clock, CheckCircle, Plus, FolderOpen } from 'lucide-react'
 import { toast } from 'sonner'
+
+const US_STATES = [
+  { value: 'AL', label: 'Alabama' }, { value: 'AK', label: 'Alaska' }, { value: 'AZ', label: 'Arizona' },
+  { value: 'AR', label: 'Arkansas' }, { value: 'CA', label: 'California' }, { value: 'CO', label: 'Colorado' },
+  { value: 'CT', label: 'Connecticut' }, { value: 'DE', label: 'Delaware' }, { value: 'FL', label: 'Florida' },
+  { value: 'GA', label: 'Georgia' }, { value: 'HI', label: 'Hawaii' }, { value: 'ID', label: 'Idaho' },
+  { value: 'IL', label: 'Illinois' }, { value: 'IN', label: 'Indiana' }, { value: 'IA', label: 'Iowa' },
+  { value: 'KS', label: 'Kansas' }, { value: 'KY', label: 'Kentucky' }, { value: 'LA', label: 'Louisiana' },
+  { value: 'ME', label: 'Maine' }, { value: 'MD', label: 'Maryland' }, { value: 'MA', label: 'Massachusetts' },
+  { value: 'MI', label: 'Michigan' }, { value: 'MN', label: 'Minnesota' }, { value: 'MS', label: 'Mississippi' },
+  { value: 'MO', label: 'Missouri' }, { value: 'MT', label: 'Montana' }, { value: 'NE', label: 'Nebraska' },
+  { value: 'NV', label: 'Nevada' }, { value: 'NH', label: 'New Hampshire' }, { value: 'NJ', label: 'New Jersey' },
+  { value: 'NM', label: 'New Mexico' }, { value: 'NY', label: 'New York' }, { value: 'NC', label: 'North Carolina' },
+  { value: 'ND', label: 'North Dakota' }, { value: 'OH', label: 'Ohio' }, { value: 'OK', label: 'Oklahoma' },
+  { value: 'OR', label: 'Oregon' }, { value: 'PA', label: 'Pennsylvania' }, { value: 'RI', label: 'Rhode Island' },
+  { value: 'SC', label: 'South Carolina' }, { value: 'SD', label: 'South Dakota' }, { value: 'TN', label: 'Tennessee' },
+  { value: 'TX', label: 'Texas' }, { value: 'UT', label: 'Utah' }, { value: 'VT', label: 'Vermont' },
+  { value: 'VA', label: 'Virginia' }, { value: 'WA', label: 'Washington' }, { value: 'WV', label: 'West Virginia' },
+  { value: 'WI', label: 'Wisconsin' }, { value: 'WY', label: 'Wyoming' },
+]
 
 interface ServiceRequestData {
   id: string
@@ -55,8 +75,15 @@ export default function FormationPage() {
   const [submittingItin, setSubmittingItin] = useState(false)
   const [submittingEin, setSubmittingEin] = useState(false)
   const [loading, setLoading] = useState(true)
-  const [step, setStep] = useState(1)
+  const [step, setStep] = useState(0)
   const [submitting, setSubmitting] = useState(false)
+  const [showExistingLLCForm, setShowExistingLLCForm] = useState(false)
+  const [existingLLCData, setExistingLLCData] = useState({
+    name: '',
+    state: '',
+    ein: '',
+    formationDate: '',
+  })
 
   // Form state
   const [formData, setFormData] = useState({
@@ -122,6 +149,36 @@ export default function FormationPage() {
     }
   }
 
+  const handleExistingLLCSubmit = async () => {
+    setSubmitting(true)
+    try {
+      const res = await fetch('/api/companies', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: existingLLCData.name,
+          legalName: `${existingLLCData.name} LLC`,
+          state: existingLLCData.state,
+          alreadyFormed: true,
+          ein: existingLLCData.ein || undefined,
+          formationDate: existingLLCData.formationDate || undefined,
+        }),
+      })
+
+      const data = await res.json()
+      if (res.ok) {
+        setCompany(data.company)
+        toast.success('LLC added successfully!')
+      } else {
+        toast.error(data.error || 'Failed to add LLC')
+      }
+    } catch {
+      toast.error('Something went wrong')
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
   if (loading) {
     return (
       <div>
@@ -158,7 +215,7 @@ export default function FormationPage() {
             <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4">
               <div>
                 <p className="text-sm text-muted-foreground">State</p>
-                <p className="font-medium">{company.state === 'DE' ? 'Delaware' : company.state === 'WY' ? 'Wyoming' : company.state}</p>
+                <p className="font-medium">{US_STATES.find(s => s.value === company.state)?.label || company.state}</p>
               </div>
               <div>
                 <p className="text-sm text-muted-foreground">Formation Status</p>
@@ -466,26 +523,149 @@ export default function FormationPage() {
     )
   }
 
+  // Existing LLC form
+  if (showExistingLLCForm) {
+    return (
+      <div>
+        <div className="mb-8">
+          <h1 className="text-2xl font-bold text-foreground">Add Your Existing LLC</h1>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Enter your LLC details to access EIN, ITIN, and banking services.
+          </p>
+        </div>
+
+        <Card>
+          <CardContent className="py-6">
+            <div className="space-y-6">
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label>LLC Name <span className="text-red-500">*</span></Label>
+                  <Input
+                    value={existingLLCData.name}
+                    onChange={(e) => setExistingLLCData({ ...existingLLCData, name: e.target.value })}
+                    placeholder="My Company LLC"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>State of Formation <span className="text-red-500">*</span></Label>
+                  <Select value={existingLLCData.state} onValueChange={(v) => setExistingLLCData({ ...existingLLCData, state: v })}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select state" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {US_STATES.map((s) => (
+                        <SelectItem key={s.value} value={s.value}>{s.label}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label>EIN (Optional)</Label>
+                  <Input
+                    value={existingLLCData.ein}
+                    onChange={(e) => setExistingLLCData({ ...existingLLCData, ein: e.target.value })}
+                    placeholder="XX-XXXXXXX"
+                  />
+                  <p className="text-xs text-muted-foreground">If you already have an EIN, enter it here. Otherwise, we can help you get one.</p>
+                </div>
+                <div className="space-y-2">
+                  <Label>Formation Date (Optional)</Label>
+                  <Input
+                    type="date"
+                    value={existingLLCData.formationDate}
+                    onChange={(e) => setExistingLLCData({ ...existingLLCData, formationDate: e.target.value })}
+                  />
+                </div>
+              </div>
+
+              <div className="flex justify-between">
+                <Button variant="outline" onClick={() => setShowExistingLLCForm(false)} className="gap-2">
+                  <ArrowLeft className="h-4 w-4" />
+                  Back
+                </Button>
+                <Button
+                  onClick={handleExistingLLCSubmit}
+                  disabled={submitting || !existingLLCData.name || !existingLLCData.state}
+                  className="gap-2"
+                >
+                  {submitting ? (
+                    <>
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      Adding...
+                    </>
+                  ) : (
+                    <>
+                      Add My LLC
+                      <Check className="h-4 w-4" />
+                    </>
+                  )}
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    )
+  }
+
   // Multi-step formation form
   return (
     <div>
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-foreground">LLC Formation</h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Set up your US LLC. Step {step} of 4.
+          {step === 0 ? 'Get started with your US LLC.' : `Set up your US LLC. Step ${step} of 4.`}
         </p>
       </div>
 
-      {/* Progress */}
-      <div className="mb-8 flex gap-2">
-        {[1, 2, 3, 4].map((s) => (
-          <div
-            key={s}
-            className={`h-2 flex-1 rounded-full ${s <= step ? 'bg-blue-500' : 'bg-muted'}`}
-          />
-        ))}
-      </div>
+      {/* Progress - only show when in wizard */}
+      {step >= 1 && (
+        <div className="mb-8 flex gap-2">
+          {[1, 2, 3, 4].map((s) => (
+            <div
+              key={s}
+              className={`h-2 flex-1 rounded-full ${s <= step ? 'bg-blue-500' : 'bg-muted'}`}
+            />
+          ))}
+        </div>
+      )}
 
+      {/* Step 0: Choice Screen */}
+      {step === 0 && (
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Card
+            className="cursor-pointer transition-colors hover:border-blue-500/50"
+            onClick={() => setStep(1)}
+          >
+            <CardHeader>
+              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-500/15">
+                <Plus className="h-6 w-6 text-blue-400" />
+              </div>
+              <CardTitle className="text-lg">Form a New LLC</CardTitle>
+              <CardDescription>
+                We&apos;ll handle the full formation process — state filing, registered agent, operating agreement, and EIN.
+              </CardDescription>
+            </CardHeader>
+          </Card>
+
+          <Card
+            className="cursor-pointer transition-colors hover:border-emerald-500/50"
+            onClick={() => setShowExistingLLCForm(true)}
+          >
+            <CardHeader>
+              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-emerald-500/15">
+                <FolderOpen className="h-6 w-6 text-emerald-400" />
+              </div>
+              <CardTitle className="text-lg">I Already Have an LLC</CardTitle>
+              <CardDescription>
+                Add your existing US LLC and get help with EIN, ITIN, banking, and compliance.
+              </CardDescription>
+            </CardHeader>
+          </Card>
+        </div>
+      )}
+
+      {step >= 1 && (
       <Card>
         <CardContent className="py-6">
           {step === 1 && (
@@ -646,14 +826,10 @@ export default function FormationPage() {
 
           {/* Navigation */}
           <div className="mt-8 flex justify-between">
-            {step > 1 ? (
-              <Button variant="outline" onClick={() => setStep(step - 1)} className="gap-2">
-                <ArrowLeft className="h-4 w-4" />
-                Back
-              </Button>
-            ) : (
-              <div />
-            )}
+            <Button variant="outline" onClick={() => setStep(step - 1)} className="gap-2">
+              <ArrowLeft className="h-4 w-4" />
+              Back
+            </Button>
             {step < 4 ? (
               <Button
                 onClick={() => setStep(step + 1)}
@@ -685,6 +861,7 @@ export default function FormationPage() {
           </div>
         </CardContent>
       </Card>
+      )}
     </div>
   )
 }

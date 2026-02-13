@@ -1,6 +1,19 @@
 import { NextResponse } from 'next/server'
 import { createClient, createServiceClient } from '@/lib/supabase/server'
 
+const US_STATE_NAMES: Record<string, string> = {
+  AL: 'Alabama', AK: 'Alaska', AZ: 'Arizona', AR: 'Arkansas', CA: 'California',
+  CO: 'Colorado', CT: 'Connecticut', DE: 'Delaware', FL: 'Florida', GA: 'Georgia',
+  HI: 'Hawaii', ID: 'Idaho', IL: 'Illinois', IN: 'Indiana', IA: 'Iowa',
+  KS: 'Kansas', KY: 'Kentucky', LA: 'Louisiana', ME: 'Maine', MD: 'Maryland',
+  MA: 'Massachusetts', MI: 'Michigan', MN: 'Minnesota', MS: 'Mississippi', MO: 'Missouri',
+  MT: 'Montana', NE: 'Nebraska', NV: 'Nevada', NH: 'New Hampshire', NJ: 'New Jersey',
+  NM: 'New Mexico', NY: 'New York', NC: 'North Carolina', ND: 'North Dakota', OH: 'Ohio',
+  OK: 'Oklahoma', OR: 'Oregon', PA: 'Pennsylvania', RI: 'Rhode Island', SC: 'South Carolina',
+  SD: 'South Dakota', TN: 'Tennessee', TX: 'Texas', UT: 'Utah', VT: 'Vermont',
+  VA: 'Virginia', WA: 'Washington', WV: 'West Virginia', WI: 'Wisconsin', WY: 'Wyoming',
+}
+
 interface FounderData {
   id: string
   role?: string
@@ -78,13 +91,20 @@ export async function POST(request: Request) {
 
     const body = await request.json()
 
-    const insertData = {
+    const isAlreadyFormed = body.alreadyFormed === true
+
+    const insertData: Record<string, unknown> = {
       founder_id: founder.id,
       name: body.name,
       legal_name: body.legalName || body.name,
       state: body.state,
       description: body.description || null,
-      formation_status: 'pending',
+      formation_status: isAlreadyFormed ? 'formed' : 'pending',
+    }
+
+    if (isAlreadyFormed) {
+      if (body.ein) insertData.ein = body.ein
+      insertData.formation_date = body.formationDate || new Date().toISOString().split('T')[0]
     }
 
     const { data: company, error } = await (supabase
@@ -98,33 +118,103 @@ export async function POST(request: Request) {
     }
 
     const companyId = (company as { id: string }).id
-
-    // Auto-create compliance deadlines
     const now = new Date()
-    const boiDue = new Date(now.getTime() + 90 * 24 * 60 * 60 * 1000)
-    const annualReportDue = new Date(now.getFullYear() + 1, 2, 1) // March 1 next year
 
-    await (supabase.from('compliance_deadlines') as ReturnType<typeof supabase.from>)
-      .insert([
-        {
-          founder_id: founder.id,
-          company_id: companyId,
-          title: 'FinCEN BOI Report',
-          description: 'Beneficial Ownership Information report due within 90 days of formation.',
-          due_date: boiDue.toISOString().split('T')[0],
-          is_recurring: false,
-          recurring_type: 'boi_report',
-        },
-        {
-          founder_id: founder.id,
-          company_id: companyId,
-          title: `${body.state === 'DE' ? 'Delaware' : 'Wyoming'} Annual Report`,
-          description: `Annual report and franchise tax filing for ${body.state === 'DE' ? 'Delaware' : 'Wyoming'}.`,
-          due_date: annualReportDue.toISOString().split('T')[0],
-          is_recurring: false,
-          recurring_type: null,
-        },
-      ])
+    if (isAlreadyFormed) {
+      // Already-formed LLC: create recurring compliance deadlines
+      const state = body.state || 'DE'
+      const stateName = US_STATE_NAMES[state] || state
+
+      let annualReportDue: Date
+      if (state === 'WY') {
+        annualReportDue = new Date(now.getFullYear() + 1, now.getMonth(), 1)
+      } else {
+        annualReportDue = new Date(now.getFullYear() + 1, 2, 1)
+      }
+
+      const raRenewalDue = new Date(now.getFullYear() + 1, now.getMonth(), now.getDate())
+
+      let taxDue: Date
+      let taxTitle: string
+      let taxDescription: string
+      if (state === 'DE') {
+        taxDue = new Date(now.getFullYear() + 1, 5, 1)
+        taxTitle = 'Delaware Franchise Tax'
+        taxDescription = 'Annual Delaware franchise tax filing due June 1.'
+      } else {
+        taxDue = new Date(now.getFullYear() + 1, 3, 15)
+        taxTitle = 'Federal Tax Filing'
+        taxDescription = 'Federal tax return filing due April 15.'
+      }
+
+      const boiDue = new Date(now.getTime() + 90 * 24 * 60 * 60 * 1000)
+
+      await (supabase.from('compliance_deadlines') as ReturnType<typeof supabase.from>)
+        .insert([
+          {
+            founder_id: founder.id,
+            company_id: companyId,
+            title: 'FinCEN BOI Report',
+            description: 'Beneficial Ownership Information report — verify if already filed.',
+            due_date: boiDue.toISOString().split('T')[0],
+            is_recurring: false,
+            recurring_type: 'boi_report',
+          },
+          {
+            founder_id: founder.id,
+            company_id: companyId,
+            title: `${stateName} LLC Annual Report`,
+            description: `Annual report filing for ${stateName} LLC.`,
+            due_date: annualReportDue.toISOString().split('T')[0],
+            is_recurring: true,
+            recurring_type: 'llc_annual_report',
+          },
+          {
+            founder_id: founder.id,
+            company_id: companyId,
+            title: 'Registered Agent Renewal',
+            description: 'Annual registered agent service renewal.',
+            due_date: raRenewalDue.toISOString().split('T')[0],
+            is_recurring: true,
+            recurring_type: 'ra_renewal',
+          },
+          {
+            founder_id: founder.id,
+            company_id: companyId,
+            title: taxTitle,
+            description: taxDescription,
+            due_date: taxDue.toISOString().split('T')[0],
+            is_recurring: true,
+            recurring_type: 'tax_filing',
+          },
+        ])
+    } else {
+      // New formation: create pending deadlines
+      const boiDue = new Date(now.getTime() + 90 * 24 * 60 * 60 * 1000)
+      const annualReportDue = new Date(now.getFullYear() + 1, 2, 1)
+
+      await (supabase.from('compliance_deadlines') as ReturnType<typeof supabase.from>)
+        .insert([
+          {
+            founder_id: founder.id,
+            company_id: companyId,
+            title: 'FinCEN BOI Report',
+            description: 'Beneficial Ownership Information report due within 90 days of formation.',
+            due_date: boiDue.toISOString().split('T')[0],
+            is_recurring: false,
+            recurring_type: 'boi_report',
+          },
+          {
+            founder_id: founder.id,
+            company_id: companyId,
+            title: `${body.state === 'DE' ? 'Delaware' : 'Wyoming'} Annual Report`,
+            description: `Annual report and franchise tax filing for ${body.state === 'DE' ? 'Delaware' : 'Wyoming'}.`,
+            due_date: annualReportDue.toISOString().split('T')[0],
+            is_recurring: false,
+            recurring_type: null,
+          },
+        ])
+    }
 
     return NextResponse.json({ company }, { status: 201 })
   } catch {
