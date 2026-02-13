@@ -14,13 +14,15 @@ import {
   Building2,
   Landmark,
   Briefcase,
+  Home,
 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 
 const navigation = [
-  { name: 'Overview', href: '/admin', icon: LayoutDashboard },
+  { name: 'Intro', href: '/admin', icon: Home },
+  { name: 'Overview', href: '/admin/overview', icon: LayoutDashboard },
   { name: 'Applications', href: '/admin/applications', icon: FileText },
   { name: 'Formations', href: '/admin/formations', icon: Building2 },
   { name: 'Founders', href: '/admin/founders', icon: Users },

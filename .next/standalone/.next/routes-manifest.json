@@ -106,6 +106,12 @@
       "namedRegex": "^/admin/founders(?:/)?$"
     },
     {
+      "page": "/admin/overview",
+      "regex": "^/admin/overview(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/overview(?:/)?$"
+    },
+    {
       "page": "/admin/services",
       "regex": "^/admin/services(?:/)?$",
       "routeKeys": {},
