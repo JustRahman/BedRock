@@ -185,6 +185,34 @@ export async function PATCH(request: Request) {
       return NextResponse.json({ error: error.message }, { status: 500 })
     }
 
+    // Auto-create next year's deadline if recurring and just completed
+    const dl = deadline as Record<string, unknown>
+    if (body.completed === true && dl.is_recurring && dl.recurring_type) {
+      // Duplicate guard: check no uncompleted deadline with same recurring_type + company_id
+      const { data: existing } = await supabase
+        .from('compliance_deadlines')
+        .select('id')
+        .eq('company_id', dl.company_id as string)
+        .eq('recurring_type', dl.recurring_type as string)
+        .eq('completed', false)
+
+      if (!existing || existing.length === 0) {
+        const currentDue = new Date(dl.due_date as string)
+        const nextDue = new Date(currentDue.getFullYear() + 1, currentDue.getMonth(), currentDue.getDate())
+
+        await (supabase.from('compliance_deadlines') as ReturnType<typeof supabase.from>)
+          .insert({
+            founder_id: dl.founder_id as string,
+            company_id: dl.company_id as string,
+            title: dl.title as string,
+            description: dl.description as string | null,
+            due_date: nextDue.toISOString().split('T')[0],
+            is_recurring: true,
+            recurring_type: dl.recurring_type as string,
+          })
+      }
+    }
+
     return NextResponse.json({ deadline })
   } catch {
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })

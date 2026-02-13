@@ -77,7 +77,7 @@ export function ComplianceClient({ items }: { items: ComplianceItem[] }) {
       await fetch('/api/compliance', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id, completed: true }),
+        body: JSON.stringify({ deadlineId: id, completed: true }),
       })
       router.refresh()
     } catch {

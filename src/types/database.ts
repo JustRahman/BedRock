@@ -186,6 +186,8 @@ export interface Database {
           ein: string | null
           legal_name: string | null
           formation_status: string
+          registered_agent_name: string | null
+          registered_agent_notes: string | null
           created_at: string
           updated_at: string
         }
@@ -206,6 +208,8 @@ export interface Database {
           ein?: string | null
           legal_name?: string | null
           formation_status?: string
+          registered_agent_name?: string | null
+          registered_agent_notes?: string | null
           created_at?: string
           updated_at?: string
         }
@@ -226,6 +230,8 @@ export interface Database {
           ein?: string | null
           legal_name?: string | null
           formation_status?: string
+          registered_agent_name?: string | null
+          registered_agent_notes?: string | null
           created_at?: string
           updated_at?: string
         }
@@ -364,6 +370,8 @@ export interface Database {
           completed: boolean
           completed_at: string | null
           reminder_sent: boolean
+          is_recurring: boolean
+          recurring_type: string | null
           created_at: string
           updated_at: string
         }
@@ -377,6 +385,8 @@ export interface Database {
           completed?: boolean
           completed_at?: string | null
           reminder_sent?: boolean
+          is_recurring?: boolean
+          recurring_type?: string | null
           created_at?: string
           updated_at?: string
         }
@@ -390,6 +400,8 @@ export interface Database {
           completed?: boolean
           completed_at?: string | null
           reminder_sent?: boolean
+          is_recurring?: boolean
+          recurring_type?: string | null
           created_at?: string
           updated_at?: string
         }

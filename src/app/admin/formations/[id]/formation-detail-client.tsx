@@ -39,6 +39,9 @@ export function FormationDetailClient({ company, founder, updates }: Props) {
   const [ein, setEin] = useState((company.ein as string) || '')
   const [submittingStatus, setSubmittingStatus] = useState(false)
   const [submittingEin, setSubmittingEin] = useState(false)
+  const [raName, setRaName] = useState((company.registered_agent_name as string) || '')
+  const [raNotes, setRaNotes] = useState((company.registered_agent_notes as string) || '')
+  const [submittingRA, setSubmittingRA] = useState(false)
 
   const handleStatusUpdate = async () => {
     setSubmittingStatus(true)
@@ -92,6 +95,32 @@ export function FormationDetailClient({ company, founder, updates }: Props) {
       toast.error('Something went wrong')
     } finally {
       setSubmittingEin(false)
+    }
+  }
+
+  const handleRAUpdate = async () => {
+    setSubmittingRA(true)
+    try {
+      const res = await fetch('/api/companies', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          companyId: company.id,
+          registeredAgentName: raName.trim(),
+          registeredAgentNotes: raNotes.trim(),
+        }),
+      })
+
+      if (res.ok) {
+        toast.success('Registered agent info saved')
+        router.refresh()
+      } else {
+        toast.error('Failed to save registered agent info')
+      }
+    } catch {
+      toast.error('Something went wrong')
+    } finally {
+      setSubmittingRA(false)
     }
   }
 
@@ -153,6 +182,10 @@ export function FormationDetailClient({ company, founder, updates }: Props) {
               <div>
                 <p className="text-sm text-gray-500">EIN</p>
                 <p className="font-medium">{(company.ein as string) || 'Not assigned'}</p>
+              </div>
+              <div>
+                <p className="text-sm text-gray-500">Registered Agent</p>
+                <p className="font-medium">{(company.registered_agent_name as string) || 'Not assigned'}</p>
               </div>
               <div>
                 <p className="text-sm text-gray-500">Created</p>
@@ -272,6 +305,47 @@ export function FormationDetailClient({ company, founder, updates }: Props) {
                   <>
                     <Save className="h-4 w-4" />
                     Save EIN
+                  </>
+                )}
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Registered Agent */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-base">Registered Agent</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label>Provider Name</Label>
+                <Input
+                  value={raName}
+                  onChange={(e) => setRaName(e.target.value)}
+                  placeholder="e.g. Northwest Registered Agent"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>Notes</Label>
+                <Textarea
+                  value={raNotes}
+                  onChange={(e) => setRaNotes(e.target.value)}
+                  placeholder="Account number, renewal date, etc."
+                  rows={3}
+                />
+              </div>
+              <Button onClick={handleRAUpdate} disabled={submittingRA} variant="outline" className="gap-2">
+                {submittingRA ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    Saving...
+                  </>
+                ) : (
+                  <>
+                    <Save className="h-4 w-4" />
+                    Save RA Info
                   </>
                 )}
               </Button>
