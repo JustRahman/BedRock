@@ -16,8 +16,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { Building2, Check, ArrowRight, ArrowLeft, Loader2, FileText } from 'lucide-react'
+import { Building2, Check, ArrowRight, ArrowLeft, Loader2, FileText, Clock, CheckCircle } from 'lucide-react'
 import { toast } from 'sonner'
+
+interface ServiceRequestData {
+  id: string
+  service_type: string
+  status: string
+  admin_notes: string | null
+  created_at: string
+}
 
 interface Company {
   id: string
@@ -42,6 +50,10 @@ export default function FormationPage() {
   const [company, setCompany] = useState<Company | null>(null)
   const [updates, setUpdates] = useState<CompanyUpdateEntry[]>([])
   const [bankApp, setBankApp] = useState<{ id: string; status: string; bank_name: string } | null>(null)
+  const [itinRequest, setItinRequest] = useState<ServiceRequestData | null>(null)
+  const [einRequest, setEinRequest] = useState<ServiceRequestData | null>(null)
+  const [submittingItin, setSubmittingItin] = useState(false)
+  const [submittingEin, setSubmittingEin] = useState(false)
   const [loading, setLoading] = useState(true)
   const [step, setStep] = useState(1)
   const [submitting, setSubmitting] = useState(false)
@@ -61,12 +73,20 @@ export default function FormationPage() {
     Promise.all([
       fetch('/api/companies').then((r) => r.json()),
       fetch('/api/bank-applications').then((r) => r.json()),
+      fetch('/api/service-requests?type=itin').then((r) => r.json()),
+      fetch('/api/service-requests?type=ein_only').then((r) => r.json()),
     ])
-      .then(([companyData, bankData]) => {
+      .then(([companyData, bankData, itinData, einData]) => {
         if (companyData.company) setCompany(companyData.company)
         if (companyData.updates) setUpdates(companyData.updates)
         if (bankData.applications && bankData.applications.length > 0) {
           setBankApp(bankData.applications[0])
+        }
+        if (itinData.requests && itinData.requests.length > 0) {
+          setItinRequest(itinData.requests[0])
+        }
+        if (einData.requests && einData.requests.length > 0) {
+          setEinRequest(einData.requests[0])
         }
       })
       .catch(() => {})
@@ -217,8 +237,9 @@ export default function FormationPage() {
           </CardContent>
         </Card>
 
-        {/* Next Steps */}
-        {company.formation_status === 'formed' && !company.ein && (
+        {/* Next Steps & Services */}
+        <div className="space-y-4">
+        {company.formation_status === 'formed' && !company.ein && !einRequest && (
           <Card>
             <CardContent className="py-6">
               <div className="flex items-center justify-between">
@@ -282,6 +303,165 @@ export default function FormationPage() {
             </CardContent>
           </Card>
         )}
+
+        {/* EIN Request (for founders who need help with EIN) */}
+        {company.formation_status === 'formed' && !company.ein && (
+          <Card>
+            <CardContent className="py-6">
+              {einRequest ? (
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    {einRequest.status === 'completed' ? (
+                      <CheckCircle className="h-5 w-5 text-green-500" />
+                    ) : (
+                      <Clock className="h-5 w-5 text-blue-500" />
+                    )}
+                    <div>
+                      <p className="font-medium text-foreground">EIN Application</p>
+                      <p className="text-sm text-muted-foreground">
+                        {einRequest.status === 'requested' && 'Your EIN request has been submitted. Our team will handle the SS-4 and IRS submission.'}
+                        {einRequest.status === 'in_progress' && 'We\'re working on your EIN application with the IRS.'}
+                        {einRequest.status === 'completed' && 'Your EIN has been assigned!'}
+                      </p>
+                      {einRequest.admin_notes ? (
+                        <p className="mt-1 text-xs text-muted-foreground">Update: {einRequest.admin_notes}</p>
+                      ) : null}
+                    </div>
+                  </div>
+                  <Badge className={
+                    einRequest.status === 'completed' ? 'bg-green-500/15 text-green-600' :
+                    einRequest.status === 'in_progress' ? 'bg-yellow-500/15 text-yellow-600' :
+                    'bg-blue-500/15 text-blue-600'
+                  }>
+                    {einRequest.status === 'requested' ? 'Submitted' :
+                     einRequest.status === 'in_progress' ? 'In Progress' :
+                     einRequest.status === 'completed' ? 'Completed' : einRequest.status}
+                  </Badge>
+                </div>
+              ) : (
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-medium text-foreground">EIN keeps getting rejected?</p>
+                    <p className="text-sm text-muted-foreground">
+                      IRS SS-4 applications from international founders get rejected or stuck. We handle the SS-4 preparation, fax submission, and IRS follow-up.
+                    </p>
+                  </div>
+                  <Button
+                    variant="outline"
+                    className="gap-2 shrink-0"
+                    disabled={submittingEin}
+                    onClick={async () => {
+                      setSubmittingEin(true)
+                      try {
+                        const res = await fetch('/api/service-requests', {
+                          method: 'POST',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({ serviceType: 'ein_only' }),
+                        })
+                        if (res.ok) {
+                          const data = await res.json()
+                          setEinRequest(data.request)
+                          toast.success('EIN request submitted!')
+                        } else {
+                          const err = await res.json()
+                          toast.error(err.error || 'Failed to submit')
+                        }
+                      } catch { toast.error('Something went wrong') }
+                      finally { setSubmittingEin(false) }
+                    }}
+                  >
+                    {submittingEin ? <Loader2 className="h-4 w-4 animate-spin" /> : (
+                      <>
+                        <FileText className="h-4 w-4" />
+                        Request EIN Help
+                      </>
+                    )}
+                  </Button>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        )}
+
+        {/* ITIN Request */}
+        {company.formation_status === 'formed' && (
+          <Card>
+            <CardContent className="py-6">
+              {itinRequest ? (
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    {itinRequest.status === 'completed' ? (
+                      <CheckCircle className="h-5 w-5 text-green-500" />
+                    ) : (
+                      <Clock className="h-5 w-5 text-blue-500" />
+                    )}
+                    <div>
+                      <p className="font-medium text-foreground">ITIN Application</p>
+                      <p className="text-sm text-muted-foreground">
+                        {itinRequest.status === 'requested' && 'Your ITIN request has been submitted. Our team will begin shortly.'}
+                        {itinRequest.status === 'in_progress' && 'We\'re working on your ITIN application.'}
+                        {itinRequest.status === 'completed' && 'Your ITIN has been obtained!'}
+                      </p>
+                      {itinRequest.admin_notes ? (
+                        <p className="mt-1 text-xs text-muted-foreground">Update: {itinRequest.admin_notes}</p>
+                      ) : null}
+                    </div>
+                  </div>
+                  <Badge className={
+                    itinRequest.status === 'completed' ? 'bg-green-500/15 text-green-600' :
+                    itinRequest.status === 'in_progress' ? 'bg-yellow-500/15 text-yellow-600' :
+                    'bg-blue-500/15 text-blue-600'
+                  }>
+                    {itinRequest.status === 'requested' ? 'Submitted' :
+                     itinRequest.status === 'in_progress' ? 'In Progress' :
+                     itinRequest.status === 'completed' ? 'Completed' : itinRequest.status}
+                  </Badge>
+                </div>
+              ) : (
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-medium text-foreground">Need an ITIN?</p>
+                    <p className="text-sm text-muted-foreground">
+                      Without an SSN, you need an ITIN to activate Stripe, file taxes, and keep your bank account open. We handle the W-7 preparation and IRS submission.
+                    </p>
+                  </div>
+                  <Button
+                    variant="outline"
+                    className="gap-2 shrink-0"
+                    disabled={submittingItin}
+                    onClick={async () => {
+                      setSubmittingItin(true)
+                      try {
+                        const res = await fetch('/api/service-requests', {
+                          method: 'POST',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({ serviceType: 'itin' }),
+                        })
+                        if (res.ok) {
+                          const data = await res.json()
+                          setItinRequest(data.request)
+                          toast.success('ITIN request submitted!')
+                        } else {
+                          const err = await res.json()
+                          toast.error(err.error || 'Failed to submit')
+                        }
+                      } catch { toast.error('Something went wrong') }
+                      finally { setSubmittingItin(false) }
+                    }}
+                  >
+                    {submittingItin ? <Loader2 className="h-4 w-4 animate-spin" /> : (
+                      <>
+                        <FileText className="h-4 w-4" />
+                        Request ITIN
+                      </>
+                    )}
+                  </Button>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        )}
+        </div>
       </div>
     )
   }

@@ -75,6 +75,8 @@ export async function POST(request: Request) {
         business_score: trustScore.businessScore || 0,
         financial_score: trustScore.businessScore || 0,
         social_score: trustScore.networkScore || 0,
+        digital_lineage_score: trustScore.digitalLineageScore || 0,
+        network_score: trustScore.networkScore || 0,
         country_adjustment: trustScore.countryAdjustment || 0,
         status: trustScore.status || 'review_needed',
         score_breakdown: trustScore.breakdown || {},

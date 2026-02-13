@@ -14,19 +14,32 @@ import {
   Landmark,
   Menu,
   X,
+  Zap,
+  Heart,
 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { useState, useEffect } from 'react'
 
-const navigation = [
+interface NavItem {
+  name: string
+  href: string
+  icon: React.ElementType
+  section?: string
+}
+
+const navigation: NavItem[] = [
   { name: 'Overview', href: '/dashboard', icon: LayoutDashboard },
-  { name: 'Formation', href: '/dashboard/formation', icon: Landmark },
-  { name: 'Documents', href: '/dashboard/documents', icon: FileText },
-  { name: 'Compliance', href: '/dashboard/compliance', icon: Calendar },
+  // Services
+  { name: 'Formation', href: '/dashboard/formation', icon: Landmark, section: 'Services' },
   { name: 'Bank Account', href: '/dashboard/bank', icon: Building2 },
-  { name: 'Billing', href: '/dashboard/billing', icon: CreditCard },
+  { name: 'Compliance', href: '/dashboard/compliance', icon: Calendar },
+  { name: 'Stripe Help', href: '/dashboard/stripe', icon: Zap },
+  { name: 'Business Credit', href: '/dashboard/credit', icon: CreditCard },
+  { name: 'Alternative ID', href: '/dashboard/alternative-id', icon: Heart },
+  // Account
+  { name: 'Documents', href: '/dashboard/documents', icon: FileText, section: 'Account' },
   { name: 'Settings', href: '/dashboard/settings', icon: Settings },
 ]
 
@@ -58,22 +71,28 @@ export function Sidebar() {
 
   const navContent = (
     <>
-      <nav className="flex-1 space-y-1 px-3 py-4">
+      <nav className="flex-1 space-y-0.5 px-3 py-4 overflow-y-auto">
         {navigation.map((item) => {
-          const isActive = pathname === item.href
+          const isActive = pathname === item.href || (item.href !== '/dashboard' && pathname.startsWith(item.href))
           return (
-            <Link
-              key={item.name}
-              href={item.href}
-              className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
-                isActive
-                  ? 'bg-zinc-700/40 text-white'
-                  : 'text-zinc-400 hover:bg-zinc-700/25 hover:text-zinc-200'
-              }`}
-            >
-              <item.icon className={`h-5 w-5 ${isActive ? 'text-blue-400' : ''}`} />
-              {item.name}
-            </Link>
+            <div key={item.name}>
+              {item.section && (
+                <p className="mt-4 mb-1.5 px-3 text-[10px] font-semibold uppercase tracking-widest text-zinc-500">
+                  {item.section}
+                </p>
+              )}
+              <Link
+                href={item.href}
+                className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+                  isActive
+                    ? 'bg-zinc-700/40 text-white'
+                    : 'text-zinc-400 hover:bg-zinc-700/25 hover:text-zinc-200'
+                }`}
+              >
+                <item.icon className={`h-4.5 w-4.5 ${isActive ? 'text-blue-400' : ''}`} />
+                {item.name}
+              </Link>
+            </div>
           )
         })}
       </nav>

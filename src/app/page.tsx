@@ -7,6 +7,8 @@ import {
   TrustScorePreview,
   Comparison,
   Testimonials,
+  Solutions,
+  AlternativeID,
   Pricing,
   FAQ,
   CTA,
@@ -25,6 +27,8 @@ export default function Home() {
         <TrustScorePreview />
         <Comparison />
         <Testimonials />
+        <Solutions />
+        <AlternativeID />
         <Pricing />
         <FAQ />
         <CTA />

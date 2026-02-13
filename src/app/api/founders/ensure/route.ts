@@ -83,6 +83,8 @@ export async function POST(request: Request) {
           business_score: body.trustScore.businessScore || 0,
           financial_score: body.trustScore.businessScore || 0,
           social_score: body.trustScore.networkScore || 0,
+          digital_lineage_score: body.trustScore.digitalLineageScore || 0,
+          network_score: body.trustScore.networkScore || 0,
           country_adjustment: body.trustScore.countryAdjustment || 0,
           status: body.trustScore.status || 'review_needed',
           score_breakdown: body.trustScore.breakdown || {},

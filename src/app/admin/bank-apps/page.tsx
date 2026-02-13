@@ -15,7 +15,7 @@ interface BankAppRow {
   notes: string | null
   created_at: string
   founders: { full_name: string; email: string } | null
-  companies: { name: string; state: string } | null
+  companies: { id: string; name: string; state: string } | null
 }
 
 export default async function AdminBankAppsPage() {
@@ -23,7 +23,7 @@ export default async function AdminBankAppsPage() {
 
   const { data } = await supabase
     .from('bank_applications')
-    .select('*, founders(full_name, email), companies(name, state)')
+    .select('*, founders(full_name, email), companies(id, name, state)')
     .order('created_at', { ascending: false })
 
   const apps = ((data || []) as BankAppRow[]).map((a) => ({
@@ -31,6 +31,7 @@ export default async function AdminBankAppsPage() {
     founderId: a.founder_id,
     founderName: a.founders ? (a.founders as { full_name: string }).full_name : 'Unknown',
     founderEmail: a.founders ? (a.founders as { email: string }).email : '',
+    companyId: a.company_id,
     companyName: a.companies ? (a.companies as { name: string }).name : 'N/A',
     companyState: a.companies ? (a.companies as { state: string }).state : '',
     bankName: a.bank_name || 'N/A',

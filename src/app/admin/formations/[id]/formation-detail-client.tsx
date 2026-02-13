@@ -16,14 +16,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { ArrowLeft, Building2, Loader2, Save, Clock, User } from 'lucide-react'
+import { ArrowLeft, Building2, Loader2, Save, Clock, User, CheckCircle, AlertCircle, RefreshCw, Calendar, Landmark } from 'lucide-react'
 import { toast } from 'sonner'
-import { format } from 'date-fns'
+import { format, differenceInDays, isPast } from 'date-fns'
 
 interface Props {
   company: Record<string, unknown>
   founder: Record<string, unknown> | null
   updates: Record<string, unknown>[]
+  deadlines: Record<string, unknown>[]
+  bankApps: Record<string, unknown>[]
 }
 
 const statusColors: Record<string, string> = {
@@ -32,7 +34,15 @@ const statusColors: Record<string, string> = {
   formed: 'bg-green-100 text-green-700',
 }
 
-export function FormationDetailClient({ company, founder, updates }: Props) {
+const bankStatusConfig: Record<string, { label: string; color: string }> = {
+  draft: { label: 'Draft', color: 'bg-gray-100 text-gray-700' },
+  submitted: { label: 'New Request', color: 'bg-blue-100 text-blue-700' },
+  under_review: { label: 'In Progress', color: 'bg-yellow-100 text-yellow-700' },
+  approved: { label: 'Account Opened', color: 'bg-green-100 text-green-700' },
+  rejected: { label: 'Rejected', color: 'bg-red-100 text-red-700' },
+}
+
+export function FormationDetailClient({ company, founder, updates, deadlines, bankApps }: Props) {
   const router = useRouter()
   const [newStatus, setNewStatus] = useState(company.formation_status as string)
   const [note, setNote] = useState('')
@@ -42,6 +52,7 @@ export function FormationDetailClient({ company, founder, updates }: Props) {
   const [raName, setRaName] = useState((company.registered_agent_name as string) || '')
   const [raNotes, setRaNotes] = useState((company.registered_agent_notes as string) || '')
   const [submittingRA, setSubmittingRA] = useState(false)
+  const [completingDeadline, setCompletingDeadline] = useState<string | null>(null)
 
   const handleStatusUpdate = async () => {
     setSubmittingStatus(true)
@@ -121,6 +132,27 @@ export function FormationDetailClient({ company, founder, updates }: Props) {
       toast.error('Something went wrong')
     } finally {
       setSubmittingRA(false)
+    }
+  }
+
+  const handleMarkDeadlineComplete = async (id: string) => {
+    setCompletingDeadline(id)
+    try {
+      const res = await fetch('/api/compliance', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ deadlineId: id, completed: true }),
+      })
+      if (res.ok) {
+        toast.success('Deadline marked complete')
+        router.refresh()
+      } else {
+        toast.error('Failed to mark complete')
+      }
+    } catch {
+      toast.error('Something went wrong')
+    } finally {
+      setCompletingDeadline(null)
     }
   }
 
@@ -353,6 +385,152 @@ export function FormationDetailClient({ company, founder, updates }: Props) {
           </CardContent>
         </Card>
       </div>
+
+      {/* Compliance Deadlines */}
+      <Card className="mt-6">
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Calendar className="h-5 w-5 text-gray-400" />
+              <CardTitle className="text-base">Compliance Deadlines</CardTitle>
+            </div>
+            <Badge variant="outline">{deadlines.length} items</Badge>
+          </div>
+        </CardHeader>
+        <CardContent>
+          {deadlines.length === 0 ? (
+            <p className="text-sm text-gray-500">No compliance deadlines yet. They are auto-created when the formation status is set to &quot;Formed&quot;.</p>
+          ) : (
+            <div className="space-y-3">
+              {deadlines.map((d) => {
+                const completed = d.completed as boolean
+                const dueDate = new Date(d.due_date as string)
+                const isOverdue = !completed && isPast(dueDate)
+                const daysUntil = differenceInDays(dueDate, new Date())
+                const isRecurring = d.is_recurring as boolean
+
+                return (
+                  <div
+                    key={d.id as string}
+                    className={`flex items-start justify-between rounded-lg border p-4 ${
+                      completed
+                        ? 'border-green-200 bg-green-50'
+                        : isOverdue
+                        ? 'border-red-200 bg-red-50'
+                        : daysUntil <= 14
+                        ? 'border-yellow-200 bg-yellow-50'
+                        : 'border-gray-200'
+                    }`}
+                  >
+                    <div className="flex items-start gap-3">
+                      {completed ? (
+                        <CheckCircle className="mt-0.5 h-5 w-5 text-green-600" />
+                      ) : isOverdue ? (
+                        <AlertCircle className="mt-0.5 h-5 w-5 text-red-600" />
+                      ) : (
+                        <Clock className="mt-0.5 h-5 w-5 text-gray-400" />
+                      )}
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <p className={`text-sm font-medium ${completed ? 'text-green-800' : 'text-gray-900'}`}>
+                            {d.title as string}
+                          </p>
+                          {isRecurring && (
+                            <span title="Auto-renews when completed">
+                              <RefreshCw className="h-3.5 w-3.5 text-blue-500" />
+                            </span>
+                          )}
+                        </div>
+                        {(d.description as string) ? (
+                          <p className="mt-1 text-xs text-gray-500">{d.description as string}</p>
+                        ) : null}
+                        <p className="mt-1 text-xs text-gray-400">
+                          Due: {format(dueDate, 'MMM d, yyyy')}
+                          {!completed && (
+                            <span className={isOverdue ? ' text-red-600 font-medium' : daysUntil <= 14 ? ' text-yellow-600 font-medium' : ''}>
+                              {' '}({isOverdue ? `${Math.abs(daysUntil)} days overdue` : daysUntil === 0 ? 'Today' : `${daysUntil} days left`})
+                            </span>
+                          )}
+                        </p>
+                      </div>
+                    </div>
+                    {!completed && (
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => handleMarkDeadlineComplete(d.id as string)}
+                        disabled={completingDeadline === (d.id as string)}
+                        className="shrink-0"
+                      >
+                        {completingDeadline === (d.id as string) ? (
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : (
+                          'Mark Complete'
+                        )}
+                      </Button>
+                    )}
+                  </div>
+                )
+              })}
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
+      {/* Bank Applications */}
+      {bankApps.length > 0 && (
+        <Card className="mt-6">
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Landmark className="h-5 w-5 text-gray-400" />
+                <CardTitle className="text-base">Bank Applications</CardTitle>
+              </div>
+              <Badge variant="outline">{bankApps.length} app{bankApps.length !== 1 ? 's' : ''}</Badge>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3">
+              {bankApps.map((app) => {
+                const status = bankStatusConfig[(app.status as string)] || bankStatusConfig.draft
+                return (
+                  <div
+                    key={app.id as string}
+                    className={`flex items-start justify-between rounded-lg border p-4 ${
+                      app.status === 'approved'
+                        ? 'border-green-200 bg-green-50'
+                        : app.status === 'rejected'
+                        ? 'border-red-200 bg-red-50'
+                        : app.status === 'under_review'
+                        ? 'border-yellow-200 bg-yellow-50'
+                        : 'border-blue-200 bg-blue-50'
+                    }`}
+                  >
+                    <div className="flex items-start gap-3">
+                      <Landmark className="mt-0.5 h-5 w-5 text-gray-400" />
+                      <div>
+                        <p className="font-medium text-gray-900 capitalize">{app.bank_name as string}</p>
+                        <Badge className={`mt-1 ${status.color}`}>{status.label}</Badge>
+                        {(app.notes as string) ? (
+                          <p className="mt-2 text-xs text-gray-500">{app.notes as string}</p>
+                        ) : null}
+                        <p className="mt-1 text-xs text-gray-400">
+                          {(app.submitted_at as string)
+                            ? `Submitted ${format(new Date(app.submitted_at as string), 'MMM d, yyyy')}`
+                            : ''}
+                          {(app.approved_at as string)
+                            ? ` · Opened ${format(new Date(app.approved_at as string), 'MMM d, yyyy')}`
+                            : ''}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Activity Timeline */}
       <Card className="mt-6">

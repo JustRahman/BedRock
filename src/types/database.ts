@@ -11,6 +11,8 @@ export type ApplicationStatus = 'draft' | 'submitted' | 'under_review' | 'approv
 export type TrustScoreStatus = 'elite' | 'approved' | 'review_needed' | 'conditional' | 'not_eligible'
 export type DocumentType = 'passport' | 'local_id' | 'address_proof' | 'bank_statement' | 'business_license' | 'other'
 export type PaymentStatus = 'pending' | 'processing' | 'completed' | 'failed' | 'refunded'
+export type ServiceType = 'itin' | 'ein_only' | 'stripe_activation' | 'credit_building' | 'alternative_id'
+export type ServiceRequestStatus = 'requested' | 'in_progress' | 'completed' | 'rejected'
 export type UserRole = 'founder' | 'admin'
 export type FounderStatus = 'onboarding' | 'verified' | 'active' | 'churned'
 export type FounderTier = 'basic' | 'standard' | 'premium'
@@ -575,6 +577,44 @@ export interface Database {
           created_at?: string
         }
       }
+      service_requests: {
+        Row: {
+          id: string
+          founder_id: string
+          company_id: string | null
+          service_type: ServiceType
+          status: ServiceRequestStatus
+          details: Record<string, unknown> | null
+          notes: string | null
+          admin_notes: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          founder_id: string
+          company_id?: string | null
+          service_type: ServiceType
+          status?: ServiceRequestStatus
+          details?: Record<string, unknown> | null
+          notes?: string | null
+          admin_notes?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          founder_id?: string
+          company_id?: string | null
+          service_type?: ServiceType
+          status?: ServiceRequestStatus
+          details?: Record<string, unknown> | null
+          notes?: string | null
+          admin_notes?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+      }
     }
     Views: {
       [_ in never]: never
@@ -614,3 +654,4 @@ export type Payment = Tables<'payments'>
 export type ReferralCode = Tables<'referral_codes'>
 export type UniversityVerificationCode = Tables<'university_verification_codes'>
 export type CompanyUpdate = Tables<'company_updates'>
+export type ServiceRequest = Tables<'service_requests'>
