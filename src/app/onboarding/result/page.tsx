@@ -349,7 +349,7 @@ function getPersonalizedSteps(result: TrustScoreResult): StepItem[] {
 
   // Digital Lineage — Code History
   const codeItems = bd.digitalLineage.codeHistory.items
-  const hasGithub = codeItems.find(i => i.name === 'GitHub Connected')?.earned
+  const hasGithub = codeItems.find(i => i.name.startsWith('GitHub Connected'))?.earned
   if (hasGithub) {
     steps.push({ title: 'GitHub Connected', description: 'Your code history is verified.', type: 'done' })
   } else {
@@ -358,7 +358,7 @@ function getPersonalizedSteps(result: TrustScoreResult): StepItem[] {
 
   // Digital Lineage — Professional
   const proItems = bd.digitalLineage.professionalGraph.items
-  const hasLinkedin = proItems.find(i => i.name === 'LinkedIn Connected')?.earned
+  const hasLinkedin = proItems.find(i => i.name.startsWith('LinkedIn Connected'))?.earned
   if (hasLinkedin) {
     steps.push({ title: 'LinkedIn Connected', description: 'Your professional network is verified.', type: 'done' })
   } else {
