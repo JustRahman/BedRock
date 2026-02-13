@@ -82,6 +82,12 @@
       "namedRegex": "^/admin/applications(?:/)?$"
     },
     {
+      "page": "/admin/bank-apps",
+      "regex": "^/admin/bank\\-apps(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/bank\\-apps(?:/)?$"
+    },
+    {
       "page": "/admin/compliance",
       "regex": "^/admin/compliance(?:/)?$",
       "routeKeys": {},
@@ -98,6 +104,12 @@
       "regex": "^/admin/founders(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/admin/founders(?:/)?$"
+    },
+    {
+      "page": "/admin/services",
+      "regex": "^/admin/services(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/services(?:/)?$"
     },
     {
       "page": "/admin/settings",
@@ -232,6 +244,12 @@
       "namedRegex": "^/api/payments/webhook(?:/)?$"
     },
     {
+      "page": "/api/service-requests",
+      "regex": "^/api/service\\-requests(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/service\\-requests(?:/)?$"
+    },
+    {
       "page": "/api/trust-score",
       "regex": "^/api/trust\\-score(?:/)?$",
       "routeKeys": {},
@@ -286,6 +304,12 @@
       "namedRegex": "^/dashboard(?:/)?$"
     },
     {
+      "page": "/dashboard/alternative-id",
+      "regex": "^/dashboard/alternative\\-id(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/dashboard/alternative\\-id(?:/)?$"
+    },
+    {
       "page": "/dashboard/bank",
       "regex": "^/dashboard/bank(?:/)?$",
       "routeKeys": {},
@@ -310,6 +334,12 @@
       "namedRegex": "^/dashboard/compliance(?:/)?$"
     },
     {
+      "page": "/dashboard/credit",
+      "regex": "^/dashboard/credit(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/dashboard/credit(?:/)?$"
+    },
+    {
       "page": "/dashboard/documents",
       "regex": "^/dashboard/documents(?:/)?$",
       "routeKeys": {},
@@ -332,6 +362,12 @@
       "regex": "^/dashboard/settings(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/dashboard/settings(?:/)?$"
+    },
+    {
+      "page": "/dashboard/stripe",
+      "regex": "^/dashboard/stripe(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/dashboard/stripe(?:/)?$"
     },
     {
       "page": "/icon.svg",

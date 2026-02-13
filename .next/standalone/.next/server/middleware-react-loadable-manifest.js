@@ -1,1 +1,1 @@
-self.__REACT_LOADABLE_MANIFEST='{"lib/face-api-loader.ts -> @vladmandic/face-api":{"id":898,"files":["static/chunks/88603698.40a9770fc6774d21.js","static/chunks/2619-fd64e7a5bd9005d5.js","static/chunks/6075.7cdab9489f08f830.js"]}}';
+self.__REACT_LOADABLE_MANIFEST='{"lib/face-api-loader.ts -> @vladmandic/face-api":{"id":898,"files":["static/chunks/88603698.d7947733099192fd.js","static/chunks/2619-9aac8983f30c7c8a.js","static/chunks/6075.b8ec89e2a39f45c1.js"]}}';
