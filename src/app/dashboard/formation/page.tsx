@@ -41,6 +41,7 @@ export default function FormationPage() {
   const router = useRouter()
   const [company, setCompany] = useState<Company | null>(null)
   const [updates, setUpdates] = useState<CompanyUpdateEntry[]>([])
+  const [bankApp, setBankApp] = useState<{ id: string; status: string; bank_name: string } | null>(null)
   const [loading, setLoading] = useState(true)
   const [step, setStep] = useState(1)
   const [submitting, setSubmitting] = useState(false)
@@ -57,11 +58,16 @@ export default function FormationPage() {
   })
 
   useEffect(() => {
-    fetch('/api/companies')
-      .then((r) => r.json())
-      .then((data) => {
-        if (data.company) setCompany(data.company)
-        if (data.updates) setUpdates(data.updates)
+    Promise.all([
+      fetch('/api/companies').then((r) => r.json()),
+      fetch('/api/bank-applications').then((r) => r.json()),
+    ])
+      .then(([companyData, bankData]) => {
+        if (companyData.company) setCompany(companyData.company)
+        if (companyData.updates) setUpdates(companyData.updates)
+        if (bankData.applications && bankData.applications.length > 0) {
+          setBankApp(bankData.applications[0])
+        }
       })
       .catch(() => {})
       .finally(() => setLoading(false))
@@ -231,7 +237,7 @@ export default function FormationPage() {
           </Card>
         )}
 
-        {company.ein && (
+        {company.ein && !bankApp && (
           <Card>
             <CardContent className="py-6">
               <div className="flex items-center justify-between">
@@ -242,6 +248,33 @@ export default function FormationPage() {
                 <Link href="/dashboard/bank/application">
                   <Button className="gap-2">
                     Start Bank Application
+                    <ArrowRight className="h-4 w-4" />
+                  </Button>
+                </Link>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        {company.ein && bankApp && (
+          <Card>
+            <CardContent className="py-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="font-medium text-foreground">
+                    Bank Application: <span className="capitalize">{bankApp.bank_name}</span>
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    {bankApp.status === 'approved'
+                      ? 'Your bank account has been approved!'
+                      : bankApp.status === 'rejected'
+                      ? 'Your bank application was not approved.'
+                      : 'Your bank application is being reviewed.'}
+                  </p>
+                </div>
+                <Link href="/dashboard/bank">
+                  <Button variant="outline" className="gap-2">
+                    View Status
                     <ArrowRight className="h-4 w-4" />
                   </Button>
                 </Link>

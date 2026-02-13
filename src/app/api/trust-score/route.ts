@@ -97,35 +97,70 @@ export async function PATCH(request: Request) {
       return NextResponse.json({ error: 'Founder ID required' }, { status: 400 })
     }
 
-    const updateData: Record<string, unknown> = {
-      manual_override: true,
-      override_reason: body.reason || null,
-    }
-
-    if (body.totalScore !== undefined) {
-      updateData.total_score = body.totalScore
-    }
-
     if (body.status) {
       const validStatuses = ['elite', 'approved', 'review_needed', 'conditional', 'not_eligible']
       if (!validStatuses.includes(body.status)) {
         return NextResponse.json({ error: 'Invalid status value' }, { status: 400 })
       }
-      updateData.status = body.status
     }
 
-    const { data: trustScore, error } = await (supabase
-      .from('trust_scores') as ReturnType<typeof supabase.from>)
-      .update(updateData)
+    // Check if trust score row exists
+    const { data: existing } = await supabase
+      .from('trust_scores')
+      .select('id')
       .eq('founder_id', body.founderId)
-      .select()
       .single()
 
-    if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 })
-    }
+    if (existing) {
+      // Update existing row
+      const updateData: Record<string, unknown> = {
+        manual_override: true,
+        override_reason: body.reason || null,
+      }
+      if (body.totalScore !== undefined) updateData.total_score = body.totalScore
+      if (body.status) updateData.status = body.status
 
-    return NextResponse.json({ trustScore })
+      const { data: trustScore, error } = await (supabase
+        .from('trust_scores') as ReturnType<typeof supabase.from>)
+        .update(updateData)
+        .eq('founder_id', body.founderId)
+        .select()
+        .single()
+
+      if (error) {
+        return NextResponse.json({ error: error.message }, { status: 500 })
+      }
+
+      return NextResponse.json({ trustScore })
+    } else {
+      // Insert new row
+      const insertData = {
+        founder_id: body.founderId,
+        total_score: body.totalScore ?? 0,
+        identity_score: 0,
+        business_score: 0,
+        financial_score: 0,
+        social_score: 0,
+        digital_lineage_score: 0,
+        network_score: 0,
+        country_adjustment: 0,
+        status: body.status || 'review_needed',
+        manual_override: true,
+        override_reason: body.reason || null,
+      }
+
+      const { data: trustScore, error } = await (supabase
+        .from('trust_scores') as ReturnType<typeof supabase.from>)
+        .insert(insertData)
+        .select()
+        .single()
+
+      if (error) {
+        return NextResponse.json({ error: error.message }, { status: 500 })
+      }
+
+      return NextResponse.json({ trustScore })
+    }
   } catch {
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
