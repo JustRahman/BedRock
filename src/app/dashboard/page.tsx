@@ -12,6 +12,8 @@ interface TrustScoreData {
   business_score: number
   financial_score: number
   social_score: number
+  digital_lineage_score: number
+  network_score: number
   status: 'elite' | 'approved' | 'review_needed' | 'conditional' | 'not_eligible'
 }
 
@@ -334,10 +336,10 @@ export default function DashboardPage() {
               status={trustScore.status}
               statusLabel={statusLabels[trustScore.status]}
               breakdown={{
-                digitalLineage: trustScore.financial_score,
+                digitalLineage: trustScore.digital_lineage_score,
                 business: trustScore.business_score,
                 identity: trustScore.identity_score,
-                network: trustScore.social_score,
+                network: trustScore.network_score,
               }}
             />
           ) : (
