@@ -18,7 +18,7 @@ export async function GET() {
 
     const { data: founderData } = await supabase
       .from('founders')
-      .select('id')
+      .select('id, role')
       .eq('user_id', user.id)
       .single()
 
@@ -27,6 +27,21 @@ export async function GET() {
       return NextResponse.json({ error: 'Founder not found' }, { status: 404 })
     }
 
+    // Admin: return all applications with founder + company info
+    if (founder.role === 'admin') {
+      const { data: applications, error } = await supabase
+        .from('bank_applications')
+        .select('*, founders(full_name, email), companies(name, state)')
+        .order('created_at', { ascending: false })
+
+      if (error) {
+        return NextResponse.json({ error: error.message }, { status: 500 })
+      }
+
+      return NextResponse.json({ applications: applications || [] })
+    }
+
+    // Regular user: their own applications
     const { data: applications, error } = await supabase
       .from('bank_applications')
       .select('*')

@@ -9,6 +9,8 @@ interface DeadlineRow {
   description: string | null
   due_date: string
   completed: boolean
+  is_recurring: boolean
+  recurring_type: string | null
   founder_id: string
   founders: { full_name: string } | null
 }
@@ -18,7 +20,7 @@ export default async function AdminCompliancePage() {
 
   const { data } = await supabase
     .from('compliance_deadlines')
-    .select('id, title, description, due_date, completed, founder_id, founders(full_name)')
+    .select('id, title, description, due_date, completed, is_recurring, recurring_type, founder_id, founders(full_name)')
     .order('due_date', { ascending: true })
 
   const items = ((data || []) as DeadlineRow[]).map((d) => ({
@@ -26,8 +28,11 @@ export default async function AdminCompliancePage() {
     founderName: d.founders ? (d.founders as { full_name: string }).full_name : 'Unknown',
     founderId: d.founder_id,
     title: d.title,
+    description: d.description,
     dueDate: d.due_date,
     completed: d.completed,
+    isRecurring: d.is_recurring || false,
+    recurringType: d.recurring_type,
   }))
 
   return <ComplianceClient items={items} />

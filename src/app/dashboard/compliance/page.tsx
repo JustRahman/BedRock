@@ -2,21 +2,8 @@
 
 import { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { Checkbox } from '@/components/ui/checkbox'
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Textarea } from '@/components/ui/textarea'
-import { Calendar, Plus, CheckCircle, AlertCircle, Clock, Trash2, Loader2 } from 'lucide-react'
+import { Calendar, CheckCircle, AlertCircle, Clock } from 'lucide-react'
 import { format, differenceInDays, isPast } from 'date-fns'
 
 interface ComplianceDeadline {
@@ -32,17 +19,7 @@ interface ComplianceDeadline {
 export default function CompliancePage() {
   const [deadlines, setDeadlines] = useState<ComplianceDeadline[]>([])
   const [loading, setLoading] = useState(true)
-  const [isAddOpen, setIsAddOpen] = useState(false)
   const [filter, setFilter] = useState<'all' | 'upcoming' | 'completed'>('all')
-  const [saving, setSaving] = useState(false)
-  const [toggling, setToggling] = useState<string | null>(null)
-  const [deleting, setDeleting] = useState<string | null>(null)
-
-  // Form state
-  const [newTitle, setNewTitle] = useState('')
-  const [newDescription, setNewDescription] = useState('')
-  const [newDueDate, setNewDueDate] = useState('')
-  const [formError, setFormError] = useState('')
 
   async function fetchDeadlines() {
     try {
@@ -61,83 +38,6 @@ export default function CompliancePage() {
   useEffect(() => {
     fetchDeadlines()
   }, [])
-
-  const handleAdd = async () => {
-    if (!newTitle || !newDueDate) {
-      setFormError('Title and due date are required.')
-      return
-    }
-
-    setFormError('')
-    setSaving(true)
-
-    try {
-      const res = await fetch('/api/compliance', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          title: newTitle,
-          description: newDescription || null,
-          dueDate: newDueDate,
-        }),
-      })
-
-      if (!res.ok) {
-        const data = await res.json()
-        setFormError(data.error || 'Failed to create deadline')
-        return
-      }
-
-      setIsAddOpen(false)
-      setNewTitle('')
-      setNewDescription('')
-      setNewDueDate('')
-      await fetchDeadlines()
-    } catch {
-      setFormError('Something went wrong. Please try again.')
-    } finally {
-      setSaving(false)
-    }
-  }
-
-  const toggleComplete = async (deadline: ComplianceDeadline) => {
-    setToggling(deadline.id)
-    try {
-      const res = await fetch('/api/compliance', {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          deadlineId: deadline.id,
-          completed: !deadline.completed,
-        }),
-      })
-
-      if (res.ok) {
-        const data = await res.json()
-        setDeadlines((prev) =>
-          prev.map((d) => (d.id === deadline.id ? data.deadline : d))
-        )
-      }
-    } catch {
-      // ignore
-    } finally {
-      setToggling(null)
-    }
-  }
-
-  const handleDelete = async (id: string) => {
-    setDeleting(id)
-    try {
-      const res = await fetch(`/api/compliance?id=${id}`, { method: 'DELETE' })
-      if (res.ok) {
-        setDeadlines((prev) => prev.filter((d) => d.id !== id))
-      }
-    } catch {
-      // ignore
-    } finally {
-      setDeleting(null)
-    }
-  }
 
   if (loading) {
     return (
@@ -186,77 +86,11 @@ export default function CompliancePage() {
 
   return (
     <div>
-      <div className="mb-6 sm:mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <h1 className="text-xl sm:text-2xl font-bold text-foreground">Compliance Calendar</h1>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Track important deadlines and stay compliant.
-          </p>
-        </div>
-        <Dialog open={isAddOpen} onOpenChange={(open) => {
-          setIsAddOpen(open)
-          if (!open) {
-            setFormError('')
-            setNewTitle('')
-            setNewDescription('')
-            setNewDueDate('')
-          }
-        }}>
-          <DialogTrigger asChild>
-            <Button className="gap-2">
-              <Plus className="h-4 w-4" />
-              Add Deadline
-            </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Add Compliance Deadline</DialogTitle>
-              <DialogDescription>
-                Create a new deadline to track.
-              </DialogDescription>
-            </DialogHeader>
-            <div className="space-y-4 py-4">
-              <div className="space-y-2">
-                <Label>Title</Label>
-                <Input
-                  placeholder="e.g., Annual Report Filing"
-                  value={newTitle}
-                  onChange={(e) => setNewTitle(e.target.value)}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label>Description</Label>
-                <Textarea
-                  placeholder="Describe the deadline..."
-                  rows={2}
-                  value={newDescription}
-                  onChange={(e) => setNewDescription(e.target.value)}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label>Due Date</Label>
-                <Input
-                  type="date"
-                  value={newDueDate}
-                  onChange={(e) => setNewDueDate(e.target.value)}
-                />
-              </div>
-              {formError && (
-                <p className="text-sm text-red-400">{formError}</p>
-              )}
-              <Button className="w-full" onClick={handleAdd} disabled={saving}>
-                {saving ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Saving...
-                  </>
-                ) : (
-                  'Add Deadline'
-                )}
-              </Button>
-            </div>
-          </DialogContent>
-        </Dialog>
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-xl sm:text-2xl font-bold text-foreground">Compliance Calendar</h1>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Your compliance deadlines and filings. BedRock handles these for you.
+        </p>
       </div>
 
       {/* Stats */}
@@ -327,7 +161,7 @@ export default function CompliancePage() {
             <p className="font-medium text-foreground">No deadlines found</p>
             <p className="mt-1 text-sm text-muted-foreground">
               {filter === 'all'
-                ? 'Add your first compliance deadline to get started.'
+                ? 'No compliance deadlines yet.'
                 : `No ${filter} deadlines.`}
             </p>
           </CardContent>
@@ -345,12 +179,15 @@ export default function CompliancePage() {
                 className={`transition-opacity ${deadline.completed ? 'opacity-60' : ''}`}
               >
                 <CardContent className="flex items-start gap-3 p-3 sm:gap-4 sm:p-4">
-                  <Checkbox
-                    checked={deadline.completed}
-                    onCheckedChange={() => toggleComplete(deadline)}
-                    disabled={toggling === deadline.id}
-                    className="mt-1"
-                  />
+                  <div className="mt-1">
+                    {deadline.completed ? (
+                      <CheckCircle className="h-5 w-5 text-emerald-400" />
+                    ) : isOverdue ? (
+                      <AlertCircle className="h-5 w-5 text-red-400" />
+                    ) : (
+                      <Clock className="h-5 w-5 text-blue-400" />
+                    )}
+                  </div>
                   <div className="flex-1">
                     <div className="flex items-start justify-between gap-4">
                       <div>
@@ -402,18 +239,6 @@ export default function CompliancePage() {
                       )}
                     </div>
                   </div>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => handleDelete(deadline.id)}
-                    disabled={deleting === deadline.id}
-                  >
-                    {deleting === deadline.id ? (
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                    ) : (
-                      <Trash2 className="h-4 w-4 text-red-400" />
-                    )}
-                  </Button>
                 </CardContent>
               </Card>
             )

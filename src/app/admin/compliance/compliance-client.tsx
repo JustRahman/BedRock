@@ -21,16 +21,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { Search, AlertTriangle, Calendar, Bell, CheckCircle } from 'lucide-react'
+import { Search, ChevronDown, ChevronRight, RefreshCw, Loader2 } from 'lucide-react'
 import { format, differenceInDays, isPast } from 'date-fns'
+import { toast } from 'sonner'
 
 interface ComplianceItem {
   id: string
   founderName: string
   founderId: string
   title: string
+  description: string | null
   dueDate: string
   completed: boolean
+  isRecurring: boolean
+  recurringType: string | null
 }
 
 function getStatus(item: ComplianceItem): 'completed' | 'overdue' | 'at_risk' | 'pending' {
@@ -52,6 +56,8 @@ export function ComplianceClient({ items }: { items: ComplianceItem[] }) {
   const router = useRouter()
   const [search, setSearch] = useState('')
   const [statusFilter, setStatusFilter] = useState<string>('all')
+  const [expandedId, setExpandedId] = useState<string | null>(null)
+  const [completing, setCompleting] = useState<string | null>(null)
 
   const itemsWithStatus = items.map((item) => ({
     ...item,
@@ -73,15 +79,23 @@ export function ComplianceClient({ items }: { items: ComplianceItem[] }) {
   const pendingCount = itemsWithStatus.filter((i) => i.status === 'pending').length
 
   const handleMarkComplete = async (id: string) => {
+    setCompleting(id)
     try {
-      await fetch('/api/compliance', {
+      const res = await fetch('/api/compliance', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ deadlineId: id, completed: true }),
       })
-      router.refresh()
+      if (res.ok) {
+        toast.success('Deadline marked complete')
+        router.refresh()
+      } else {
+        toast.error('Failed to mark complete')
+      }
     } catch {
-      // Silently fail
+      toast.error('Something went wrong')
+    } finally {
+      setCompleting(null)
     }
   }
 
@@ -90,7 +104,7 @@ export function ComplianceClient({ items }: { items: ComplianceItem[] }) {
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-gray-900">Compliance Overview</h1>
         <p className="mt-1 text-sm text-gray-500">
-          Monitor compliance deadlines across all founders.
+          Monitor and manage compliance deadlines across all founders.
         </p>
       </div>
 
@@ -169,6 +183,7 @@ export function ComplianceClient({ items }: { items: ComplianceItem[] }) {
           <Table>
             <TableHeader>
               <TableRow>
+                <TableHead className="w-8"></TableHead>
                 <TableHead>Founder</TableHead>
                 <TableHead>Deadline</TableHead>
                 <TableHead>Due Date</TableHead>
@@ -180,7 +195,7 @@ export function ComplianceClient({ items }: { items: ComplianceItem[] }) {
             <TableBody>
               {filteredItems.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={6} className="text-center text-gray-500">
+                  <TableCell colSpan={7} className="text-center text-gray-500">
                     No compliance items found.
                   </TableCell>
                 </TableRow>
@@ -189,42 +204,103 @@ export function ComplianceClient({ items }: { items: ComplianceItem[] }) {
                   const status = statusConfig[item.status]
                   const daysUntil = differenceInDays(new Date(item.dueDate), new Date())
                   const isOverdue = isPast(new Date(item.dueDate)) && !item.completed
+                  const isExpanded = expandedId === item.id
 
                   return (
-                    <TableRow key={item.id}>
-                      <TableCell className="font-medium">{item.founderName}</TableCell>
-                      <TableCell>{item.title}</TableCell>
-                      <TableCell>{format(new Date(item.dueDate), 'MMM d, yyyy')}</TableCell>
-                      <TableCell>
-                        <span
-                          className={
-                            isOverdue
-                              ? 'font-medium text-red-600'
-                              : daysUntil <= 14
-                              ? 'font-medium text-yellow-600'
-                              : 'text-gray-600'
-                          }
-                        >
-                          {item.completed
-                            ? 'Done'
-                            : isOverdue
-                            ? `${Math.abs(daysUntil)} overdue`
-                            : daysUntil === 0
-                            ? 'Today'
-                            : `${daysUntil} days`}
-                        </span>
-                      </TableCell>
-                      <TableCell>
-                        <Badge className={status.color}>{status.label}</Badge>
-                      </TableCell>
-                      <TableCell className="text-right">
-                        {!item.completed && (
-                          <Button size="sm" onClick={() => handleMarkComplete(item.id)}>
-                            Mark Complete
-                          </Button>
-                        )}
-                      </TableCell>
-                    </TableRow>
+                    <>
+                      <TableRow
+                        key={item.id}
+                        className="cursor-pointer hover:bg-gray-50"
+                        onClick={() => setExpandedId(isExpanded ? null : item.id)}
+                      >
+                        <TableCell>
+                          {isExpanded ? (
+                            <ChevronDown className="h-4 w-4 text-gray-400" />
+                          ) : (
+                            <ChevronRight className="h-4 w-4 text-gray-400" />
+                          )}
+                        </TableCell>
+                        <TableCell className="font-medium">{item.founderName}</TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-2">
+                            {item.title}
+                            {item.isRecurring && (
+                              <span title="Recurring">
+                                <RefreshCw className="h-3.5 w-3.5 text-blue-500" />
+                              </span>
+                            )}
+                          </div>
+                        </TableCell>
+                        <TableCell>{format(new Date(item.dueDate), 'MMM d, yyyy')}</TableCell>
+                        <TableCell>
+                          <span
+                            className={
+                              isOverdue
+                                ? 'font-medium text-red-600'
+                                : daysUntil <= 14
+                                ? 'font-medium text-yellow-600'
+                                : 'text-gray-600'
+                            }
+                          >
+                            {item.completed
+                              ? 'Done'
+                              : isOverdue
+                              ? `${Math.abs(daysUntil)} overdue`
+                              : daysUntil === 0
+                              ? 'Today'
+                              : `${daysUntil} days`}
+                          </span>
+                        </TableCell>
+                        <TableCell>
+                          <Badge className={status.color}>{status.label}</Badge>
+                        </TableCell>
+                        <TableCell className="text-right" onClick={(e) => e.stopPropagation()}>
+                          {!item.completed && (
+                            <Button
+                              size="sm"
+                              onClick={() => handleMarkComplete(item.id)}
+                              disabled={completing === item.id}
+                            >
+                              {completing === item.id ? (
+                                <Loader2 className="h-4 w-4 animate-spin" />
+                              ) : (
+                                'Mark Complete'
+                              )}
+                            </Button>
+                          )}
+                        </TableCell>
+                      </TableRow>
+                      {isExpanded && (
+                        <TableRow key={`${item.id}-detail`}>
+                          <TableCell></TableCell>
+                          <TableCell colSpan={6} className="bg-gray-50">
+                            <div className="py-2 space-y-2">
+                              <div>
+                                <span className="text-sm font-medium text-gray-500">Description: </span>
+                                <span className="text-sm text-gray-700">
+                                  {item.description || 'No description'}
+                                </span>
+                              </div>
+                              {item.isRecurring && (
+                                <div>
+                                  <span className="text-sm font-medium text-gray-500">Type: </span>
+                                  <Badge variant="outline" className="text-xs">
+                                    {item.recurringType === 'llc_annual_report' && 'LLC Annual Report'}
+                                    {item.recurringType === 'ra_renewal' && 'RA Renewal'}
+                                    {item.recurringType === 'tax_filing' && 'Tax Filing'}
+                                    {item.recurringType === 'boi_report' && 'BOI Report'}
+                                    {!item.recurringType && 'Custom'}
+                                  </Badge>
+                                  <span className="ml-2 text-xs text-blue-600">
+                                    Auto-renews when completed
+                                  </span>
+                                </div>
+                              )}
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                      )}
+                    </>
                   )
                 })
               )}

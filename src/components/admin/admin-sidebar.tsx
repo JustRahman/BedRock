@@ -12,6 +12,7 @@ import {
   LogOut,
   BarChart3,
   Building2,
+  Landmark,
 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
@@ -22,6 +23,7 @@ const navigation = [
   { name: 'Applications', href: '/admin/applications', icon: FileText },
   { name: 'Formations', href: '/admin/formations', icon: Building2 },
   { name: 'Founders', href: '/admin/founders', icon: Users },
+  { name: 'Bank Apps', href: '/admin/bank-apps', icon: Landmark },
   { name: 'Compliance', href: '/admin/compliance', icon: Calendar },
   { name: 'Analytics', href: '/admin/analytics', icon: BarChart3 },
   { name: 'Settings', href: '/admin/settings', icon: Settings },
