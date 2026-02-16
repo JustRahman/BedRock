@@ -13,7 +13,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { CreditCard, Loader2 } from 'lucide-react'
+import { CreditCard, Copy, Check, Loader2, Wallet } from 'lucide-react'
 
 interface Payment {
   id: string
@@ -33,6 +33,15 @@ export default function BillingPage() {
   const [payments, setPayments] = useState<Payment[]>([])
   const [founder, setFounder] = useState<Founder | null>(null)
   const [loading, setLoading] = useState(true)
+  const [copied, setCopied] = useState(false)
+
+  const SOLANA_ADDRESS = '8etC2hdAgk3587oniSG8ia8yPq5ZGhbVBmWazbnecEjA'
+
+  function copyAddress() {
+    navigator.clipboard.writeText(SOLANA_ADDRESS)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
 
   useEffect(() => {
     Promise.all([
@@ -75,12 +84,33 @@ export default function BillingPage() {
         </p>
       </div>
 
-      {/* Test Mode Banner */}
-      <div className="mb-6 rounded-lg border border-yellow-500/20 bg-yellow-500/5 px-4 py-3">
-        <p className="text-sm text-yellow-300">
-          <span className="font-medium">Test Mode</span> — Payments are running in Stripe sandbox. No real charges will be made.
-        </p>
-      </div>
+      {/* Payment Method */}
+      <Card className="mb-6 border-purple-500/20 bg-purple-500/5">
+        <CardHeader className="pb-3">
+          <div className="flex items-center gap-2">
+            <Wallet className="h-5 w-5 text-purple-400" />
+            <CardTitle className="text-base">Pay with Solana</CardTitle>
+          </div>
+          <CardDescription>
+            Send payment to the Solana address below. Card payments coming soon.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center gap-2">
+            <code className="flex-1 rounded-md border border-purple-500/20 bg-background px-3 py-2 text-xs sm:text-sm font-mono break-all">
+              {SOLANA_ADDRESS}
+            </code>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={copyAddress}
+              className="shrink-0 border-purple-500/20 hover:bg-purple-500/10"
+            >
+              {copied ? <Check className="h-4 w-4 text-emerald-400" /> : <Copy className="h-4 w-4" />}
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Current Plan */}
       <Card className="mb-6">

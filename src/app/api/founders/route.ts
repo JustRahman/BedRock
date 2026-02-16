@@ -29,8 +29,8 @@ export async function GET(request: Request) {
     if (currentFounder?.role === 'admin') {
       // Admin can see all founders
       const { searchParams } = new URL(request.url)
-      const limit = parseInt(searchParams.get('limit') || '50')
-      const offset = parseInt(searchParams.get('offset') || '0')
+      const limit = Math.min(parseInt(searchParams.get('limit') || '50') || 50, 100)
+      const offset = Math.max(parseInt(searchParams.get('offset') || '0') || 0, 0)
 
       const { data: founders, error, count } = await supabase
         .from('founders')

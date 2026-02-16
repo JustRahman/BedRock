@@ -100,6 +100,58 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$serv
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$supabase$2f$server$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/lib/supabase/server.ts [app-route] (ecmascript)");
 ;
 ;
+const US_STATE_NAMES = {
+    AL: 'Alabama',
+    AK: 'Alaska',
+    AZ: 'Arizona',
+    AR: 'Arkansas',
+    CA: 'California',
+    CO: 'Colorado',
+    CT: 'Connecticut',
+    DE: 'Delaware',
+    FL: 'Florida',
+    GA: 'Georgia',
+    HI: 'Hawaii',
+    ID: 'Idaho',
+    IL: 'Illinois',
+    IN: 'Indiana',
+    IA: 'Iowa',
+    KS: 'Kansas',
+    KY: 'Kentucky',
+    LA: 'Louisiana',
+    ME: 'Maine',
+    MD: 'Maryland',
+    MA: 'Massachusetts',
+    MI: 'Michigan',
+    MN: 'Minnesota',
+    MS: 'Mississippi',
+    MO: 'Missouri',
+    MT: 'Montana',
+    NE: 'Nebraska',
+    NV: 'Nevada',
+    NH: 'New Hampshire',
+    NJ: 'New Jersey',
+    NM: 'New Mexico',
+    NY: 'New York',
+    NC: 'North Carolina',
+    ND: 'North Dakota',
+    OH: 'Ohio',
+    OK: 'Oklahoma',
+    OR: 'Oregon',
+    PA: 'Pennsylvania',
+    RI: 'Rhode Island',
+    SC: 'South Carolina',
+    SD: 'South Dakota',
+    TN: 'Tennessee',
+    TX: 'Texas',
+    UT: 'Utah',
+    VT: 'Vermont',
+    VA: 'Virginia',
+    WA: 'Washington',
+    WV: 'West Virginia',
+    WI: 'Wisconsin',
+    WY: 'Wyoming'
+};
 async function GET() {
     try {
         const authClient = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$supabase$2f$server$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["createClient"])();
@@ -129,8 +181,18 @@ async function GET() {
                 status: 500
             });
         }
+        // Fetch company updates timeline if company exists
+        let updates = null;
+        if (company) {
+            const companyRecord = company;
+            const { data: updatesData } = await supabase.from('company_updates').select('*').eq('company_id', companyRecord.id).order('created_at', {
+                ascending: true
+            });
+            updates = updatesData;
+        }
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-            company: company || null
+            company: company || null,
+            updates: updates || []
         });
     } catch  {
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
@@ -162,14 +224,19 @@ async function POST(request) {
             });
         }
         const body = await request.json();
+        const isAlreadyFormed = body.alreadyFormed === true;
         const insertData = {
             founder_id: founder.id,
             name: body.name,
             legal_name: body.legalName || body.name,
             state: body.state,
             description: body.description || null,
-            formation_status: 'pending'
+            formation_status: isAlreadyFormed ? 'formed' : 'pending'
         };
+        if (isAlreadyFormed) {
+            if (body.ein) insertData.ein = body.ein;
+            insertData.formation_date = body.formationDate || new Date().toISOString().split('T')[0];
+        }
         const { data: company, error } = await supabase.from('companies').insert(insertData).select().single();
         if (error) {
             return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
@@ -179,27 +246,94 @@ async function POST(request) {
             });
         }
         const companyId = company.id;
-        // Auto-create compliance deadlines
         const now = new Date();
-        const boiDue = new Date(now.getTime() + 90 * 24 * 60 * 60 * 1000);
-        const annualReportDue = new Date(now.getFullYear() + 1, 2, 1) // March 1 next year
-        ;
-        await supabase.from('compliance_deadlines').insert([
-            {
-                founder_id: founder.id,
-                company_id: companyId,
-                title: 'FinCEN BOI Report',
-                description: 'Beneficial Ownership Information report due within 90 days of formation.',
-                due_date: boiDue.toISOString().split('T')[0]
-            },
-            {
-                founder_id: founder.id,
-                company_id: companyId,
-                title: `${body.state === 'DE' ? 'Delaware' : 'Wyoming'} Annual Report`,
-                description: `Annual report and franchise tax filing for ${body.state === 'DE' ? 'Delaware' : 'Wyoming'}.`,
-                due_date: annualReportDue.toISOString().split('T')[0]
+        if (isAlreadyFormed) {
+            // Already-formed LLC: create recurring compliance deadlines
+            const state = body.state || 'DE';
+            const stateName = US_STATE_NAMES[state] || state;
+            let annualReportDue;
+            if (state === 'WY') {
+                annualReportDue = new Date(now.getFullYear() + 1, now.getMonth(), 1);
+            } else {
+                annualReportDue = new Date(now.getFullYear() + 1, 2, 1);
             }
-        ]);
+            const raRenewalDue = new Date(now.getFullYear() + 1, now.getMonth(), now.getDate());
+            let taxDue;
+            let taxTitle;
+            let taxDescription;
+            if (state === 'DE') {
+                taxDue = new Date(now.getFullYear() + 1, 5, 1);
+                taxTitle = 'Delaware Franchise Tax';
+                taxDescription = 'Annual Delaware franchise tax filing due June 1.';
+            } else {
+                taxDue = new Date(now.getFullYear() + 1, 3, 15);
+                taxTitle = 'Federal Tax Filing';
+                taxDescription = 'Federal tax return filing due April 15.';
+            }
+            const boiDue = new Date(now.getTime() + 90 * 24 * 60 * 60 * 1000);
+            await supabase.from('compliance_deadlines').insert([
+                {
+                    founder_id: founder.id,
+                    company_id: companyId,
+                    title: 'FinCEN BOI Report',
+                    description: 'Beneficial Ownership Information report — verify if already filed.',
+                    due_date: boiDue.toISOString().split('T')[0],
+                    is_recurring: false,
+                    recurring_type: 'boi_report'
+                },
+                {
+                    founder_id: founder.id,
+                    company_id: companyId,
+                    title: `${stateName} LLC Annual Report`,
+                    description: `Annual report filing for ${stateName} LLC.`,
+                    due_date: annualReportDue.toISOString().split('T')[0],
+                    is_recurring: true,
+                    recurring_type: 'llc_annual_report'
+                },
+                {
+                    founder_id: founder.id,
+                    company_id: companyId,
+                    title: 'Registered Agent Renewal',
+                    description: 'Annual registered agent service renewal.',
+                    due_date: raRenewalDue.toISOString().split('T')[0],
+                    is_recurring: true,
+                    recurring_type: 'ra_renewal'
+                },
+                {
+                    founder_id: founder.id,
+                    company_id: companyId,
+                    title: taxTitle,
+                    description: taxDescription,
+                    due_date: taxDue.toISOString().split('T')[0],
+                    is_recurring: true,
+                    recurring_type: 'tax_filing'
+                }
+            ]);
+        } else {
+            // New formation: create pending deadlines
+            const boiDue = new Date(now.getTime() + 90 * 24 * 60 * 60 * 1000);
+            const annualReportDue = new Date(now.getFullYear() + 1, 2, 1);
+            await supabase.from('compliance_deadlines').insert([
+                {
+                    founder_id: founder.id,
+                    company_id: companyId,
+                    title: 'FinCEN BOI Report',
+                    description: 'Beneficial Ownership Information report due within 90 days of formation.',
+                    due_date: boiDue.toISOString().split('T')[0],
+                    is_recurring: false,
+                    recurring_type: 'boi_report'
+                },
+                {
+                    founder_id: founder.id,
+                    company_id: companyId,
+                    title: `${body.state === 'DE' ? 'Delaware' : 'Wyoming'} Annual Report`,
+                    description: `Annual report and franchise tax filing for ${body.state === 'DE' ? 'Delaware' : 'Wyoming'}.`,
+                    due_date: annualReportDue.toISOString().split('T')[0],
+                    is_recurring: false,
+                    recurring_type: null
+                }
+            ]);
+        }
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
             company
         }, {
@@ -241,6 +375,8 @@ async function PATCH(request) {
         if (body.formationDate !== undefined) updateData.formation_date = body.formationDate;
         if (body.name !== undefined) updateData.name = body.name;
         if (body.legalName !== undefined) updateData.legal_name = body.legalName;
+        if (body.registeredAgentName !== undefined) updateData.registered_agent_name = body.registeredAgentName;
+        if (body.registeredAgentNotes !== undefined) updateData.registered_agent_notes = body.registeredAgentNotes;
         // Determine which company to update
         const isAdmin = founder.role === 'admin' && body.companyId;
         let queryBuilder = supabase.from('companies').update(updateData);
@@ -252,6 +388,83 @@ async function PATCH(request) {
             }, {
                 status: 500
             });
+        }
+        // Log status change to company_updates if status was changed
+        if (body.formationStatus && company) {
+            const companyRecord = company;
+            await supabase.from('company_updates').insert({
+                company_id: companyRecord.id,
+                status: body.formationStatus,
+                note: body.note || null,
+                created_by: founder.id
+            });
+        }
+        // Auto-create recurring deadlines when status changes to 'formed'
+        if (body.formationStatus === 'formed' && company) {
+            const companyRecord = company;
+            // Check if recurring deadlines already exist for this company
+            const { data: existingRecurring } = await supabase.from('compliance_deadlines').select('id').eq('company_id', companyRecord.id).eq('is_recurring', true);
+            if (!existingRecurring || existingRecurring.length === 0) {
+                const now = new Date();
+                const state = companyRecord.state || 'DE';
+                // LLC Annual Report due date
+                let annualReportDue;
+                if (state === 'WY') {
+                    // Wyoming: anniversary month of next year
+                    annualReportDue = new Date(now.getFullYear() + 1, now.getMonth(), 1);
+                } else {
+                    // Delaware: March 1 next year
+                    annualReportDue = new Date(now.getFullYear() + 1, 2, 1);
+                }
+                // RA Renewal: 1 year from formation
+                const raRenewalDue = new Date(now.getFullYear() + 1, now.getMonth(), now.getDate());
+                // Tax Filing due date
+                let taxDue;
+                let taxTitle;
+                let taxDescription;
+                if (state === 'DE') {
+                    taxDue = new Date(now.getFullYear() + 1, 5, 1); // June 1
+                    taxTitle = 'Delaware Franchise Tax';
+                    taxDescription = 'Annual Delaware franchise tax filing due June 1.';
+                } else {
+                    taxDue = new Date(now.getFullYear() + 1, 3, 15); // April 15
+                    taxTitle = 'Federal Tax Filing';
+                    taxDescription = 'Federal tax return filing due April 15.';
+                }
+                const stateName = state === 'DE' ? 'Delaware' : state === 'WY' ? 'Wyoming' : state;
+                // Remove the non-recurring annual report that was created at company creation
+                await supabase.from('compliance_deadlines').delete().eq('company_id', companyRecord.id).eq('is_recurring', false).like('title', `%Annual Report%`);
+                // Create recurring deadlines
+                await supabase.from('compliance_deadlines').insert([
+                    {
+                        founder_id: companyRecord.founder_id,
+                        company_id: companyRecord.id,
+                        title: `${stateName} LLC Annual Report`,
+                        description: `Annual report filing for ${stateName} LLC.`,
+                        due_date: annualReportDue.toISOString().split('T')[0],
+                        is_recurring: true,
+                        recurring_type: 'llc_annual_report'
+                    },
+                    {
+                        founder_id: companyRecord.founder_id,
+                        company_id: companyRecord.id,
+                        title: 'Registered Agent Renewal',
+                        description: 'Annual registered agent service renewal.',
+                        due_date: raRenewalDue.toISOString().split('T')[0],
+                        is_recurring: true,
+                        recurring_type: 'ra_renewal'
+                    },
+                    {
+                        founder_id: companyRecord.founder_id,
+                        company_id: companyRecord.id,
+                        title: taxTitle,
+                        description: taxDescription,
+                        due_date: taxDue.toISOString().split('T')[0],
+                        is_recurring: true,
+                        recurring_type: 'tax_filing'
+                    }
+                ]);
+            }
         }
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
             company

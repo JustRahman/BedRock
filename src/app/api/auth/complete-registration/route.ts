@@ -1,10 +1,16 @@
 import { NextResponse } from 'next/server'
-import { createServiceClient } from '@/lib/supabase/server'
+import { createClient, createServiceClient } from '@/lib/supabase/server'
 
 export async function POST(request: Request) {
   try {
+    const authClient = await createClient()
+    const { data: { user: authUser }, error: authError } = await authClient.auth.getUser()
+    if (authError || !authUser) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+
     const body = await request.json()
-    const { userId, email, fullName, phone, dateOfBirth, countryOfOrigin, countryOfResidence, trustScore, oauthVerifications } = body
+    const { email, fullName, phone, dateOfBirth, countryOfOrigin, countryOfResidence, trustScore, oauthVerifications } = body
 
     if (!email || !fullName) {
       return NextResponse.json({ error: 'Email and full name are required' }, { status: 400 })
@@ -12,26 +18,8 @@ export async function POST(request: Request) {
 
     const supabase = createServiceClient()
 
-    // Find the auth user — prefer userId if provided, otherwise look up by email
-    let authUserId = userId
-
-    if (authUserId) {
-      // Verify the user exists
-      const { data: { user }, error } = await supabase.auth.admin.getUserById(authUserId)
-      if (error || !user) {
-        authUserId = null // Fall through to email lookup
-      }
-    }
-
-    if (!authUserId) {
-      // Fallback: find user by email using admin API with page size 1
-      const { data: { users } } = await supabase.auth.admin.listUsers({ page: 1, perPage: 1000 })
-      const authUser = users?.find((u) => u.email === email)
-      if (!authUser) {
-        return NextResponse.json({ error: 'User not found in auth' }, { status: 404 })
-      }
-      authUserId = authUser.id
-    }
+    // Use the authenticated user's ID directly
+    const authUserId = authUser.id
 
     // Check if founder already exists
     const { data: existingFounder } = await (supabase

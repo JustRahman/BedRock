@@ -79,21 +79,27 @@ async function middleware(request) {
         url.searchParams.set('redirectTo', pathname);
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$exports$2f$index$2e$js__$5b$middleware$2d$edge$5d$__$28$ecmascript$29$__["NextResponse"].redirect(url);
     }
+    // Check if user is admin via auth metadata
+    const isAdmin = !!user?.app_metadata?.is_admin;
     // Redirect authenticated users away from auth pages
     if (user && (pathname === '/login' || pathname === '/register')) {
-        const redirectTo = request.nextUrl.searchParams.get('redirectTo') || '/dashboard';
+        const explicit = request.nextUrl.searchParams.get('redirectTo');
+        const redirectTo = explicit || (isAdmin ? '/admin' : '/dashboard');
         const url = request.nextUrl.clone();
         url.pathname = redirectTo;
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$exports$2f$index$2e$js__$5b$middleware$2d$edge$5d$__$28$ecmascript$29$__["NextResponse"].redirect(url);
     }
-    // Check admin access
-    if (pathname.startsWith('/admin') && user) {
-        const { data: founder } = await supabase.from('founders').select('role').eq('user_id', user.id).single();
-        if (!founder || founder.role !== 'admin') {
-            const url = request.nextUrl.clone();
-            url.pathname = '/dashboard';
-            return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$exports$2f$index$2e$js__$5b$middleware$2d$edge$5d$__$28$ecmascript$29$__["NextResponse"].redirect(url);
-        }
+    // Redirect admins from /dashboard to /admin
+    if (user && isAdmin && pathname === '/dashboard') {
+        const url = request.nextUrl.clone();
+        url.pathname = '/admin';
+        return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$exports$2f$index$2e$js__$5b$middleware$2d$edge$5d$__$28$ecmascript$29$__["NextResponse"].redirect(url);
+    }
+    // Block non-admins from /admin
+    if (pathname.startsWith('/admin') && user && !isAdmin) {
+        const url = request.nextUrl.clone();
+        url.pathname = '/dashboard';
+        return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$esm$2f$server$2f$web$2f$exports$2f$index$2e$js__$5b$middleware$2d$edge$5d$__$28$ecmascript$29$__["NextResponse"].redirect(url);
     }
     return supabaseResponse;
 }

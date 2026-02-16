@@ -280,6 +280,25 @@ async function PATCH(request) {
                 status: 500
             });
         }
+        // Auto-create next year's deadline if recurring and just completed
+        const dl = deadline;
+        if (body.completed === true && dl.is_recurring && dl.recurring_type) {
+            // Duplicate guard: check no uncompleted deadline with same recurring_type + company_id
+            const { data: existing } = await supabase.from('compliance_deadlines').select('id').eq('company_id', dl.company_id).eq('recurring_type', dl.recurring_type).eq('completed', false);
+            if (!existing || existing.length === 0) {
+                const currentDue = new Date(dl.due_date);
+                const nextDue = new Date(currentDue.getFullYear() + 1, currentDue.getMonth(), currentDue.getDate());
+                await supabase.from('compliance_deadlines').insert({
+                    founder_id: dl.founder_id,
+                    company_id: dl.company_id,
+                    title: dl.title,
+                    description: dl.description,
+                    due_date: nextDue.toISOString().split('T')[0],
+                    is_recurring: true,
+                    recurring_type: dl.recurring_type
+                });
+            }
+        }
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
             deadline
         });

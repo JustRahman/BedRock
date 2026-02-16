@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback } from 'react'
 import Link from 'next/link'
-import { FileText, Calendar, Shield, Building2, Landmark } from 'lucide-react'
+import { FileText, Calendar, Shield, Building2, Landmark, RefreshCw } from 'lucide-react'
 import { StatusCard, ActionItems, TrustScoreCard } from '@/components/dashboard'
 import { PendingUploadBanner } from '@/components/dashboard/pending-upload-banner'
 
@@ -15,6 +15,7 @@ interface TrustScoreData {
   digital_lineage_score: number
   network_score: number
   status: 'elite' | 'approved' | 'review_needed' | 'conditional' | 'not_eligible'
+  score_breakdown?: Record<string, unknown> | null
 }
 
 interface DocumentData {
@@ -278,6 +279,19 @@ export default function DashboardPage() {
     <div>
       <PendingUploadBanner onUploadsComplete={refreshDocuments} />
 
+      {/* Re-onboard banner for users with old v1 trust scores */}
+      {trustScore && (!trustScore.score_breakdown || typeof trustScore.score_breakdown !== 'object' || !('github' in trustScore.score_breakdown)) && (
+        <Link href="/onboarding">
+          <div className="mb-6 flex items-center gap-3 rounded-xl border border-blue-500/20 bg-blue-500/10 p-4 cursor-pointer hover:bg-blue-500/15 transition-colors">
+            <RefreshCw className="h-5 w-5 text-blue-400 shrink-0" />
+            <div className="flex-1">
+              <p className="text-sm font-medium text-blue-300">Update Your Trust Score</p>
+              <p className="text-xs text-blue-400/70">We&apos;ve improved our scoring system. Re-complete onboarding to get a more accurate score with detailed per-provider breakdown.</p>
+            </div>
+          </div>
+        </Link>
+      )}
+
       <div className="mb-6 sm:mb-8">
         <h1 className="text-xl sm:text-2xl font-bold text-white">Dashboard</h1>
         <p className="mt-1 text-sm text-zinc-500">
@@ -341,6 +355,7 @@ export default function DashboardPage() {
                 identity: trustScore.identity_score,
                 network: trustScore.network_score,
               }}
+              scoreBreakdown={trustScore.score_breakdown}
             />
           ) : (
             <div className="rounded-xl border border-border bg-card py-12 text-center">

@@ -134,7 +134,7 @@ export function StepCodeHistory({ data, onNext, onBack }: StepCodeHistoryProps) 
       </div>
 
       <p className="text-sm text-zinc-500">
-        This step is optional but significantly impacts your Digital Lineage score (up to 15 points).
+        This step is optional but significantly impacts your Digital Lineage score (up to 25 points).
       </p>
 
       <div className="flex justify-between pt-4">

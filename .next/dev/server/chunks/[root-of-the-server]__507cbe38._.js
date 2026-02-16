@@ -112,7 +112,7 @@ async function GET() {
                 status: 401
             });
         }
-        const { data: founderData } = await supabase.from('founders').select('id').eq('user_id', user.id).single();
+        const { data: founderData } = await supabase.from('founders').select('id, role').eq('user_id', user.id).single();
         const founder = founderData;
         if (!founder) {
             return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
@@ -121,6 +121,23 @@ async function GET() {
                 status: 404
             });
         }
+        // Admin: return all applications with founder + company info
+        if (founder.role === 'admin') {
+            const { data: applications, error } = await supabase.from('bank_applications').select('*, founders(full_name, email), companies(name, state)').order('created_at', {
+                ascending: false
+            });
+            if (error) {
+                return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+                    error: error.message
+                }, {
+                    status: 500
+                });
+            }
+            return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+                applications: applications || []
+            });
+        }
+        // Regular user: their own applications
         const { data: applications, error } = await supabase.from('bank_applications').select('*').eq('founder_id', founder.id).order('created_at', {
             ascending: false
         });

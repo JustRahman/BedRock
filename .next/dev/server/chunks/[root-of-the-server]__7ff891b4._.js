@@ -154,33 +154,63 @@ async function POST(request) {
         // Save trust score if provided
         if (body.trustScore) {
             const { data: existingScore } = await supabase.from('trust_scores').select('id').eq('founder_id', founderId).single();
+            // Build DB columns from v2 result format
+            const ts = body.trustScore;
+            const isV2 = body.trustScoreVersion === 2 || ts.breakdown?.github;
+            let scoreData;
+            if (isV2) {
+                // v2: per-provider breakdown available
+                const b = ts.breakdown || {};
+                const githubScore = b.github?.score || 0;
+                const stripeScore = b.stripe?.score || 0;
+                const linkedinScore = b.linkedin?.score || 0;
+                const identityScore = b.identity?.score || 0;
+                const dpScore = b.digital_presence?.score || 0;
+                const networkScore = b.network?.score || 0;
+                // Map risk_level to DB status
+                let status = 'review_needed';
+                if (ts.risk_level === 'low') status = ts.score >= 95 ? 'elite' : 'approved';
+                else if (ts.risk_level === 'medium') status = 'review_needed';
+                else if (ts.risk_level === 'high') status = 'conditional';
+                else if (ts.risk_level === 'critical') status = 'not_eligible';
+                scoreData = {
+                    total_score: ts.score || 0,
+                    digital_lineage_score: githubScore + dpScore,
+                    business_score: stripeScore,
+                    financial_score: stripeScore,
+                    social_score: linkedinScore,
+                    identity_score: identityScore,
+                    network_score: networkScore,
+                    country_adjustment: ts.country_adjustment || 0,
+                    status,
+                    score_breakdown: b
+                };
+            } else {
+                // v1 fallback (legacy)
+                scoreData = {
+                    total_score: ts.totalScore || 0,
+                    identity_score: ts.identityScore || 0,
+                    business_score: ts.businessScore || 0,
+                    financial_score: ts.businessScore || 0,
+                    social_score: ts.networkScore || 0,
+                    digital_lineage_score: ts.digitalLineageScore || 0,
+                    network_score: ts.networkScore || 0,
+                    country_adjustment: ts.countryAdjustment || 0,
+                    status: ts.status || 'review_needed',
+                    score_breakdown: ts.breakdown || {}
+                };
+            }
             if (!existingScore) {
                 const { error: tsError } = await supabase.from('trust_scores').insert({
                     founder_id: founderId,
-                    total_score: body.trustScore.totalScore || 0,
-                    identity_score: body.trustScore.identityScore || 0,
-                    business_score: body.trustScore.businessScore || 0,
-                    financial_score: body.trustScore.businessScore || 0,
-                    social_score: body.trustScore.networkScore || 0,
-                    country_adjustment: body.trustScore.countryAdjustment || 0,
-                    status: body.trustScore.status || 'review_needed',
-                    score_breakdown: body.trustScore.breakdown || {}
+                    ...scoreData
                 });
                 if (tsError) {
                     console.error('[ensure] Trust score insert failed:', tsError.message);
                 }
             } else {
                 // Update existing score
-                await supabase.from('trust_scores').update({
-                    total_score: body.trustScore.totalScore || 0,
-                    identity_score: body.trustScore.identityScore || 0,
-                    business_score: body.trustScore.businessScore || 0,
-                    financial_score: body.trustScore.businessScore || 0,
-                    social_score: body.trustScore.networkScore || 0,
-                    country_adjustment: body.trustScore.countryAdjustment || 0,
-                    status: body.trustScore.status || 'review_needed',
-                    score_breakdown: body.trustScore.breakdown || {}
-                }).eq('founder_id', founderId);
+                await supabase.from('trust_scores').update(scoreData).eq('founder_id', founderId);
             }
         }
         // Save all verification data from onboarding

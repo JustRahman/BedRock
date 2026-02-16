@@ -188,13 +188,6 @@ async function PATCH(request) {
                 status: 400
             });
         }
-        const updateData = {
-            manual_override: true,
-            override_reason: body.reason || null
-        };
-        if (body.totalScore !== undefined) {
-            updateData.total_score = body.totalScore;
-        }
         if (body.status) {
             const validStatuses = [
                 'elite',
@@ -210,19 +203,56 @@ async function PATCH(request) {
                     status: 400
                 });
             }
-            updateData.status = body.status;
         }
-        const { data: trustScore, error } = await supabase.from('trust_scores').update(updateData).eq('founder_id', body.founderId).select().single();
-        if (error) {
+        // Check if trust score row exists
+        const { data: existing } = await supabase.from('trust_scores').select('id').eq('founder_id', body.founderId).single();
+        if (existing) {
+            // Update existing row
+            const updateData = {
+                manual_override: true,
+                override_reason: body.reason || null
+            };
+            if (body.totalScore !== undefined) updateData.total_score = body.totalScore;
+            if (body.status) updateData.status = body.status;
+            const { data: trustScore, error } = await supabase.from('trust_scores').update(updateData).eq('founder_id', body.founderId).select().single();
+            if (error) {
+                return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+                    error: error.message
+                }, {
+                    status: 500
+                });
+            }
             return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-                error: error.message
-            }, {
-                status: 500
+                trustScore
+            });
+        } else {
+            // Insert new row
+            const insertData = {
+                founder_id: body.founderId,
+                total_score: body.totalScore ?? 0,
+                identity_score: 0,
+                business_score: 0,
+                financial_score: 0,
+                social_score: 0,
+                digital_lineage_score: 0,
+                network_score: 0,
+                country_adjustment: 0,
+                status: body.status || 'review_needed',
+                manual_override: true,
+                override_reason: body.reason || null
+            };
+            const { data: trustScore, error } = await supabase.from('trust_scores').insert(insertData).select().single();
+            if (error) {
+                return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+                    error: error.message
+                }, {
+                    status: 500
+                });
+            }
+            return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+                trustScore
             });
         }
-        return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-            trustScore
-        });
     } catch  {
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
             error: 'Internal server error'

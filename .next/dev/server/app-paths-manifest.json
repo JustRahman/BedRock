@@ -1,24 +1,6 @@
 {
-  "/(auth)/login/page": "app/(auth)/login/page.js",
-  "/api/bank-applications/route": "app/api/bank-applications/route.js",
-  "/api/companies/route": "app/api/companies/route.js",
-  "/api/compliance/route": "app/api/compliance/route.js",
-  "/api/documents/route": "app/api/documents/route.js",
-  "/api/founders/ensure/route": "app/api/founders/ensure/route.js",
-  "/api/founders/route": "app/api/founders/route.js",
-  "/api/payments/checkout/route": "app/api/payments/checkout/route.js",
-  "/api/payments/route": "app/api/payments/route.js",
-  "/api/trust-score/route": "app/api/trust-score/route.js",
-  "/api/verifications/route": "app/api/verifications/route.js",
-  "/dashboard/bank/page": "app/dashboard/bank/page.js",
-  "/dashboard/billing/page": "app/dashboard/billing/page.js",
-  "/dashboard/compliance/page": "app/dashboard/compliance/page.js",
-  "/dashboard/documents/page": "app/dashboard/documents/page.js",
-  "/dashboard/formation/page": "app/dashboard/formation/page.js",
-  "/dashboard/page": "app/dashboard/page.js",
-  "/dashboard/settings/page": "app/dashboard/settings/page.js",
-  "/onboarding/page": "app/onboarding/page.js",
-  "/onboarding/payment/page": "app/onboarding/payment/page.js",
-  "/onboarding/result/page": "app/onboarding/result/page.js",
-  "/page": "app/page.js"
+  "/_not-found/page": "app/_not-found/page.js",
+  "/api/trust-score/calculate/route": "app/api/trust-score/calculate/route.js",
+  "/api/v1/trust-score/route": "app/api/v1/trust-score/route.js",
+  "/onboarding/page": "app/onboarding/page.js"
 }

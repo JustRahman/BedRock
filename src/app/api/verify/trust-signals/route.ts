@@ -3,6 +3,7 @@ import { createServiceClient } from '@/lib/supabase/server'
 import { sendEmail } from '@/lib/email'
 import { universityVerificationEmail } from '@/lib/email-templates'
 import { isKnownAccelerator } from '@/lib/accelerators'
+import { checkRateLimit, getClientIp } from '@/lib/rate-limit'
 import crypto from 'crypto'
 
 // Stateless HMAC-based email verification (no DB table needed)
@@ -15,6 +16,15 @@ function createVerificationToken(email: string, code: string, expiresAt: string)
 
 export async function POST(request: Request) {
   try {
+    const ip = getClientIp(request)
+    const { allowed } = checkRateLimit(`verify-ts:${ip}`, 15, 60_000)
+    if (!allowed) {
+      return NextResponse.json(
+        { error: 'Too many requests. Please try again later.' },
+        { status: 429, headers: { 'Retry-After': '60' } }
+      )
+    }
+
     const body = await request.json()
     const { type } = body
 

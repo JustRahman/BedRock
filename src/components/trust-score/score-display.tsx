@@ -1,38 +1,57 @@
 'use client'
 
-import { TrustScoreResult } from '@/lib/trust-score'
-import { Check, X, Lightbulb } from 'lucide-react'
+import { TrustScoreV2Result, ProviderBreakdown } from '@/lib/trust-score-v2'
+import { Lightbulb } from 'lucide-react'
 
 interface ScoreDisplayProps {
-  result: TrustScoreResult
+  result: TrustScoreV2Result
 }
 
 function getDarkScoreColor(score: number): string {
   if (score >= 85) return 'text-emerald-400'
-  if (score >= 70) return 'text-blue-400'
-  if (score >= 50) return 'text-yellow-400'
-  if (score >= 30) return 'text-orange-400'
+  if (score >= 65) return 'text-blue-400'
+  if (score >= 45) return 'text-yellow-400'
+  if (score >= 25) return 'text-orange-400'
   return 'text-red-400'
 }
 
-function getDarkStatusStyle(status: TrustScoreResult['status']): { bg: string; text: string; border: string } {
-  switch (status) {
-    case 'elite':
-      return { bg: 'bg-emerald-500/10', text: 'text-emerald-400', border: 'border-emerald-500/20' }
-    case 'approved':
-      return { bg: 'bg-blue-500/10', text: 'text-blue-400', border: 'border-blue-500/20' }
-    case 'review_needed':
-      return { bg: 'bg-yellow-500/10', text: 'text-yellow-400', border: 'border-yellow-500/20' }
-    case 'conditional':
-      return { bg: 'bg-orange-500/10', text: 'text-orange-400', border: 'border-orange-500/20' }
-    case 'not_eligible':
-      return { bg: 'bg-red-500/10', text: 'text-red-400', border: 'border-red-500/20' }
+function getStatusFromRisk(risk: TrustScoreV2Result['risk_level']): { label: string; description: string; bg: string; text: string; border: string } {
+  switch (risk) {
+    case 'low':
+      return {
+        label: 'Approved',
+        description: 'Great news! You meet our approval criteria. Full access to all services.',
+        bg: 'bg-emerald-500/10', text: 'text-emerald-400', border: 'border-emerald-500/20',
+      }
+    case 'medium':
+      return {
+        label: 'Review Needed',
+        description: 'Your application requires manual review. We may schedule a brief video call.',
+        bg: 'bg-yellow-500/10', text: 'text-yellow-400', border: 'border-yellow-500/20',
+      }
+    case 'high':
+      return {
+        label: 'Almost There',
+        description: 'A few more verification steps will strengthen your application significantly.',
+        bg: 'bg-orange-500/10', text: 'text-orange-400', border: 'border-orange-500/20',
+      }
+    case 'critical':
+      return {
+        label: 'Getting Started',
+        description: 'Complete the steps below to strengthen your application — we\u2019re here to help.',
+        bg: 'bg-red-500/10', text: 'text-red-400', border: 'border-red-500/20',
+      }
     default:
-      return { bg: 'bg-zinc-500/10', text: 'text-zinc-400', border: 'border-zinc-500/20' }
+      return {
+        label: 'Unknown',
+        description: '',
+        bg: 'bg-zinc-500/10', text: 'text-zinc-400', border: 'border-zinc-500/20',
+      }
   }
 }
 
 function getBarColor(score: number, max: number): string {
+  if (max === 0) return 'bg-zinc-600'
   const pct = (score / max) * 100
   if (pct >= 75) return 'bg-emerald-500'
   if (pct >= 50) return 'bg-blue-500'
@@ -41,50 +60,37 @@ function getBarColor(score: number, max: number): string {
 }
 
 export function ScoreDisplay({ result }: ScoreDisplayProps) {
-  const statusStyle = getDarkStatusStyle(result.status)
+  const status = getStatusFromRisk(result.risk_level)
+  const b = result.breakdown
 
   return (
     <div className="space-y-6">
       {/* Main Score */}
       <div className="text-center">
-        <div className={`text-7xl font-bold tracking-tight ${getDarkScoreColor(result.totalScore)}`}>
-          {result.totalScore}
+        <div className={`text-7xl font-bold tracking-tight ${getDarkScoreColor(result.score)}`}>
+          {result.score}
         </div>
         <p className="mt-1 text-sm text-zinc-500">out of 100 points</p>
-        <div className={`mt-4 inline-flex items-center rounded-full border px-3 py-1 text-sm font-medium ${statusStyle.bg} ${statusStyle.text} ${statusStyle.border}`}>
-          {result.statusLabel}
+        <div className={`mt-4 inline-flex items-center rounded-full border px-3 py-1 text-sm font-medium ${status.bg} ${status.text} ${status.border}`}>
+          {status.label}
         </div>
-        <p className="mt-3 text-sm text-zinc-400">{result.statusDescription}</p>
+        <p className="mt-3 text-sm text-zinc-400">{status.description}</p>
       </div>
 
-      {/* Score Breakdown Grid */}
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-        <ScoreCategory
-          name="Digital Lineage"
-          score={result.digitalLineageScore}
-          max={result.breakdown.digitalLineage.max}
-        />
-        <ScoreCategory
-          name="Business"
-          score={result.businessScore}
-          max={result.breakdown.business.max}
-        />
-        <ScoreCategory
-          name="Identity"
-          score={result.identityScore}
-          max={result.breakdown.identity.max}
-        />
-        <ScoreCategory
-          name="Network"
-          score={result.networkScore}
-          max={result.breakdown.network.max}
-        />
+      {/* Provider Score Grid */}
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+        <ScoreCategory name="GitHub" score={b.github.score} max={b.github.max} />
+        <ScoreCategory name="Stripe" score={b.stripe.score} max={b.stripe.max} />
+        <ScoreCategory name="LinkedIn" score={b.linkedin.score} max={b.linkedin.max} />
+        <ScoreCategory name="Identity" score={b.identity.score} max={b.identity.max} />
+        <ScoreCategory name="Digital" score={b.digital_presence.score} max={b.digital_presence.max} />
+        <ScoreCategory name="Network" score={b.network.score} max={b.network.max} />
       </div>
 
       {/* Country Adjustment */}
-      {result.countryAdjustment !== 0 && (
+      {result.country_adjustment !== 0 && (
         <div className="rounded-lg border border-orange-500/20 bg-orange-500/5 px-4 py-3 text-center text-sm text-orange-300">
-          Country risk adjustment: {result.countryAdjustment} points
+          Country risk adjustment: {result.country_adjustment} points
         </div>
       )}
     </div>
@@ -92,7 +98,7 @@ export function ScoreDisplay({ result }: ScoreDisplayProps) {
 }
 
 function ScoreCategory({ name, score, max }: { name: string; score: number; max: number }) {
-  const percentage = Math.round((score / max) * 100)
+  const percentage = max > 0 ? Math.round((score / max) * 100) : 0
 
   return (
     <div className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-3 text-center">
@@ -110,113 +116,94 @@ function ScoreCategory({ name, score, max }: { name: string; score: number; max:
 }
 
 interface ScoreBreakdownDetailProps {
-  result: TrustScoreResult
+  result: TrustScoreV2Result
+}
+
+const providerLabels: Record<string, string> = {
+  github: 'GitHub',
+  stripe: 'Stripe / Financial',
+  linkedin: 'LinkedIn',
+  identity: 'Identity Verification',
+  digital_presence: 'Digital Presence',
+  network: 'Trust Network',
+}
+
+const detailLabels: Record<string, string> = {
+  connected: 'OAuth Connected',
+  username: 'Username',
+  account_age_years: 'Account Age (years)',
+  repos: 'Public Repos',
+  stars: 'Total Stars',
+  followers: 'Followers',
+  languages: 'Languages',
+  username_only: 'Username Only (capped)',
+  monthly_revenue: 'Monthly Revenue',
+  account_age_months: 'Account Age (months)',
+  chargeback_rate: 'Chargeback Rate',
+  total_charges: 'Total Charges',
+  bank_statements: 'Bank Statements',
+  has_picture: 'Has Profile Picture',
+  email_verified: 'Email Verified',
+  url_only: 'URL Only (partial)',
+  passport: 'Passport Uploaded',
+  name_match: 'Name Matches Passport',
+  dob_match: 'DOB Matches Passport',
+  gender_match: 'Gender Matches',
+  nationality_match: 'Nationality Matches',
+  local_id: 'Local Government ID',
+  face_verified: 'Face Verification',
+  face_skipped: 'Face Scan Skipped',
+  address_verified: 'Address Verified',
+  website: 'Website Verified',
+  twitter: 'Twitter/X Verified',
+  instagram: 'Instagram Verified',
+  app_store: 'App Store App',
+  referral: 'Founder Referral',
+  university: 'University Email',
+  accelerator: 'Accelerator',
+  employer: 'Employer Verification',
 }
 
 export function ScoreBreakdownDetail({ result }: ScoreBreakdownDetailProps) {
+  const providers = Object.entries(result.breakdown) as [string, ProviderBreakdown][]
+
   return (
     <div className="space-y-4">
-      {/* Digital Lineage — with nested sub-sections */}
-      <BreakdownCard
-        name="Digital Lineage"
-        total={result.breakdown.digitalLineage.total}
-        max={result.breakdown.digitalLineage.max}
-      >
-        <SubSection name="Code History" data={result.breakdown.digitalLineage.codeHistory} />
-        <SubSection name="Professional Graph" data={result.breakdown.digitalLineage.professionalGraph} />
-        <SubSection name="Digital Presence" data={result.breakdown.digitalLineage.digitalPresence} />
-      </BreakdownCard>
-
-      <CategoryCard name="Business Signals" data={result.breakdown.business} />
-      <CategoryCard name="Identity Verification" data={result.breakdown.identity} />
-      <CategoryCard name="Trust Network" data={result.breakdown.network} />
+      {providers.map(([key, provider]) => (
+        <ProviderCard key={key} name={providerLabels[key] || key} provider={provider} />
+      ))}
     </div>
   )
 }
 
-function BreakdownCard({ name, total, max, children }: { name: string; total: number; max: number; children: React.ReactNode }) {
+function ProviderCard({ name, provider }: { name: string; provider: ProviderBreakdown }) {
+  const percentage = provider.max > 0 ? Math.round((provider.score / provider.max) * 100) : 0
+
   return (
     <div className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-4">
       <div className="mb-3 flex items-center justify-between">
         <span className="text-sm font-medium text-zinc-200">{name}</span>
-        <span className="text-sm text-zinc-500">{total} / {max}</span>
+        <span className="text-sm text-zinc-500">{provider.score} / {provider.max}</span>
       </div>
-      <div className="space-y-4">
-        {children}
+      <div className="mb-3 h-1.5 w-full overflow-hidden rounded-full bg-white/[0.06]">
+        <div
+          className={`h-full rounded-full transition-all ${getBarColor(provider.score, provider.max)}`}
+          style={{ width: `${percentage}%` }}
+        />
       </div>
+      {Object.keys(provider.details).length > 0 && (
+        <ul className="space-y-1">
+          {Object.entries(provider.details).map(([key, value]) => (
+            <li key={key} className="flex items-center justify-between text-sm">
+              <span className="text-zinc-500">{detailLabels[key] || key}</span>
+              <span className={`font-medium ${value === true ? 'text-emerald-400' : value === false ? 'text-zinc-600' : 'text-zinc-300'}`}>
+                {typeof value === 'boolean' ? (value ? 'Yes' : 'No') : String(value)}
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
-  )
-}
-
-function SubSection({
-  name,
-  data,
-}: {
-  name: string
-  data: { total: number; max: number; items: { name: string; points: number; earned: boolean }[] }
-}) {
-  return (
-    <div>
-      <div className="mb-2 flex items-center justify-between text-xs">
-        <span className="font-medium text-zinc-400">{name}</span>
-        <span className="text-zinc-600">{data.total} / {data.max}</span>
-      </div>
-      <ul className="space-y-1">
-        {data.items.map((item, index) => (
-          <ScoreItem key={index} item={item} />
-        ))}
-      </ul>
-    </div>
-  )
-}
-
-function CategoryCard({
-  name,
-  data,
-}: {
-  name: string
-  data: { total: number; max: number; items: { name: string; points: number; earned: boolean }[] }
-}) {
-  return (
-    <div className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-4">
-      <div className="mb-3 flex items-center justify-between">
-        <span className="text-sm font-medium text-zinc-200">{name}</span>
-        <span className="text-sm text-zinc-500">{data.total} / {data.max}</span>
-      </div>
-      <ul className="space-y-2">
-        {data.items.map((item, index) => (
-          <ScoreItem key={index} item={item} />
-        ))}
-      </ul>
-    </div>
-  )
-}
-
-function ScoreItem({ item }: { item: { name: string; points: number; earned: boolean } }) {
-  return (
-    <li className="flex items-center justify-between text-sm">
-      <span className="flex items-center gap-2">
-        {item.earned ? (
-          <Check className="h-3.5 w-3.5 text-emerald-400" />
-        ) : (
-          <X className="h-3.5 w-3.5 text-zinc-600" />
-        )}
-        <span className={item.earned ? 'text-zinc-300' : 'text-zinc-600'}>
-          {item.name}
-        </span>
-      </span>
-      <span
-        className={
-          item.earned
-            ? item.points > 0
-              ? 'font-medium text-emerald-400'
-              : 'font-medium text-red-400'
-            : 'text-zinc-600'
-        }
-      >
-        {item.points > 0 ? '+' : ''}{item.points}
-      </span>
-    </li>
   )
 }
 

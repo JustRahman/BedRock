@@ -5,7 +5,10 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Shield, ArrowRight, CreditCard, Loader2, CheckCircle } from 'lucide-react'
-import { TrustScoreResult, calculateTrustScore } from '@/lib/trust-score'
+import { TrustScoreV2Result, TrustScoreV2Input, calculateTrustScoreV2 } from '@/lib/trust-score-v2'
+import type { GitHubProfileData } from '@/lib/oauth/github'
+import type { StripeProfileData } from '@/lib/oauth/stripe'
+import type { LinkedInProfileData } from '@/lib/oauth/linkedin'
 import {
   ScoreDisplay,
   ScoreBreakdownDetail,
@@ -15,7 +18,7 @@ import { createClient } from '@/lib/supabase/client'
 
 export default function OnboardingResultPage() {
   const router = useRouter()
-  const [result, setResult] = useState<TrustScoreResult | null>(null)
+  const [result, setResult] = useState<TrustScoreV2Result | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [activeTab, setActiveTab] = useState<'breakdown' | 'next-steps'>('breakdown')
   const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -29,28 +32,35 @@ export default function OnboardingResultPage() {
       const { data: { user } } = await supabase.auth.getUser()
       if (user) setIsLoggedIn(true)
 
-      // Check both sessionStorage and localStorage
+      // Check for a pre-computed v2 result in sessionStorage
       const storedResult = sessionStorage.getItem('trustScoreResult') || localStorage.getItem('trustScoreResult')
       if (storedResult) {
         try {
           const parsed = JSON.parse(storedResult)
-          setResult(parsed)
-          // Auto-save for logged-in users via server API (bypasses RLS)
-          if (user) await saveTrustScoreViaAPI(parsed)
-          setIsLoading(false)
-          return
+          // If it looks like a v2 result (has `score` and `breakdown.github`), use directly
+          if (parsed.breakdown?.github) {
+            setResult(parsed as TrustScoreV2Result)
+            if (user) await saveTrustScoreViaAPI(parsed as TrustScoreV2Result)
+            setIsLoading(false)
+            return
+          }
         } catch {
           // Continue to calculate from onboarding data
         }
       }
 
+      // Build v2 input from onboarding + OAuth data
       const storedData = sessionStorage.getItem('onboardingData') || localStorage.getItem('onboardingData')
       if (storedData) {
         try {
           const data = JSON.parse(storedData)
-          const calculated = calculateTrustScore(data)
+          const v2Input = buildV2Input(data)
+          const calculated = calculateTrustScoreV2(v2Input)
           setResult(calculated)
-          // Auto-save for logged-in users via server API (bypasses RLS)
+          // Store the v2 result for potential re-use
+          try {
+            sessionStorage.setItem('trustScoreResult', JSON.stringify(calculated))
+          } catch { /* ignore */ }
           if (user) await saveTrustScoreViaAPI(calculated)
           setIsLoading(false)
           return
@@ -62,10 +72,98 @@ export default function OnboardingResultPage() {
       router.push('/onboarding')
     }
 
-    async function saveTrustScoreViaAPI(score: TrustScoreResult) {
+    function buildV2Input(data: Record<string, unknown>): TrustScoreV2Input {
+      const input: TrustScoreV2Input = {}
+
+      // GitHub OAuth data
+      const ghRaw = sessionStorage.getItem('oauth_github_data') || localStorage.getItem('oauth_github_data')
+      if (ghRaw) {
+        try {
+          input.github = JSON.parse(ghRaw) as GitHubProfileData
+        } catch { /* ignore */ }
+      }
+      const codeHistory = data.codeHistory as Record<string, unknown> | undefined
+      if (!input.github && codeHistory?.hasGithub) {
+        input.githubUsernameOnly = !codeHistory.githubConnected
+      }
+
+      // Stripe OAuth data
+      const stRaw = sessionStorage.getItem('oauth_stripe_data') || localStorage.getItem('oauth_stripe_data')
+      if (stRaw) {
+        try {
+          input.stripe = JSON.parse(stRaw) as StripeProfileData
+        } catch { /* ignore */ }
+      }
+
+      // LinkedIn OAuth data
+      const liRaw = sessionStorage.getItem('oauth_linkedin_data') || localStorage.getItem('oauth_linkedin_data')
+      if (liRaw) {
+        try {
+          input.linkedin = JSON.parse(liRaw) as LinkedInProfileData
+        } catch { /* ignore */ }
+      }
+      const professional = data.professional as Record<string, unknown> | undefined
+      if (!input.linkedin && professional?.hasLinkedin) {
+        input.linkedinUrlOnly = !professional.linkedinConnected
+      }
+
+      // Identity verification
+      const id = data.identity as Record<string, unknown> | undefined
+      if (id) {
+        input.identity = {
+          hasPassport: !!id.hasPassport,
+          passportNameMatch: id.passportNameMatch as boolean | undefined,
+          passportDobMatch: id.passportDobMatch as boolean | undefined,
+          passportGenderMatch: id.passportGenderMatch as boolean | undefined,
+          passportNationalityMatch: id.passportNationalityMatch as boolean | undefined,
+          hasLocalId: !!id.hasLocalId,
+          hasLivenessCheck: !!id.hasLivenessCheck,
+          faceSkipped: !!id.faceSkipped,
+          hasAddressProof: !!id.hasAddressProof,
+        }
+      }
+
+      // Financial extras
+      const financial = data.financial as Record<string, unknown> | undefined
+      if (financial?.hasBankStatements) {
+        input.hasBankStatements = true
+      }
+
+      // Digital presence
+      const dp = data.digitalPresence as Record<string, unknown> | undefined
+      if (dp) {
+        input.digitalPresence = {
+          websiteVerified: !!dp.websiteVerified,
+          twitterVerified: !!dp.twitterVerified,
+          instagramVerified: !!dp.instagramVerified,
+          appStoreVerified: !!dp.appStoreVerified,
+        }
+      }
+
+      // Network / trust signals
+      const ts = data.trustSignals as Record<string, unknown> | undefined
+      if (ts) {
+        input.network = {
+          referralVerified: !!ts.referralVerified,
+          universityEmailVerified: !!ts.universityEmailVerified,
+          acceleratorVerified: !!ts.acceleratorVerified,
+          hasEmployer: !!ts.hasEmployerVerification,
+        }
+      }
+
+      // Country info
+      const basicInfo = data.basicInfo as Record<string, unknown> | undefined
+      if (basicInfo) {
+        input.countryOfOrigin = (basicInfo.countryOfOrigin as string) || undefined
+        input.countryOfResidence = (basicInfo.countryOfResidence as string) || undefined
+      }
+
+      return input
+    }
+
+    async function saveTrustScoreViaAPI(score: TrustScoreV2Result) {
       setSavingScore(true)
       try {
-        // Load the full onboarding data to save all verifications
         const onboardingRaw = sessionStorage.getItem('onboardingData') || localStorage.getItem('onboardingData')
         const onboardingData = onboardingRaw ? JSON.parse(onboardingRaw) : null
 
@@ -85,6 +183,7 @@ export default function OnboardingResultPage() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             trustScore: score,
+            trustScoreVersion: 2,
             onboardingData,
             oauthData: Object.keys(oauthData).length > 0 ? oauthData : undefined,
           }),
@@ -92,12 +191,14 @@ export default function OnboardingResultPage() {
 
         if (res.ok) {
           setScoreSaved(true)
-          // Clean up storage only after confirmed save
           try {
             sessionStorage.removeItem('onboardingData')
             sessionStorage.removeItem('trustScoreResult')
             localStorage.removeItem('onboardingData')
             localStorage.removeItem('trustScoreResult')
+            localStorage.removeItem('oauth_github_data')
+            localStorage.removeItem('oauth_linkedin_data')
+            localStorage.removeItem('oauth_stripe_data')
           } catch { /* ignore */ }
         }
       } catch {
@@ -226,7 +327,7 @@ export default function OnboardingResultPage() {
               </Button>
             </Link>
           )}
-          {result.totalScore >= 50 && (
+          {result.score >= 60 && (
             <Link href="/onboarding/payment" className="flex-1">
               <Button
                 className="w-full gap-2 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white hover:from-emerald-400 hover:to-emerald-500 rounded-xl py-6 text-base font-medium transition-all duration-300 hover:shadow-[0_0_30px_rgba(16,185,129,0.3)]"
@@ -261,7 +362,7 @@ export default function OnboardingResultPage() {
   )
 }
 
-function NextSteps({ result }: { result: TrustScoreResult }) {
+function NextSteps({ result }: { result: TrustScoreV2Result }) {
   const steps = getPersonalizedSteps(result)
 
   return (
@@ -301,9 +402,9 @@ interface StepItem {
   points?: number
 }
 
-function getPersonalizedSteps(result: TrustScoreResult): StepItem[] {
+function getPersonalizedSteps(result: TrustScoreV2Result): StepItem[] {
   const steps: StepItem[] = []
-  const bd = result.breakdown
+  const b = result.breakdown
 
   // Always start with account creation
   steps.push({
@@ -312,72 +413,83 @@ function getPersonalizedSteps(result: TrustScoreResult): StepItem[] {
     type: 'action',
   })
 
-  // Identity — check what's missing
-  const identityItems = bd.identity.items
-  const hasPassport = identityItems.find(i => i.name === 'Passport Uploaded')?.earned
-  const nameMatch = identityItems.find(i => i.name === 'Name Matches Passport')?.earned
-  const dobMatch = identityItems.find(i => i.name === 'DOB Matches Passport')?.earned
-  const hasLocalId = identityItems.find(i => i.name === 'Local Government ID')?.earned
-  const hasLiveness = identityItems.find(i => i.name === 'Face Verification')?.earned
-  const faceSkipped = identityItems.find(i => i.name === 'Face Verification Skipped')?.earned
-  const hasAddress = identityItems.find(i => i.name === 'Address Verified')?.earned
-
-  if (hasPassport && hasLiveness && nameMatch && dobMatch) {
-    steps.push({ title: 'Identity Fully Verified', description: 'Passport, face scan, and all details confirmed.', type: 'done' })
-  } else if (hasPassport) {
-    steps.push({ title: 'Passport Uploaded', description: 'Document received.', type: 'done' })
-    if (!nameMatch) {
-      steps.push({ title: 'Fix Name Mismatch', description: 'Your profile name doesn\u2019t match your passport. Update your info or re-upload.', type: 'action', points: 2 })
-    }
-    if (!dobMatch) {
-      steps.push({ title: 'Fix Date of Birth', description: 'Your date of birth doesn\u2019t match your passport.', type: 'action', points: 2 })
+  // GitHub
+  if (b.github.score > 0) {
+    if (b.github.details.username_only) {
+      steps.push({ title: 'GitHub Username Added', description: 'Connect via OAuth for the full score.', type: 'done' })
+      steps.push({ title: 'Connect GitHub via OAuth', description: 'Authenticate with GitHub to unlock full scoring.', type: 'action', points: 10 })
+    } else {
+      steps.push({ title: 'GitHub Connected', description: 'Your code history is verified.', type: 'done' })
     }
   } else {
-    steps.push({ title: 'Upload Your Passport', description: 'Verify your identity with a valid passport.', type: 'action', points: 8 })
-  }
-  if (faceSkipped) {
-    steps.push({ title: 'Complete Face Verification', description: 'You skipped the face scan \u2014 completing it removes the -2 penalty and earns +4 points.', type: 'action', points: 6 })
-  } else if (!hasLiveness && hasPassport) {
-    steps.push({ title: 'Complete Face Scan', description: 'Take a selfie to verify it matches your passport photo.', type: 'action', points: 4 })
-  }
-  if (!hasLocalId) {
-    steps.push({ title: 'Add Local Government ID', description: 'Upload a national ID or driver\'s license for additional verification.', type: 'action', points: 5 })
-  }
-  if (!hasAddress) {
-    steps.push({ title: 'Add Proof of Address', description: 'Upload a utility bill or bank statement showing your address.', type: 'action', points: 3 })
+    steps.push({ title: 'Connect GitHub', description: 'Link your GitHub account to prove your developer history.', type: 'action', points: 25 })
   }
 
-  // Digital Lineage — Code History
-  const codeItems = bd.digitalLineage.codeHistory.items
-  const hasGithub = codeItems.find(i => i.name.startsWith('GitHub Connected'))?.earned
-  if (hasGithub) {
-    steps.push({ title: 'GitHub Connected', description: 'Your code history is verified.', type: 'done' })
+  // Stripe
+  if (b.stripe.score > 0) {
+    steps.push({ title: 'Financial Signals Added', description: `Earning ${b.stripe.score}/${b.stripe.max} points.`, type: 'done' })
+    if (b.stripe.score < b.stripe.max) {
+      steps.push({ title: 'Strengthen Financial Signals', description: 'Add more revenue documentation.', type: 'action' })
+    }
   } else {
-    steps.push({ title: 'Connect GitHub', description: 'Link your GitHub account to prove your developer history.', type: 'action', points: 8 })
+    steps.push({ title: 'Connect Stripe or Add Revenue', description: 'Show business traction to earn up to +25 points.', type: 'action', points: 25 })
   }
 
-  // Digital Lineage — Professional
-  const proItems = bd.digitalLineage.professionalGraph.items
-  const hasLinkedin = proItems.find(i => i.name.startsWith('LinkedIn Connected'))?.earned
-  if (hasLinkedin) {
-    steps.push({ title: 'LinkedIn Connected', description: 'Your professional network is verified.', type: 'done' })
+  // LinkedIn
+  if (b.linkedin.score > 0) {
+    if (b.linkedin.details.url_only) {
+      steps.push({ title: 'LinkedIn URL Added', description: 'Connect via OAuth for more points.', type: 'done' })
+      steps.push({ title: 'Connect LinkedIn via OAuth', description: 'Authenticate with LinkedIn for +7 more points.', type: 'action', points: 7 })
+    } else {
+      steps.push({ title: 'LinkedIn Connected', description: 'Your professional network is verified.', type: 'done' })
+    }
   } else {
-    steps.push({ title: 'Connect LinkedIn', description: 'Link your LinkedIn profile to verify your professional background.', type: 'action', points: 6 })
+    steps.push({ title: 'Connect LinkedIn', description: 'Link your LinkedIn profile to verify your professional background.', type: 'action', points: 10 })
   }
 
-  // Business signals
-  if (bd.business.total === 0) {
-    steps.push({ title: 'Add Revenue Signals', description: 'Connect Stripe or add bank statements to prove business traction.', type: 'action', points: 15 })
-  } else if (bd.business.total < bd.business.max) {
-    steps.push({ title: 'Strengthen Business Signals', description: 'Add more financial documentation to boost your business score.', type: 'action' })
+  // Identity
+  if (b.identity.score >= 18) {
+    steps.push({ title: 'Identity Fully Verified', description: 'Passport, face scan, and documents confirmed.', type: 'done' })
+  } else if (b.identity.score > 0) {
+    steps.push({ title: 'Identity Partially Verified', description: `Earning ${b.identity.score}/${b.identity.max} points.`, type: 'done' })
+    if (!b.identity.details.passport) {
+      steps.push({ title: 'Upload Passport', description: 'Verify your identity with a valid passport.', type: 'action', points: 8 })
+    }
+    if (b.identity.details.face_skipped) {
+      steps.push({ title: 'Complete Face Verification', description: 'Removing the skip penalty and earning face scan points.', type: 'action', points: 6 })
+    } else if (!b.identity.details.face_verified) {
+      steps.push({ title: 'Complete Face Scan', description: 'Take a selfie to verify it matches your passport.', type: 'action', points: 4 })
+    }
+    if (!b.identity.details.local_id) {
+      steps.push({ title: 'Add Local Government ID', description: 'Upload a national ID or driver\'s license.', type: 'action', points: 5 })
+    }
+    if (!b.identity.details.address_verified) {
+      steps.push({ title: 'Add Proof of Address', description: 'Upload a utility bill or bank statement.', type: 'action', points: 3 })
+    }
+  } else {
+    steps.push({ title: 'Verify Your Identity', description: 'Upload passport, face scan, and local ID to earn up to +20 points.', type: 'action', points: 20 })
   }
 
-  // Final step based on status
-  if (result.status === 'elite' || result.status === 'approved') {
+  // Digital Presence
+  if (b.digital_presence.score > 0 && b.digital_presence.score < b.digital_presence.max) {
+    steps.push({ title: 'Add More Digital Presence', description: 'Verify website, social accounts, or app store listing.', type: 'action', points: b.digital_presence.max - b.digital_presence.score })
+  } else if (b.digital_presence.score === 0) {
+    steps.push({ title: 'Verify Digital Presence', description: 'Add your website, social accounts, or app store listing.', type: 'action', points: 10 })
+  }
+
+  // Network
+  if (b.network.score === 0) {
+    steps.push({ title: 'Add Trust Network Signals', description: 'Get a referral, verify your university email, or add accelerator affiliation.', type: 'action', points: 10 })
+  } else if (b.network.score < b.network.max) {
+    steps.push({ title: 'Strengthen Trust Network', description: 'Add more referrals or credentials.', type: 'action', points: b.network.max - b.network.score })
+  }
+
+  // Final step based on recommendation
+  if (result.recommendation === 'approve') {
     steps.push({ title: 'Choose Your Plan & Get Approved', description: 'Select a service package and we\'ll submit your bank application.', type: 'action' })
-  } else if (result.status === 'review_needed') {
+  } else if (result.recommendation === 'review') {
     steps.push({ title: 'Application Review', description: 'Our team may schedule a brief video call to verify your information.', type: 'info' })
-  } else if (result.status === 'conditional') {
+  } else if (result.recommendation === 'enhanced_review') {
     steps.push({ title: 'Manual Review Required', description: 'Complete the steps above to improve your score, then our team will review.', type: 'info' })
   } else {
     steps.push({ title: 'Complete Steps Above & Resubmit', description: 'Each step above strengthens your application. We\u2019re here to help you get approved.', type: 'info' })

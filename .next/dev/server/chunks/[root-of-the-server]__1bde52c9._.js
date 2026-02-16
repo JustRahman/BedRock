@@ -209,7 +209,39 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$cheerio$2f$d
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$cheerio$2f$dist$2f$esm$2f$load$2d$parse$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/cheerio/dist/esm/load-parse.js [app-route] (ecmascript)");
 ;
 ;
-async function verifyDomain(url) {
+// === Name matching helpers ===
+function editDistance(a, b) {
+    const m = a.length, n = b.length;
+    const dp = Array.from({
+        length: m + 1
+    }, ()=>Array(n + 1).fill(0));
+    for(let i = 0; i <= m; i++)dp[i][0] = i;
+    for(let j = 0; j <= n; j++)dp[0][j] = j;
+    for(let i = 1; i <= m; i++){
+        for(let j = 1; j <= n; j++){
+            dp[i][j] = a[i - 1] === b[j - 1] ? dp[i - 1][j - 1] : 1 + Math.min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]);
+        }
+    }
+    return dp[m][n];
+}
+function fuzzyWordMatch(a, b) {
+    if (a === b) return true;
+    const maxDist = Math.max(1, Math.floor(Math.max(a.length, b.length) * 0.3));
+    return editDistance(a, b) <= maxDist;
+}
+function fuzzyNameFoundInText(name, text) {
+    const nameParts = name.toLowerCase().split(/\s+/).filter((p)=>p.length >= 2);
+    const textLower = text.toLowerCase();
+    // Exact full name
+    if (textLower.includes(name.toLowerCase())) return true;
+    // All parts found exactly
+    if (nameParts.length >= 2 && nameParts.every((p)=>textLower.includes(p))) return true;
+    // Fuzzy: extract words from text and check each name part has a close match
+    const textWords = textLower.replace(/[^a-z\s]/g, '').split(/\s+/).filter((w)=>w.length >= 2);
+    if (nameParts.every((np)=>textWords.some((tw)=>fuzzyWordMatch(np, tw)))) return true;
+    return false;
+}
+async function verifyDomain(url, founderName) {
     let hostname;
     try {
         const parsed = new URL(url.startsWith('http') ? url : `https://${url}`);
@@ -284,6 +316,16 @@ async function verifyDomain(url) {
             result.title = $('title').first().text().trim() || undefined;
             result.description = $('meta[name="description"]').attr('content')?.trim() || $('meta[property="og:description"]').attr('content')?.trim() || undefined;
             result.ogImage = $('meta[property="og:image"]').attr('content')?.trim() || undefined;
+            // Check if founder's name appears on the page (body, title, meta tags)
+            if (founderName && founderName.trim().length >= 2) {
+                const searchText = [
+                    $('body').text(),
+                    result.title || '',
+                    result.description || '',
+                    $('meta[property="og:title"]').attr('content') || ''
+                ].join(' ');
+                result.nameFound = fuzzyNameFoundInText(founderName.trim(), searchText);
+            }
         }
     } catch  {
     // Site unreachable — isLive stays false
@@ -378,7 +420,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$digital$2d$pre
 ;
 async function POST(request) {
     try {
-        const { type, value } = await request.json();
+        const { type, value, founderName } = await request.json();
         if (!type || !value || typeof value !== 'string') {
             return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
                 success: false,
@@ -390,9 +432,9 @@ async function POST(request) {
         switch(type){
             case 'domain':
                 {
-                    const data = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$digital$2d$presence$2d$verification$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["verifyDomain"])(value);
+                    const data = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$digital$2d$presence$2d$verification$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["verifyDomain"])(value, founderName);
                     return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-                        success: !data.error,
+                        success: data.isLive && !data.error,
                         data
                     });
                 }

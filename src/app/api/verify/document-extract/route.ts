@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import Anthropic from '@anthropic-ai/sdk'
+import { checkRateLimit, getClientIp } from '@/lib/rate-limit'
 
 function getAnthropicClient() {
   return new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! })
@@ -59,6 +60,15 @@ Return null for any field you cannot read clearly. Do not guess.`,
 
 export async function POST(request: Request) {
   try {
+    const ip = getClientIp(request)
+    const { allowed } = checkRateLimit(`verify-doc:${ip}`, 5, 60_000)
+    if (!allowed) {
+      return NextResponse.json(
+        { error: 'Too many requests. Please try again later.' },
+        { status: 429, headers: { 'Retry-After': '60' } }
+      )
+    }
+
     const formData = await request.formData()
     const file = formData.get('file') as File | null
     const documentType = formData.get('documentType') as string | null
@@ -66,6 +76,15 @@ export async function POST(request: Request) {
     if (!file || !documentType) {
       return NextResponse.json(
         { error: 'File and documentType are required' },
+        { status: 400 },
+      )
+    }
+
+    // Validate file size (max 10MB)
+    const MAX_FILE_SIZE = 10 * 1024 * 1024
+    if (file.size > MAX_FILE_SIZE) {
+      return NextResponse.json(
+        { error: 'File too large. Maximum size is 10MB.' },
         { status: 400 },
       )
     }

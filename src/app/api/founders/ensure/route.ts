@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createClient, createServiceClient } from '@/lib/supabase/server'
+import { getStatusFromScore } from '@/lib/trust-score-v2'
 
 export async function POST(request: Request) {
   try {
@@ -75,19 +76,35 @@ export async function POST(request: Request) {
         .eq('founder_id', founderId)
         .single()
 
+      // Build DB columns from v2 result format
+      const ts = body.trustScore
+      const b = ts.breakdown || {}
+      const githubScore = b.github?.score || 0
+      const stripeScore = b.stripe?.score || 0
+      const linkedinScore = b.linkedin?.score || 0
+      const identityScore = b.identity?.score || 0
+      const dpScore = b.digital_presence?.score || 0
+      const networkScore = b.network?.score || 0
+
+      const { status } = getStatusFromScore(ts.score || 0)
+
+      const scoreData: Record<string, unknown> = {
+        total_score: ts.score || 0,
+        digital_lineage_score: githubScore + dpScore,
+        business_score: stripeScore,
+        financial_score: stripeScore,
+        social_score: linkedinScore,
+        identity_score: identityScore,
+        network_score: networkScore,
+        country_adjustment: ts.country_adjustment || 0,
+        status,
+        score_breakdown: b,
+      }
+
       if (!existingScore) {
         const { error: tsError } = await (supabase.from('trust_scores') as ReturnType<typeof supabase.from>).insert({
           founder_id: founderId,
-          total_score: body.trustScore.totalScore || 0,
-          identity_score: body.trustScore.identityScore || 0,
-          business_score: body.trustScore.businessScore || 0,
-          financial_score: body.trustScore.businessScore || 0,
-          social_score: body.trustScore.networkScore || 0,
-          digital_lineage_score: body.trustScore.digitalLineageScore || 0,
-          network_score: body.trustScore.networkScore || 0,
-          country_adjustment: body.trustScore.countryAdjustment || 0,
-          status: body.trustScore.status || 'review_needed',
-          score_breakdown: body.trustScore.breakdown || {},
+          ...scoreData,
         })
 
         if (tsError) {
@@ -96,16 +113,7 @@ export async function POST(request: Request) {
       } else {
         // Update existing score
         await (supabase.from('trust_scores') as ReturnType<typeof supabase.from>)
-          .update({
-            total_score: body.trustScore.totalScore || 0,
-            identity_score: body.trustScore.identityScore || 0,
-            business_score: body.trustScore.businessScore || 0,
-            financial_score: body.trustScore.businessScore || 0,
-            social_score: body.trustScore.networkScore || 0,
-            country_adjustment: body.trustScore.countryAdjustment || 0,
-            status: body.trustScore.status || 'review_needed',
-            score_breakdown: body.trustScore.breakdown || {},
-          })
+          .update(scoreData)
           .eq('founder_id', founderId)
       }
     }
@@ -150,22 +158,22 @@ export async function POST(request: Request) {
         }
       }
 
-      // GitHub OAuth
+      // GitHub OAuth — type must match PUT handler expectation ('github')
       if (od.codeHistory?.githubConnected) {
         const ghData = body.oauthData?.github || od.codeHistory
-        verifications.push({ type: 'github_oauth', data: ghData })
+        verifications.push({ type: 'github', data: ghData })
       }
 
-      // LinkedIn OAuth
+      // LinkedIn OAuth — type must match PUT handler expectation ('linkedin')
       if (od.professional?.linkedinConnected) {
         const liData = body.oauthData?.linkedin || od.professional
-        verifications.push({ type: 'linkedin_oauth', data: liData })
+        verifications.push({ type: 'linkedin', data: liData })
       }
 
-      // Stripe OAuth
+      // Stripe OAuth — type must match PUT handler expectation ('stripe')
       if (od.financial?.hasStripeConnected) {
         const stripeData = body.oauthData?.stripe || od.financial
-        verifications.push({ type: 'stripe_oauth', data: stripeData })
+        verifications.push({ type: 'stripe', data: stripeData })
       }
 
       // Financial details
@@ -233,9 +241,9 @@ export async function POST(request: Request) {
       // Upsert all verifications
       for (const v of verifications) {
         const status = (
-          v.type === 'github_oauth' && od.codeHistory?.githubConnected ? 'verified' :
-          v.type === 'linkedin_oauth' && od.professional?.linkedinConnected ? 'verified' :
-          v.type === 'stripe_oauth' && od.financial?.hasStripeConnected ? 'verified' :
+          v.type === 'github' && od.codeHistory?.githubConnected ? 'verified' :
+          v.type === 'linkedin' && od.professional?.linkedinConnected ? 'verified' :
+          v.type === 'stripe' && od.financial?.hasStripeConnected ? 'verified' :
           v.type === 'face_scan' ? 'verified' :
           v.type === 'referral' && od.trustSignals?.referralVerified ? 'verified' :
           v.type === 'university_email' && od.trustSignals?.universityEmailVerified ? 'verified' :

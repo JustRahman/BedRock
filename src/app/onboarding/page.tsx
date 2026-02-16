@@ -87,6 +87,7 @@ export default function OnboardingPage() {
           professional: parsed.professional ?? prev.professional,
           financial: parsed.financial ?? prev.financial,
           digitalPresence: parsed.digitalPresence ?? prev.digitalPresence,
+          trustSignals: parsed.trustSignals ?? prev.trustSignals,
         }))
       }
     } catch {
@@ -159,11 +160,14 @@ export default function OnboardingPage() {
     setIsSubmitting(true)
     const finalData = { ...data, trustSignals }
 
-    // Merge OAuth data from sessionStorage into submission
+    // Read OAuth profile objects from sessionStorage
+    let githubData: string | null = null
+    let linkedinData: string | null = null
+    let stripeData: string | null = null
     try {
-      const githubData = sessionStorage.getItem('oauth_github_data')
-      const linkedinData = sessionStorage.getItem('oauth_linkedin_data')
-      const stripeData = sessionStorage.getItem('oauth_stripe_data')
+      githubData = sessionStorage.getItem('oauth_github_data')
+      linkedinData = sessionStorage.getItem('oauth_linkedin_data')
+      stripeData = sessionStorage.getItem('oauth_stripe_data')
 
       if (githubData) {
         finalData.codeHistory = {
@@ -193,17 +197,35 @@ export default function OnboardingPage() {
       sessionStorage.setItem('onboardingData', JSON.stringify(finalData))
       localStorage.setItem('onboardingData', JSON.stringify(finalData))
 
+      // Copy OAuth profile data to localStorage so result page can read it
+      try {
+        if (githubData) localStorage.setItem('oauth_github_data', githubData)
+        if (linkedinData) localStorage.setItem('oauth_linkedin_data', linkedinData)
+        if (stripeData) localStorage.setItem('oauth_stripe_data', stripeData)
+      } catch { /* ignore */ }
+
+      // Include OAuth profile objects in the POST so the server can score them
+      const oauthData: Record<string, unknown> = {}
+      try {
+        if (githubData) oauthData.github = JSON.parse(githubData)
+        if (linkedinData) oauthData.linkedin = JSON.parse(linkedinData)
+        if (stripeData) oauthData.stripe = JSON.parse(stripeData)
+      } catch { /* ignore */ }
+
       const response = await fetch('/api/trust-score/calculate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(finalData),
+        body: JSON.stringify({
+          ...finalData,
+          oauthData: Object.keys(oauthData).length > 0 ? oauthData : undefined,
+        }),
       })
 
       const result = await response.json()
       sessionStorage.setItem('trustScoreResult', JSON.stringify(result))
       localStorage.setItem('trustScoreResult', JSON.stringify(result))
 
-      // Clean up OAuth and step storage
+      // Clean up session-only step storage (keep OAuth in localStorage for result page)
       try {
         sessionStorage.removeItem(STEP_STORAGE_KEY)
         sessionStorage.removeItem('oauth_github_data')
