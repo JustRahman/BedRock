@@ -95,9 +95,9 @@ export default function RegisterPage() {
       // Collect OAuth verifications
       const oauthVerifications: { type: string; data: unknown }[] = []
       const oauthEntries = [
-        { type: 'github_oauth', key: 'oauth_github_data' },
-        { type: 'linkedin_oauth', key: 'oauth_linkedin_data' },
-        { type: 'stripe_oauth', key: 'oauth_stripe_data' },
+        { type: 'github', key: 'oauth_github_data' },
+        { type: 'linkedin', key: 'oauth_linkedin_data' },
+        { type: 'stripe', key: 'oauth_stripe_data' },
       ]
       for (const entry of oauthEntries) {
         const raw = localStorage.getItem(entry.key) || sessionStorage.getItem(entry.key)
@@ -132,13 +132,12 @@ export default function RegisterPage() {
         console.error('Failed to save registration data')
       }
 
-      // Only clean up storage if server confirmed the save — otherwise
-      // the dashboard ensure endpoint will retry from localStorage
+      // Only clean up trustScoreResult — keep onboardingData and OAuth data
+      // in localStorage so the dashboard ensure endpoint can save ALL
+      // verifications (identity, digital presence, trust signals, etc.)
       if (registrationSaved) {
         try {
-          localStorage.removeItem('onboardingData')
           localStorage.removeItem('trustScoreResult')
-          sessionStorage.removeItem('onboardingData')
           sessionStorage.removeItem('trustScoreResult')
         } catch { /* ignore */ }
       }

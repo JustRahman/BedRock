@@ -158,19 +158,23 @@ export async function POST(request: Request) {
         }
       }
 
-      // GitHub OAuth — type must match PUT handler expectation ('github')
+      // GitHub — OAuth or username-only
       if (od.codeHistory?.githubConnected) {
         const ghData = body.oauthData?.github || od.codeHistory
         verifications.push({ type: 'github', data: ghData })
+      } else if (od.codeHistory?.hasGithub) {
+        verifications.push({ type: 'github_username', data: od.codeHistory })
       }
 
-      // LinkedIn OAuth — type must match PUT handler expectation ('linkedin')
+      // LinkedIn — OAuth or URL-only
       if (od.professional?.linkedinConnected) {
         const liData = body.oauthData?.linkedin || od.professional
         verifications.push({ type: 'linkedin', data: liData })
+      } else if (od.professional?.hasLinkedin) {
+        verifications.push({ type: 'linkedin_url', data: od.professional })
       }
 
-      // Stripe OAuth — type must match PUT handler expectation ('stripe')
+      // Stripe OAuth
       if (od.financial?.hasStripeConnected) {
         const stripeData = body.oauthData?.stripe || od.financial
         verifications.push({ type: 'stripe', data: stripeData })

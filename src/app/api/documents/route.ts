@@ -181,7 +181,7 @@ export async function POST(request: Request) {
         // Upsert founder_verifications record
         const verificationData = {
           founder_id: founder.id,
-          verification_type: `document_${type}`,
+          verification_type: type,
           status: result.status === 'review_needed' ? 'pending' as const : result.status as 'verified' | 'failed',
           verified_at: result.status === 'verified' ? new Date().toISOString() : null,
           metadata: {

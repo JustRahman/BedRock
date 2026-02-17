@@ -98,14 +98,14 @@ function scoreGitHub(data: GitHubProfileData | null | undefined, usernameOnly: b
   // Account age: 0-8 pts (1pt/year, cap 8)
   const accountAge = Math.min(8, Math.floor(data.accountAgeYears))
 
-  // Public repos: 0-5 pts (1pt per 10 repos)
-  const repos = Math.min(5, Math.floor(data.publicRepos / 10))
+  // Public repos: 0-5 pts (1pt per 5 repos)
+  const repos = Math.min(5, Math.floor(data.publicRepos / 5))
 
-  // Stars: 0-4 pts (1pt per 25 stars)
-  const stars = Math.min(4, Math.floor(data.totalStars / 25))
+  // Stars: 0-4 pts (1pt per 3 stars)
+  const stars = Math.min(4, Math.floor(data.totalStars / 3))
 
-  // Followers: 0-4 pts (1pt per 25 followers)
-  const followers = Math.min(4, Math.floor(data.followers / 25))
+  // Followers: 0-4 pts (1pt per 5 followers)
+  const followers = Math.min(4, Math.floor(data.followers / 5))
 
   // Language diversity: 0-2 pts (1pt per 2 languages)
   const languages = Math.min(2, Math.floor(data.topLanguages.length / 2))

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createClient, createServiceClient } from '@/lib/supabase/server'
+import { getStatusFromScore } from '@/lib/trust-score-v2'
 
 export async function POST(request: Request) {
   try {
@@ -54,20 +55,23 @@ export async function POST(request: Request) {
 
     const founderId = (founder as { id: string }).id
 
-    // Save trust score if provided
+    // Save trust score if provided (v2 format: score, breakdown.github.score, etc.)
     if (trustScore && founderId) {
+      const b = trustScore.breakdown || {}
+      const { status } = getStatusFromScore(trustScore.score || 0)
+
       const { error: tsError } = await (supabase.from('trust_scores') as ReturnType<typeof supabase.from>).insert({
         founder_id: founderId,
-        total_score: trustScore.totalScore || 0,
-        identity_score: trustScore.identityScore || 0,
-        business_score: trustScore.businessScore || 0,
-        financial_score: trustScore.businessScore || 0,
-        social_score: trustScore.networkScore || 0,
-        digital_lineage_score: trustScore.digitalLineageScore || 0,
-        network_score: trustScore.networkScore || 0,
-        country_adjustment: trustScore.countryAdjustment || 0,
-        status: trustScore.status || 'review_needed',
-        score_breakdown: trustScore.breakdown || {},
+        total_score: trustScore.score || 0,
+        identity_score: b.identity?.score || 0,
+        business_score: b.stripe?.score || 0,
+        financial_score: b.stripe?.score || 0,
+        social_score: b.linkedin?.score || 0,
+        digital_lineage_score: (b.github?.score || 0) + (b.digital_presence?.score || 0),
+        network_score: b.network?.score || 0,
+        country_adjustment: trustScore.country_adjustment || 0,
+        status,
+        score_breakdown: b,
       })
 
       if (tsError) {

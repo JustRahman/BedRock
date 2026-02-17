@@ -77,11 +77,21 @@ export default function DashboardPage() {
         // Also pass any unsaved onboarding data from localStorage
         let trustScorePayload = undefined
         let onboardingPayload = undefined
+        let oauthPayload: Record<string, unknown> | undefined = undefined
         try {
           const storedScore = localStorage.getItem('trustScoreResult')
           if (storedScore) trustScorePayload = JSON.parse(storedScore)
           const storedData = localStorage.getItem('onboardingData')
           if (storedData) onboardingPayload = JSON.parse(storedData)
+          // Collect OAuth profile data from localStorage
+          const oauthData: Record<string, unknown> = {}
+          const gh = localStorage.getItem('oauth_github_data')
+          const li = localStorage.getItem('oauth_linkedin_data')
+          const st = localStorage.getItem('oauth_stripe_data')
+          if (gh) oauthData.github = JSON.parse(gh)
+          if (li) oauthData.linkedin = JSON.parse(li)
+          if (st) oauthData.stripe = JSON.parse(st)
+          if (Object.keys(oauthData).length > 0) oauthPayload = oauthData
         } catch { /* ignore */ }
 
         const ensureRes = await fetch('/api/founders/ensure', {
@@ -90,6 +100,7 @@ export default function DashboardPage() {
           body: JSON.stringify({
             trustScore: trustScorePayload,
             onboardingData: onboardingPayload,
+            oauthData: oauthPayload,
           }),
         })
 
@@ -98,6 +109,9 @@ export default function DashboardPage() {
           try {
             localStorage.removeItem('trustScoreResult')
             localStorage.removeItem('onboardingData')
+            localStorage.removeItem('oauth_github_data')
+            localStorage.removeItem('oauth_linkedin_data')
+            localStorage.removeItem('oauth_stripe_data')
           } catch { /* ignore */ }
         }
 
