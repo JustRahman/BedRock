@@ -1812,8 +1812,8 @@ async function POST(request) {
             }
         }
         // Save trust score if provided
+        let trustScoreSaved = false;
         if (body.trustScore) {
-            const { data: existingScore } = await supabase.from('trust_scores').select('id').eq('founder_id', founderId).single();
             // Build DB columns from v2 result format
             const ts = body.trustScore;
             const b = ts.breakdown || {};
@@ -1824,7 +1824,8 @@ async function POST(request) {
             const dpScore = b.digital_presence?.score || 0;
             const networkScore = b.network?.score || 0;
             const { status } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$trust$2d$score$2d$v2$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["getStatusFromScore"])(ts.score || 0);
-            const scoreData = {
+            const { error: tsError } = await supabase.from('trust_scores').upsert({
+                founder_id: founderId,
                 total_score: ts.score || 0,
                 digital_lineage_score: githubScore + dpScore,
                 business_score: economicScore,
@@ -1834,19 +1835,15 @@ async function POST(request) {
                 network_score: networkScore,
                 country_adjustment: ts.country_adjustment || 0,
                 status,
-                score_breakdown: b
-            };
-            if (!existingScore) {
-                const { error: tsError } = await supabase.from('trust_scores').insert({
-                    founder_id: founderId,
-                    ...scoreData
-                });
-                if (tsError) {
-                    console.error('[ensure] Trust score insert failed:', tsError.message);
-                }
+                score_breakdown: b,
+                calculated_at: new Date().toISOString()
+            }, {
+                onConflict: 'founder_id'
+            });
+            if (tsError) {
+                console.error('[ensure] Trust score upsert failed:', tsError.message);
             } else {
-                // Update existing score
-                await supabase.from('trust_scores').update(scoreData).eq('founder_id', founderId);
+                trustScoreSaved = true;
             }
         }
         // Save all verification data from onboarding
@@ -2020,7 +2017,8 @@ async function POST(request) {
             founder: {
                 id: founderId
             },
-            created: !existingFounder
+            created: !existingFounder,
+            trustScoreSaved
         });
     } catch (err) {
         console.error('[ensure] Unexpected error:', err);

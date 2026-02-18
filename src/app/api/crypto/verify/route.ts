@@ -5,6 +5,7 @@ import { fetchOnChainData } from '@/lib/crypto/on-chain-data'
 import { scoreWallet } from '@/lib/crypto/score-wallet'
 import { validateChallenge } from '@/lib/crypto/challenge-cache'
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit'
+import { getStatusFromScore } from '@/lib/trust-score-v2'
 import type { ChainId, CryptoWalletProfileData } from '@/lib/crypto/types'
 
 export async function POST(request: Request) {
@@ -28,11 +29,11 @@ export async function POST(request: Request) {
 
     const { data: founderData } = await supabase
       .from('founders')
-      .select('id')
+      .select('id, country_of_origin, country_of_residence')
       .eq('user_id', user.id)
       .single()
 
-    const founder = founderData as { id: string } | null
+    const founder = founderData as { id: string; country_of_origin?: string; country_of_residence?: string } | null
     if (!founder) {
       return NextResponse.json({ error: 'Founder not found' }, { status: 404 })
     }
@@ -113,18 +114,51 @@ export async function POST(request: Request) {
         metadata: profileData as unknown as Record<string, unknown>,
       }, { onConflict: 'founder_id,verification_type' })
 
-    // Recalculate trust score
+    // Patch crypto score into existing trust score (don't recalculate everything)
     try {
-      await fetch(new URL('/api/trust-score/calculate', request.url).toString(), {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          cookie: request.headers.get('cookie') || '',
-        },
-        body: JSON.stringify({}),
-      })
-    } catch {
-      // Non-critical — score will be recalculated on next page load
+      const { data: currentScore } = await (supabase
+        .from('trust_scores') as ReturnType<typeof supabase.from>)
+        .select('*')
+        .eq('founder_id', founder.id)
+        .single()
+
+      if (currentScore) {
+        const cs = currentScore as Record<string, unknown>
+        const breakdown = (cs.score_breakdown || {}) as Record<string, Record<string, unknown>>
+        const ea = breakdown.economic_activity || { score: 0, max: 25, details: {} }
+        const eaDetails = (ea.details || {}) as Record<string, unknown>
+
+        // Calculate old crypto contribution (in case re-connecting)
+        const oldCryptoScore = Number(eaDetails.crypto_subtotal || 0)
+
+        // Update economic_activity breakdown with crypto data
+        eaDetails.crypto_verified = true
+        eaDetails.crypto_subtotal = walletScore.total
+        eaDetails.crypto_wallet_age = walletScore.walletAge
+        eaDetails.crypto_tx_count = walletScore.txCount
+        eaDetails.crypto_holdings = walletScore.holdings
+        eaDetails.crypto_activity_spread = walletScore.activitySpread
+        eaDetails.crypto_chain = chain
+        ea.details = eaDetails
+        ea.score = Math.min(25, Number(ea.score || 0) - oldCryptoScore + walletScore.total)
+        breakdown.economic_activity = ea
+
+        const newTotal = Number(cs.total_score || 0) - oldCryptoScore + walletScore.total
+        const { status } = getStatusFromScore(newTotal)
+
+        await (supabase.from('trust_scores') as ReturnType<typeof supabase.from>)
+          .update({
+            total_score: newTotal,
+            business_score: Number(cs.business_score || 0) - oldCryptoScore + walletScore.total,
+            financial_score: Number(cs.financial_score || 0) - oldCryptoScore + walletScore.total,
+            score_breakdown: breakdown,
+            status,
+            calculated_at: new Date().toISOString(),
+          })
+          .eq('founder_id', founder.id)
+      }
+    } catch (e) {
+      console.error('[verify] Trust score patch failed:', e)
     }
 
     return NextResponse.json({

@@ -1037,6 +1037,7 @@ function WalletConnectModal({ open, onOpenChange, onVerified }) {
                 const data = await verifyRes.json();
                 throw new Error(data.error || 'Verification failed');
             }
+            // Trust score is recalculated server-side in the verify endpoint
             onVerified();
             onOpenChange(false);
         } catch (err) {
@@ -1086,6 +1087,14 @@ function WalletConnectModal({ open, onOpenChange, onVerified }) {
                 const data = await verifyRes.json();
                 throw new Error(data.error || 'Verification failed');
             }
+            // Recalculate trust score from client
+            await fetch('/api/trust-score/calculate', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({})
+            }).catch(()=>{});
             onVerified();
             onOpenChange(false);
         } catch (err) {
@@ -1133,6 +1142,14 @@ function WalletConnectModal({ open, onOpenChange, onVerified }) {
             const data = await verifyRes.json();
             throw new Error(data.error || 'Verification failed');
         }
+        // Recalculate trust score from client
+        await fetch('/api/trust-score/calculate', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({})
+        }).catch(()=>{});
         onVerified();
         onOpenChange(false);
     }
@@ -1161,20 +1178,20 @@ function WalletConnectModal({ open, onOpenChange, onVerified }) {
                             children: "Connect Crypto Wallet"
                         }, void 0, false, {
                             fileName: "[project]/src/components/dashboard/wallet-connect-modal.tsx",
-                            lineNumber: 309,
+                            lineNumber: 317,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DialogDescription"], {
                             children: "Choose your wallet to sign a message and verify ownership."
                         }, void 0, false, {
                             fileName: "[project]/src/components/dashboard/wallet-connect-modal.tsx",
-                            lineNumber: 310,
+                            lineNumber: 318,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/dashboard/wallet-connect-modal.tsx",
-                    lineNumber: 308,
+                    lineNumber: 316,
                     columnNumber: 9
                 }, this),
                 status === 'idle' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1186,7 +1203,7 @@ function WalletConnectModal({ open, onOpenChange, onVerified }) {
                                 className: "h-8 w-8 text-zinc-500"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/wallet-connect-modal.tsx",
-                                lineNumber: 320,
+                                lineNumber: 328,
                                 columnNumber: 17
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1196,7 +1213,7 @@ function WalletConnectModal({ open, onOpenChange, onVerified }) {
                                         children: "No wallets detected"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/wallet-connect-modal.tsx",
-                                        lineNumber: 322,
+                                        lineNumber: 330,
                                         columnNumber: 19
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1211,7 +1228,7 @@ function WalletConnectModal({ open, onOpenChange, onVerified }) {
                                                 children: "MetaMask"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/wallet-connect-modal.tsx",
-                                                lineNumber: 324,
+                                                lineNumber: 332,
                                                 columnNumber: 29
                                             }, this),
                                             ",",
@@ -1224,7 +1241,7 @@ function WalletConnectModal({ open, onOpenChange, onVerified }) {
                                                 children: "Phantom"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/wallet-connect-modal.tsx",
-                                                lineNumber: 325,
+                                                lineNumber: 333,
                                                 columnNumber: 21
                                             }, this),
                                             ", or",
@@ -1237,26 +1254,26 @@ function WalletConnectModal({ open, onOpenChange, onVerified }) {
                                                 children: "TronLink"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/wallet-connect-modal.tsx",
-                                                lineNumber: 326,
+                                                lineNumber: 334,
                                                 columnNumber: 21
                                             }, this),
                                             " and reload."
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/components/dashboard/wallet-connect-modal.tsx",
-                                        lineNumber: 323,
+                                        lineNumber: 331,
                                         columnNumber: 19
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/wallet-connect-modal.tsx",
-                                lineNumber: 321,
+                                lineNumber: 329,
                                 columnNumber: 17
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/wallet-connect-modal.tsx",
-                        lineNumber: 319,
+                        lineNumber: 327,
                         columnNumber: 15
                     }, this) : wallets.map((wallet)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                             type: "button",
@@ -1268,7 +1285,7 @@ function WalletConnectModal({ open, onOpenChange, onVerified }) {
                                     children: wallet.name.charAt(0)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/dashboard/wallet-connect-modal.tsx",
-                                    lineNumber: 338,
+                                    lineNumber: 346,
                                     columnNumber: 19
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1278,7 +1295,7 @@ function WalletConnectModal({ open, onOpenChange, onVerified }) {
                                             children: wallet.name
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/wallet-connect-modal.tsx",
-                                            lineNumber: 342,
+                                            lineNumber: 350,
                                             columnNumber: 21
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1286,24 +1303,24 @@ function WalletConnectModal({ open, onOpenChange, onVerified }) {
                                             children: wallet.description
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/dashboard/wallet-connect-modal.tsx",
-                                            lineNumber: 343,
+                                            lineNumber: 351,
                                             columnNumber: 21
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/dashboard/wallet-connect-modal.tsx",
-                                    lineNumber: 341,
+                                    lineNumber: 349,
                                     columnNumber: 19
                                 }, this)
                             ]
                         }, wallet.id, true, {
                             fileName: "[project]/src/components/dashboard/wallet-connect-modal.tsx",
-                            lineNumber: 332,
+                            lineNumber: 340,
                             columnNumber: 17
                         }, this))
                 }, void 0, false, {
                     fileName: "[project]/src/components/dashboard/wallet-connect-modal.tsx",
-                    lineNumber: 317,
+                    lineNumber: 325,
                     columnNumber: 11
                 }, this),
                 status === 'chain_select' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1314,7 +1331,7 @@ function WalletConnectModal({ open, onOpenChange, onVerified }) {
                             children: "Your wallet is on an unsupported network. Pick one to switch to:"
                         }, void 0, false, {
                             fileName: "[project]/src/components/dashboard/wallet-connect-modal.tsx",
-                            lineNumber: 354,
+                            lineNumber: 362,
                             columnNumber: 13
                         }, this),
                         evmChains.map((c)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1327,7 +1344,7 @@ function WalletConnectModal({ open, onOpenChange, onVerified }) {
                                         children: c.chainId === 1 ? 'ETH' : c.chainId === 8453 ? 'BASE' : 'POL'
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/wallet-connect-modal.tsx",
-                                        lineNumber: 364,
+                                        lineNumber: 372,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1335,13 +1352,13 @@ function WalletConnectModal({ open, onOpenChange, onVerified }) {
                                         children: c.name
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/wallet-connect-modal.tsx",
-                                        lineNumber: 367,
+                                        lineNumber: 375,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, c.chainId, true, {
                                 fileName: "[project]/src/components/dashboard/wallet-connect-modal.tsx",
-                                lineNumber: 358,
+                                lineNumber: 366,
                                 columnNumber: 15
                             }, this)),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -1352,13 +1369,13 @@ function WalletConnectModal({ open, onOpenChange, onVerified }) {
                             children: "Back"
                         }, void 0, false, {
                             fileName: "[project]/src/components/dashboard/wallet-connect-modal.tsx",
-                            lineNumber: 370,
+                            lineNumber: 378,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/dashboard/wallet-connect-modal.tsx",
-                    lineNumber: 353,
+                    lineNumber: 361,
                     columnNumber: 11
                 }, this),
                 (status === 'connecting' || status === 'signing' || status === 'verifying') && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1368,7 +1385,7 @@ function WalletConnectModal({ open, onOpenChange, onVerified }) {
                             className: "h-8 w-8 animate-spin text-blue-500"
                         }, void 0, false, {
                             fileName: "[project]/src/components/dashboard/wallet-connect-modal.tsx",
-                            lineNumber: 379,
+                            lineNumber: 387,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1380,13 +1397,13 @@ function WalletConnectModal({ open, onOpenChange, onVerified }) {
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/dashboard/wallet-connect-modal.tsx",
-                            lineNumber: 380,
+                            lineNumber: 388,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/dashboard/wallet-connect-modal.tsx",
-                    lineNumber: 378,
+                    lineNumber: 386,
                     columnNumber: 11
                 }, this),
                 status === 'error' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1399,12 +1416,12 @@ function WalletConnectModal({ open, onOpenChange, onVerified }) {
                                 children: error
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/wallet-connect-modal.tsx",
-                                lineNumber: 392,
+                                lineNumber: 400,
                                 columnNumber: 15
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/dashboard/wallet-connect-modal.tsx",
-                            lineNumber: 391,
+                            lineNumber: 399,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -1414,24 +1431,24 @@ function WalletConnectModal({ open, onOpenChange, onVerified }) {
                             children: "Try Again"
                         }, void 0, false, {
                             fileName: "[project]/src/components/dashboard/wallet-connect-modal.tsx",
-                            lineNumber: 394,
+                            lineNumber: 402,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/dashboard/wallet-connect-modal.tsx",
-                    lineNumber: 390,
+                    lineNumber: 398,
                     columnNumber: 11
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/components/dashboard/wallet-connect-modal.tsx",
-            lineNumber: 307,
+            lineNumber: 315,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/components/dashboard/wallet-connect-modal.tsx",
-        lineNumber: 306,
+        lineNumber: 314,
         columnNumber: 5
     }, this);
 }
@@ -2276,6 +2293,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$dashboa
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$dashboard$2f$trust$2d$score$2d$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/dashboard/trust-score-card.tsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$dashboard$2f$economic$2d$activity$2d$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/dashboard/economic-activity-card.tsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$dashboard$2f$pending$2d$upload$2d$banner$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/dashboard/pending-upload-banner.tsx [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$supabase$2f$client$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/lib/supabase/client.ts [app-client] (ecmascript)");
 ;
 var _s = __turbopack_context__.k.signature();
 'use client';
@@ -2285,6 +2303,12 @@ var _s = __turbopack_context__.k.signature();
 ;
 ;
 ;
+;
+const RE_ONBOARD_EMAILS = [
+    'contact@nazarly.digital',
+    'ra@nemy.agency',
+    'rahmanbazarov4567@gmail.com'
+];
 const statusLabels = {
     elite: 'Elite',
     approved: 'Approved',
@@ -2300,6 +2324,7 @@ function DashboardPage() {
     const [company, setCompany] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
     const [bankApp, setBankApp] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
     const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(true);
+    const [showReOnboard, setShowReOnboard] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const refreshDocuments = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
         "DashboardPage.useCallback[refreshDocuments]": async ()=>{
             try {
@@ -2317,6 +2342,12 @@ function DashboardPage() {
         "DashboardPage.useEffect": ()=>{
             async function fetchData() {
                 try {
+                    // Check if current user should see re-onboard banner
+                    const supabase = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$supabase$2f$client$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createClient"])();
+                    const { data: { user } } = await supabase.auth.getUser();
+                    if (user?.email && RE_ONBOARD_EMAILS.includes(user.email)) {
+                        setShowReOnboard(true);
+                    }
                     // Step 1: Ensure founder exists (auto-create if missing)
                     // Also pass any unsaved onboarding data from localStorage
                     let trustScorePayload = undefined;
@@ -2407,20 +2438,20 @@ function DashboardPage() {
                             className: "h-8 w-48 animate-pulse rounded bg-muted"
                         }, void 0, false, {
                             fileName: "[project]/src/app/dashboard/page.tsx",
-                            lineNumber: 163,
+                            lineNumber: 178,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "mt-2 h-4 w-72 animate-pulse rounded bg-muted"
                         }, void 0, false, {
                             fileName: "[project]/src/app/dashboard/page.tsx",
-                            lineNumber: 164,
+                            lineNumber: 179,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/dashboard/page.tsx",
-                    lineNumber: 162,
+                    lineNumber: 177,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2433,23 +2464,23 @@ function DashboardPage() {
                                 className: "h-24 animate-pulse rounded bg-muted"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/dashboard/page.tsx",
-                                lineNumber: 169,
+                                lineNumber: 184,
                                 columnNumber: 15
                             }, this)
                         }, i, false, {
                             fileName: "[project]/src/app/dashboard/page.tsx",
-                            lineNumber: 168,
+                            lineNumber: 183,
                             columnNumber: 13
                         }, this))
                 }, void 0, false, {
                     fileName: "[project]/src/app/dashboard/page.tsx",
-                    lineNumber: 166,
+                    lineNumber: 181,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/app/dashboard/page.tsx",
-            lineNumber: 161,
+            lineNumber: 176,
             columnNumber: 7
         }, this);
     }
@@ -2541,10 +2572,10 @@ function DashboardPage() {
                 onUploadsComplete: refreshDocuments
             }, void 0, false, {
                 fileName: "[project]/src/app/dashboard/page.tsx",
-                lineNumber: 295,
+                lineNumber: 310,
                 columnNumber: 7
             }, this),
-            trustScore ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
+            showReOnboard ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                 href: "/onboarding",
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "mb-6 flex items-center gap-3 rounded-xl border border-blue-500/20 bg-blue-500/10 p-4 cursor-pointer hover:bg-blue-500/15 transition-colors",
@@ -2553,7 +2584,7 @@ function DashboardPage() {
                             className: "h-5 w-5 text-blue-400 shrink-0"
                         }, void 0, false, {
                             fileName: "[project]/src/app/dashboard/page.tsx",
-                            lineNumber: 300,
+                            lineNumber: 315,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2564,7 +2595,7 @@ function DashboardPage() {
                                     children: "Re-do Onboarding"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/dashboard/page.tsx",
-                                    lineNumber: 302,
+                                    lineNumber: 317,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2572,24 +2603,24 @@ function DashboardPage() {
                                     children: "Update your identity, social profiles, and digital presence to recalculate your trust score."
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/dashboard/page.tsx",
-                                    lineNumber: 303,
+                                    lineNumber: 318,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/dashboard/page.tsx",
-                            lineNumber: 301,
+                            lineNumber: 316,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/dashboard/page.tsx",
-                    lineNumber: 299,
+                    lineNumber: 314,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/app/dashboard/page.tsx",
-                lineNumber: 298,
+                lineNumber: 313,
                 columnNumber: 9
             }, this) : null,
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2600,7 +2631,7 @@ function DashboardPage() {
                         children: "Dashboard"
                     }, void 0, false, {
                         fileName: "[project]/src/app/dashboard/page.tsx",
-                        lineNumber: 310,
+                        lineNumber: 325,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2608,13 +2639,13 @@ function DashboardPage() {
                         children: "Welcome back! Here's an overview of your account status."
                     }, void 0, false, {
                         fileName: "[project]/src/app/dashboard/page.tsx",
-                        lineNumber: 311,
+                        lineNumber: 326,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/dashboard/page.tsx",
-                lineNumber: 309,
+                lineNumber: 324,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2628,7 +2659,7 @@ function DashboardPage() {
                         description: trustScore ? statusLabels[trustScore.status] : 'Complete onboarding first'
                     }, void 0, false, {
                         fileName: "[project]/src/app/dashboard/page.tsx",
-                        lineNumber: 318,
+                        lineNumber: 333,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$dashboard$2f$status$2d$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["StatusCard"], {
@@ -2639,7 +2670,7 @@ function DashboardPage() {
                         description: company ? `${company.name}` : 'Start LLC formation'
                     }, void 0, false, {
                         fileName: "[project]/src/app/dashboard/page.tsx",
-                        lineNumber: 325,
+                        lineNumber: 340,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$dashboard$2f$status$2d$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["StatusCard"], {
@@ -2650,7 +2681,7 @@ function DashboardPage() {
                         description: overdueDeadlines > 0 ? `${overdueDeadlines} overdue` : 'All on track'
                     }, void 0, false, {
                         fileName: "[project]/src/app/dashboard/page.tsx",
-                        lineNumber: 336,
+                        lineNumber: 351,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$dashboard$2f$status$2d$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["StatusCard"], {
@@ -2661,13 +2692,13 @@ function DashboardPage() {
                         description: bankApp ? `${bankApp.bank_name || 'Bank'}` : 'Available after EIN'
                     }, void 0, false, {
                         fileName: "[project]/src/app/dashboard/page.tsx",
-                        lineNumber: 343,
+                        lineNumber: 358,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/dashboard/page.tsx",
-                lineNumber: 317,
+                lineNumber: 332,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2689,7 +2720,7 @@ function DashboardPage() {
                                 scoreBreakdown: trustScore.score_breakdown
                             }, void 0, false, {
                                 fileName: "[project]/src/app/dashboard/page.tsx",
-                                lineNumber: 362,
+                                lineNumber: 377,
                                 columnNumber: 13
                             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "rounded-xl border border-border bg-card py-12 text-center",
@@ -2698,7 +2729,7 @@ function DashboardPage() {
                                         className: "mx-auto mb-3 h-10 w-10 text-zinc-600"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/dashboard/page.tsx",
-                                        lineNumber: 376,
+                                        lineNumber: 391,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2706,7 +2737,7 @@ function DashboardPage() {
                                         children: "No Trust Score Yet"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/dashboard/page.tsx",
-                                        lineNumber: 377,
+                                        lineNumber: 392,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2714,13 +2745,13 @@ function DashboardPage() {
                                         children: "Complete the onboarding process to calculate your score."
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/dashboard/page.tsx",
-                                        lineNumber: 378,
+                                        lineNumber: 393,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/dashboard/page.tsx",
-                                lineNumber: 375,
+                                lineNumber: 390,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$dashboard$2f$economic$2d$activity$2d$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["EconomicActivityCard"], {
@@ -2734,13 +2765,13 @@ function DashboardPage() {
                                 onRefresh: ()=>window.location.reload()
                             }, void 0, false, {
                                 fileName: "[project]/src/app/dashboard/page.tsx",
-                                lineNumber: 384,
+                                lineNumber: 399,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/dashboard/page.tsx",
-                        lineNumber: 360,
+                        lineNumber: 375,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2749,28 +2780,28 @@ function DashboardPage() {
                             items: actionItems
                         }, void 0, false, {
                             fileName: "[project]/src/app/dashboard/page.tsx",
-                            lineNumber: 399,
+                            lineNumber: 414,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/app/dashboard/page.tsx",
-                        lineNumber: 398,
+                        lineNumber: 413,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/dashboard/page.tsx",
-                lineNumber: 358,
+                lineNumber: 373,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/app/dashboard/page.tsx",
-        lineNumber: 294,
+        lineNumber: 309,
         columnNumber: 5
     }, this);
 }
-_s(DashboardPage, "IyE4E5FVD9L68Pn24nLm4jnMwNg=");
+_s(DashboardPage, "fSs1rILfeIFSufBo75bAbCqxS5s=");
 _c = DashboardPage;
 var _c;
 __turbopack_context__.k.register(_c, "DashboardPage");

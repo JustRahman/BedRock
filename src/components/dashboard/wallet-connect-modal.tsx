@@ -202,6 +202,8 @@ export function WalletConnectModal({ open, onOpenChange, onVerified }: WalletCon
         throw new Error(data.error || 'Verification failed')
       }
 
+      // Trust score is recalculated server-side in the verify endpoint
+
       onVerified()
       onOpenChange(false)
     } catch (err) {
@@ -248,6 +250,9 @@ export function WalletConnectModal({ open, onOpenChange, onVerified }: WalletCon
         throw new Error(data.error || 'Verification failed')
       }
 
+      // Recalculate trust score from client
+      await fetch('/api/trust-score/calculate', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({}) }).catch(() => {})
+
       onVerified()
       onOpenChange(false)
     } catch (err) {
@@ -285,6 +290,9 @@ export function WalletConnectModal({ open, onOpenChange, onVerified }: WalletCon
       const data = await verifyRes.json()
       throw new Error(data.error || 'Verification failed')
     }
+
+    // Recalculate trust score from client
+    await fetch('/api/trust-score/calculate', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({}) }).catch(() => {})
 
     onVerified()
     onOpenChange(false)

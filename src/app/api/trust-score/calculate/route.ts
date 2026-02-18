@@ -191,6 +191,24 @@ export async function PUT(request: Request) {
       } else if (v.verification_type === 'address_proof') {
         if (!v2Input.identity) v2Input.identity = {}
         v2Input.identity.hasAddressProof = true
+      } else if (v.verification_type === 'digital_presence' && meta) {
+        const dp = meta as Record<string, unknown>
+        v2Input.digitalPresence = {
+          websiteVerified: !!dp.websiteVerified,
+          appStoreVerified: !!dp.appStoreVerified,
+        }
+      } else if (v.verification_type === 'referral' && meta) {
+        if (!v2Input.network) v2Input.network = { referralVerified: false, universityEmailVerified: false, acceleratorVerified: false, hasEmployer: false }
+        v2Input.network.referralVerified = !!(meta as Record<string, unknown>).referralVerified
+      } else if (v.verification_type === 'university_email' && meta) {
+        if (!v2Input.network) v2Input.network = { referralVerified: false, universityEmailVerified: false, acceleratorVerified: false, hasEmployer: false }
+        v2Input.network.universityEmailVerified = !!(meta as Record<string, unknown>).verified
+      } else if (v.verification_type === 'accelerator' && meta) {
+        if (!v2Input.network) v2Input.network = { referralVerified: false, universityEmailVerified: false, acceleratorVerified: false, hasEmployer: false }
+        v2Input.network.acceleratorVerified = !!(meta as Record<string, unknown>).verified
+      } else if (v.verification_type === 'employer_verification') {
+        if (!v2Input.network) v2Input.network = { referralVerified: false, universityEmailVerified: false, acceleratorVerified: false, hasEmployer: false }
+        v2Input.network.hasEmployer = true
       }
     }
 
@@ -216,17 +234,17 @@ export async function PUT(request: Request) {
 
     if (body.digitalPresence) {
       v2Input.digitalPresence = {
-        websiteVerified: body.digitalPresence.websiteVerified || false,
-        appStoreVerified: body.digitalPresence.appStoreVerified || false,
+        websiteVerified: body.digitalPresence.websiteVerified || v2Input.digitalPresence?.websiteVerified || false,
+        appStoreVerified: body.digitalPresence.appStoreVerified || v2Input.digitalPresence?.appStoreVerified || false,
       }
     }
 
     if (body.trustSignals) {
       v2Input.network = {
-        referralVerified: body.trustSignals.referralVerified || false,
-        universityEmailVerified: body.trustSignals.universityEmailVerified || false,
-        acceleratorVerified: body.trustSignals.acceleratorVerified || false,
-        hasEmployer: body.trustSignals.hasEmployerVerification || false,
+        referralVerified: body.trustSignals.referralVerified || v2Input.network?.referralVerified || false,
+        universityEmailVerified: body.trustSignals.universityEmailVerified || v2Input.network?.universityEmailVerified || false,
+        acceleratorVerified: body.trustSignals.acceleratorVerified || v2Input.network?.acceleratorVerified || false,
+        hasEmployer: body.trustSignals.hasEmployerVerification || v2Input.network?.hasEmployer || false,
       }
     }
 

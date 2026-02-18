@@ -1,11 +1,13 @@
 {
-  "/(auth)/login/page": "app/(auth)/login/page.js",
   "/api/bank-applications/route": "app/api/bank-applications/route.js",
   "/api/companies/route": "app/api/companies/route.js",
   "/api/compliance/route": "app/api/compliance/route.js",
   "/api/documents/route": "app/api/documents/route.js",
   "/api/founders/ensure/route": "app/api/founders/ensure/route.js",
+  "/api/oauth/github/connect/route": "app/api/oauth/github/connect/route.js",
   "/api/trust-score/route": "app/api/trust-score/route.js",
+  "/api/verify/document-extract/route": "app/api/verify/document-extract/route.js",
   "/dashboard/page": "app/dashboard/page.js",
-  "/onboarding/page": "app/onboarding/page.js"
+  "/onboarding/page": "app/onboarding/page.js",
+  "/page": "app/page.js"
 }
