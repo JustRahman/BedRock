@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///Users/rahmanbazarov/Data/programming/BedRock/src/app/dashboard/formation/loading.tsx"],"sourcesContent":["export default function FormationLoading() {\n  return (\n    <div className=\"animate-in fade-in duration-200\">\n      <div className=\"mb-6\">\n        <div className=\"h-8 w-40 animate-pulse rounded bg-muted\" />\n        <div className=\"mt-2 h-4 w-64 animate-pulse rounded bg-muted\" />\n      </div>\n      <div className=\"rounded-xl border border-border bg-card p-6\">\n        <div className=\"h-64 animate-pulse rounded bg-muted\" />\n      </div>\n    </div>\n  )\n}\n"],"names":[],"mappings":";;;;;;AAAe,SAAS;IACtB,qBACE,8OAAC;QAAI,WAAU;;0BACb,8OAAC;gBAAI,WAAU;;kCACb,8OAAC;wBAAI,WAAU;;;;;;kCACf,8OAAC;wBAAI,WAAU;;;;;;;;;;;;0BAEjB,8OAAC;gBAAI,WAAU;0BACb,cAAA,8OAAC;oBAAI,WAAU;;;;;;;;;;;;;;;;;AAIvB"}}]
-}

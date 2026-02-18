@@ -15,6 +15,7 @@
 
 # next.js (allow .next/standalone and .next/static for pre-built deploys)
 /.next/cache/
+/.next/dev/
 /.next/server/
 /.next/types/
 /.next/*.json
