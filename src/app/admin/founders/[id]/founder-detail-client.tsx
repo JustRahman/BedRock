@@ -37,6 +37,7 @@ import {
   Mail,
   Calendar,
   Download,
+  DollarSign,
 } from 'lucide-react'
 import { format } from 'date-fns'
 import { Progress } from '@/components/ui/progress'
@@ -77,6 +78,12 @@ export function FounderDetailClient({
   )
   const [overrideReason, setOverrideReason] = useState('')
   const [saving, setSaving] = useState(false)
+  const [paymentVerified, setPaymentVerified] = useState(
+    verifications.some(
+      (v) => (v.verification_type as string) === 'payment_verified' && v.status === 'verified'
+    )
+  )
+  const [paymentToggling, setPaymentToggling] = useState(false)
 
   const handleOverride = async () => {
     setSaving(true)
@@ -140,6 +147,32 @@ export function FounderDetailClient({
       }
     } catch {
       toast.error('Failed to reject founder')
+    }
+  }
+
+  const handlePaymentToggle = async () => {
+    setPaymentToggling(true)
+    const newValue = !paymentVerified
+    try {
+      const res = await fetch('/api/admin/payment-verified', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          founderId: founder.id,
+          verified: newValue,
+        }),
+      })
+      if (res.ok) {
+        setPaymentVerified(newValue)
+        toast.success(newValue ? 'Payment marked as verified' : 'Payment verification removed')
+        router.refresh()
+      } else {
+        toast.error('Failed to update payment verification')
+      }
+    } catch {
+      toast.error('Failed to update payment verification')
+    } finally {
+      setPaymentToggling(false)
     }
   }
 
@@ -488,15 +521,49 @@ export function FounderDetailClient({
                     ) : null}
                   </div>
                   <div className="mt-6 space-y-3">
-                    <ScoreBar label="Digital Lineage" value={(trustScore.digital_lineage_score as number) || 0} max={40} />
-                    <ScoreBar label="Business" value={(trustScore.business_score as number) || 0} max={25} />
+                    <ScoreBar label="Digital Lineage" value={(trustScore.digital_lineage_score as number) || 0} max={35} />
+                    <ScoreBar label="Economic Activity" value={(trustScore.business_score as number) || 0} max={25} />
                     <ScoreBar label="Identity" value={(trustScore.identity_score as number) || 0} max={20} />
-                    <ScoreBar label="Network" value={(trustScore.network_score as number) || 0} max={15} />
+                    <ScoreBar label="Network" value={(trustScore.network_score as number) || 0} max={10} />
                   </div>
                 </>
               ) : (
                 <p className="text-center text-sm text-gray-500">No trust score calculated</p>
               )}
+            </CardContent>
+          </Card>
+
+          {/* Payment Verified Toggle */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-base">
+                <DollarSign className="h-5 w-5" />
+                Payment Verification
+              </CardTitle>
+              <CardDescription>
+                Toggle whether this founder&apos;s formation payment has been verified.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium">
+                    {paymentVerified ? 'Verified' : 'Not Verified'}
+                  </p>
+                  <p className="text-xs text-gray-500">
+                    {paymentVerified ? '+5 trust score points' : '0 trust score points'}
+                  </p>
+                </div>
+                <Button
+                  size="sm"
+                  variant={paymentVerified ? 'default' : 'outline'}
+                  onClick={handlePaymentToggle}
+                  disabled={paymentToggling}
+                  className={paymentVerified ? 'bg-green-600 hover:bg-green-700' : ''}
+                >
+                  {paymentToggling ? 'Updating...' : paymentVerified ? 'Verified' : 'Mark Verified'}
+                </Button>
+              </div>
             </CardContent>
           </Card>
 

@@ -1,0 +1,3 @@
+{
+  "/api/crypto/verify/route": "app/api/crypto/verify/route.js"
+}

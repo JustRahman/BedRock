@@ -9,7 +9,7 @@ R.c("server/chunks/node_modules_entities_lib_e27fcc70._.js")
 R.c("server/chunks/node_modules_he_he_bcb6459f.js")
 R.c("server/chunks/node_modules_svix_dist_56996d0e._.js")
 R.c("server/chunks/node_modules_a676d2d4._.js")
-R.c("server/chunks/[root-of-the-server]__99f587fd._.js")
+R.c("server/chunks/[root-of-the-server]__35ffc0db._.js")
 R.c("server/chunks/_next-internal_server_app_api_trust-score_calculate_route_actions_f9e88736.js")
 R.m("[project]/node_modules/next/dist/esm/build/templates/app-route.js { INNER_APP_ROUTE => \"[project]/src/app/api/trust-score/calculate/route.ts [app-route] (ecmascript)\" } [app-route] (ecmascript)")
 module.exports=R.m("[project]/node_modules/next/dist/esm/build/templates/app-route.js { INNER_APP_ROUTE => \"[project]/src/app/api/trust-score/calculate/route.ts [app-route] (ecmascript)\" } [app-route] (ecmascript)").exports

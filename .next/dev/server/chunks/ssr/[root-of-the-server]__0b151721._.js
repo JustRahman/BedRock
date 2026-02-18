@@ -111,8 +111,6 @@ __turbopack_context__.s([
     ()=>countryRiskTiers,
     "digitalPresenceSchema",
     ()=>digitalPresenceSchema,
-    "financialSchema",
-    ()=>financialSchema,
     "geographyOptions",
     ()=>geographyOptions,
     "getCountryPenalty",
@@ -172,21 +170,10 @@ const professionalSchema = __TURBOPACK__imported__module__$5b$project$5d2f$node_
     linkedinUrl: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["string"]().url('Please enter a valid URL').or(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["string"]().length(0)).optional(),
     linkedinConnected: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["boolean"]().optional()
 });
-const financialSchema = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["object"]({
-    hasStripeConnected: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["boolean"](),
-    monthlyRevenue: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["string"]().optional(),
-    customerGeography: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["string"]().optional(),
-    chargebackRate: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["string"]().optional(),
-    hasBankStatements: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["boolean"]()
-});
 const digitalPresenceSchema = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["object"]({
     website: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["string"]().url('Please enter a valid URL').or(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["string"]().length(0)).optional(),
-    twitterHandle: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["string"]().optional(),
-    instagramHandle: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["string"]().optional(),
     appStoreUrl: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["string"]().url('Please enter a valid URL').or(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["string"]().length(0)).optional(),
     websiteVerified: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["boolean"]().optional(),
-    twitterVerified: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["boolean"]().optional(),
-    instagramVerified: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["boolean"]().optional(),
     appStoreVerified: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["boolean"]().optional()
 });
 const trustSignalsSchema = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$schemas$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["object"]({
@@ -208,7 +195,6 @@ const onboardingSchema = __TURBOPACK__imported__module__$5b$project$5d2f$node_mo
     identity: identitySchema,
     codeHistory: codeHistorySchema,
     professional: professionalSchema,
-    financial: financialSchema,
     digitalPresence: digitalPresenceSchema,
     trustSignals: trustSignalsSchema
 });
@@ -1339,96 +1325,120 @@ const chargebackOptions = [
 
 __turbopack_context__.s([
     "calculateTrustScoreV2",
-    ()=>calculateTrustScoreV2
+    ()=>calculateTrustScoreV2,
+    "getStatusFromScore",
+    ()=>getStatusFromScore
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$validations$2f$onboarding$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/lib/validations/onboarding.ts [app-ssr] (ecmascript)");
 ;
+function getStatusFromScore(score) {
+    if (score >= 85) {
+        return {
+            status: 'elite',
+            risk_level: 'low',
+            recommendation: 'approve'
+        };
+    } else if (score >= 65) {
+        return {
+            status: 'approved',
+            risk_level: 'low',
+            recommendation: 'approve'
+        };
+    } else if (score >= 45) {
+        return {
+            status: 'review_needed',
+            risk_level: 'medium',
+            recommendation: 'review'
+        };
+    } else if (score >= 25) {
+        return {
+            status: 'conditional',
+            risk_level: 'high',
+            recommendation: 'enhanced_review'
+        };
+    } else {
+        return {
+            status: 'not_eligible',
+            risk_level: 'critical',
+            recommendation: 'deny'
+        };
+    }
+}
 // === Scoring functions ===
+// Weights: GitHub 25, Economic Activity 25, LinkedIn 10, Identity 20, Digital Presence 10, Network 10 = 100
 function scoreGitHub(data, usernameOnly) {
     if (!data) {
         return {
             score: 0,
-            max: 30,
+            max: 25,
             details: {
                 connected: false
             }
         };
     }
-    // Account age: 0-10 pts (1.25pt/year, max 8+ years)
-    const accountAge = Math.min(10, Math.floor(data.accountAgeYears * 1.25));
-    // Public repos: 0-6 pts (1pt per 10 repos, max 60+)
-    const repos = Math.min(6, Math.floor(data.publicRepos / 10));
-    // Stars: 0-5 pts (1pt per 20 stars, max 100+)
-    const stars = Math.min(5, Math.floor(data.totalStars / 20));
-    // Followers: 0-5 pts (1pt per 20 followers, max 100+)
-    const followers = Math.min(5, Math.floor(data.followers / 20));
-    // Language diversity: 0-2 pts (1pt per 2 languages, max 4+)
-    const languages = Math.min(2, Math.floor(data.topLanguages.length / 2));
-    // Has contributions/activity: 2 pts (if they have repos, they have activity)
-    const activity = data.publicRepos > 0 ? 2 : 0;
-    let total = accountAge + repos + stars + followers + languages + activity;
-    // Username-only cap at 20
+    // Account age: 0-5 pts (1pt/year, cap 5)
+    const accountAge = Math.min(5, Math.floor(data.accountAgeYears));
+    // Commit activity (last 12 months): 0-8 pts (1pt per 50 commits)
+    const commits = Math.min(8, Math.floor((data.commitsLastYear ?? 0) / 50));
+    // Public repos: 0-4 pts (1pt per 5 repos)
+    const repos = Math.min(4, Math.floor(data.publicRepos / 5));
+    // Language diversity: 0-3 pts (1pt per language)
+    const languages = Math.min(3, data.topLanguages.length);
+    // Stars + Followers combined social proof: 0-3 pts (1pt per 10 combined)
+    const socialProof = Math.min(3, Math.floor((data.totalStars + data.followers) / 10));
+    // Recent activity: 2 pts if any commits in last 30 days
+    const recentActivity = (data.commitsLast30Days ?? 0) > 0 ? 2 : 0;
+    let total = accountAge + commits + repos + languages + socialProof + recentActivity;
+    // Username-only cap at 15
     if (usernameOnly) {
-        total = Math.min(20, total);
+        total = Math.min(15, total);
     }
     return {
-        score: Math.min(30, total),
-        max: 30,
+        score: Math.min(25, total),
+        max: 25,
         details: {
             connected: !usernameOnly,
             username: data.login,
             account_age_years: data.accountAgeYears,
+            commits_last_year: data.commitsLastYear ?? 0,
+            commits_last_30_days: data.commitsLast30Days ?? 0,
             repos: data.publicRepos,
-            stars: data.totalStars,
-            followers: data.followers,
             languages: data.topLanguages.length,
+            stars_and_followers: data.totalStars + data.followers,
             username_only: usernameOnly
         }
     };
 }
-function scoreStripe(data, hasBankStatements) {
-    if (!data && !hasBankStatements) {
+function scoreStripeReweighted(data) {
+    if (!data) {
         return {
             score: 0,
-            max: 35,
             details: {
-                connected: false
+                stripe_connected: false
             }
         };
     }
-    if (!data) {
-        // Bank statements only = 2 pts
-        return {
-            score: 2,
-            max: 35,
-            details: {
-                connected: false,
-                bank_statements: true
-            }
-        };
-    }
-    // Account age: 0-10 pts (1pt per 3 months, max 30mo+)
-    const accountAge = Math.min(10, Math.floor(data.accountAgeMonths / 3));
-    // Monthly revenue: 0-12 pts (scaled tiers)
+    // Account age: 0-4 pts (1pt per 3 months)
+    const accountAge = Math.min(4, Math.floor(data.accountAgeMonths / 3));
+    // Monthly revenue: 0-5 pts (tiered)
     let revenue = 0;
-    if (data.monthlyRevenue >= 50000) revenue = 12;
-    else if (data.monthlyRevenue >= 10000) revenue = 11;
-    else if (data.monthlyRevenue >= 5000) revenue = 9;
-    else if (data.monthlyRevenue >= 1000) revenue = 7;
-    else if (data.monthlyRevenue > 0) revenue = 4;
-    // Low chargebacks: 0-5 pts
+    if (data.monthlyRevenue >= 50000) revenue = 5;
+    else if (data.monthlyRevenue >= 10000) revenue = 4;
+    else if (data.monthlyRevenue >= 5000) revenue = 3;
+    else if (data.monthlyRevenue >= 1000) revenue = 2;
+    else if (data.monthlyRevenue > 0) revenue = 1;
+    // Low chargebacks: 0-3 pts
     let chargebacks = 0;
-    if (data.chargebackRateCategory === 'none') chargebacks = 5;
-    else if (data.chargebackRateCategory === 'low') chargebacks = 3;
+    if (data.chargebackRateCategory === 'none') chargebacks = 3;
+    else if (data.chargebackRateCategory === 'low') chargebacks = 2;
     else if (data.chargebackRateCategory === 'medium') chargebacks = 1;
-    // Transaction volume: 0-6 pts (1pt per 20 charges, max 100+)
-    const volume = Math.min(6, Math.floor(data.totalCharges / 20));
+    // Transaction volume: 0-3 pts (1pt per 25 charges)
+    const volume = Math.min(3, Math.floor(data.totalCharges / 25));
     const total = accountAge + revenue + chargebacks + volume;
     return {
-        score: Math.min(35, total),
-        max: 35,
+        score: Math.min(15, total),
         details: {
-            connected: true,
+            stripe_connected: true,
             monthly_revenue: data.monthlyRevenueFormatted,
             account_age_months: data.accountAgeMonths,
             chargeback_rate: `${data.chargebackRate}%`,
@@ -1436,36 +1446,69 @@ function scoreStripe(data, hasBankStatements) {
         }
     };
 }
+function scoreEconomicActivity(input, legacyStripe) {
+    const details = {};
+    // Signal 1: Crypto wallet (max 15)
+    let cryptoScore = 0;
+    if (input?.crypto) {
+        cryptoScore = Math.min(15, input.crypto.total);
+        details.crypto_verified = true;
+        details.crypto_wallet_age = input.crypto.walletAge;
+        details.crypto_tx_count = input.crypto.txCount;
+        details.crypto_holdings = input.crypto.holdings;
+        details.crypto_activity_spread = input.crypto.activitySpread;
+        details.crypto_subtotal = cryptoScore;
+    } else {
+        details.crypto_verified = false;
+    }
+    // Signal 2: Payment verified by admin (5 or 0)
+    const paymentScore = input?.paymentVerified ? 5 : 0;
+    details.payment_verified = !!input?.paymentVerified;
+    details.payment_subtotal = paymentScore;
+    // Signal 3: Stripe connected (max 15, reweighted)
+    const stripeData = input?.stripe ?? legacyStripe;
+    const stripeResult = scoreStripeReweighted(stripeData);
+    const stripeScore = stripeResult.score;
+    Object.assign(details, stripeResult.details);
+    details.stripe_subtotal = stripeScore;
+    // Cap at 25
+    const total = Math.min(25, cryptoScore + paymentScore + stripeScore);
+    return {
+        score: total,
+        max: 25,
+        details
+    };
+}
 function scoreLinkedIn(data, urlOnly) {
     if (!data && !urlOnly) {
         return {
             score: 0,
-            max: 15,
+            max: 10,
             details: {
                 connected: false
             }
         };
     }
-    // URL-only fallback = flat 5 pts
+    // URL-only fallback = flat 3 pts
     if (!data && urlOnly) {
         return {
-            score: 5,
-            max: 15,
+            score: 3,
+            max: 10,
             details: {
                 connected: false,
                 url_only: true
             }
         };
     }
-    // OAuth connected: 10 pts
-    let total = 10;
-    // Profile has picture: 3 pts
-    if (data.picture) total += 3;
-    // Email verified via LinkedIn: 2 pts
-    if (data.verified && data.email) total += 2;
+    // OAuth connected: 7 pts
+    let total = 7;
+    // Profile has picture: 2 pts
+    if (data.picture) total += 2;
+    // Email verified via LinkedIn: 1 pt
+    if (data.verified && data.email) total += 1;
     return {
-        score: Math.min(15, total),
-        max: 15,
+        score: Math.min(10, total),
+        max: 10,
         details: {
             connected: true,
             has_picture: !!data.picture,
@@ -1483,20 +1526,14 @@ function scoreDigitalPresence(input) {
     }
     let total = 0;
     const details = {};
+    // Website verified (DNS/content check): 6 pts
     if (input.websiteVerified) {
-        total += 5;
+        total += 6;
         details.website = true;
     }
-    if (input.twitterVerified) {
-        total += 2;
-        details.twitter = true;
-    }
-    if (input.instagramVerified) {
-        total += 1;
-        details.instagram = true;
-    }
+    // App Store listing (public listing, name match): 4 pts
     if (input.appStoreVerified) {
-        total += 2;
+        total += 4;
         details.app_store = true;
     }
     return {
@@ -1551,10 +1588,10 @@ function scoreIdentity(input) {
     if (input.hasPassport) {
         total += 2;
         details.passport = true;
-        const nameMatch = input.passportNameMatch ?? true;
-        const dobMatch = input.passportDobMatch ?? true;
-        const genderMatch = input.passportGenderMatch ?? true;
-        const nationalityMatch = input.passportNationalityMatch ?? true;
+        const nameMatch = input.passportNameMatch ?? false;
+        const dobMatch = input.passportDobMatch ?? false;
+        const genderMatch = input.passportGenderMatch ?? false;
+        const nationalityMatch = input.passportNationalityMatch ?? false;
         if (nameMatch) {
             total += 2;
             details.name_match = true;
@@ -1614,67 +1651,59 @@ function scoreIdentity(input) {
 }
 function calculateTrustScoreV2(input) {
     const github = scoreGitHub(input.github, !!input.githubUsernameOnly);
-    const stripe = scoreStripe(input.stripe, !!input.hasBankStatements);
+    // Backward compat: if old `stripe` field is set but no economicActivity, map it
+    const eaInput = input.economicActivity ?? (input.stripe ? {
+        stripe: input.stripe
+    } : undefined);
+    const economic_activity = scoreEconomicActivity(eaInput, input.stripe);
     const linkedin = scoreLinkedIn(input.linkedin, !!input.linkedinUrlOnly);
     const identity = scoreIdentity(input.identity);
     const digital_presence = scoreDigitalPresence(input.digitalPresence);
     const network = scoreNetwork(input.network);
     const signals_connected = [];
     if (github.score > 0) signals_connected.push('github');
-    if (stripe.score > 0) signals_connected.push('stripe');
+    if (economic_activity.score > 0) signals_connected.push('economic_activity');
     if (linkedin.score > 0) signals_connected.push('linkedin');
     if (identity.score > 0) signals_connected.push('identity');
     if (digital_presence.score > 0) signals_connected.push('digital_presence');
     if (network.score > 0) signals_connected.push('network');
-    // Max possible: 30+35+15+20+10+10 = 120, clamped to 100
-    const rawScore = github.score + stripe.score + linkedin.score + identity.score + digital_presence.score + network.score;
-    // Country adjustment
+    // Max possible: 25+25+10+20+10+10 = 100
+    const rawScore = github.score + economic_activity.score + linkedin.score + identity.score + digital_presence.score + network.score;
+    // Country adjustment — use rawScore to determine penalty reduction
     const country = input.countryOfOrigin || input.countryOfResidence || '';
     let country_adjustment = 0;
     if (country) {
         country_adjustment = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$validations$2f$onboarding$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["getCountryPenalty"])(country);
-        // GitHub+LinkedIn score > 35 eliminates penalty
-        const githubLinkedinScore = github.score + linkedin.score;
         if (country_adjustment < 0) {
-            if (githubLinkedinScore > 35) {
+            if (rawScore >= 75) {
                 country_adjustment = 0;
-            } else if (githubLinkedinScore > 25) {
+            } else if (rawScore >= 55) {
                 country_adjustment = Math.round(country_adjustment / 2);
             }
         }
     }
     const score = Math.max(0, Math.min(100, rawScore + country_adjustment));
-    // Risk level and recommendation
-    let risk_level;
-    let recommendation;
-    // Thresholds raised because max raw is 120 (clamped to 100)
-    if (score >= 90) {
-        risk_level = 'low';
-        recommendation = 'approve';
-    } else if (score >= 60) {
-        risk_level = 'medium';
-        recommendation = 'review';
-    } else if (score >= 35) {
-        risk_level = 'high';
-        recommendation = 'enhanced_review';
-    } else {
-        risk_level = 'critical';
-        recommendation = 'deny';
-    }
+    // Status, risk level, and recommendation from single source of truth
+    const { status, risk_level, recommendation } = getStatusFromScore(score);
     // Improvement suggestions
     const improvements = [];
     if (github.score === 0) {
-        improvements.push('Connect GitHub for up to +30 points');
+        improvements.push('Connect GitHub for up to +25 points');
     } else if (input.githubUsernameOnly) {
-        improvements.push('Connect GitHub via OAuth for full score (currently capped at 20)');
+        improvements.push('Connect GitHub via OAuth for full score (currently capped at 15)');
     }
-    if (stripe.score === 0) {
-        improvements.push('Connect Stripe for up to +35 points');
+    if (economic_activity.score < 25) {
+        const remaining = 25 - economic_activity.score;
+        if (economic_activity.score === 0) {
+            improvements.push('Verify a crypto wallet or connect Stripe for up to +25 points');
+        } else {
+            improvements.push(`Add more economic signals for up to +${remaining} more points`);
+        }
     }
     if (linkedin.score === 0) {
-        improvements.push('Connect LinkedIn for up to +15 points');
+        improvements.push('Connect LinkedIn for up to +10 points');
     } else if (input.linkedinUrlOnly) {
-        improvements.push('Connect LinkedIn via OAuth for +10 more points');
+        improvements.push('Connect LinkedIn via OAuth for +7 more points');
     }
     if (identity.score === 0) {
         improvements.push('Upload your passport to earn up to +20 points');
@@ -1694,13 +1723,14 @@ function calculateTrustScoreV2(input) {
         score,
         breakdown: {
             github,
-            stripe,
+            economic_activity,
             linkedin,
             identity,
             digital_presence,
             network
         },
         country_adjustment,
+        status,
         risk_level,
         recommendation,
         signals_connected,
@@ -1726,9 +1756,9 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$re
 ;
 function getDarkScoreColor(score) {
     if (score >= 85) return 'text-emerald-400';
-    if (score >= 70) return 'text-blue-400';
-    if (score >= 50) return 'text-yellow-400';
-    if (score >= 30) return 'text-orange-400';
+    if (score >= 65) return 'text-blue-400';
+    if (score >= 45) return 'text-yellow-400';
+    if (score >= 25) return 'text-orange-400';
     return 'text-red-400';
 }
 function getStatusFromRisk(risk) {
@@ -1843,9 +1873,9 @@ function ScoreDisplay({ result }) {
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(ScoreCategory, {
-                        name: "Stripe",
-                        score: b.stripe.score,
-                        max: b.stripe.max
+                        name: "Economic",
+                        score: b.economic_activity.score,
+                        max: b.economic_activity.max
                     }, void 0, false, {
                         fileName: "[project]/src/components/trust-score/score-display.tsx",
                         lineNumber: 83,
@@ -1970,6 +2000,7 @@ function ScoreCategory({ name, score, max }) {
 }
 const providerLabels = {
     github: 'GitHub',
+    economic_activity: 'Economic Activity',
     stripe: 'Stripe / Financial',
     linkedin: 'LinkedIn',
     identity: 'Identity Verification',
@@ -1985,6 +2016,16 @@ const detailLabels = {
     followers: 'Followers',
     languages: 'Languages',
     username_only: 'Username Only (capped)',
+    crypto_verified: 'Crypto Wallet Verified',
+    crypto_wallet_age: 'Wallet Age Score',
+    crypto_tx_count: 'Transaction Count Score',
+    crypto_holdings: 'Stablecoin Holdings Score',
+    crypto_activity_spread: 'Activity Spread Score',
+    crypto_subtotal: 'Crypto Subtotal',
+    payment_verified: 'Formation Payment Verified',
+    payment_subtotal: 'Payment Subtotal',
+    stripe_connected: 'Stripe Connected',
+    stripe_subtotal: 'Stripe Subtotal',
     monthly_revenue: 'Monthly Revenue',
     account_age_months: 'Account Age (months)',
     chargeback_rate: 'Chargeback Rate',
@@ -2003,9 +2044,7 @@ const detailLabels = {
     face_skipped: 'Face Scan Skipped',
     address_verified: 'Address Verified',
     website: 'Website Verified',
-    twitter: 'Twitter/X Verified',
-    instagram: 'Instagram Verified',
-    app_store: 'App Store App',
+    app_store: 'App Store Listing',
     referral: 'Founder Referral',
     university: 'University Email',
     accelerator: 'Accelerator',
@@ -2020,12 +2059,12 @@ function ScoreBreakdownDetail({ result }) {
                 provider: provider
             }, key, false, {
                 fileName: "[project]/src/components/trust-score/score-display.tsx",
-                lineNumber: 173,
+                lineNumber: 182,
                 columnNumber: 9
             }, this))
     }, void 0, false, {
         fileName: "[project]/src/components/trust-score/score-display.tsx",
-        lineNumber: 171,
+        lineNumber: 180,
         columnNumber: 5
     }, this);
 }
@@ -2042,7 +2081,7 @@ function ProviderCard({ name, provider }) {
                         children: name
                     }, void 0, false, {
                         fileName: "[project]/src/components/trust-score/score-display.tsx",
-                        lineNumber: 185,
+                        lineNumber: 194,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2054,13 +2093,13 @@ function ProviderCard({ name, provider }) {
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/trust-score/score-display.tsx",
-                        lineNumber: 186,
+                        lineNumber: 195,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/trust-score/score-display.tsx",
-                lineNumber: 184,
+                lineNumber: 193,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2072,12 +2111,12 @@ function ProviderCard({ name, provider }) {
                     }
                 }, void 0, false, {
                     fileName: "[project]/src/components/trust-score/score-display.tsx",
-                    lineNumber: 189,
+                    lineNumber: 198,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/trust-score/score-display.tsx",
-                lineNumber: 188,
+                lineNumber: 197,
                 columnNumber: 7
             }, this),
             Object.keys(provider.details).length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
@@ -2090,7 +2129,7 @@ function ProviderCard({ name, provider }) {
                                 children: detailLabels[key] || key
                             }, void 0, false, {
                                 fileName: "[project]/src/components/trust-score/score-display.tsx",
-                                lineNumber: 198,
+                                lineNumber: 207,
                                 columnNumber: 15
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2098,24 +2137,24 @@ function ProviderCard({ name, provider }) {
                                 children: typeof value === 'boolean' ? value ? 'Yes' : 'No' : String(value)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/trust-score/score-display.tsx",
-                                lineNumber: 199,
+                                lineNumber: 208,
                                 columnNumber: 15
                             }, this)
                         ]
                     }, key, true, {
                         fileName: "[project]/src/components/trust-score/score-display.tsx",
-                        lineNumber: 197,
+                        lineNumber: 206,
                         columnNumber: 13
                     }, this))
             }, void 0, false, {
                 fileName: "[project]/src/components/trust-score/score-display.tsx",
-                lineNumber: 195,
+                lineNumber: 204,
                 columnNumber: 9
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/trust-score/score-display.tsx",
-        lineNumber: 183,
+        lineNumber: 192,
         columnNumber: 5
     }, this);
 }
@@ -2131,14 +2170,14 @@ function ImprovementSuggestions({ improvements }) {
                         className: "h-4 w-4"
                     }, void 0, false, {
                         fileName: "[project]/src/components/trust-score/score-display.tsx",
-                        lineNumber: 220,
+                        lineNumber: 229,
                         columnNumber: 9
                     }, this),
                     "Ways to Improve Your Score"
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/trust-score/score-display.tsx",
-                lineNumber: 219,
+                lineNumber: 228,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
@@ -2150,25 +2189,25 @@ function ImprovementSuggestions({ improvements }) {
                                 className: "mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-500/50"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/trust-score/score-display.tsx",
-                                lineNumber: 226,
+                                lineNumber: 235,
                                 columnNumber: 13
                             }, this),
                             improvement
                         ]
                     }, index, true, {
                         fileName: "[project]/src/components/trust-score/score-display.tsx",
-                        lineNumber: 225,
+                        lineNumber: 234,
                         columnNumber: 11
                     }, this))
             }, void 0, false, {
                 fileName: "[project]/src/components/trust-score/score-display.tsx",
-                lineNumber: 223,
+                lineNumber: 232,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/trust-score/score-display.tsx",
-        lineNumber: 218,
+        lineNumber: 227,
         columnNumber: 5
     }, this);
 }
@@ -2296,13 +2335,6 @@ function OnboardingResultPage() {
             if (!input.github && codeHistory?.hasGithub) {
                 input.githubUsernameOnly = !codeHistory.githubConnected;
             }
-            // Stripe OAuth data
-            const stRaw = sessionStorage.getItem('oauth_stripe_data') || localStorage.getItem('oauth_stripe_data');
-            if (stRaw) {
-                try {
-                    input.stripe = JSON.parse(stRaw);
-                } catch  {}
-            }
             // LinkedIn OAuth data
             const liRaw = sessionStorage.getItem('oauth_linkedin_data') || localStorage.getItem('oauth_linkedin_data');
             if (liRaw) {
@@ -2329,18 +2361,11 @@ function OnboardingResultPage() {
                     hasAddressProof: !!id.hasAddressProof
                 };
             }
-            // Financial extras
-            const financial = data.financial;
-            if (financial?.hasBankStatements) {
-                input.hasBankStatements = true;
-            }
             // Digital presence
             const dp = data.digitalPresence;
             if (dp) {
                 input.digitalPresence = {
                     websiteVerified: !!dp.websiteVerified,
-                    twitterVerified: !!dp.twitterVerified,
-                    instagramVerified: !!dp.instagramVerified,
                     appStoreVerified: !!dp.appStoreVerified
                 };
             }
@@ -2396,6 +2421,9 @@ function OnboardingResultPage() {
                         sessionStorage.removeItem('trustScoreResult');
                         localStorage.removeItem('onboardingData');
                         localStorage.removeItem('trustScoreResult');
+                        localStorage.removeItem('oauth_github_data');
+                        localStorage.removeItem('oauth_linkedin_data');
+                        localStorage.removeItem('oauth_stripe_data');
                     } catch  {}
                 }
             } catch  {
@@ -2418,25 +2446,25 @@ function OnboardingResultPage() {
                         className: "h-5 w-5 animate-spin"
                     }, void 0, false, {
                         fileName: "[project]/src/app/onboarding/result/page.tsx",
-                        lineNumber: 215,
+                        lineNumber: 201,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                         children: "Calculating your Trust Score..."
                     }, void 0, false, {
                         fileName: "[project]/src/app/onboarding/result/page.tsx",
-                        lineNumber: 216,
+                        lineNumber: 202,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/onboarding/result/page.tsx",
-                lineNumber: 214,
+                lineNumber: 200,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "[project]/src/app/onboarding/result/page.tsx",
-            lineNumber: 213,
+            lineNumber: 199,
             columnNumber: 7
         }, this);
     }
@@ -2450,27 +2478,27 @@ function OnboardingResultPage() {
                         className: "absolute top-0 left-1/4 w-96 h-96 bg-blue-600/30 rounded-full blur-[128px]"
                     }, void 0, false, {
                         fileName: "[project]/src/app/onboarding/result/page.tsx",
-                        lineNumber: 226,
+                        lineNumber: 212,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "absolute top-20 right-1/4 w-80 h-80 bg-violet-600/25 rounded-full blur-[128px]"
                     }, void 0, false, {
                         fileName: "[project]/src/app/onboarding/result/page.tsx",
-                        lineNumber: 227,
+                        lineNumber: 213,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/onboarding/result/page.tsx",
-                lineNumber: 225,
+                lineNumber: 211,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:64px_64px]"
             }, void 0, false, {
                 fileName: "[project]/src/app/onboarding/result/page.tsx",
-                lineNumber: 231,
+                lineNumber: 217,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2488,12 +2516,12 @@ function OnboardingResultPage() {
                                         className: "h-5 w-5 text-white"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/onboarding/result/page.tsx",
-                                        lineNumber: 238,
+                                        lineNumber: 224,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/onboarding/result/page.tsx",
-                                    lineNumber: 237,
+                                    lineNumber: 223,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2501,18 +2529,18 @@ function OnboardingResultPage() {
                                     children: "BedRock"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/onboarding/result/page.tsx",
-                                    lineNumber: 240,
+                                    lineNumber: 226,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/onboarding/result/page.tsx",
-                            lineNumber: 236,
+                            lineNumber: 222,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/app/onboarding/result/page.tsx",
-                        lineNumber: 235,
+                        lineNumber: 221,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2523,20 +2551,20 @@ function OnboardingResultPage() {
                                 children: "Your Trust Score"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/onboarding/result/page.tsx",
-                                lineNumber: 246,
+                                lineNumber: 232,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$trust$2d$score$2f$score$2d$display$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["ScoreDisplay"], {
                                 result: result
                             }, void 0, false, {
                                 fileName: "[project]/src/app/onboarding/result/page.tsx",
-                                lineNumber: 247,
+                                lineNumber: 233,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/onboarding/result/page.tsx",
-                        lineNumber: 245,
+                        lineNumber: 231,
                         columnNumber: 9
                     }, this),
                     result.improvements.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2545,12 +2573,12 @@ function OnboardingResultPage() {
                             improvements: result.improvements
                         }, void 0, false, {
                             fileName: "[project]/src/app/onboarding/result/page.tsx",
-                            lineNumber: 253,
+                            lineNumber: 239,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/app/onboarding/result/page.tsx",
-                        lineNumber: 252,
+                        lineNumber: 238,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2566,7 +2594,7 @@ function OnboardingResultPage() {
                                         children: "Score Breakdown"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/onboarding/result/page.tsx",
-                                        lineNumber: 260,
+                                        lineNumber: 246,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2576,13 +2604,13 @@ function OnboardingResultPage() {
                                         children: "Next Steps"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/onboarding/result/page.tsx",
-                                        lineNumber: 271,
+                                        lineNumber: 257,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/onboarding/result/page.tsx",
-                                lineNumber: 259,
+                                lineNumber: 245,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2592,26 +2620,26 @@ function OnboardingResultPage() {
                                         result: result
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/onboarding/result/page.tsx",
-                                        lineNumber: 285,
+                                        lineNumber: 271,
                                         columnNumber: 43
                                     }, this),
                                     activeTab === 'next-steps' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(NextSteps, {
                                         result: result
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/onboarding/result/page.tsx",
-                                        lineNumber: 286,
+                                        lineNumber: 272,
                                         columnNumber: 44
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/onboarding/result/page.tsx",
-                                lineNumber: 284,
+                                lineNumber: 270,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/onboarding/result/page.tsx",
-                        lineNumber: 258,
+                        lineNumber: 244,
                         columnNumber: 9
                     }, this),
                     scoreSaved && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2621,7 +2649,7 @@ function OnboardingResultPage() {
                                 className: "h-5 w-5 text-emerald-400 shrink-0"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/onboarding/result/page.tsx",
-                                lineNumber: 293,
+                                lineNumber: 279,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2629,13 +2657,13 @@ function OnboardingResultPage() {
                                 children: "Your trust score has been saved to your account."
                             }, void 0, false, {
                                 fileName: "[project]/src/app/onboarding/result/page.tsx",
-                                lineNumber: 294,
+                                lineNumber: 280,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/onboarding/result/page.tsx",
-                        lineNumber: 292,
+                        lineNumber: 278,
                         columnNumber: 11
                     }, this),
                     savingScore && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2645,7 +2673,7 @@ function OnboardingResultPage() {
                                 className: "h-5 w-5 text-blue-400 shrink-0 animate-spin"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/onboarding/result/page.tsx",
-                                lineNumber: 299,
+                                lineNumber: 285,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2653,13 +2681,13 @@ function OnboardingResultPage() {
                                 children: "Saving trust score to your account..."
                             }, void 0, false, {
                                 fileName: "[project]/src/app/onboarding/result/page.tsx",
-                                lineNumber: 300,
+                                lineNumber: 286,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/onboarding/result/page.tsx",
-                        lineNumber: 298,
+                        lineNumber: 284,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2677,18 +2705,18 @@ function OnboardingResultPage() {
                                             className: "h-4 w-4"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/onboarding/result/page.tsx",
-                                            lineNumber: 313,
+                                            lineNumber: 299,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/onboarding/result/page.tsx",
-                                    lineNumber: 308,
+                                    lineNumber: 294,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/app/onboarding/result/page.tsx",
-                                lineNumber: 307,
+                                lineNumber: 293,
                                 columnNumber: 13
                             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
                                 href: "/register",
@@ -2702,18 +2730,18 @@ function OnboardingResultPage() {
                                             className: "h-4 w-4"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/onboarding/result/page.tsx",
-                                            lineNumber: 323,
+                                            lineNumber: 309,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/onboarding/result/page.tsx",
-                                    lineNumber: 318,
+                                    lineNumber: 304,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/app/onboarding/result/page.tsx",
-                                lineNumber: 317,
+                                lineNumber: 303,
                                 columnNumber: 13
                             }, this),
                             result.score >= 60 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -2727,19 +2755,19 @@ function OnboardingResultPage() {
                                             className: "h-4 w-4"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/onboarding/result/page.tsx",
-                                            lineNumber: 333,
+                                            lineNumber: 319,
                                             columnNumber: 17
                                         }, this),
                                         "Choose Your Plan"
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/onboarding/result/page.tsx",
-                                    lineNumber: 329,
+                                    lineNumber: 315,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/app/onboarding/result/page.tsx",
-                                lineNumber: 328,
+                                lineNumber: 314,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -2752,18 +2780,18 @@ function OnboardingResultPage() {
                                     children: "Update Information"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/onboarding/result/page.tsx",
-                                    lineNumber: 339,
+                                    lineNumber: 325,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/app/onboarding/result/page.tsx",
-                                lineNumber: 338,
+                                lineNumber: 324,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/onboarding/result/page.tsx",
-                        lineNumber: 305,
+                        lineNumber: 291,
                         columnNumber: 9
                     }, this),
                     !isLoggedIn && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2777,25 +2805,25 @@ function OnboardingResultPage() {
                                 children: "Sign in"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/onboarding/result/page.tsx",
-                                lineNumber: 352,
+                                lineNumber: 338,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/onboarding/result/page.tsx",
-                        lineNumber: 350,
+                        lineNumber: 336,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/onboarding/result/page.tsx",
-                lineNumber: 233,
+                lineNumber: 219,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/app/onboarding/result/page.tsx",
-        lineNumber: 223,
+        lineNumber: 209,
         columnNumber: 5
     }, this);
 }
@@ -2813,7 +2841,7 @@ function NextSteps({ result }) {
                             children: step.type === 'done' ? '\u2713' : index + 1
                         }, void 0, false, {
                             fileName: "[project]/src/app/onboarding/result/page.tsx",
-                            lineNumber: 370,
+                            lineNumber: 356,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2823,7 +2851,7 @@ function NextSteps({ result }) {
                                     children: step.title
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/onboarding/result/page.tsx",
-                                    lineNumber: 380,
+                                    lineNumber: 366,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2831,7 +2859,7 @@ function NextSteps({ result }) {
                                     children: step.description
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/onboarding/result/page.tsx",
-                                    lineNumber: 383,
+                                    lineNumber: 369,
                                     columnNumber: 15
                                 }, this),
                                 step.points ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2843,29 +2871,29 @@ function NextSteps({ result }) {
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/onboarding/result/page.tsx",
-                                    lineNumber: 385,
+                                    lineNumber: 371,
                                     columnNumber: 17
                                 }, this) : null
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/onboarding/result/page.tsx",
-                            lineNumber: 379,
+                            lineNumber: 365,
                             columnNumber: 13
                         }, this)
                     ]
                 }, index, true, {
                     fileName: "[project]/src/app/onboarding/result/page.tsx",
-                    lineNumber: 369,
+                    lineNumber: 355,
                     columnNumber: 11
                 }, this))
         }, void 0, false, {
             fileName: "[project]/src/app/onboarding/result/page.tsx",
-            lineNumber: 367,
+            lineNumber: 353,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/app/onboarding/result/page.tsx",
-        lineNumber: 366,
+        lineNumber: 352,
         columnNumber: 5
     }, this);
 }
@@ -2904,29 +2932,29 @@ function getPersonalizedSteps(result) {
             title: 'Connect GitHub',
             description: 'Link your GitHub account to prove your developer history.',
             type: 'action',
-            points: 30
+            points: 25
         });
     }
-    // Stripe
-    if (b.stripe.score > 0) {
+    // Economic Activity
+    if (b.economic_activity.score > 0) {
         steps.push({
-            title: 'Financial Signals Added',
-            description: `Earning ${b.stripe.score}/${b.stripe.max} points.`,
+            title: 'Economic Signals Added',
+            description: `Earning ${b.economic_activity.score}/${b.economic_activity.max} points.`,
             type: 'done'
         });
-        if (b.stripe.score < b.stripe.max) {
+        if (b.economic_activity.score < b.economic_activity.max) {
             steps.push({
-                title: 'Strengthen Financial Signals',
-                description: 'Add more revenue documentation.',
+                title: 'Strengthen Economic Signals',
+                description: 'Connect a wallet, Stripe, or complete payment.',
                 type: 'action'
             });
         }
     } else {
         steps.push({
-            title: 'Connect Stripe or Add Revenue',
-            description: 'Show business traction to earn up to +35 points.',
+            title: 'Add Economic Activity',
+            description: 'Verify a crypto wallet or connect Stripe for up to +25 points.',
             type: 'action',
-            points: 35
+            points: 25
         });
     }
     // LinkedIn
@@ -2939,9 +2967,9 @@ function getPersonalizedSteps(result) {
             });
             steps.push({
                 title: 'Connect LinkedIn via OAuth',
-                description: 'Authenticate with LinkedIn for +10 more points.',
+                description: 'Authenticate with LinkedIn for +7 more points.',
                 type: 'action',
-                points: 10
+                points: 7
             });
         } else {
             steps.push({
@@ -2955,7 +2983,7 @@ function getPersonalizedSteps(result) {
             title: 'Connect LinkedIn',
             description: 'Link your LinkedIn profile to verify your professional background.',
             type: 'action',
-            points: 15
+            points: 10
         });
     }
     // Identity

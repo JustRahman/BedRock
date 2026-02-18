@@ -48,7 +48,7 @@ function AnimatedScore({ value, className }) {
         children: display
     }, void 0, false, {
         fileName: "[project]/src/app/docs/page.tsx",
-        lineNumber: 56,
+        lineNumber: 57,
         columnNumber: 10
     }, this);
 }
@@ -96,7 +96,7 @@ function BreakdownBar({ label, score, max }) {
                         children: label
                     }, void 0, false, {
                         fileName: "[project]/src/app/docs/page.tsx",
-                        lineNumber: 86,
+                        lineNumber: 87,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -108,13 +108,13 @@ function BreakdownBar({ label, score, max }) {
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/docs/page.tsx",
-                        lineNumber: 87,
+                        lineNumber: 88,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/docs/page.tsx",
-                lineNumber: 85,
+                lineNumber: 86,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -126,18 +126,18 @@ function BreakdownBar({ label, score, max }) {
                     }
                 }, void 0, false, {
                     fileName: "[project]/src/app/docs/page.tsx",
-                    lineNumber: 90,
+                    lineNumber: 91,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/app/docs/page.tsx",
-                lineNumber: 89,
+                lineNumber: 90,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/app/docs/page.tsx",
-        lineNumber: 84,
+        lineNumber: 85,
         columnNumber: 5
     }, this);
 }
@@ -147,25 +147,25 @@ const famousFounders = [
     {
         name: 'Linus Torvalds',
         username: 'torvalds',
-        github: '28/30',
+        github: '25/25',
         note: 'Creator of Linux & Git'
     },
     {
         name: 'DHH',
         username: 'dhh',
-        github: '25/30',
+        github: '22/25',
         note: 'Creator of Ruby on Rails'
     },
     {
         name: 'Guillermo Rauch',
         username: 'rauchg',
-        github: '24/30',
+        github: '21/25',
         note: 'CEO of Vercel'
     },
     {
         name: 'Evan You',
         username: 'yyx990803',
-        github: '26/30',
+        github: '23/25',
         note: 'Creator of Vue.js'
     }
 ];
@@ -238,7 +238,7 @@ function DocsPage() {
                             children: "BedRock"
                         }, void 0, false, {
                             fileName: "[project]/src/app/docs/page.tsx",
-                            lineNumber: 166,
+                            lineNumber: 167,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("nav", {
@@ -250,7 +250,7 @@ function DocsPage() {
                                     children: "Dashboard"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/docs/page.tsx",
-                                    lineNumber: 168,
+                                    lineNumber: 169,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -258,24 +258,24 @@ function DocsPage() {
                                     children: "Trust Score API"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/docs/page.tsx",
-                                    lineNumber: 169,
+                                    lineNumber: 170,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/docs/page.tsx",
-                            lineNumber: 167,
+                            lineNumber: 168,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/docs/page.tsx",
-                    lineNumber: 165,
+                    lineNumber: 166,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/app/docs/page.tsx",
-                lineNumber: 164,
+                lineNumber: 165,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("main", {
@@ -289,7 +289,7 @@ function DocsPage() {
                                 children: "87%"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/docs/page.tsx",
-                                lineNumber: 177,
+                                lineNumber: 178,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -297,13 +297,13 @@ function DocsPage() {
                                 children: "of legitimate international founders are rejected by traditional bank KYC"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/docs/page.tsx",
-                                lineNumber: 178,
+                                lineNumber: 179,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/docs/page.tsx",
-                        lineNumber: 176,
+                        lineNumber: 177,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -314,7 +314,7 @@ function DocsPage() {
                                 children: "Trust Score API"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/docs/page.tsx",
-                                lineNumber: 183,
+                                lineNumber: 184,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -322,13 +322,13 @@ function DocsPage() {
                                 children: "Digital residue replaces document-based KYC. Enter any founder's GitHub username to see how traditional KYC misses real signal."
                             }, void 0, false, {
                                 fileName: "[project]/src/app/docs/page.tsx",
-                                lineNumber: 184,
+                                lineNumber: 185,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/docs/page.tsx",
-                        lineNumber: 182,
+                        lineNumber: 183,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -339,15 +339,15 @@ function DocsPage() {
                                 children: "Score a Founder"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/docs/page.tsx",
-                                lineNumber: 192,
+                                lineNumber: 193,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                 className: "text-zinc-500 mb-4 text-sm",
-                                children: "Public GitHub data only. No auth required. Full score uses 5 signals via OAuth."
+                                children: "Public GitHub data only. No auth required. Full score uses 6 signals via OAuth."
                             }, void 0, false, {
                                 fileName: "[project]/src/app/docs/page.tsx",
-                                lineNumber: 193,
+                                lineNumber: 194,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -362,7 +362,7 @@ function DocsPage() {
                                         className: "flex-1 rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-3 text-white placeholder:text-zinc-600 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/docs/page.tsx",
-                                        lineNumber: 198,
+                                        lineNumber: 199,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -386,7 +386,7 @@ function DocsPage() {
                                                             strokeWidth: "4"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/docs/page.tsx",
-                                                            lineNumber: 214,
+                                                            lineNumber: 215,
                                                             columnNumber: 21
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("path", {
@@ -395,31 +395,31 @@ function DocsPage() {
                                                             d: "M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/docs/page.tsx",
-                                                            lineNumber: 215,
+                                                            lineNumber: 216,
                                                             columnNumber: 21
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/docs/page.tsx",
-                                                    lineNumber: 213,
+                                                    lineNumber: 214,
                                                     columnNumber: 19
                                                 }, this),
                                                 "Scoring..."
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/docs/page.tsx",
-                                            lineNumber: 212,
+                                            lineNumber: 213,
                                             columnNumber: 17
                                         }, this) : 'Score'
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/docs/page.tsx",
-                                        lineNumber: 206,
+                                        lineNumber: 207,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/docs/page.tsx",
-                                lineNumber: 197,
+                                lineNumber: 198,
                                 columnNumber: 11
                             }, this),
                             error ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -427,7 +427,7 @@ function DocsPage() {
                                 children: error
                             }, void 0, false, {
                                 fileName: "[project]/src/app/docs/page.tsx",
-                                lineNumber: 224,
+                                lineNumber: 225,
                                 columnNumber: 13
                             }, this) : null,
                             result ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -445,24 +445,24 @@ function DocsPage() {
                                                             children: [
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(AnimatedScore, {
                                                                     value: result.breakdown.github.score,
-                                                                    className: getRiskColor(result.breakdown.github.score >= 22 ? 'low' : result.breakdown.github.score >= 15 ? 'medium' : 'high')
+                                                                    className: getRiskColor(result.breakdown.github.score >= 18 ? 'low' : result.breakdown.github.score >= 12 ? 'medium' : 'high')
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/docs/page.tsx",
-                                                                    lineNumber: 237,
+                                                                    lineNumber: 238,
                                                                     columnNumber: 25
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                     className: "text-zinc-600 text-2xl",
-                                                                    children: "/30"
+                                                                    children: "/25"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/docs/page.tsx",
-                                                                    lineNumber: 238,
+                                                                    lineNumber: 239,
                                                                     columnNumber: 25
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/app/docs/page.tsx",
-                                                            lineNumber: 236,
+                                                            lineNumber: 237,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -472,35 +472,35 @@ function DocsPage() {
                                                                     children: "GitHub Signal Score"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/docs/page.tsx",
-                                                                    lineNumber: 241,
+                                                                    lineNumber: 242,
                                                                     columnNumber: 25
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                                     className: "mt-1 text-sm text-zinc-500",
-                                                                    children: "1 of 5 verification signals"
+                                                                    children: "1 of 6 verification signals"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/docs/page.tsx",
-                                                                    lineNumber: 242,
+                                                                    lineNumber: 243,
                                                                     columnNumber: 25
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/app/docs/page.tsx",
-                                                            lineNumber: 240,
+                                                            lineNumber: 241,
                                                             columnNumber: 23
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/docs/page.tsx",
-                                                    lineNumber: 235,
+                                                    lineNumber: 236,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                     className: "mt-4 rounded-lg border border-blue-800/50 bg-blue-950/20 px-4 py-3 text-sm text-blue-300",
-                                                    children: "Partial score using public GitHub data only. Full assessment with Stripe, LinkedIn, and more available via OAuth connection."
+                                                    children: "Partial score using public GitHub data only. Full assessment with economic activity, LinkedIn, and more available via OAuth connection."
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/docs/page.tsx",
-                                                    lineNumber: 247,
+                                                    lineNumber: 248,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
@@ -515,7 +515,7 @@ function DocsPage() {
                                                             className: getRiskColor(result.risk_level)
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/docs/page.tsx",
-                                                            lineNumber: 255,
+                                                            lineNumber: 256,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -523,13 +523,13 @@ function DocsPage() {
                                                             children: "/100"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/docs/page.tsx",
-                                                            lineNumber: 256,
+                                                            lineNumber: 257,
                                                             columnNumber: 23
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/docs/page.tsx",
-                                                    lineNumber: 254,
+                                                    lineNumber: 255,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -542,7 +542,7 @@ function DocsPage() {
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/app/docs/page.tsx",
-                                                            lineNumber: 259,
+                                                            lineNumber: 260,
                                                             columnNumber: 23
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -554,30 +554,30 @@ function DocsPage() {
                                                                     children: result.recommendation
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/docs/page.tsx",
-                                                                    lineNumber: 263,
+                                                                    lineNumber: 264,
                                                                     columnNumber: 41
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/app/docs/page.tsx",
-                                                            lineNumber: 262,
+                                                            lineNumber: 263,
                                                             columnNumber: 23
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/docs/page.tsx",
-                                                    lineNumber: 258,
+                                                    lineNumber: 259,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/docs/page.tsx",
-                                            lineNumber: 253,
+                                            lineNumber: 254,
                                             columnNumber: 19
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/docs/page.tsx",
-                                        lineNumber: 232,
+                                        lineNumber: 233,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -589,16 +589,16 @@ function DocsPage() {
                                                 max: result.breakdown.github.max
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                lineNumber: 272,
+                                                lineNumber: 273,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(BreakdownBar, {
-                                                label: "Stripe / Financial",
-                                                score: result.breakdown.stripe.score,
-                                                max: result.breakdown.stripe.max
+                                                label: "Economic Activity",
+                                                score: result.breakdown.economic_activity.score,
+                                                max: result.breakdown.economic_activity.max
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                lineNumber: 273,
+                                                lineNumber: 274,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(BreakdownBar, {
@@ -607,7 +607,16 @@ function DocsPage() {
                                                 max: result.breakdown.linkedin.max
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                lineNumber: 274,
+                                                lineNumber: 275,
+                                                columnNumber: 17
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(BreakdownBar, {
+                                                label: "Identity",
+                                                score: result.breakdown.identity.score,
+                                                max: result.breakdown.identity.max
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/docs/page.tsx",
+                                                lineNumber: 276,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(BreakdownBar, {
@@ -616,7 +625,7 @@ function DocsPage() {
                                                 max: result.breakdown.digital_presence.max
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                lineNumber: 275,
+                                                lineNumber: 277,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(BreakdownBar, {
@@ -625,13 +634,13 @@ function DocsPage() {
                                                 max: result.breakdown.network.max
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                lineNumber: 276,
+                                                lineNumber: 278,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/docs/page.tsx",
-                                        lineNumber: 271,
+                                        lineNumber: 272,
                                         columnNumber: 15
                                     }, this),
                                     result.breakdown.github.details && result.breakdown.github.score > 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -642,7 +651,7 @@ function DocsPage() {
                                                 children: "GitHub Details"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                lineNumber: 282,
+                                                lineNumber: 284,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -658,7 +667,7 @@ function DocsPage() {
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                                lineNumber: 286,
+                                                                lineNumber: 288,
                                                                 columnNumber: 25
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -666,13 +675,37 @@ function DocsPage() {
                                                                 children: "Account age"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                                lineNumber: 287,
+                                                                lineNumber: 289,
                                                                 columnNumber: 25
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/app/docs/page.tsx",
-                                                        lineNumber: 285,
+                                                        lineNumber: 287,
+                                                        columnNumber: 23
+                                                    }, this) : null,
+                                                    result.breakdown.github.details.commits_last_year !== undefined ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                className: "text-lg font-bold text-zinc-200",
+                                                                children: String(result.breakdown.github.details.commits_last_year)
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/docs/page.tsx",
+                                                                lineNumber: 294,
+                                                                columnNumber: 25
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                className: "text-xs text-zinc-500",
+                                                                children: "Commits (12mo)"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/docs/page.tsx",
+                                                                lineNumber: 295,
+                                                                columnNumber: 25
+                                                            }, this)
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/src/app/docs/page.tsx",
+                                                        lineNumber: 293,
                                                         columnNumber: 23
                                                     }, this) : null,
                                                     result.breakdown.github.details.repos !== undefined ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -682,7 +715,7 @@ function DocsPage() {
                                                                 children: String(result.breakdown.github.details.repos)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                                lineNumber: 292,
+                                                                lineNumber: 300,
                                                                 columnNumber: 25
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -690,73 +723,49 @@ function DocsPage() {
                                                                 children: "Public repos"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                                lineNumber: 293,
+                                                                lineNumber: 301,
                                                                 columnNumber: 25
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/app/docs/page.tsx",
-                                                        lineNumber: 291,
+                                                        lineNumber: 299,
                                                         columnNumber: 23
                                                     }, this) : null,
-                                                    result.breakdown.github.details.stars !== undefined ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    result.breakdown.github.details.languages !== undefined ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                         children: [
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                 className: "text-lg font-bold text-zinc-200",
-                                                                children: String(result.breakdown.github.details.stars)
+                                                                children: String(result.breakdown.github.details.languages)
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                                lineNumber: 298,
+                                                                lineNumber: 306,
                                                                 columnNumber: 25
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                 className: "text-xs text-zinc-500",
-                                                                children: "Stars"
+                                                                children: "Languages"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                                lineNumber: 299,
+                                                                lineNumber: 307,
                                                                 columnNumber: 25
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/app/docs/page.tsx",
-                                                        lineNumber: 297,
-                                                        columnNumber: 23
-                                                    }, this) : null,
-                                                    result.breakdown.github.details.followers !== undefined ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                        children: [
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                className: "text-lg font-bold text-zinc-200",
-                                                                children: String(result.breakdown.github.details.followers)
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/src/app/docs/page.tsx",
-                                                                lineNumber: 304,
-                                                                columnNumber: 25
-                                                            }, this),
-                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                                className: "text-xs text-zinc-500",
-                                                                children: "Followers"
-                                                            }, void 0, false, {
-                                                                fileName: "[project]/src/app/docs/page.tsx",
-                                                                lineNumber: 305,
-                                                                columnNumber: 25
-                                                            }, this)
-                                                        ]
-                                                    }, void 0, true, {
-                                                        fileName: "[project]/src/app/docs/page.tsx",
-                                                        lineNumber: 303,
+                                                        lineNumber: 305,
                                                         columnNumber: 23
                                                     }, this) : null
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                lineNumber: 283,
+                                                lineNumber: 285,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/docs/page.tsx",
-                                        lineNumber: 281,
+                                        lineNumber: 283,
                                         columnNumber: 17
                                     }, this) : null,
                                     result.improvements.length > 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -767,7 +776,7 @@ function DocsPage() {
                                                 children: "Unlock full score"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                lineNumber: 315,
+                                                lineNumber: 317,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
@@ -780,7 +789,7 @@ function DocsPage() {
                                                                 children: "+"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                                lineNumber: 319,
+                                                                lineNumber: 321,
                                                                 columnNumber: 25
                                                             }, this),
                                                             " ",
@@ -788,18 +797,18 @@ function DocsPage() {
                                                         ]
                                                     }, i, true, {
                                                         fileName: "[project]/src/app/docs/page.tsx",
-                                                        lineNumber: 318,
+                                                        lineNumber: 320,
                                                         columnNumber: 23
                                                     }, this))
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                lineNumber: 316,
+                                                lineNumber: 318,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/docs/page.tsx",
-                                        lineNumber: 314,
+                                        lineNumber: 316,
                                         columnNumber: 17
                                     }, this) : null,
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -814,7 +823,7 @@ function DocsPage() {
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                lineNumber: 328,
+                                                lineNumber: 330,
                                                 columnNumber: 17
                                             }, this),
                                             responseTime ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -826,13 +835,13 @@ function DocsPage() {
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                lineNumber: 335,
+                                                lineNumber: 337,
                                                 columnNumber: 19
                                             }, this) : null
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/docs/page.tsx",
-                                        lineNumber: 327,
+                                        lineNumber: 329,
                                         columnNumber: 15
                                     }, this),
                                     showRaw ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -842,24 +851,24 @@ function DocsPage() {
                                             children: JSON.stringify(result, null, 2)
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/docs/page.tsx",
-                                            lineNumber: 342,
+                                            lineNumber: 344,
                                             columnNumber: 19
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/docs/page.tsx",
-                                        lineNumber: 341,
+                                        lineNumber: 343,
                                         columnNumber: 17
                                     }, this) : null
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/docs/page.tsx",
-                                lineNumber: 230,
+                                lineNumber: 231,
                                 columnNumber: 13
                             }, this) : null
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/docs/page.tsx",
-                        lineNumber: 191,
+                        lineNumber: 192,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -870,7 +879,7 @@ function DocsPage() {
                                 children: "Traditional KYC vs BedRock"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/docs/page.tsx",
-                                lineNumber: 353,
+                                lineNumber: 355,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -884,7 +893,7 @@ function DocsPage() {
                                                 children: "Traditional KYC"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                lineNumber: 357,
+                                                lineNumber: 359,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -898,7 +907,7 @@ function DocsPage() {
                                                                 children: "✕"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                                lineNumber: 360,
+                                                                lineNumber: 362,
                                                                 columnNumber: 19
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -910,19 +919,19 @@ function DocsPage() {
                                                                         children: "Auto-denied"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/app/docs/page.tsx",
-                                                                        lineNumber: 361,
+                                                                        lineNumber: 363,
                                                                         columnNumber: 76
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                                lineNumber: 361,
+                                                                lineNumber: 363,
                                                                 columnNumber: 19
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/app/docs/page.tsx",
-                                                        lineNumber: 359,
+                                                        lineNumber: 361,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -933,7 +942,7 @@ function DocsPage() {
                                                                 children: "✕"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                                lineNumber: 364,
+                                                                lineNumber: 366,
                                                                 columnNumber: 19
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -945,19 +954,19 @@ function DocsPage() {
                                                                         children: "No FICO score"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/app/docs/page.tsx",
-                                                                        lineNumber: 365,
+                                                                        lineNumber: 367,
                                                                         columnNumber: 74
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                                lineNumber: 365,
+                                                                lineNumber: 367,
                                                                 columnNumber: 19
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/app/docs/page.tsx",
-                                                        lineNumber: 363,
+                                                        lineNumber: 365,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -968,7 +977,7 @@ function DocsPage() {
                                                                 children: "✕"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                                lineNumber: 368,
+                                                                lineNumber: 370,
                                                                 columnNumber: 19
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -980,19 +989,19 @@ function DocsPage() {
                                                                         children: "Cannot verify"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/app/docs/page.tsx",
-                                                                        lineNumber: 369,
+                                                                        lineNumber: 371,
                                                                         columnNumber: 73
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                                lineNumber: 369,
+                                                                lineNumber: 371,
                                                                 columnNumber: 19
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/app/docs/page.tsx",
-                                                        lineNumber: 367,
+                                                        lineNumber: 369,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1003,7 +1012,7 @@ function DocsPage() {
                                                                 children: "✕"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                                lineNumber: 372,
+                                                                lineNumber: 374,
                                                                 columnNumber: 19
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1015,25 +1024,25 @@ function DocsPage() {
                                                                         children: "No employer letter"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/app/docs/page.tsx",
-                                                                        lineNumber: 373,
+                                                                        lineNumber: 375,
                                                                         columnNumber: 67
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                                lineNumber: 373,
+                                                                lineNumber: 375,
                                                                 columnNumber: 19
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/app/docs/page.tsx",
-                                                        lineNumber: 371,
+                                                        lineNumber: 373,
                                                         columnNumber: 17
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                lineNumber: 358,
+                                                lineNumber: 360,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1044,7 +1053,7 @@ function DocsPage() {
                                                         children: "Result: Denied"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/docs/page.tsx",
-                                                        lineNumber: 377,
+                                                        lineNumber: 379,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1052,19 +1061,19 @@ function DocsPage() {
                                                         children: "Average processing: 2-3 weeks"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/docs/page.tsx",
-                                                        lineNumber: 378,
+                                                        lineNumber: 380,
                                                         columnNumber: 17
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                lineNumber: 376,
+                                                lineNumber: 378,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/docs/page.tsx",
-                                        lineNumber: 356,
+                                        lineNumber: 358,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1075,7 +1084,7 @@ function DocsPage() {
                                                 children: "BedRock Trust Score"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                lineNumber: 384,
+                                                lineNumber: 386,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1089,7 +1098,7 @@ function DocsPage() {
                                                                 children: "✓"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                                lineNumber: 387,
+                                                                lineNumber: 389,
                                                                 columnNumber: 19
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1098,22 +1107,22 @@ function DocsPage() {
                                                                     "GitHub: 8 years active — ",
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                         className: "text-emerald-400",
-                                                                        children: "27/30"
+                                                                        children: "23/25"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/app/docs/page.tsx",
-                                                                        lineNumber: 388,
+                                                                        lineNumber: 390,
                                                                         columnNumber: 76
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                                lineNumber: 388,
+                                                                lineNumber: 390,
                                                                 columnNumber: 19
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/app/docs/page.tsx",
-                                                        lineNumber: 386,
+                                                        lineNumber: 388,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1124,31 +1133,31 @@ function DocsPage() {
                                                                 children: "✓"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                                lineNumber: 391,
+                                                                lineNumber: 393,
                                                                 columnNumber: 19
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                 className: "text-zinc-400",
                                                                 children: [
-                                                                    "Stripe: $12k/mo revenue — ",
+                                                                    "Economic Activity: wallet + Stripe — ",
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                         className: "text-emerald-400",
-                                                                        children: "28/35"
+                                                                        children: "22/25"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/app/docs/page.tsx",
-                                                                        lineNumber: 392,
-                                                                        columnNumber: 77
+                                                                        lineNumber: 394,
+                                                                        columnNumber: 88
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                                lineNumber: 392,
+                                                                lineNumber: 394,
                                                                 columnNumber: 19
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/app/docs/page.tsx",
-                                                        lineNumber: 390,
+                                                        lineNumber: 392,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1159,7 +1168,7 @@ function DocsPage() {
                                                                 children: "✓"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                                lineNumber: 395,
+                                                                lineNumber: 397,
                                                                 columnNumber: 19
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1168,22 +1177,22 @@ function DocsPage() {
                                                                     "LinkedIn: 5yr profile — ",
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                         className: "text-emerald-400",
-                                                                        children: "13/15"
+                                                                        children: "9/10"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/app/docs/page.tsx",
-                                                                        lineNumber: 396,
+                                                                        lineNumber: 398,
                                                                         columnNumber: 75
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                                lineNumber: 396,
+                                                                lineNumber: 398,
                                                                 columnNumber: 19
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/app/docs/page.tsx",
-                                                        lineNumber: 394,
+                                                        lineNumber: 396,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1194,37 +1203,37 @@ function DocsPage() {
                                                                 children: "✓"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                                lineNumber: 399,
+                                                                lineNumber: 401,
                                                                 columnNumber: 19
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                 className: "text-zinc-400",
                                                                 children: [
-                                                                    "47 repos, 200+ stars — ",
+                                                                    "Passport + face scan — ",
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                         className: "text-emerald-400",
-                                                                        children: "verified developer"
+                                                                        children: "16/20"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/app/docs/page.tsx",
-                                                                        lineNumber: 400,
+                                                                        lineNumber: 402,
                                                                         columnNumber: 74
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                                lineNumber: 400,
+                                                                lineNumber: 402,
                                                                 columnNumber: 19
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/app/docs/page.tsx",
-                                                        lineNumber: 398,
+                                                        lineNumber: 400,
                                                         columnNumber: 17
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                lineNumber: 385,
+                                                lineNumber: 387,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1232,10 +1241,10 @@ function DocsPage() {
                                                 children: [
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                         className: "text-lg font-bold text-emerald-400",
-                                                        children: "Score: 74/100 — Approve"
+                                                        children: "Score: 83/100 — Approve"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/docs/page.tsx",
-                                                        lineNumber: 404,
+                                                        lineNumber: 406,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1243,31 +1252,31 @@ function DocsPage() {
                                                         children: "Score calculated in <1 second"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/docs/page.tsx",
-                                                        lineNumber: 405,
+                                                        lineNumber: 407,
                                                         columnNumber: 17
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                lineNumber: 403,
+                                                lineNumber: 405,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/docs/page.tsx",
-                                        lineNumber: 383,
+                                        lineNumber: 385,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/docs/page.tsx",
-                                lineNumber: 354,
+                                lineNumber: 356,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/docs/page.tsx",
-                        lineNumber: 352,
+                        lineNumber: 354,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -1278,7 +1287,7 @@ function DocsPage() {
                                 children: "What Banks See vs What BedRock Sees"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/docs/page.tsx",
-                                lineNumber: 413,
+                                lineNumber: 415,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1295,7 +1304,7 @@ function DocsPage() {
                                                         children: "Founder Profile"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/docs/page.tsx",
-                                                        lineNumber: 418,
+                                                        lineNumber: 420,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -1303,7 +1312,7 @@ function DocsPage() {
                                                         children: "Traditional KYC"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/docs/page.tsx",
-                                                        lineNumber: 419,
+                                                        lineNumber: 421,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -1311,18 +1320,18 @@ function DocsPage() {
                                                         children: "BedRock Score"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/docs/page.tsx",
-                                                        lineNumber: 420,
+                                                        lineNumber: 422,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                lineNumber: 417,
+                                                lineNumber: 419,
                                                 columnNumber: 17
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/docs/page.tsx",
-                                            lineNumber: 416,
+                                            lineNumber: 418,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {
@@ -1332,10 +1341,10 @@ function DocsPage() {
                                                     children: [
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
                                                             className: "p-4 text-zinc-300",
-                                                            children: "Developer from Turkmenistan, 8yr GitHub"
+                                                            children: "Developer from Turkmenistan, 8yr GitHub, passport verified"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/docs/page.tsx",
-                                                            lineNumber: 425,
+                                                            lineNumber: 427,
                                                             columnNumber: 19
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -1345,33 +1354,33 @@ function DocsPage() {
                                                                 children: "Auto-denied"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                                lineNumber: 426,
+                                                                lineNumber: 428,
                                                                 columnNumber: 39
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/docs/page.tsx",
-                                                            lineNumber: 426,
+                                                            lineNumber: 428,
                                                             columnNumber: 19
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
                                                             className: "p-4",
                                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                 className: "text-emerald-400 font-medium",
-                                                                children: "74/100 — Approve"
+                                                                children: "85/100 — Approve"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                                lineNumber: 427,
+                                                                lineNumber: 429,
                                                                 columnNumber: 39
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/docs/page.tsx",
-                                                            lineNumber: 427,
+                                                            lineNumber: 429,
                                                             columnNumber: 19
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/docs/page.tsx",
-                                                    lineNumber: 424,
+                                                    lineNumber: 426,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
@@ -1381,7 +1390,7 @@ function DocsPage() {
                                                             children: "Belarus founder, expiring passport, $15k MRR"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/docs/page.tsx",
-                                                            lineNumber: 430,
+                                                            lineNumber: 432,
                                                             columnNumber: 19
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -1391,43 +1400,43 @@ function DocsPage() {
                                                                 children: "Cannot verify"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                                lineNumber: 431,
+                                                                lineNumber: 433,
                                                                 columnNumber: 39
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/docs/page.tsx",
-                                                            lineNumber: 431,
+                                                            lineNumber: 433,
                                                             columnNumber: 19
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
                                                             className: "p-4",
                                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                 className: "text-yellow-400 font-medium",
-                                                                children: "68/100 — Review"
+                                                                children: "68/100 — Approve"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                                lineNumber: 432,
+                                                                lineNumber: 434,
                                                                 columnNumber: 39
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/docs/page.tsx",
-                                                            lineNumber: 432,
+                                                            lineNumber: 434,
                                                             columnNumber: 19
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/docs/page.tsx",
-                                                    lineNumber: 429,
+                                                    lineNumber: 431,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
                                                     children: [
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
                                                             className: "p-4 text-zinc-300",
-                                                            children: "Nigerian YC founder, 200+ GitHub stars"
+                                                            children: "Nigerian YC founder, 200+ GitHub stars, verified ID"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/docs/page.tsx",
-                                                            lineNumber: 435,
+                                                            lineNumber: 437,
                                                             columnNumber: 19
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -1437,33 +1446,33 @@ function DocsPage() {
                                                                 children: "High-risk country"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                                lineNumber: 436,
+                                                                lineNumber: 438,
                                                                 columnNumber: 39
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/docs/page.tsx",
-                                                            lineNumber: 436,
+                                                            lineNumber: 438,
                                                             columnNumber: 19
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
                                                             className: "p-4",
                                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                 className: "text-emerald-400 font-medium",
-                                                                children: "71/100 — Approve"
+                                                                children: "86/100 — Approve"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                                lineNumber: 437,
+                                                                lineNumber: 439,
                                                                 columnNumber: 39
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/docs/page.tsx",
-                                                            lineNumber: 437,
+                                                            lineNumber: 439,
                                                             columnNumber: 19
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/docs/page.tsx",
-                                                    lineNumber: 434,
+                                                    lineNumber: 436,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
@@ -1473,7 +1482,7 @@ function DocsPage() {
                                                             children: "Fresh US graduate, no credit history, no repos"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/docs/page.tsx",
-                                                            lineNumber: 440,
+                                                            lineNumber: 442,
                                                             columnNumber: 19
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -1483,56 +1492,56 @@ function DocsPage() {
                                                                 children: "Insufficient history"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                                lineNumber: 441,
+                                                                lineNumber: 443,
                                                                 columnNumber: 39
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/docs/page.tsx",
-                                                            lineNumber: 441,
+                                                            lineNumber: 443,
                                                             columnNumber: 19
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
                                                             className: "p-4",
                                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                                 className: "text-orange-400 font-medium",
-                                                                children: "28/100 — Enhanced Review"
+                                                                children: "32/100 — Enhanced Review"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                                lineNumber: 442,
+                                                                lineNumber: 444,
                                                                 columnNumber: 39
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/docs/page.tsx",
-                                                            lineNumber: 442,
+                                                            lineNumber: 444,
                                                             columnNumber: 19
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/docs/page.tsx",
-                                                    lineNumber: 439,
+                                                    lineNumber: 441,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/docs/page.tsx",
-                                            lineNumber: 423,
+                                            lineNumber: 425,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/docs/page.tsx",
-                                    lineNumber: 415,
+                                    lineNumber: 417,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/app/docs/page.tsx",
-                                lineNumber: 414,
+                                lineNumber: 416,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/docs/page.tsx",
-                        lineNumber: 412,
+                        lineNumber: 414,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -1543,7 +1552,7 @@ function DocsPage() {
                                 children: "GitHub Scores of Known Founders"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/docs/page.tsx",
-                                lineNumber: 451,
+                                lineNumber: 453,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1551,7 +1560,7 @@ function DocsPage() {
                                 children: "Click any name to score them live."
                             }, void 0, false, {
                                 fileName: "[project]/src/app/docs/page.tsx",
-                                lineNumber: 452,
+                                lineNumber: 454,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1565,7 +1574,7 @@ function DocsPage() {
                                                 children: f.github
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                lineNumber: 460,
+                                                lineNumber: 462,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1573,7 +1582,7 @@ function DocsPage() {
                                                 children: f.name
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                lineNumber: 461,
+                                                lineNumber: 463,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1581,24 +1590,24 @@ function DocsPage() {
                                                 children: f.note
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                lineNumber: 462,
+                                                lineNumber: 464,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, f.username, true, {
                                         fileName: "[project]/src/app/docs/page.tsx",
-                                        lineNumber: 455,
+                                        lineNumber: 457,
                                         columnNumber: 15
                                     }, this))
                             }, void 0, false, {
                                 fileName: "[project]/src/app/docs/page.tsx",
-                                lineNumber: 453,
+                                lineNumber: 455,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/docs/page.tsx",
-                        lineNumber: 450,
+                        lineNumber: 452,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -1609,7 +1618,7 @@ function DocsPage() {
                                 children: "API Reference"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/docs/page.tsx",
-                                lineNumber: 470,
+                                lineNumber: 472,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1623,7 +1632,7 @@ function DocsPage() {
                                                 children: "POST"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                lineNumber: 474,
+                                                lineNumber: 476,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("code", {
@@ -1631,13 +1640,13 @@ function DocsPage() {
                                                 children: "/api/v1/trust-score"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                lineNumber: 475,
+                                                lineNumber: 477,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/docs/page.tsx",
-                                        lineNumber: 473,
+                                        lineNumber: 475,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1650,7 +1659,7 @@ function DocsPage() {
                                                         children: "Mode 1: GitHub Username (Public Lookup)"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/docs/page.tsx",
-                                                        lineNumber: 481,
+                                                        lineNumber: 483,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1658,7 +1667,7 @@ function DocsPage() {
                                                         children: "Score any GitHub user using public data. No auth required. Returns GitHub breakdown only."
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/docs/page.tsx",
-                                                        lineNumber: 482,
+                                                        lineNumber: 484,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("pre", {
@@ -1668,13 +1677,13 @@ function DocsPage() {
   -d '{"github_username": "torvalds"}'`
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/docs/page.tsx",
-                                                        lineNumber: 485,
+                                                        lineNumber: 487,
                                                         columnNumber: 17
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                lineNumber: 480,
+                                                lineNumber: 482,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1684,7 +1693,7 @@ function DocsPage() {
                                                         children: "Mode 2: Full Score with Tokens"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/docs/page.tsx",
-                                                        lineNumber: 494,
+                                                        lineNumber: 496,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1692,7 +1701,7 @@ function DocsPage() {
                                                         children: "Pass OAuth tokens for a complete multi-provider score."
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/docs/page.tsx",
-                                                        lineNumber: 495,
+                                                        lineNumber: 497,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("pre", {
@@ -1706,13 +1715,13 @@ function DocsPage() {
   }'`
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/docs/page.tsx",
-                                                        lineNumber: 498,
+                                                        lineNumber: 500,
                                                         columnNumber: 17
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                lineNumber: 493,
+                                                lineNumber: 495,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1722,52 +1731,54 @@ function DocsPage() {
                                                         children: "Response"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/docs/page.tsx",
-                                                        lineNumber: 511,
+                                                        lineNumber: 513,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("pre", {
                                                         className: "rounded-lg bg-zinc-950 border border-zinc-800 p-4 text-sm text-zinc-400 font-mono overflow-x-auto",
                                                         children: `{
-  "score": 81,
+  "score": 85,
   "breakdown": {
-    "github":  { "score": 27, "max": 30, "details": { ... } },
-    "stripe":  { "score": 28, "max": 35, "details": { ... } },
-    "linkedin": { "score": 13, "max": 15, "details": { ... } },
+    "github":   { "score": 23, "max": 25, "details": { ... } },
+    "stripe":   { "score": 22, "max": 25, "details": { ... } },
+    "linkedin": { "score": 9, "max": 10, "details": { ... } },
+    "identity": { "score": 14, "max": 20, "details": { ... } },
     "digital_presence": { "score": 7, "max": 10, "details": { ... } },
-    "network": { "score": 6, "max": 10, "details": { ... } }
+    "network":  { "score": 6, "max": 10, "details": { ... } }
   },
+  "status": "elite",
   "risk_level": "low",
   "recommendation": "approve",
-  "signals_connected": ["github", "stripe", "linkedin"],
-  "improvements": ["Connect LinkedIn for +15 more points"]
+  "signals_connected": ["github", "stripe", "linkedin", "identity"],
+  "improvements": ["Complete identity verification for up to +6 more points"]
 }`
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/docs/page.tsx",
-                                                        lineNumber: 512,
+                                                        lineNumber: 514,
                                                         columnNumber: 17
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                lineNumber: 510,
+                                                lineNumber: 512,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/docs/page.tsx",
-                                        lineNumber: 478,
+                                        lineNumber: 480,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/docs/page.tsx",
-                                lineNumber: 472,
+                                lineNumber: 474,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/docs/page.tsx",
-                        lineNumber: 469,
+                        lineNumber: 471,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -1778,28 +1789,35 @@ function DocsPage() {
                                 children: "Score Interpretation"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/docs/page.tsx",
-                                lineNumber: 535,
+                                lineNumber: 539,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "grid grid-cols-1 sm:grid-cols-2 gap-4",
                                 children: [
                                     {
-                                        range: '75-100',
-                                        level: 'Low Risk',
+                                        range: '85-100',
+                                        level: 'Elite / Low Risk',
                                         rec: 'Approve',
                                         color: 'border-emerald-700 bg-emerald-950/30',
                                         text: 'text-emerald-400'
                                     },
                                     {
-                                        range: '50-74',
+                                        range: '65-84',
+                                        level: 'Approved / Low Risk',
+                                        rec: 'Approve',
+                                        color: 'border-blue-700 bg-blue-950/30',
+                                        text: 'text-blue-400'
+                                    },
+                                    {
+                                        range: '45-64',
                                         level: 'Medium Risk',
                                         rec: 'Review',
                                         color: 'border-yellow-700 bg-yellow-950/30',
                                         text: 'text-yellow-400'
                                     },
                                     {
-                                        range: '25-49',
+                                        range: '25-44',
                                         level: 'High Risk',
                                         rec: 'Enhanced Review',
                                         color: 'border-orange-700 bg-orange-950/30',
@@ -1820,7 +1838,7 @@ function DocsPage() {
                                                 children: tier.range
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                lineNumber: 545,
+                                                lineNumber: 550,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1828,7 +1846,7 @@ function DocsPage() {
                                                 children: tier.level
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                lineNumber: 546,
+                                                lineNumber: 551,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1839,24 +1857,24 @@ function DocsPage() {
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                lineNumber: 547,
+                                                lineNumber: 552,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, tier.range, true, {
                                         fileName: "[project]/src/app/docs/page.tsx",
-                                        lineNumber: 544,
+                                        lineNumber: 549,
                                         columnNumber: 15
                                     }, this))
                             }, void 0, false, {
                                 fileName: "[project]/src/app/docs/page.tsx",
-                                lineNumber: 537,
+                                lineNumber: 541,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/docs/page.tsx",
-                        lineNumber: 534,
+                        lineNumber: 538,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -1867,7 +1885,7 @@ function DocsPage() {
                                 children: "Scoring Weights"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/docs/page.tsx",
-                                lineNumber: 555,
+                                lineNumber: 560,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1884,7 +1902,7 @@ function DocsPage() {
                                                         children: "Signal"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/docs/page.tsx",
-                                                        lineNumber: 560,
+                                                        lineNumber: 565,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -1892,7 +1910,7 @@ function DocsPage() {
                                                         children: "Max Points"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/docs/page.tsx",
-                                                        lineNumber: 561,
+                                                        lineNumber: 566,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -1900,18 +1918,18 @@ function DocsPage() {
                                                         children: "What we look at"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/docs/page.tsx",
-                                                        lineNumber: 562,
+                                                        lineNumber: 567,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/docs/page.tsx",
-                                                lineNumber: 559,
+                                                lineNumber: 564,
                                                 columnNumber: 17
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/docs/page.tsx",
-                                            lineNumber: 558,
+                                            lineNumber: 563,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {
@@ -1924,44 +1942,12 @@ function DocsPage() {
                                                             children: "GitHub"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/docs/page.tsx",
-                                                            lineNumber: 567,
-                                                            columnNumber: 19
-                                                        }, this),
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                            className: "p-4 font-mono text-zinc-300",
-                                                            children: "30"
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/src/app/docs/page.tsx",
-                                                            lineNumber: 568,
-                                                            columnNumber: 19
-                                                        }, this),
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                            className: "p-4 text-zinc-500",
-                                                            children: "Account age, repos, stars, followers, language diversity"
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/src/app/docs/page.tsx",
-                                                            lineNumber: 569,
-                                                            columnNumber: 19
-                                                        }, this)
-                                                    ]
-                                                }, void 0, true, {
-                                                    fileName: "[project]/src/app/docs/page.tsx",
-                                                    lineNumber: 566,
-                                                    columnNumber: 17
-                                                }, this),
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
-                                                    children: [
-                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                            className: "p-4 text-zinc-300",
-                                                            children: "Stripe / Financial"
-                                                        }, void 0, false, {
-                                                            fileName: "[project]/src/app/docs/page.tsx",
                                                             lineNumber: 572,
                                                             columnNumber: 19
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
                                                             className: "p-4 font-mono text-zinc-300",
-                                                            children: "35"
+                                                            children: "25"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/docs/page.tsx",
                                                             lineNumber: 573,
@@ -1969,7 +1955,7 @@ function DocsPage() {
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
                                                             className: "p-4 text-zinc-500",
-                                                            children: "Revenue, account age, chargeback rate, transaction volume"
+                                                            children: "Commit activity, account age, repos, languages, recent activity"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/docs/page.tsx",
                                                             lineNumber: 574,
@@ -1985,7 +1971,7 @@ function DocsPage() {
                                                     children: [
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
                                                             className: "p-4 text-zinc-300",
-                                                            children: "LinkedIn"
+                                                            children: "Economic Activity"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/docs/page.tsx",
                                                             lineNumber: 577,
@@ -1993,7 +1979,7 @@ function DocsPage() {
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
                                                             className: "p-4 font-mono text-zinc-300",
-                                                            children: "15"
+                                                            children: "25"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/docs/page.tsx",
                                                             lineNumber: 578,
@@ -2001,7 +1987,7 @@ function DocsPage() {
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
                                                             className: "p-4 text-zinc-500",
-                                                            children: "OAuth connection, profile picture, verified email"
+                                                            children: "Crypto wallet (15), formation payment (5), Stripe connected (15) — capped at 25"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/docs/page.tsx",
                                                             lineNumber: 579,
@@ -2017,7 +2003,7 @@ function DocsPage() {
                                                     children: [
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
                                                             className: "p-4 text-zinc-300",
-                                                            children: "Digital Presence"
+                                                            children: "LinkedIn"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/docs/page.tsx",
                                                             lineNumber: 582,
@@ -2033,7 +2019,7 @@ function DocsPage() {
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
                                                             className: "p-4 text-zinc-500",
-                                                            children: "Website, Twitter/X, Instagram, App Store"
+                                                            children: "OAuth connection, profile picture, verified email"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/docs/page.tsx",
                                                             lineNumber: 584,
@@ -2049,7 +2035,7 @@ function DocsPage() {
                                                     children: [
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
                                                             className: "p-4 text-zinc-300",
-                                                            children: "Trust Network"
+                                                            children: "Identity"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/docs/page.tsx",
                                                             lineNumber: 587,
@@ -2057,7 +2043,7 @@ function DocsPage() {
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
                                                             className: "p-4 font-mono text-zinc-300",
-                                                            children: "10"
+                                                            children: "20"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/docs/page.tsx",
                                                             lineNumber: 588,
@@ -2065,7 +2051,7 @@ function DocsPage() {
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
                                                             className: "p-4 text-zinc-500",
-                                                            children: "Referrals, university email, accelerator, employer"
+                                                            children: "Passport, local ID, face verification, address proof"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/docs/page.tsx",
                                                             lineNumber: 589,
@@ -2076,28 +2062,92 @@ function DocsPage() {
                                                     fileName: "[project]/src/app/docs/page.tsx",
                                                     lineNumber: 586,
                                                     columnNumber: 17
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                                            className: "p-4 text-zinc-300",
+                                                            children: "Digital Presence"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/app/docs/page.tsx",
+                                                            lineNumber: 592,
+                                                            columnNumber: 19
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                                            className: "p-4 font-mono text-zinc-300",
+                                                            children: "10"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/app/docs/page.tsx",
+                                                            lineNumber: 593,
+                                                            columnNumber: 19
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                                            className: "p-4 text-zinc-500",
+                                                            children: "Website verified (6pts), App Store listing (4pts)"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/app/docs/page.tsx",
+                                                            lineNumber: 594,
+                                                            columnNumber: 19
+                                                        }, this)
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/src/app/docs/page.tsx",
+                                                    lineNumber: 591,
+                                                    columnNumber: 17
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                                            className: "p-4 text-zinc-300",
+                                                            children: "Trust Network"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/app/docs/page.tsx",
+                                                            lineNumber: 597,
+                                                            columnNumber: 19
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                                            className: "p-4 font-mono text-zinc-300",
+                                                            children: "10"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/app/docs/page.tsx",
+                                                            lineNumber: 598,
+                                                            columnNumber: 19
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                                            className: "p-4 text-zinc-500",
+                                                            children: "Referrals, university email, accelerator, employer"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/app/docs/page.tsx",
+                                                            lineNumber: 599,
+                                                            columnNumber: 19
+                                                        }, this)
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/src/app/docs/page.tsx",
+                                                    lineNumber: 596,
+                                                    columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/docs/page.tsx",
-                                            lineNumber: 565,
+                                            lineNumber: 570,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/docs/page.tsx",
-                                    lineNumber: 557,
+                                    lineNumber: 562,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/app/docs/page.tsx",
-                                lineNumber: 556,
+                                lineNumber: 561,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/docs/page.tsx",
-                        lineNumber: 554,
+                        lineNumber: 559,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -2110,7 +2160,7 @@ function DocsPage() {
                                     children: "Production API"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/docs/page.tsx",
-                                    lineNumber: 599,
+                                    lineNumber: 609,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2118,30 +2168,30 @@ function DocsPage() {
                                     children: "This is the MVP endpoint. The production API uses redirect-based OAuth flows for secure token exchange. Contact us for API keys and integration support."
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/docs/page.tsx",
-                                    lineNumber: 600,
+                                    lineNumber: 610,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/docs/page.tsx",
-                            lineNumber: 598,
+                            lineNumber: 608,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/app/docs/page.tsx",
-                        lineNumber: 597,
+                        lineNumber: 607,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/docs/page.tsx",
-                lineNumber: 174,
+                lineNumber: 175,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/app/docs/page.tsx",
-        lineNumber: 162,
+        lineNumber: 163,
         columnNumber: 5
     }, this);
 }

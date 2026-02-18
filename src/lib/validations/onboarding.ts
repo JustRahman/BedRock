@@ -53,32 +53,17 @@ export const professionalSchema = z.object({
 
 export type ProfessionalFormData = z.infer<typeof professionalSchema>
 
-// Step 5: Financial (Digital Lineage)
-export const financialSchema = z.object({
-  hasStripeConnected: z.boolean(),
-  monthlyRevenue: z.string().optional(),
-  customerGeography: z.string().optional(),
-  chargebackRate: z.string().optional(),
-  hasBankStatements: z.boolean(),
-})
-
-export type FinancialFormData = z.infer<typeof financialSchema>
-
-// Step 6: Digital Presence
+// Step 5: Digital Presence
 export const digitalPresenceSchema = z.object({
   website: z.string().url('Please enter a valid URL').or(z.string().length(0)).optional(),
-  twitterHandle: z.string().optional(),
-  instagramHandle: z.string().optional(),
   appStoreUrl: z.string().url('Please enter a valid URL').or(z.string().length(0)).optional(),
   websiteVerified: z.boolean().optional(),
-  twitterVerified: z.boolean().optional(),
-  instagramVerified: z.boolean().optional(),
   appStoreVerified: z.boolean().optional(),
 })
 
 export type DigitalPresenceFormData = z.infer<typeof digitalPresenceSchema>
 
-// Step 7: Trust Signals
+// Step 6: Trust Signals
 export const trustSignalsSchema = z.object({
   hasReferral: z.boolean(),
   referralCode: z.string().optional(),
@@ -102,7 +87,6 @@ export const onboardingSchema = z.object({
   identity: identitySchema,
   codeHistory: codeHistorySchema,
   professional: professionalSchema,
-  financial: financialSchema,
   digitalPresence: digitalPresenceSchema,
   trustSignals: trustSignalsSchema,
 })

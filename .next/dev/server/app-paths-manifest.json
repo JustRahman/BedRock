@@ -1,6 +1,11 @@
 {
-  "/_not-found/page": "app/_not-found/page.js",
-  "/api/trust-score/calculate/route": "app/api/trust-score/calculate/route.js",
-  "/api/v1/trust-score/route": "app/api/v1/trust-score/route.js",
+  "/(auth)/login/page": "app/(auth)/login/page.js",
+  "/api/bank-applications/route": "app/api/bank-applications/route.js",
+  "/api/companies/route": "app/api/companies/route.js",
+  "/api/compliance/route": "app/api/compliance/route.js",
+  "/api/documents/route": "app/api/documents/route.js",
+  "/api/founders/ensure/route": "app/api/founders/ensure/route.js",
+  "/api/trust-score/route": "app/api/trust-score/route.js",
+  "/dashboard/page": "app/dashboard/page.js",
   "/onboarding/page": "app/onboarding/page.js"
 }

@@ -13,7 +13,7 @@ interface TrustScoreResponse {
   score: number
   breakdown: {
     github: ProviderBreakdown
-    stripe: ProviderBreakdown
+    economic_activity: ProviderBreakdown
     linkedin: ProviderBreakdown
     identity: ProviderBreakdown
     digital_presence: ProviderBreakdown
@@ -246,7 +246,7 @@ export default function DocsPage() {
                       </div>
                     </div>
                     <div className="mt-4 rounded-lg border border-blue-800/50 bg-blue-950/20 px-4 py-3 text-sm text-blue-300">
-                      Partial score using public GitHub data only. Full assessment with Stripe, LinkedIn,
+                      Partial score using public GitHub data only. Full assessment with economic activity, LinkedIn,
                       and more available via OAuth connection.
                     </div>
                   </>
@@ -271,7 +271,7 @@ export default function DocsPage() {
               {/* Breakdown bars */}
               <div className="p-6 space-y-4">
                 <BreakdownBar label="GitHub" score={result.breakdown.github.score} max={result.breakdown.github.max} />
-                <BreakdownBar label="Stripe / Financial" score={result.breakdown.stripe.score} max={result.breakdown.stripe.max} />
+                <BreakdownBar label="Economic Activity" score={result.breakdown.economic_activity.score} max={result.breakdown.economic_activity.max} />
                 <BreakdownBar label="LinkedIn" score={result.breakdown.linkedin.score} max={result.breakdown.linkedin.max} />
                 <BreakdownBar label="Identity" score={result.breakdown.identity.score} max={result.breakdown.identity.max} />
                 <BreakdownBar label="Digital Presence" score={result.breakdown.digital_presence.score} max={result.breakdown.digital_presence.max} />
@@ -289,22 +289,22 @@ export default function DocsPage() {
                         <div className="text-xs text-zinc-500">Account age</div>
                       </div>
                     ) : null}
+                    {result.breakdown.github.details.commits_last_year !== undefined ? (
+                      <div>
+                        <div className="text-lg font-bold text-zinc-200">{String(result.breakdown.github.details.commits_last_year)}</div>
+                        <div className="text-xs text-zinc-500">Commits (12mo)</div>
+                      </div>
+                    ) : null}
                     {result.breakdown.github.details.repos !== undefined ? (
                       <div>
                         <div className="text-lg font-bold text-zinc-200">{String(result.breakdown.github.details.repos)}</div>
                         <div className="text-xs text-zinc-500">Public repos</div>
                       </div>
                     ) : null}
-                    {result.breakdown.github.details.stars !== undefined ? (
+                    {result.breakdown.github.details.languages !== undefined ? (
                       <div>
-                        <div className="text-lg font-bold text-zinc-200">{String(result.breakdown.github.details.stars)}</div>
-                        <div className="text-xs text-zinc-500">Stars</div>
-                      </div>
-                    ) : null}
-                    {result.breakdown.github.details.followers !== undefined ? (
-                      <div>
-                        <div className="text-lg font-bold text-zinc-200">{String(result.breakdown.github.details.followers)}</div>
-                        <div className="text-xs text-zinc-500">Followers</div>
+                        <div className="text-lg font-bold text-zinc-200">{String(result.breakdown.github.details.languages)}</div>
+                        <div className="text-xs text-zinc-500">Languages</div>
                       </div>
                     ) : null}
                   </div>
@@ -391,7 +391,7 @@ export default function DocsPage() {
                 </div>
                 <div className="flex items-center gap-3">
                   <span className="text-emerald-500">&#10003;</span>
-                  <span className="text-zinc-400">Stripe: $12k/mo revenue — <span className="text-emerald-400">22/25</span></span>
+                  <span className="text-zinc-400">Economic Activity: wallet + Stripe — <span className="text-emerald-400">22/25</span></span>
                 </div>
                 <div className="flex items-center gap-3">
                   <span className="text-emerald-500">&#10003;</span>
@@ -571,12 +571,12 @@ export default function DocsPage() {
                 <tr>
                   <td className="p-4 text-zinc-300">GitHub</td>
                   <td className="p-4 font-mono text-zinc-300">25</td>
-                  <td className="p-4 text-zinc-500">Account age, repos, stars, followers, language diversity</td>
+                  <td className="p-4 text-zinc-500">Commit activity, account age, repos, languages, recent activity</td>
                 </tr>
                 <tr>
-                  <td className="p-4 text-zinc-300">Stripe / Financial</td>
+                  <td className="p-4 text-zinc-300">Economic Activity</td>
                   <td className="p-4 font-mono text-zinc-300">25</td>
-                  <td className="p-4 text-zinc-500">Revenue, account age, chargeback rate, transaction volume</td>
+                  <td className="p-4 text-zinc-500">Crypto wallet (15), formation payment (5), Stripe connected (15) &mdash; capped at 25</td>
                 </tr>
                 <tr>
                   <td className="p-4 text-zinc-300">LinkedIn</td>
@@ -591,7 +591,7 @@ export default function DocsPage() {
                 <tr>
                   <td className="p-4 text-zinc-300">Digital Presence</td>
                   <td className="p-4 font-mono text-zinc-300">10</td>
-                  <td className="p-4 text-zinc-500">Website, Twitter/X, Instagram, App Store</td>
+                  <td className="p-4 text-zinc-500">Website verified (6pts), App Store listing (4pts)</td>
                 </tr>
                 <tr>
                   <td className="p-4 text-zinc-300">Trust Network</td>

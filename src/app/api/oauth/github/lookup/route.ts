@@ -41,6 +41,30 @@ export async function GET(request: NextRequest) {
       (Date.now() - new Date(createdAt).getTime()) / (365.25 * 24 * 60 * 60 * 1000)
     )
 
+    // Estimate commit activity from public events (limited to last 90 days)
+    let commitsLastYear = 0
+    let commitsLast30Days = 0
+    try {
+      const { data: events } = await octokit.activity.listPublicEventsForUser({
+        username,
+        per_page: 100,
+      })
+      const thirtyDaysAgo = new Date()
+      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30)
+
+      for (const event of events) {
+        if (event.type === 'PushEvent') {
+          const commits = (event.payload as { commits?: unknown[] }).commits?.length ?? 1
+          commitsLastYear += commits
+          if (event.created_at && new Date(event.created_at) > thirtyDaysAgo) {
+            commitsLast30Days += commits
+          }
+        }
+      }
+    } catch {
+      // Non-critical
+    }
+
     const profile: GitHubProfileData = {
       login: user.login,
       name: user.name ?? null,
@@ -51,6 +75,8 @@ export async function GET(request: NextRequest) {
       followers: user.followers,
       totalStars,
       topLanguages,
+      commitsLastYear,
+      commitsLast30Days,
     }
 
     return NextResponse.json(profile)

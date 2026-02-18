@@ -80,7 +80,7 @@ export function ScoreDisplay({ result }: ScoreDisplayProps) {
       {/* Provider Score Grid */}
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
         <ScoreCategory name="GitHub" score={b.github.score} max={b.github.max} />
-        <ScoreCategory name="Stripe" score={b.stripe.score} max={b.stripe.max} />
+        <ScoreCategory name="Economic" score={b.economic_activity.score} max={b.economic_activity.max} />
         <ScoreCategory name="LinkedIn" score={b.linkedin.score} max={b.linkedin.max} />
         <ScoreCategory name="Identity" score={b.identity.score} max={b.identity.max} />
         <ScoreCategory name="Digital" score={b.digital_presence.score} max={b.digital_presence.max} />
@@ -121,6 +121,7 @@ interface ScoreBreakdownDetailProps {
 
 const providerLabels: Record<string, string> = {
   github: 'GitHub',
+  economic_activity: 'Economic Activity',
   stripe: 'Stripe / Financial',
   linkedin: 'LinkedIn',
   identity: 'Identity Verification',
@@ -137,6 +138,16 @@ const detailLabels: Record<string, string> = {
   followers: 'Followers',
   languages: 'Languages',
   username_only: 'Username Only (capped)',
+  crypto_verified: 'Crypto Wallet Verified',
+  crypto_wallet_age: 'Wallet Age Score',
+  crypto_tx_count: 'Transaction Count Score',
+  crypto_holdings: 'Stablecoin Holdings Score',
+  crypto_activity_spread: 'Activity Spread Score',
+  crypto_subtotal: 'Crypto Subtotal',
+  payment_verified: 'Formation Payment Verified',
+  payment_subtotal: 'Payment Subtotal',
+  stripe_connected: 'Stripe Connected',
+  stripe_subtotal: 'Stripe Subtotal',
   monthly_revenue: 'Monthly Revenue',
   account_age_months: 'Account Age (months)',
   chargeback_rate: 'Chargeback Rate',
@@ -155,9 +166,7 @@ const detailLabels: Record<string, string> = {
   face_skipped: 'Face Scan Skipped',
   address_verified: 'Address Verified',
   website: 'Website Verified',
-  twitter: 'Twitter/X Verified',
-  instagram: 'Instagram Verified',
-  app_store: 'App Store App',
+  app_store: 'App Store Listing',
   referral: 'Founder Referral',
   university: 'University Email',
   accelerator: 'Accelerator',

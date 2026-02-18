@@ -7,7 +7,6 @@ import { Button } from '@/components/ui/button'
 import { Shield, ArrowRight, CreditCard, Loader2, CheckCircle } from 'lucide-react'
 import { TrustScoreV2Result, TrustScoreV2Input, calculateTrustScoreV2 } from '@/lib/trust-score-v2'
 import type { GitHubProfileData } from '@/lib/oauth/github'
-import type { StripeProfileData } from '@/lib/oauth/stripe'
 import type { LinkedInProfileData } from '@/lib/oauth/linkedin'
 import {
   ScoreDisplay,
@@ -87,14 +86,6 @@ export default function OnboardingResultPage() {
         input.githubUsernameOnly = !codeHistory.githubConnected
       }
 
-      // Stripe OAuth data
-      const stRaw = sessionStorage.getItem('oauth_stripe_data') || localStorage.getItem('oauth_stripe_data')
-      if (stRaw) {
-        try {
-          input.stripe = JSON.parse(stRaw) as StripeProfileData
-        } catch { /* ignore */ }
-      }
-
       // LinkedIn OAuth data
       const liRaw = sessionStorage.getItem('oauth_linkedin_data') || localStorage.getItem('oauth_linkedin_data')
       if (liRaw) {
@@ -123,19 +114,11 @@ export default function OnboardingResultPage() {
         }
       }
 
-      // Financial extras
-      const financial = data.financial as Record<string, unknown> | undefined
-      if (financial?.hasBankStatements) {
-        input.hasBankStatements = true
-      }
-
       // Digital presence
       const dp = data.digitalPresence as Record<string, unknown> | undefined
       if (dp) {
         input.digitalPresence = {
           websiteVerified: !!dp.websiteVerified,
-          twitterVerified: !!dp.twitterVerified,
-          instagramVerified: !!dp.instagramVerified,
           appStoreVerified: !!dp.appStoreVerified,
         }
       }
@@ -425,14 +408,14 @@ function getPersonalizedSteps(result: TrustScoreV2Result): StepItem[] {
     steps.push({ title: 'Connect GitHub', description: 'Link your GitHub account to prove your developer history.', type: 'action', points: 25 })
   }
 
-  // Stripe
-  if (b.stripe.score > 0) {
-    steps.push({ title: 'Financial Signals Added', description: `Earning ${b.stripe.score}/${b.stripe.max} points.`, type: 'done' })
-    if (b.stripe.score < b.stripe.max) {
-      steps.push({ title: 'Strengthen Financial Signals', description: 'Add more revenue documentation.', type: 'action' })
+  // Economic Activity
+  if (b.economic_activity.score > 0) {
+    steps.push({ title: 'Economic Signals Added', description: `Earning ${b.economic_activity.score}/${b.economic_activity.max} points.`, type: 'done' })
+    if (b.economic_activity.score < b.economic_activity.max) {
+      steps.push({ title: 'Strengthen Economic Signals', description: 'Connect a wallet, Stripe, or complete payment.', type: 'action' })
     }
   } else {
-    steps.push({ title: 'Connect Stripe or Add Revenue', description: 'Show business traction to earn up to +25 points.', type: 'action', points: 25 })
+    steps.push({ title: 'Add Economic Activity', description: 'Verify a crypto wallet or connect Stripe for up to +25 points.', type: 'action', points: 25 })
   }
 
   // LinkedIn

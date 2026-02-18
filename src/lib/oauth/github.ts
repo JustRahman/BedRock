@@ -11,6 +11,8 @@ export interface GitHubProfileData {
   followers: number
   totalStars: number
   topLanguages: string[]
+  commitsLastYear: number
+  commitsLast30Days: number
 }
 
 export function getGitHubAuthUrl(state: string): string {
@@ -80,6 +82,43 @@ export async function fetchGitHubProfile(token: string): Promise<GitHubProfileDa
     (Date.now() - new Date(createdAt).getTime()) / (365.25 * 24 * 60 * 60 * 1000)
   )
 
+  // Fetch commit activity via GraphQL API
+  let commitsLastYear = 0
+  let commitsLast30Days = 0
+  try {
+    const thirtyDaysAgo = new Date()
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30)
+
+    const graphqlRes = await fetch('https://api.github.com/graphql', {
+      method: 'POST',
+      headers: {
+        Authorization: `bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query: `query($since: DateTime!) {
+          viewer {
+            contributionsCollection {
+              totalCommitContributions
+            }
+            recent: contributionsCollection(from: $since) {
+              totalCommitContributions
+            }
+          }
+        }`,
+        variables: { since: thirtyDaysAgo.toISOString() },
+      }),
+    })
+
+    if (graphqlRes.ok) {
+      const gql = await graphqlRes.json()
+      commitsLastYear = gql.data?.viewer?.contributionsCollection?.totalCommitContributions ?? 0
+      commitsLast30Days = gql.data?.viewer?.recent?.totalCommitContributions ?? 0
+    }
+  } catch {
+    // Non-critical — commit data just won't contribute to score
+  }
+
   return {
     login: user.login,
     name: user.name,
@@ -90,5 +129,7 @@ export async function fetchGitHubProfile(token: string): Promise<GitHubProfileDa
     followers: user.followers,
     totalStars,
     topLanguages,
+    commitsLastYear,
+    commitsLast30Days,
   }
 }

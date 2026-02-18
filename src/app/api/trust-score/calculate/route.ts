@@ -7,6 +7,7 @@ import { checkRateLimit, getClientIp } from '@/lib/rate-limit'
 import type { GitHubProfileData } from '@/lib/oauth/github'
 import type { StripeProfileData } from '@/lib/oauth/stripe'
 import type { LinkedInProfileData } from '@/lib/oauth/linkedin'
+import type { CryptoWalletScoreBreakdown } from '@/lib/crypto/types'
 
 interface FounderData {
   id: string
@@ -69,20 +70,16 @@ export async function POST(request: Request) {
       v2Input.linkedinUrlOnly = !body.professional.linkedinConnected
     }
 
-    // Stripe — use OAuth profile data if available
+    // Stripe — use OAuth profile data if available (maps into economicActivity)
     if (body.oauthData?.stripe) {
-      v2Input.stripe = body.oauthData.stripe as StripeProfileData
+      if (!v2Input.economicActivity) v2Input.economicActivity = {}
+      v2Input.economicActivity.stripe = body.oauthData.stripe as StripeProfileData
     }
-
-    // Financial
-    v2Input.hasBankStatements = body.financial?.hasBankStatements || false
 
     // Digital presence
     if (body.digitalPresence) {
       v2Input.digitalPresence = {
         websiteVerified: body.digitalPresence.websiteVerified || false,
-        twitterVerified: body.digitalPresence.twitterVerified || false,
-        instagramVerified: body.digitalPresence.instagramVerified || false,
         appStoreVerified: body.digitalPresence.appStoreVerified || false,
       }
     }
@@ -164,7 +161,15 @@ export async function PUT(request: Request) {
         v2Input.github = meta as unknown as GitHubProfileData
         v2Input.githubUsernameOnly = true
       } else if (v.verification_type === 'stripe' && meta) {
-        v2Input.stripe = meta as unknown as StripeProfileData
+        if (!v2Input.economicActivity) v2Input.economicActivity = {}
+        v2Input.economicActivity.stripe = meta as unknown as StripeProfileData
+      } else if (v.verification_type === 'crypto_wallet' && meta) {
+        if (!v2Input.economicActivity) v2Input.economicActivity = {}
+        const profileData = meta as Record<string, unknown>
+        v2Input.economicActivity.crypto = profileData.score as unknown as CryptoWalletScoreBreakdown
+      } else if (v.verification_type === 'payment_verified') {
+        if (!v2Input.economicActivity) v2Input.economicActivity = {}
+        v2Input.economicActivity.paymentVerified = true
       } else if (v.verification_type === 'linkedin' && meta) {
         v2Input.linkedin = meta as unknown as LinkedInProfileData
         v2Input.linkedinUrlOnly = false
@@ -190,7 +195,13 @@ export async function PUT(request: Request) {
     }
 
     // Also read the request body for non-OAuth signals
-    const body = await request.json()
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let body: any = {}
+    try {
+      body = await request.json()
+    } catch {
+      // Empty body is fine for recalculation triggers
+    }
 
     if (body.identity) {
       v2Input.identity = {
@@ -206,8 +217,6 @@ export async function PUT(request: Request) {
     if (body.digitalPresence) {
       v2Input.digitalPresence = {
         websiteVerified: body.digitalPresence.websiteVerified || false,
-        twitterVerified: body.digitalPresence.twitterVerified || false,
-        instagramVerified: body.digitalPresence.instagramVerified || false,
         appStoreVerified: body.digitalPresence.appStoreVerified || false,
       }
     }
@@ -243,8 +252,8 @@ export async function PUT(request: Request) {
       founder_id: founder.id,
       total_score: result.score,
       identity_score: result.breakdown.identity.score,
-      business_score: result.breakdown.stripe.score,
-      financial_score: result.breakdown.stripe.score,
+      business_score: result.breakdown.economic_activity.score,
+      financial_score: result.breakdown.economic_activity.score,
       social_score: result.breakdown.linkedin.score,
       digital_lineage_score: result.breakdown.github.score + result.breakdown.digital_presence.score,
       network_score: result.breakdown.network.score,

@@ -55,18 +55,21 @@ export function TrustScoreCard({ score, status, statusLabel, breakdown, scoreBre
 
   let bars: { label: string; value: number; max: number }[]
 
-  if (hasV2) {
-    const github = scoreBreakdown.github as V2ProviderBreakdown | undefined
-    const stripe = scoreBreakdown.stripe as V2ProviderBreakdown | undefined
-    const linkedin = scoreBreakdown.linkedin as V2ProviderBreakdown | undefined
-    const identity = scoreBreakdown.identity as V2ProviderBreakdown | undefined
-    const dp = scoreBreakdown.digital_presence as V2ProviderBreakdown | undefined
-    const network = scoreBreakdown.network as V2ProviderBreakdown | undefined
+  // Check for v2 data — supports both new `economic_activity` and legacy `stripe` key
+  const hasV2EA = scoreBreakdown && typeof scoreBreakdown === 'object' && 'economic_activity' in scoreBreakdown
+
+  if (hasV2 || hasV2EA) {
+    const github = scoreBreakdown!.github as V2ProviderBreakdown | undefined
+    const econ = (scoreBreakdown!.economic_activity ?? scoreBreakdown!.stripe) as V2ProviderBreakdown | undefined
+    const linkedin = scoreBreakdown!.linkedin as V2ProviderBreakdown | undefined
+    const identity = scoreBreakdown!.identity as V2ProviderBreakdown | undefined
+    const dp = scoreBreakdown!.digital_presence as V2ProviderBreakdown | undefined
+    const network = scoreBreakdown!.network as V2ProviderBreakdown | undefined
 
     bars = [
-      { label: 'GitHub', value: github?.score ?? 0, max: github?.max ?? 30 },
-      { label: 'Stripe / Financial', value: stripe?.score ?? 0, max: stripe?.max ?? 35 },
-      { label: 'LinkedIn', value: linkedin?.score ?? 0, max: linkedin?.max ?? 15 },
+      { label: 'GitHub', value: github?.score ?? 0, max: github?.max ?? 25 },
+      { label: 'Economic Activity', value: econ?.score ?? 0, max: econ?.max ?? 25 },
+      { label: 'LinkedIn', value: linkedin?.score ?? 0, max: linkedin?.max ?? 10 },
       { label: 'Identity', value: identity?.score ?? 0, max: identity?.max ?? 20 },
       { label: 'Digital Presence', value: dp?.score ?? 0, max: dp?.max ?? 10 },
       { label: 'Trust Network', value: network?.score ?? 0, max: network?.max ?? 10 },
@@ -75,13 +78,13 @@ export function TrustScoreCard({ score, status, statusLabel, breakdown, scoreBre
     // Legacy fallback: approximate from DB columns
     const githubScore = Math.min(25, Math.round(breakdown.digitalLineage * 0.71))
     const digitalPresenceScore = Math.min(10, breakdown.digitalLineage - githubScore)
-    const stripeScore = Math.min(25, breakdown.business)
+    const econScore = Math.min(25, breakdown.business)
     const linkedinScore = Math.min(10, breakdown.identity)
     const networkScore = Math.min(10, breakdown.network)
 
     bars = [
       { label: 'GitHub', value: githubScore, max: 25 },
-      { label: 'Stripe / Financial', value: stripeScore, max: 25 },
+      { label: 'Economic Activity', value: econScore, max: 25 },
       { label: 'LinkedIn', value: linkedinScore, max: 10 },
       { label: 'Digital Presence', value: digitalPresenceScore, max: 10 },
       { label: 'Trust Network', value: networkScore, max: 10 },

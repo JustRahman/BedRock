@@ -10,7 +10,6 @@ import {
   StepIdentity,
   StepCodeHistory,
   StepProfessional,
-  StepFinancial,
   StepDigitalPresence,
   StepTrustSignals,
 } from '@/components/onboarding'
@@ -19,7 +18,6 @@ import {
   IdentityFormData,
   CodeHistoryFormData,
   ProfessionalFormData,
-  FinancialFormData,
   DigitalPresenceFormData,
   TrustSignalsFormData,
 } from '@/lib/validations/onboarding'
@@ -29,9 +27,8 @@ const steps = [
   { id: 2, name: 'Identity', description: 'Verification docs' },
   { id: 3, name: 'Code History', description: 'Digital Lineage' },
   { id: 4, name: 'Professional', description: 'LinkedIn graph' },
-  { id: 5, name: 'Financial', description: 'Revenue signals' },
-  { id: 6, name: 'Presence', description: 'Digital footprint' },
-  { id: 7, name: 'Trust Signals', description: 'Boost your score' },
+  { id: 5, name: 'Presence', description: 'Digital footprint' },
+  { id: 6, name: 'Trust Signals', description: 'Boost your score' },
 ]
 
 const STEP_STORAGE_KEY = 'onboarding_current_step'
@@ -43,7 +40,6 @@ interface OnboardingData {
   identity: Partial<IdentityFormData>
   codeHistory: Partial<CodeHistoryFormData>
   professional: Partial<ProfessionalFormData>
-  financial: Partial<FinancialFormData>
   digitalPresence: Partial<DigitalPresenceFormData>
   trustSignals: Partial<TrustSignalsFormData>
 }
@@ -58,7 +54,6 @@ export default function OnboardingPage() {
     identity: {},
     codeHistory: {},
     professional: {},
-    financial: {},
     digitalPresence: {},
     trustSignals: {},
   })
@@ -69,7 +64,7 @@ export default function OnboardingPage() {
       const savedStep = sessionStorage.getItem(STEP_STORAGE_KEY)
       if (savedStep) {
         const step = parseInt(savedStep, 10)
-        if (step >= 1 && step <= 7) {
+        if (step >= 1 && step <= 6) {
           setCurrentStep(step)
         }
       }
@@ -85,7 +80,6 @@ export default function OnboardingPage() {
           identity: parsed.identity ?? prev.identity,
           codeHistory: parsed.codeHistory ?? prev.codeHistory,
           professional: parsed.professional ?? prev.professional,
-          financial: parsed.financial ?? prev.financial,
           digitalPresence: parsed.digitalPresence ?? prev.digitalPresence,
           trustSignals: parsed.trustSignals ?? prev.trustSignals,
         }))
@@ -144,16 +138,10 @@ export default function OnboardingPage() {
     updateStep(5)
   }
 
-  const handleFinancialNext = (financial: FinancialFormData) => {
-    setData((prev) => ({ ...prev, financial }))
-    saveStepData('financial', financial)
-    updateStep(6)
-  }
-
   const handleDigitalPresenceNext = (digitalPresence: DigitalPresenceFormData) => {
     setData((prev) => ({ ...prev, digitalPresence }))
     saveStepData('digitalPresence', digitalPresence)
-    updateStep(7)
+    updateStep(6)
   }
 
   const handleTrustSignalsSubmit = async (trustSignals: TrustSignalsFormData) => {
@@ -181,12 +169,6 @@ export default function OnboardingPage() {
           ...finalData.professional,
           linkedinConnected: true,
           hasLinkedin: true,
-        }
-      }
-      if (stripeData) {
-        finalData.financial = {
-          ...finalData.financial,
-          hasStripeConnected: true,
         }
       }
     } catch {
@@ -349,14 +331,6 @@ export default function OnboardingPage() {
           )}
 
           {currentStep === 5 && (
-            <StepFinancial
-              data={data.financial}
-              onNext={handleFinancialNext}
-              onBack={handleBack}
-            />
-          )}
-
-          {currentStep === 6 && (
             <StepDigitalPresence
               data={data.digitalPresence}
               founderName={data.basicInfo.fullName}
@@ -365,7 +339,7 @@ export default function OnboardingPage() {
             />
           )}
 
-          {currentStep === 7 && (
+          {currentStep === 6 && (
             <StepTrustSignals
               data={data.trustSignals}
               onSubmit={handleTrustSignalsSubmit}

@@ -11,23 +11,18 @@ import {
   ArrowLeft,
   ArrowRight,
   Globe,
-  Twitter,
-  Instagram,
   Smartphone,
   CheckCircle,
   AlertCircle,
   Loader2,
   Search,
   X,
-  ExternalLink,
   Shield,
   Star,
   UserCheck,
 } from 'lucide-react'
 import type {
   DomainVerificationResult,
-  TwitterVerificationResult,
-  InstagramVerificationResult,
   AppStoreVerificationResult,
 } from '@/lib/digital-presence-verification'
 
@@ -42,15 +37,11 @@ const STORAGE_KEY = 'digital_presence_verification'
 
 interface StoredVerification {
   website?: DomainVerificationResult
-  twitter?: TwitterVerificationResult
-  instagram?: InstagramVerificationResult
   appStore?: AppStoreVerificationResult
 }
 
 export function StepDigitalPresence({ data, founderName, onNext, onBack }: StepDigitalPresenceProps) {
   const [websiteResult, setWebsiteResult] = useState<DomainVerificationResult | null>(null)
-  const [twitterResult, setTwitterResult] = useState<TwitterVerificationResult | null>(null)
-  const [instagramResult, setInstagramResult] = useState<InstagramVerificationResult | null>(null)
   const [appStoreResult, setAppStoreResult] = useState<AppStoreVerificationResult | null>(null)
   const [verifying, setVerifying] = useState({ website: false, appStore: false })
 
@@ -64,19 +55,13 @@ export function StepDigitalPresence({ data, founderName, onNext, onBack }: StepD
     resolver: zodResolver(digitalPresenceSchema),
     defaultValues: {
       website: data.website ?? '',
-      twitterHandle: data.twitterHandle ?? '',
-      instagramHandle: data.instagramHandle ?? '',
       appStoreUrl: data.appStoreUrl ?? '',
       websiteVerified: data.websiteVerified ?? false,
-      twitterVerified: data.twitterVerified ?? false,
-      instagramVerified: data.instagramVerified ?? false,
       appStoreVerified: data.appStoreVerified ?? false,
     },
   })
 
   const website = watch('website')
-  const twitterHandle = watch('twitterHandle')
-  const instagramHandle = watch('instagramHandle')
   const appStoreUrl = watch('appStoreUrl')
 
   // Restore verification results from sessionStorage on mount
@@ -88,14 +73,6 @@ export function StepDigitalPresence({ data, founderName, onNext, onBack }: StepD
         if (parsed.website) {
           setWebsiteResult(parsed.website)
           setValue('websiteVerified', parsed.website.isLive && !parsed.website.error && parsed.website.nameFound === true)
-        }
-        if (parsed.twitter) {
-          setTwitterResult(parsed.twitter)
-          setValue('twitterVerified', parsed.twitter.valid)
-        }
-        if (parsed.instagram) {
-          setInstagramResult(parsed.instagram)
-          setValue('instagramVerified', parsed.instagram.valid)
         }
         if (parsed.appStore) {
           setAppStoreResult(parsed.appStore)
@@ -110,15 +87,11 @@ export function StepDigitalPresence({ data, founderName, onNext, onBack }: StepD
   // Persist verification results to sessionStorage
   function persistResults(
     ws?: DomainVerificationResult | null,
-    tw?: TwitterVerificationResult | null,
-    ig?: InstagramVerificationResult | null,
     app?: AppStoreVerificationResult | null,
   ) {
     try {
       const stored: StoredVerification = {}
       if (ws) stored.website = ws
-      if (tw) stored.twitter = tw
-      if (ig) stored.instagram = ig
       if (app) stored.appStore = app
       sessionStorage.setItem(STORAGE_KEY, JSON.stringify(stored))
     } catch {
@@ -146,40 +119,13 @@ export function StepDigitalPresence({ data, founderName, onNext, onBack }: StepD
       setWebsiteResult(result)
       // Only fully verified if site is live AND founder name found on page
       setValue('websiteVerified', json.success && result.nameFound === true)
-      persistResults(result, twitterResult, instagramResult, appStoreResult)
+      persistResults(result, appStoreResult)
     } catch {
       setWebsiteResult({ isLive: false, hasSSL: false, error: 'Verification request failed' })
       setValue('websiteVerified', false)
     } finally {
       setVerifying((v) => ({ ...v, website: false }))
     }
-  }
-
-  const handleVerifyTwitter = () => {
-    const handle = twitterHandle?.trim()
-    if (!handle) return
-
-    // Client-side format validation — call the same logic
-    let normalized = handle.replace(/^https?:\/\/(www\.)?(twitter|x)\.com\//, '').replace(/^@/, '').split('/')[0].split('?')[0]
-    const valid = /^[a-zA-Z0-9_]{1,15}$/.test(normalized)
-    const result: TwitterVerificationResult = { handle: normalized, valid, profileUrl: `https://x.com/${normalized}` }
-    setTwitterResult(result)
-    setValue('twitterVerified', valid)
-    setValue('twitterHandle', normalized)
-    persistResults(websiteResult, result, instagramResult, appStoreResult)
-  }
-
-  const handleVerifyInstagram = () => {
-    const handle = instagramHandle?.trim()
-    if (!handle) return
-
-    let normalized = handle.replace(/^https?:\/\/(www\.)?instagram\.com\//, '').replace(/^@/, '').split('/')[0].split('?')[0]
-    const valid = /^[a-zA-Z0-9_.]{1,30}$/.test(normalized)
-    const result: InstagramVerificationResult = { handle: normalized, valid, profileUrl: `https://instagram.com/${normalized}` }
-    setInstagramResult(result)
-    setValue('instagramVerified', valid)
-    setValue('instagramHandle', normalized)
-    persistResults(websiteResult, twitterResult, result, appStoreResult)
   }
 
   const handleVerifyAppStore = async () => {
@@ -199,7 +145,7 @@ export function StepDigitalPresence({ data, founderName, onNext, onBack }: StepD
       const result = json.data as AppStoreVerificationResult
       setAppStoreResult(result)
       setValue('appStoreVerified', json.success)
-      persistResults(websiteResult, twitterResult, instagramResult, result)
+      persistResults(websiteResult, result)
     } catch {
       setAppStoreResult({ error: 'Verification request failed' })
       setValue('appStoreVerified', false)
@@ -214,28 +160,14 @@ export function StepDigitalPresence({ data, founderName, onNext, onBack }: StepD
     setWebsiteResult(null)
     setValue('website', '')
     setValue('websiteVerified', false)
-    persistResults(null, twitterResult, instagramResult, appStoreResult)
-  }
-
-  const clearTwitter = () => {
-    setTwitterResult(null)
-    setValue('twitterHandle', '')
-    setValue('twitterVerified', false)
-    persistResults(websiteResult, null, instagramResult, appStoreResult)
-  }
-
-  const clearInstagram = () => {
-    setInstagramResult(null)
-    setValue('instagramHandle', '')
-    setValue('instagramVerified', false)
-    persistResults(websiteResult, twitterResult, null, appStoreResult)
+    persistResults(null, appStoreResult)
   }
 
   const clearAppStore = () => {
     setAppStoreResult(null)
     setValue('appStoreUrl', '')
     setValue('appStoreVerified', false)
-    persistResults(websiteResult, twitterResult, instagramResult, null)
+    persistResults(websiteResult, null)
   }
 
   return (
@@ -336,142 +268,6 @@ export function StepDigitalPresence({ data, founderName, onNext, onBack }: StepD
             ) : null}
             <p className="text-xs text-zinc-500">
               We check domain age and website content via WHOIS lookup.
-            </p>
-          </>
-        )}
-      </div>
-
-      {/* Twitter/X */}
-      <div className="space-y-2">
-        <Label htmlFor="twitterHandle" className="flex items-center gap-2 text-zinc-300">
-          <Twitter className="h-4 w-4" />
-          Twitter/X Handle
-        </Label>
-        {twitterResult?.valid ? (
-          <div className="rounded-lg bg-emerald-500/[0.1] border border-emerald-500/20 p-4 text-sm">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 text-emerald-400">
-                <CheckCircle className="h-4 w-4" />
-                <span className="font-medium">Valid Handle</span>
-              </div>
-              <Button type="button" variant="ghost" size="sm" onClick={clearTwitter} className="h-6 w-6 p-0 text-zinc-400 hover:text-zinc-200">
-                <X className="h-3 w-3" />
-              </Button>
-            </div>
-            <div className="mt-2 flex items-center gap-2 text-zinc-300">
-              <span>@{twitterResult.handle}</span>
-              <a
-                href={twitterResult.profileUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-400 hover:text-blue-300"
-              >
-                <ExternalLink className="h-3 w-3" />
-              </a>
-            </div>
-          </div>
-        ) : (
-          <>
-            <div className="flex gap-2">
-              <Input
-                id="twitterHandle"
-                placeholder="@yourhandle"
-                {...register('twitterHandle')}
-                className="flex-1"
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    e.preventDefault()
-                    handleVerifyTwitter()
-                  }
-                }}
-              />
-              <Button
-                type="button"
-                variant="ghost"
-                className="gap-2 border border-white/[0.1] text-zinc-300 hover:text-zinc-200 hover:bg-white/[0.05]"
-                onClick={handleVerifyTwitter}
-                disabled={!twitterHandle?.trim()}
-              >
-                <Search className="h-4 w-4" />
-                Verify
-              </Button>
-            </div>
-            {twitterResult && !twitterResult.valid ? (
-              <div className="flex items-center gap-2 text-sm text-orange-400">
-                <AlertCircle className="h-4 w-4 shrink-0" />
-                Invalid handle format. Use 1-15 characters: letters, numbers, underscores.
-              </div>
-            ) : null}
-            <p className="text-xs text-zinc-500">
-              We validate the handle format (letters, numbers, underscores, max 15 chars).
-            </p>
-          </>
-        )}
-      </div>
-
-      {/* Instagram */}
-      <div className="space-y-2">
-        <Label htmlFor="instagramHandle" className="flex items-center gap-2 text-zinc-300">
-          <Instagram className="h-4 w-4" />
-          Instagram Handle
-        </Label>
-        {instagramResult?.valid ? (
-          <div className="rounded-lg bg-emerald-500/[0.1] border border-emerald-500/20 p-4 text-sm">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 text-emerald-400">
-                <CheckCircle className="h-4 w-4" />
-                <span className="font-medium">Valid Handle</span>
-              </div>
-              <Button type="button" variant="ghost" size="sm" onClick={clearInstagram} className="h-6 w-6 p-0 text-zinc-400 hover:text-zinc-200">
-                <X className="h-3 w-3" />
-              </Button>
-            </div>
-            <div className="mt-2 flex items-center gap-2 text-zinc-300">
-              <span>@{instagramResult.handle}</span>
-              <a
-                href={instagramResult.profileUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-400 hover:text-blue-300"
-              >
-                <ExternalLink className="h-3 w-3" />
-              </a>
-            </div>
-          </div>
-        ) : (
-          <>
-            <div className="flex gap-2">
-              <Input
-                id="instagramHandle"
-                placeholder="@yourhandle"
-                {...register('instagramHandle')}
-                className="flex-1"
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    e.preventDefault()
-                    handleVerifyInstagram()
-                  }
-                }}
-              />
-              <Button
-                type="button"
-                variant="ghost"
-                className="gap-2 border border-white/[0.1] text-zinc-300 hover:text-zinc-200 hover:bg-white/[0.05]"
-                onClick={handleVerifyInstagram}
-                disabled={!instagramHandle?.trim()}
-              >
-                <Search className="h-4 w-4" />
-                Verify
-              </Button>
-            </div>
-            {instagramResult && !instagramResult.valid ? (
-              <div className="flex items-center gap-2 text-sm text-orange-400">
-                <AlertCircle className="h-4 w-4 shrink-0" />
-                Invalid handle format. Use 1-30 characters: letters, numbers, periods, underscores.
-              </div>
-            ) : null}
-            <p className="text-xs text-zinc-500">
-              We validate the handle format (letters, numbers, periods, underscores, max 30 chars).
             </p>
           </>
         )}

@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from 'react'
 import Link from 'next/link'
 import { FileText, Calendar, Shield, Building2, Landmark, RefreshCw } from 'lucide-react'
 import { StatusCard, ActionItems, TrustScoreCard } from '@/components/dashboard'
+import { EconomicActivityCard } from '@/components/dashboard/economic-activity-card'
 import { PendingUploadBanner } from '@/components/dashboard/pending-upload-banner'
 
 interface TrustScoreData {
@@ -293,18 +294,17 @@ export default function DashboardPage() {
     <div>
       <PendingUploadBanner onUploadsComplete={refreshDocuments} />
 
-      {/* Re-onboard banner for users with old v1 trust scores */}
-      {trustScore && (!trustScore.score_breakdown || typeof trustScore.score_breakdown !== 'object' || !('github' in trustScore.score_breakdown)) && (
+      {trustScore ? (
         <Link href="/onboarding">
           <div className="mb-6 flex items-center gap-3 rounded-xl border border-blue-500/20 bg-blue-500/10 p-4 cursor-pointer hover:bg-blue-500/15 transition-colors">
             <RefreshCw className="h-5 w-5 text-blue-400 shrink-0" />
             <div className="flex-1">
-              <p className="text-sm font-medium text-blue-300">Update Your Trust Score</p>
-              <p className="text-xs text-blue-400/70">We&apos;ve improved our scoring system. Re-complete onboarding to get a more accurate score with detailed per-provider breakdown.</p>
+              <p className="text-sm font-medium text-blue-300">Re-do Onboarding</p>
+              <p className="text-xs text-blue-400/70">Update your identity, social profiles, and digital presence to recalculate your trust score.</p>
             </div>
           </div>
         </Link>
-      )}
+      ) : null}
 
       <div className="mb-6 sm:mb-8">
         <h1 className="text-xl sm:text-2xl font-bold text-white">Dashboard</h1>
@@ -357,7 +357,7 @@ export default function DashboardPage() {
       {/* Main Content Grid */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         {/* Trust Score */}
-        <div className="lg:col-span-1">
+        <div className="lg:col-span-1 space-y-6">
           {trustScore ? (
             <TrustScoreCard
               score={trustScore.total_score}
@@ -380,6 +380,18 @@ export default function DashboardPage() {
               </p>
             </div>
           )}
+
+          <EconomicActivityCard
+            cryptoVerified={!!(trustScore?.score_breakdown && typeof trustScore.score_breakdown === 'object' && (trustScore.score_breakdown as Record<string, unknown>).economic_activity && ((trustScore.score_breakdown as Record<string, Record<string, unknown>>).economic_activity?.details as Record<string, unknown>)?.crypto_verified)}
+            cryptoChain={trustScore?.score_breakdown ? String(((trustScore.score_breakdown as Record<string, Record<string, unknown>>).economic_activity?.details as Record<string, unknown>)?.crypto_chain || '') : undefined}
+            cryptoScore={trustScore?.score_breakdown ? Number(((trustScore.score_breakdown as Record<string, Record<string, unknown>>).economic_activity?.details as Record<string, unknown>)?.crypto_subtotal || 0) : undefined}
+            paymentVerified={!!(trustScore?.score_breakdown && typeof trustScore.score_breakdown === 'object' && ((trustScore.score_breakdown as Record<string, Record<string, unknown>>).economic_activity?.details as Record<string, unknown>)?.payment_verified)}
+            stripeConnected={!!(trustScore?.score_breakdown && typeof trustScore.score_breakdown === 'object' && ((trustScore.score_breakdown as Record<string, Record<string, unknown>>).economic_activity?.details as Record<string, unknown>)?.stripe_connected)}
+            stripeScore={trustScore?.score_breakdown ? Number(((trustScore.score_breakdown as Record<string, Record<string, unknown>>).economic_activity?.details as Record<string, unknown>)?.stripe_subtotal || 0) : undefined}
+            hasBankApp={!!bankApp}
+            onRefresh={() => window.location.reload()}
+          />
+
         </div>
 
         {/* Action Items */}

@@ -124,6 +124,12 @@
       "namedRegex": "^/admin/settings(?:/)?$"
     },
     {
+      "page": "/api/admin/payment-verified",
+      "regex": "^/api/admin/payment\\-verified(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/admin/payment\\-verified(?:/)?$"
+    },
+    {
       "page": "/api/auth/complete-registration",
       "regex": "^/api/auth/complete\\-registration(?:/)?$",
       "routeKeys": {},
@@ -146,6 +152,18 @@
       "regex": "^/api/compliance(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/api/compliance(?:/)?$"
+    },
+    {
+      "page": "/api/crypto/challenge",
+      "regex": "^/api/crypto/challenge(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/crypto/challenge(?:/)?$"
+    },
+    {
+      "page": "/api/crypto/verify",
+      "regex": "^/api/crypto/verify(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/crypto/verify(?:/)?$"
     },
     {
       "page": "/api/documents",

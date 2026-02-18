@@ -1,4 +1,6 @@
-[00:00:00.603] Server  WARN    ⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
-[00:00:00.682] Server  LOG     ✓ Ready in 533ms
-[00:00:13.804] Server  ERROR   GET /user - 401 with id EC0F:17D3AF:1808F63:68909A0:69917C8D in 240ms
-[00:00:13.913] Server  ERROR   Trust score API error: HttpError: Bad credentials - https://docs.github.com/rest
+[00:00:00.681] Server  WARN    ⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+[00:00:00.762] Server  LOG     ✓ Ready in 602ms
+[00:00:02.167] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:10.558] Browser WARN    Detected `scroll-behavior: smooth` on the `<html>` element. To disable smooth scrolling during route transitions, add `data-scroll-behavior="smooth"` to your <html> element. Learn more: https://nextjs.org/docs/messages/missing-data-scroll-behavior
+[00:00:52.828] Server  LOG     ✓ Compiled in 356ms
+[00:00:59.636] Server  LOG     ✓ Compiled in 91ms

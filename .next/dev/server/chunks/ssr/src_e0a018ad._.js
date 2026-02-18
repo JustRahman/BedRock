@@ -451,9 +451,11 @@ function TrustScoreCard({ score, status, statusLabel, breakdown, scoreBreakdown 
     // If v2 score_breakdown JSON is available, use real per-provider scores
     const hasV2 = scoreBreakdown && typeof scoreBreakdown === 'object' && 'github' in scoreBreakdown;
     let bars;
-    if (hasV2) {
+    // Check for v2 data — supports both new `economic_activity` and legacy `stripe` key
+    const hasV2EA = scoreBreakdown && typeof scoreBreakdown === 'object' && 'economic_activity' in scoreBreakdown;
+    if (hasV2 || hasV2EA) {
         const github = scoreBreakdown.github;
-        const stripe = scoreBreakdown.stripe;
+        const econ = scoreBreakdown.economic_activity ?? scoreBreakdown.stripe;
         const linkedin = scoreBreakdown.linkedin;
         const identity = scoreBreakdown.identity;
         const dp = scoreBreakdown.digital_presence;
@@ -462,17 +464,17 @@ function TrustScoreCard({ score, status, statusLabel, breakdown, scoreBreakdown 
             {
                 label: 'GitHub',
                 value: github?.score ?? 0,
-                max: github?.max ?? 30
+                max: github?.max ?? 25
             },
             {
-                label: 'Stripe / Financial',
-                value: stripe?.score ?? 0,
-                max: stripe?.max ?? 35
+                label: 'Economic Activity',
+                value: econ?.score ?? 0,
+                max: econ?.max ?? 25
             },
             {
                 label: 'LinkedIn',
                 value: linkedin?.score ?? 0,
-                max: linkedin?.max ?? 15
+                max: linkedin?.max ?? 10
             },
             {
                 label: 'Identity',
@@ -491,27 +493,27 @@ function TrustScoreCard({ score, status, statusLabel, breakdown, scoreBreakdown 
             }
         ];
     } else {
-        // Legacy fallback: approximate from DB columns (same as before)
-        const githubScore = Math.min(30, Math.round(breakdown.digitalLineage * 0.75));
+        // Legacy fallback: approximate from DB columns
+        const githubScore = Math.min(25, Math.round(breakdown.digitalLineage * 0.71));
         const digitalPresenceScore = Math.min(10, breakdown.digitalLineage - githubScore);
-        const stripeScore = Math.min(35, breakdown.business);
-        const linkedinScore = Math.min(15, breakdown.identity);
+        const econScore = Math.min(25, breakdown.business);
+        const linkedinScore = Math.min(10, breakdown.identity);
         const networkScore = Math.min(10, breakdown.network);
         bars = [
             {
                 label: 'GitHub',
                 value: githubScore,
-                max: 30
+                max: 25
             },
             {
-                label: 'Stripe / Financial',
-                value: stripeScore,
-                max: 35
+                label: 'Economic Activity',
+                value: econScore,
+                max: 25
             },
             {
                 label: 'LinkedIn',
                 value: linkedinScore,
-                max: 15
+                max: 10
             },
             {
                 label: 'Digital Presence',
@@ -536,20 +538,20 @@ function TrustScoreCard({ score, status, statusLabel, breakdown, scoreBreakdown 
                         children: "Trust Score"
                     }, void 0, false, {
                         fileName: "[project]/src/components/dashboard/trust-score-card.tsx",
-                        lineNumber: 94,
+                        lineNumber: 97,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trending$2d$up$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__TrendingUp$3e$__["TrendingUp"], {
                         className: "h-5 w-5 text-zinc-600"
                     }, void 0, false, {
                         fileName: "[project]/src/components/dashboard/trust-score-card.tsx",
-                        lineNumber: 95,
+                        lineNumber: 98,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/dashboard/trust-score-card.tsx",
-                lineNumber: 93,
+                lineNumber: 96,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -560,7 +562,7 @@ function TrustScoreCard({ score, status, statusLabel, breakdown, scoreBreakdown 
                         children: score
                     }, void 0, false, {
                         fileName: "[project]/src/components/dashboard/trust-score-card.tsx",
-                        lineNumber: 99,
+                        lineNumber: 102,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -570,7 +572,7 @@ function TrustScoreCard({ score, status, statusLabel, breakdown, scoreBreakdown 
                                 children: statusLabel
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/trust-score-card.tsx",
-                                lineNumber: 103,
+                                lineNumber: 106,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -578,19 +580,19 @@ function TrustScoreCard({ score, status, statusLabel, breakdown, scoreBreakdown 
                                 children: "out of 100 points"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/trust-score-card.tsx",
-                                lineNumber: 106,
+                                lineNumber: 109,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/trust-score-card.tsx",
-                        lineNumber: 102,
+                        lineNumber: 105,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/dashboard/trust-score-card.tsx",
-                lineNumber: 98,
+                lineNumber: 101,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -601,18 +603,18 @@ function TrustScoreCard({ score, status, statusLabel, breakdown, scoreBreakdown 
                         max: bar.max
                     }, bar.label, false, {
                         fileName: "[project]/src/components/dashboard/trust-score-card.tsx",
-                        lineNumber: 112,
+                        lineNumber: 115,
                         columnNumber: 11
                     }, this))
             }, void 0, false, {
                 fileName: "[project]/src/components/dashboard/trust-score-card.tsx",
-                lineNumber: 110,
+                lineNumber: 113,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/dashboard/trust-score-card.tsx",
-        lineNumber: 92,
+        lineNumber: 95,
         columnNumber: 5
     }, this);
 }
@@ -629,7 +631,7 @@ function ScoreBar({ label, value, max }) {
                         children: label
                     }, void 0, false, {
                         fileName: "[project]/src/components/dashboard/trust-score-card.tsx",
-                        lineNumber: 125,
+                        lineNumber: 128,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -641,13 +643,13 @@ function ScoreBar({ label, value, max }) {
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/trust-score-card.tsx",
-                        lineNumber: 126,
+                        lineNumber: 129,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/dashboard/trust-score-card.tsx",
-                lineNumber: 124,
+                lineNumber: 127,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -659,18 +661,18 @@ function ScoreBar({ label, value, max }) {
                     }
                 }, void 0, false, {
                     fileName: "[project]/src/components/dashboard/trust-score-card.tsx",
-                    lineNumber: 131,
+                    lineNumber: 134,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/dashboard/trust-score-card.tsx",
-                lineNumber: 130,
+                lineNumber: 133,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/dashboard/trust-score-card.tsx",
-        lineNumber: 123,
+        lineNumber: 126,
         columnNumber: 5
     }, this);
 }

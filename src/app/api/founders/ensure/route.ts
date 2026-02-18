@@ -61,11 +61,25 @@ export async function POST(request: Request) {
         .single()
 
       if (founderError) {
-        console.error('[ensure] Founder creation failed:', founderError.message)
-        return NextResponse.json({ error: founderError.message }, { status: 500 })
+        // Race condition: another request created the founder between our check and insert
+        if (founderError.message.includes('duplicate key')) {
+          const { data: raceFounder } = await (supabase
+            .from('founders') as ReturnType<typeof supabase.from>)
+            .select('id')
+            .eq('user_id', user.id)
+            .single()
+          if (raceFounder) {
+            founderId = (raceFounder as { id: string }).id
+          } else {
+            return NextResponse.json({ error: founderError.message }, { status: 500 })
+          }
+        } else {
+          console.error('[ensure] Founder creation failed:', founderError.message)
+          return NextResponse.json({ error: founderError.message }, { status: 500 })
+        }
+      } else {
+        founderId = (founder as { id: string }).id
       }
-
-      founderId = (founder as { id: string }).id
     }
 
     // Save trust score if provided
@@ -80,7 +94,7 @@ export async function POST(request: Request) {
       const ts = body.trustScore
       const b = ts.breakdown || {}
       const githubScore = b.github?.score || 0
-      const stripeScore = b.stripe?.score || 0
+      const economicScore = b.economic_activity?.score ?? b.stripe?.score ?? 0
       const linkedinScore = b.linkedin?.score || 0
       const identityScore = b.identity?.score || 0
       const dpScore = b.digital_presence?.score || 0
@@ -91,8 +105,8 @@ export async function POST(request: Request) {
       const scoreData: Record<string, unknown> = {
         total_score: ts.score || 0,
         digital_lineage_score: githubScore + dpScore,
-        business_score: stripeScore,
-        financial_score: stripeScore,
+        business_score: economicScore,
+        financial_score: economicScore,
         social_score: linkedinScore,
         identity_score: identityScore,
         network_score: networkScore,
@@ -196,16 +210,12 @@ export async function POST(request: Request) {
       // Digital presence
       if (od.digitalPresence) {
         const dp = od.digitalPresence
-        if (dp.website || dp.twitterHandle || dp.instagramHandle || dp.appStoreUrl) {
+        if (dp.website || dp.appStoreUrl) {
           verifications.push({
             type: 'digital_presence',
             data: {
               website: dp.website,
               websiteVerified: dp.websiteVerified,
-              twitterHandle: dp.twitterHandle,
-              twitterVerified: dp.twitterVerified,
-              instagramHandle: dp.instagramHandle,
-              instagramVerified: dp.instagramVerified,
               appStoreUrl: dp.appStoreUrl,
               appStoreVerified: dp.appStoreVerified,
             },

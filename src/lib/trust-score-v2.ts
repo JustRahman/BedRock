@@ -2,11 +2,19 @@ import { getCountryPenalty } from '@/lib/validations/onboarding'
 import type { GitHubProfileData } from '@/lib/oauth/github'
 import type { StripeProfileData } from '@/lib/oauth/stripe'
 import type { LinkedInProfileData } from '@/lib/oauth/linkedin'
+import type { CryptoWalletScoreBreakdown } from '@/lib/crypto/types'
 
 // === Input types ===
 
+export interface EconomicActivityInput {
+  crypto?: CryptoWalletScoreBreakdown | null
+  paymentVerified?: boolean
+  stripe?: StripeProfileData | null
+}
+
 export interface TrustScoreV2Input {
   github?: GitHubProfileData | null
+  /** @deprecated Use economicActivity.stripe instead */
   stripe?: StripeProfileData | null
   linkedin?: LinkedInProfileData | null
   githubUsernameOnly?: boolean
@@ -24,8 +32,6 @@ export interface TrustScoreV2Input {
   }
   digitalPresence?: {
     websiteVerified?: boolean
-    twitterVerified?: boolean
-    instagramVerified?: boolean
     appStoreVerified?: boolean
   }
   network?: {
@@ -34,6 +40,7 @@ export interface TrustScoreV2Input {
     acceleratorVerified?: boolean
     hasEmployer?: boolean
   }
+  economicActivity?: EconomicActivityInput
   hasBankStatements?: boolean
   countryOfOrigin?: string
   countryOfResidence?: string
@@ -53,7 +60,7 @@ export interface TrustScoreV2Result {
   score: number
   breakdown: {
     github: ProviderBreakdown
-    stripe: ProviderBreakdown
+    economic_activity: ProviderBreakdown
     linkedin: ProviderBreakdown
     identity: ProviderBreakdown
     digital_presence: ProviderBreakdown
@@ -88,32 +95,32 @@ export function getStatusFromScore(score: number): {
 }
 
 // === Scoring functions ===
-// Weights: GitHub 25, Stripe 25, LinkedIn 10, Identity 20, Digital Presence 10, Network 10 = 100
+// Weights: GitHub 25, Economic Activity 25, LinkedIn 10, Identity 20, Digital Presence 10, Network 10 = 100
 
 function scoreGitHub(data: GitHubProfileData | null | undefined, usernameOnly: boolean): ProviderBreakdown {
   if (!data) {
     return { score: 0, max: 25, details: { connected: false } }
   }
 
-  // Account age: 0-8 pts (1pt/year, cap 8)
-  const accountAge = Math.min(8, Math.floor(data.accountAgeYears))
+  // Account age: 0-5 pts (1pt/year, cap 5)
+  const accountAge = Math.min(5, Math.floor(data.accountAgeYears))
 
-  // Public repos: 0-5 pts (1pt per 5 repos)
-  const repos = Math.min(5, Math.floor(data.publicRepos / 5))
+  // Commit activity (last 12 months): 0-8 pts (1pt per 50 commits)
+  const commits = Math.min(8, Math.floor((data.commitsLastYear ?? 0) / 50))
 
-  // Stars: 0-4 pts (1pt per 3 stars)
-  const stars = Math.min(4, Math.floor(data.totalStars / 3))
+  // Public repos: 0-4 pts (1pt per 5 repos)
+  const repos = Math.min(4, Math.floor(data.publicRepos / 5))
 
-  // Followers: 0-4 pts (1pt per 5 followers)
-  const followers = Math.min(4, Math.floor(data.followers / 5))
+  // Language diversity: 0-3 pts (1pt per language)
+  const languages = Math.min(3, data.topLanguages.length)
 
-  // Language diversity: 0-2 pts (1pt per 2 languages)
-  const languages = Math.min(2, Math.floor(data.topLanguages.length / 2))
+  // Stars + Followers combined social proof: 0-3 pts (1pt per 10 combined)
+  const socialProof = Math.min(3, Math.floor((data.totalStars + data.followers) / 10))
 
-  // Has contributions/activity: 0-2 pts
-  const activity = data.publicRepos > 0 ? 2 : 0
+  // Recent activity: 2 pts if any commits in last 30 days
+  const recentActivity = (data.commitsLast30Days ?? 0) > 0 ? 2 : 0
 
-  let total = accountAge + repos + stars + followers + languages + activity
+  let total = accountAge + commits + repos + languages + socialProof + recentActivity
 
   // Username-only cap at 15
   if (usernameOnly) {
@@ -127,62 +134,88 @@ function scoreGitHub(data: GitHubProfileData | null | undefined, usernameOnly: b
       connected: !usernameOnly,
       username: data.login,
       account_age_years: data.accountAgeYears,
+      commits_last_year: data.commitsLastYear ?? 0,
+      commits_last_30_days: data.commitsLast30Days ?? 0,
       repos: data.publicRepos,
-      stars: data.totalStars,
-      followers: data.followers,
       languages: data.topLanguages.length,
+      stars_and_followers: data.totalStars + data.followers,
       username_only: usernameOnly,
     },
   }
 }
 
-function scoreStripe(data: StripeProfileData | null | undefined, hasBankStatements: boolean): ProviderBreakdown {
-  if (!data && !hasBankStatements) {
-    return { score: 0, max: 25, details: { connected: false } }
-  }
-
+function scoreStripeReweighted(data: StripeProfileData | null | undefined): { score: number; details: Record<string, string | number | boolean> } {
   if (!data) {
-    // Bank statements only = 2 pts
-    return {
-      score: 2,
-      max: 25,
-      details: { connected: false, bank_statements: true },
-    }
+    return { score: 0, details: { stripe_connected: false } }
   }
 
-  // Account age: 0-7 pts (1pt per 3 months)
-  const accountAge = Math.min(7, Math.floor(data.accountAgeMonths / 3))
+  // Account age: 0-4 pts (1pt per 3 months)
+  const accountAge = Math.min(4, Math.floor(data.accountAgeMonths / 3))
 
-  // Monthly revenue: 0-9 pts (scaled tiers)
+  // Monthly revenue: 0-5 pts (tiered)
   let revenue = 0
-  if (data.monthlyRevenue >= 50000) revenue = 9
-  else if (data.monthlyRevenue >= 10000) revenue = 8
-  else if (data.monthlyRevenue >= 5000) revenue = 7
-  else if (data.monthlyRevenue >= 1000) revenue = 5
-  else if (data.monthlyRevenue > 0) revenue = 3
+  if (data.monthlyRevenue >= 50000) revenue = 5
+  else if (data.monthlyRevenue >= 10000) revenue = 4
+  else if (data.monthlyRevenue >= 5000) revenue = 3
+  else if (data.monthlyRevenue >= 1000) revenue = 2
+  else if (data.monthlyRevenue > 0) revenue = 1
 
-  // Low chargebacks: 0-5 pts
+  // Low chargebacks: 0-3 pts
   let chargebacks = 0
-  if (data.chargebackRateCategory === 'none') chargebacks = 5
-  else if (data.chargebackRateCategory === 'low') chargebacks = 3
+  if (data.chargebackRateCategory === 'none') chargebacks = 3
+  else if (data.chargebackRateCategory === 'low') chargebacks = 2
   else if (data.chargebackRateCategory === 'medium') chargebacks = 1
 
-  // Transaction volume: 0-4 pts (1pt per 25 charges)
-  const volume = Math.min(4, Math.floor(data.totalCharges / 25))
+  // Transaction volume: 0-3 pts (1pt per 25 charges)
+  const volume = Math.min(3, Math.floor(data.totalCharges / 25))
 
   const total = accountAge + revenue + chargebacks + volume
 
   return {
-    score: Math.min(25, total),
-    max: 25,
+    score: Math.min(15, total),
     details: {
-      connected: true,
+      stripe_connected: true,
       monthly_revenue: data.monthlyRevenueFormatted,
       account_age_months: data.accountAgeMonths,
       chargeback_rate: `${data.chargebackRate}%`,
       total_charges: data.totalCharges,
     },
   }
+}
+
+function scoreEconomicActivity(input: EconomicActivityInput | undefined, legacyStripe?: StripeProfileData | null): ProviderBreakdown {
+  const details: Record<string, string | number | boolean> = {}
+
+  // Signal 1: Crypto wallet (max 15)
+  let cryptoScore = 0
+  if (input?.crypto) {
+    cryptoScore = Math.min(15, input.crypto.total)
+    details.crypto_verified = true
+    details.crypto_wallet_age = input.crypto.walletAge
+    details.crypto_tx_count = input.crypto.txCount
+    details.crypto_holdings = input.crypto.holdings
+    details.crypto_activity_spread = input.crypto.activitySpread
+    details.crypto_subtotal = cryptoScore
+  } else {
+    details.crypto_verified = false
+  }
+
+  // Signal 2: Payment verified by admin (5 or 0)
+  const paymentScore = input?.paymentVerified ? 5 : 0
+  details.payment_verified = !!input?.paymentVerified
+  details.payment_subtotal = paymentScore
+
+  // Signal 3: Stripe connected (max 15, reweighted)
+  const stripeData = input?.stripe ?? legacyStripe
+  const stripeResult = scoreStripeReweighted(stripeData)
+  const stripeScore = stripeResult.score
+  Object.assign(details, stripeResult.details)
+  details.stripe_subtotal = stripeScore
+
+  // Cap at 25
+  const total = Math.min(25, cryptoScore + paymentScore + stripeScore)
+
+  return { score: total, max: 25, details }
 }
 
 function scoreLinkedIn(data: LinkedInProfileData | null | undefined, urlOnly: boolean): ProviderBreakdown {
@@ -227,20 +260,15 @@ function scoreDigitalPresence(input: TrustScoreV2Input['digitalPresence']): Prov
   let total = 0
   const details: Record<string, boolean> = {}
 
+  // Website verified (DNS/content check): 6 pts
   if (input.websiteVerified) {
-    total += 5
+    total += 6
     details.website = true
   }
-  if (input.twitterVerified) {
-    total += 2
-    details.twitter = true
-  }
-  if (input.instagramVerified) {
-    total += 1
-    details.instagram = true
-  }
+
+  // App Store listing (public listing, name match): 4 pts
   if (input.appStoreVerified) {
-    total += 2
+    total += 4
     details.app_store = true
   }
 
@@ -335,7 +363,13 @@ function scoreIdentity(input: TrustScoreV2Input['identity']): ProviderBreakdown 
 
 export function calculateTrustScoreV2(input: TrustScoreV2Input): TrustScoreV2Result {
   const github = scoreGitHub(input.github, !!input.githubUsernameOnly)
-  const stripe = scoreStripe(input.stripe, !!input.hasBankStatements)
+
+  // Backward compat: if old `stripe` field is set but no economicActivity, map it
+  const eaInput: EconomicActivityInput | undefined = input.economicActivity ?? (
+    input.stripe ? { stripe: input.stripe } : undefined
+  )
+  const economic_activity = scoreEconomicActivity(eaInput, input.stripe)
+
   const linkedin = scoreLinkedIn(input.linkedin, !!input.linkedinUrlOnly)
   const identity = scoreIdentity(input.identity)
   const digital_presence = scoreDigitalPresence(input.digitalPresence)
@@ -343,14 +377,14 @@ export function calculateTrustScoreV2(input: TrustScoreV2Input): TrustScoreV2Res
 
   const signals_connected: string[] = []
   if (github.score > 0) signals_connected.push('github')
-  if (stripe.score > 0) signals_connected.push('stripe')
+  if (economic_activity.score > 0) signals_connected.push('economic_activity')
   if (linkedin.score > 0) signals_connected.push('linkedin')
   if (identity.score > 0) signals_connected.push('identity')
   if (digital_presence.score > 0) signals_connected.push('digital_presence')
   if (network.score > 0) signals_connected.push('network')
 
   // Max possible: 25+25+10+20+10+10 = 100
-  const rawScore = github.score + stripe.score + linkedin.score + identity.score + digital_presence.score + network.score
+  const rawScore = github.score + economic_activity.score + linkedin.score + identity.score + digital_presence.score + network.score
 
   // Country adjustment — use rawScore to determine penalty reduction
   const country = input.countryOfOrigin || input.countryOfResidence || ''
@@ -378,8 +412,13 @@ export function calculateTrustScoreV2(input: TrustScoreV2Input): TrustScoreV2Res
   } else if (input.githubUsernameOnly) {
     improvements.push('Connect GitHub via OAuth for full score (currently capped at 15)')
   }
-  if (stripe.score === 0) {
-    improvements.push('Connect Stripe for up to +25 points')
+  if (economic_activity.score < 25) {
+    const remaining = 25 - economic_activity.score
+    if (economic_activity.score === 0) {
+      improvements.push('Verify a crypto wallet or connect Stripe for up to +25 points')
+    } else {
+      improvements.push(`Add more economic signals for up to +${remaining} more points`)
+    }
   }
   if (linkedin.score === 0) {
     improvements.push('Connect LinkedIn for up to +10 points')
@@ -403,7 +442,7 @@ export function calculateTrustScoreV2(input: TrustScoreV2Input): TrustScoreV2Res
 
   return {
     score,
-    breakdown: { github, stripe, linkedin, identity, digital_presence, network },
+    breakdown: { github, economic_activity, linkedin, identity, digital_presence, network },
     country_adjustment,
     status,
     risk_level,

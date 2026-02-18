@@ -438,6 +438,15 @@ async function POST(request) {
                 status: 400
             });
         }
+        // Validate file size (max 10MB)
+        const MAX_FILE_SIZE = 10 * 1024 * 1024;
+        if (file.size > MAX_FILE_SIZE) {
+            return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+                error: 'File too large. Maximum size is 10MB.'
+            }, {
+                status: 400
+            });
+        }
         // Read file buffer once (File stream can only be consumed once)
         const arrayBuffer = await file.arrayBuffer();
         const buffer = Buffer.from(arrayBuffer);
@@ -502,7 +511,7 @@ async function POST(request) {
                 // Upsert founder_verifications record
                 const verificationData = {
                     founder_id: founder.id,
-                    verification_type: `document_${type}`,
+                    verification_type: type,
                     status: result.status === 'review_needed' ? 'pending' : result.status,
                     verified_at: result.status === 'verified' ? new Date().toISOString() : null,
                     metadata: {
