@@ -6,6 +6,13 @@ import { FileText, Calendar, Shield, Building2, Landmark, RefreshCw } from 'luci
 import { StatusCard, ActionItems, TrustScoreCard } from '@/components/dashboard'
 import { EconomicActivityCard } from '@/components/dashboard/economic-activity-card'
 import { PendingUploadBanner } from '@/components/dashboard/pending-upload-banner'
+import { createClient } from '@/lib/supabase/client'
+
+const RE_ONBOARD_EMAILS = [
+  'contact@nazarly.digital',
+  'ra@nemy.agency',
+  'rahmanbazarov4567@gmail.com',
+]
 
 interface TrustScoreData {
   total_score: number
@@ -58,6 +65,7 @@ export default function DashboardPage() {
   const [company, setCompany] = useState<CompanyData | null>(null)
   const [bankApp, setBankApp] = useState<BankAppData | null>(null)
   const [loading, setLoading] = useState(true)
+  const [showReOnboard, setShowReOnboard] = useState(false)
 
   const refreshDocuments = useCallback(async () => {
     try {
@@ -74,6 +82,13 @@ export default function DashboardPage() {
   useEffect(() => {
     async function fetchData() {
       try {
+        // Check if current user should see re-onboard banner
+        const supabase = createClient()
+        const { data: { user } } = await supabase.auth.getUser()
+        if (user?.email && RE_ONBOARD_EMAILS.includes(user.email)) {
+          setShowReOnboard(true)
+        }
+
         // Step 1: Ensure founder exists (auto-create if missing)
         // Also pass any unsaved onboarding data from localStorage
         let trustScorePayload = undefined
@@ -294,13 +309,13 @@ export default function DashboardPage() {
     <div>
       <PendingUploadBanner onUploadsComplete={refreshDocuments} />
 
-      {trustScore && (!trustScore.score_breakdown || typeof trustScore.score_breakdown !== 'object' || !('github' in trustScore.score_breakdown)) ? (
+      {showReOnboard ? (
         <Link href="/onboarding">
           <div className="mb-6 flex items-center gap-3 rounded-xl border border-blue-500/20 bg-blue-500/10 p-4 cursor-pointer hover:bg-blue-500/15 transition-colors">
             <RefreshCw className="h-5 w-5 text-blue-400 shrink-0" />
             <div className="flex-1">
               <p className="text-sm font-medium text-blue-300">Re-do Onboarding</p>
-              <p className="text-xs text-blue-400/70">We&apos;ve improved our scoring system. Re-complete onboarding to get a more accurate score with detailed per-provider breakdown.</p>
+              <p className="text-xs text-blue-400/70">Update your identity, social profiles, and digital presence to recalculate your trust score.</p>
             </div>
           </div>
         </Link>
