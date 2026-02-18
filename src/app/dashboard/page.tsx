@@ -11,7 +11,6 @@ import { createClient } from '@/lib/supabase/client'
 const RE_ONBOARD_EMAILS = [
   'contact@nazarly.digital',
   'ra@nemy.agency',
-  'rahmanbazarov4567@gmail.com',
 ]
 
 interface TrustScoreData {

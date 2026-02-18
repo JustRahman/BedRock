@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -38,6 +38,8 @@ import {
   Calendar,
   Download,
   DollarSign,
+  Upload,
+  Loader2,
 } from 'lucide-react'
 import { format } from 'date-fns'
 import { Progress } from '@/components/ui/progress'
@@ -51,6 +53,19 @@ interface FounderDetailClientProps {
   company: Record<string, unknown> | null
   bankApplication: Record<string, unknown> | null
 }
+
+const adminDocumentTypes = [
+  { value: 'articles_of_organization', label: 'Articles of Organization' },
+  { value: 'ein_letter', label: 'EIN Letter' },
+  { value: 'operating_agreement', label: 'Operating Agreement' },
+  { value: 'registered_agent', label: 'Registered Agent' },
+  { value: 'passport', label: 'Passport' },
+  { value: 'local_id', label: 'Local ID' },
+  { value: 'address_proof', label: 'Address Proof' },
+  { value: 'bank_statement', label: 'Bank Statement' },
+  { value: 'business_license', label: 'Business License' },
+  { value: 'other', label: 'Other' },
+]
 
 const statusOptions = [
   { value: 'elite', label: 'Elite' },
@@ -84,6 +99,54 @@ export function FounderDetailClient({
     )
   )
   const [paymentToggling, setPaymentToggling] = useState(false)
+  const [isUploadOpen, setIsUploadOpen] = useState(false)
+  const [uploadType, setUploadType] = useState('')
+  const [uploadFile, setUploadFile] = useState<File | null>(null)
+  const [uploading, setUploading] = useState(false)
+  const [uploadError, setUploadError] = useState('')
+  const fileInputRef = useRef<HTMLInputElement>(null)
+
+  const handleUploadDocument = async () => {
+    if (!uploadFile || !uploadType) {
+      setUploadError('Please select a document type and file.')
+      return
+    }
+    setUploadError('')
+    setUploading(true)
+    try {
+      const formData = new FormData()
+      formData.append('file', uploadFile)
+      formData.append('type', uploadType)
+      formData.append('founderId', founder.id as string)
+
+      const res = await fetch('/api/documents', { method: 'POST', body: formData })
+      if (!res.ok) {
+        const data = await res.json()
+        setUploadError(data.error || 'Upload failed')
+        return
+      }
+      toast.success('Document uploaded successfully')
+      setIsUploadOpen(false)
+      setUploadFile(null)
+      setUploadType('')
+      router.refresh()
+    } catch {
+      setUploadError('Upload failed. Please try again.')
+    } finally {
+      setUploading(false)
+    }
+  }
+
+  const handleDownloadDoc = async (docId: string) => {
+    try {
+      const res = await fetch(`/api/documents/download?id=${docId}`)
+      if (!res.ok) return
+      const data = await res.json()
+      if (data.url) window.open(data.url, '_blank')
+    } catch {
+      toast.error('Failed to download document')
+    }
+  }
 
   const handleOverride = async () => {
     setSaving(true)
@@ -447,11 +510,84 @@ export function FounderDetailClient({
 
             <TabsContent value="documents" className="mt-6">
               <Card>
-                <CardHeader>
-                  <CardTitle>Uploaded Documents</CardTitle>
-                  <CardDescription>
-                    Review and verify submitted documents.
-                  </CardDescription>
+                <CardHeader className="flex flex-row items-center justify-between">
+                  <div>
+                    <CardTitle>Uploaded Documents</CardTitle>
+                    <CardDescription>
+                      Review and verify submitted documents.
+                    </CardDescription>
+                  </div>
+                  <Dialog open={isUploadOpen} onOpenChange={(open) => {
+                    setIsUploadOpen(open)
+                    if (!open) { setUploadError(''); setUploadFile(null); setUploadType('') }
+                  }}>
+                    <DialogTrigger asChild>
+                      <Button size="sm" className="gap-2">
+                        <Upload className="h-4 w-4" />
+                        Upload Document
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent>
+                      <DialogHeader>
+                        <DialogTitle>Upload Document for Founder</DialogTitle>
+                        <DialogDescription>
+                          Select the document type and upload a file. Admin uploads are automatically marked as verified.
+                        </DialogDescription>
+                      </DialogHeader>
+                      <div className="space-y-4 py-4">
+                        <div className="space-y-2">
+                          <Label>Document Type</Label>
+                          <Select value={uploadType} onValueChange={setUploadType}>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select document type" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {adminDocumentTypes.map((t) => (
+                                <SelectItem key={t.value} value={t.value}>
+                                  {t.label}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        <div className="space-y-2">
+                          <Label>File</Label>
+                          <div
+                            className="flex cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed p-6 hover:bg-gray-50"
+                            onClick={() => fileInputRef.current?.click()}
+                          >
+                            <Upload className="mb-2 h-8 w-8 text-gray-400" />
+                            {uploadFile ? (
+                              <p className="text-sm font-medium">{uploadFile.name}</p>
+                            ) : (
+                              <>
+                                <p className="text-sm text-gray-500">Click to upload</p>
+                                <p className="mt-1 text-xs text-gray-400">PDF, PNG, JPG up to 10MB</p>
+                              </>
+                            )}
+                            <input
+                              ref={fileInputRef}
+                              type="file"
+                              className="hidden"
+                              accept=".pdf,.png,.jpg,.jpeg"
+                              onChange={(e) => setUploadFile(e.target.files?.[0] ?? null)}
+                            />
+                          </div>
+                        </div>
+                        {uploadError && <p className="text-sm text-red-500">{uploadError}</p>}
+                        <Button onClick={handleUploadDocument} className="w-full" disabled={uploading}>
+                          {uploading ? (
+                            <>
+                              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                              Uploading...
+                            </>
+                          ) : (
+                            'Upload'
+                          )}
+                        </Button>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
@@ -468,7 +604,7 @@ export function FounderDetailClient({
                             <div>
                               <p className="font-medium">{doc.file_name as string}</p>
                               <p className="text-sm text-gray-500">
-                                {doc.type as string} &bull; Uploaded{' '}
+                                {(doc.type as string).replace(/_/g, ' ')} &bull; Uploaded{' '}
                                 {format(new Date(doc.created_at as string), 'MMM d, yyyy')}
                               </p>
                             </div>
@@ -483,6 +619,13 @@ export function FounderDetailClient({
                             >
                               {doc.verified ? 'Verified' : 'Pending'}
                             </Badge>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleDownloadDoc(doc.id as string)}
+                            >
+                              <Download className="h-4 w-4" />
+                            </Button>
                           </div>
                         </div>
                       ))

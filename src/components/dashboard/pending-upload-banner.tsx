@@ -38,11 +38,18 @@ export function PendingUploadBanner({ onUploadsComplete }: PendingUploadBannerPr
         return
       }
 
-      // Ensure founder exists before uploading documents
+      // Ensure founder exists (with profile data) before uploading documents
+      // Pass onboarding data so founder has full_name/country for document verification
+      let onboardingData = undefined
+      try {
+        const stored = sessionStorage.getItem('onboardingData') || localStorage.getItem('onboardingData')
+        if (stored) onboardingData = JSON.parse(stored)
+      } catch { /* ignore */ }
+
       await fetch('/api/founders/ensure', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({}),
+        body: JSON.stringify({ onboardingData }),
       })
 
       const results: UploadedDoc[] = []

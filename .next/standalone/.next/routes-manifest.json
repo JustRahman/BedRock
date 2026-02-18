@@ -172,6 +172,12 @@
       "namedRegex": "^/api/documents(?:/)?$"
     },
     {
+      "page": "/api/documents/download",
+      "regex": "^/api/documents/download(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/documents/download(?:/)?$"
+    },
+    {
       "page": "/api/email/welcome",
       "regex": "^/api/email/welcome(?:/)?$",
       "routeKeys": {},

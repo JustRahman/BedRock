@@ -18,6 +18,7 @@ interface ServiceRequestPageProps {
   bulletPoints: string[]
   ctaLabel: string
   notesPlaceholder: string
+  comingSoon?: boolean
 }
 
 interface ServiceRequestData {
@@ -45,6 +46,7 @@ export function ServiceRequestPage({
   bulletPoints,
   ctaLabel,
   notesPlaceholder,
+  comingSoon,
 }: ServiceRequestPageProps) {
   const [request, setRequest] = useState<ServiceRequestData | null>(null)
   const [loading, setLoading] = useState(true)
@@ -199,34 +201,41 @@ export function ServiceRequestPage({
         {/* Service description */}
         <Card>
           <CardHeader>
-            <div className="flex items-center gap-3">
-              <div className={`flex h-10 w-10 items-center justify-center rounded-xl ${iconBg}`}>
-                <Icon className="h-5 w-5 text-white" />
-              </div>
-              <div>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className={`flex h-10 w-10 items-center justify-center rounded-xl ${iconBg}`}>
+                  <Icon className="h-5 w-5 text-white" />
+                </div>
                 <CardTitle>{title}</CardTitle>
-                <p className="text-sm text-muted-foreground">{subtitle}</p>
               </div>
+              {comingSoon ? (
+                <Badge className="bg-amber-500/15 text-amber-500 border-amber-500/20">
+                  <Clock className="mr-1 h-3 w-3" />
+                  Coming Soon
+                </Badge>
+              ) : null}
             </div>
           </CardHeader>
           <CardContent>
             <p className="text-sm text-muted-foreground leading-relaxed">{description}</p>
 
-            <div className="mt-6 space-y-3">
-              {bulletPoints.map((point) => (
-                <div key={point} className="flex items-start gap-2.5">
-                  <CheckCircle className="mt-0.5 h-4 w-4 shrink-0 text-green-500" />
-                  <span className="text-sm">{point}</span>
-                </div>
-              ))}
-            </div>
+            {bulletPoints.length > 0 ? (
+              <div className="mt-6 space-y-3">
+                {bulletPoints.map((point) => (
+                  <div key={point} className="flex items-start gap-2.5">
+                    <CheckCircle className="mt-0.5 h-4 w-4 shrink-0 text-green-500" />
+                    <span className="text-sm">{point}</span>
+                  </div>
+                ))}
+              </div>
+            ) : null}
           </CardContent>
         </Card>
 
         {/* Request form */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-base">Request This Service</CardTitle>
+            <CardTitle className="text-base">{comingSoon ? 'Request Early Access' : 'Request This Service'}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
@@ -250,7 +259,9 @@ export function ServiceRequestPage({
                 )}
               </Button>
               <p className="text-xs text-muted-foreground">
-                After submitting, our team will review your request and begin working on it. You&apos;ll see updates on this page.
+                {comingSoon
+                  ? 'Submit your request and we\u2019ll notify you as soon as this service is available.'
+                  : 'After submitting, our team will review your request and begin working on it. You\u2019ll see updates on this page.'}
               </p>
             </div>
           </CardContent>

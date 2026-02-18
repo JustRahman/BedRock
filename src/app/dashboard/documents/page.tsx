@@ -30,7 +30,6 @@ import {
 import { Label } from '@/components/ui/label'
 import { Upload, Download, Trash2, FileText, CheckCircle, Clock, Loader2, AlertTriangle, Eye } from 'lucide-react'
 import { format } from 'date-fns'
-import { createClient } from '@/lib/supabase/client'
 
 interface Document {
   id: string
@@ -76,6 +75,10 @@ const documentTypes = [
   { value: 'address_proof', label: 'Address Proof' },
   { value: 'bank_statement', label: 'Bank Statement' },
   { value: 'business_license', label: 'Business License' },
+  { value: 'articles_of_organization', label: 'Articles of Organization' },
+  { value: 'ein_letter', label: 'EIN Letter' },
+  { value: 'operating_agreement', label: 'Operating Agreement' },
+  { value: 'registered_agent', label: 'Registered Agent' },
   { value: 'other', label: 'Other' },
 ]
 
@@ -210,14 +213,10 @@ export default function DocumentsPage() {
 
   const handleDownload = async (doc: Document) => {
     try {
-      const supabase = createClient()
-      const { data, error } = await supabase.storage
-        .from('documents')
-        .createSignedUrl(doc.file_path, 60)
-
-      if (error || !data?.signedUrl) return
-
-      window.open(data.signedUrl, '_blank')
+      const res = await fetch(`/api/documents/download?id=${doc.id}`)
+      if (!res.ok) return
+      const data = await res.json()
+      if (data.url) window.open(data.url, '_blank')
     } catch {
       // ignore
     }
