@@ -79,6 +79,10 @@ const documentTypes = [
   { value: 'ein_letter', label: 'EIN Letter' },
   { value: 'operating_agreement', label: 'Operating Agreement' },
   { value: 'registered_agent', label: 'Registered Agent' },
+  { value: 'form_8843', label: 'Form 8843' },
+  { value: 'form_1040nr', label: 'Form 1040-NR' },
+  { value: 'w2', label: 'W-2' },
+  { value: 'form_1042s', label: 'Form 1042-S' },
   { value: 'other', label: 'Other' },
 ]
 

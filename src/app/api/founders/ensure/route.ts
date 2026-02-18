@@ -27,19 +27,21 @@ export async function POST(request: Request) {
       founderId = (existingFounder as { id: string }).id
 
       // Update founder with any new onboarding data
+      const updates: Record<string, unknown> = {}
       if (body.onboardingData?.basicInfo) {
         const bi = body.onboardingData.basicInfo
-        const updates: Record<string, unknown> = {}
         if (bi.phone) updates.phone = bi.phone
         if (bi.dateOfBirth) updates.date_of_birth = bi.dateOfBirth
         if (bi.countryOfOrigin) updates.country_of_origin = bi.countryOfOrigin
         if (bi.countryOfResidence) updates.country_of_residence = bi.countryOfResidence
-        if (Object.keys(updates).length > 0) {
-          updates.onboarding_completed = true
-          await (supabase.from('founders') as ReturnType<typeof supabase.from>)
-            .update(updates)
-            .eq('id', founderId)
-        }
+      }
+      // Set role if provided (handles case where complete-registration ran first without role)
+      if (body.role) updates.role = body.role
+      if (Object.keys(updates).length > 0) {
+        if (body.onboardingData?.basicInfo) updates.onboarding_completed = true
+        await (supabase.from('founders') as ReturnType<typeof supabase.from>)
+          .update(updates)
+          .eq('id', founderId)
       }
     } else {
       // Create founder record
@@ -56,6 +58,7 @@ export async function POST(request: Request) {
           country_of_origin: bi.countryOfOrigin || '',
           country_of_residence: bi.countryOfResidence || '',
           onboarding_completed: !!body.trustScore,
+          role: body.role || 'founder',
         })
         .select('id')
         .single()
@@ -269,7 +272,15 @@ export async function POST(request: Request) {
       }
     }
 
-    return NextResponse.json({ founder: { id: founderId }, created: !existingFounder, trustScoreSaved })
+    // Fetch founder role
+    const { data: founderRow } = await (supabase
+      .from('founders') as ReturnType<typeof supabase.from>)
+      .select('role')
+      .eq('id', founderId)
+      .single()
+    const role = (founderRow as { role: string } | null)?.role || 'founder'
+
+    return NextResponse.json({ founder: { id: founderId, role }, created: !existingFounder, trustScoreSaved })
   } catch (err) {
     console.error('[ensure] Unexpected error:', err)
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })

@@ -1,12 +1,15 @@
 'use client'
 
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback, Suspense } from 'react'
 import Link from 'next/link'
-import { FileText, Calendar, Shield, Building2, Landmark, RefreshCw } from 'lucide-react'
+import { useSearchParams } from 'next/navigation'
+import { FileText, Calendar, Shield, Building2, Landmark, RefreshCw, Rocket, Loader2 } from 'lucide-react'
 import { StatusCard, ActionItems, TrustScoreCard } from '@/components/dashboard'
 import { EconomicActivityCard } from '@/components/dashboard/economic-activity-card'
 import { PendingUploadBanner } from '@/components/dashboard/pending-upload-banner'
 import { createClient } from '@/lib/supabase/client'
+import { Button } from '@/components/ui/button'
+import { toast } from 'sonner'
 
 const RE_ONBOARD_EMAILS = [
   'contact@nazarly.digital',
@@ -49,6 +52,12 @@ interface BankAppData {
   bank_name: string | null
 }
 
+interface ServiceRequestData {
+  id: string
+  status: string
+  service_type: string
+}
+
 const statusLabels: Record<string, string> = {
   elite: 'Elite',
   approved: 'Approved',
@@ -58,6 +67,22 @@ const statusLabels: Record<string, string> = {
 }
 
 export default function DashboardPage() {
+  return (
+    <Suspense fallback={
+      <div>
+        <div className="mb-8">
+          <div className="h-8 w-48 animate-pulse rounded bg-muted" />
+          <div className="mt-2 h-4 w-72 animate-pulse rounded bg-muted" />
+        </div>
+      </div>
+    }>
+      <DashboardContent />
+    </Suspense>
+  )
+}
+
+function DashboardContent() {
+  const searchParams = useSearchParams()
   const [trustScore, setTrustScore] = useState<TrustScoreData | null>(null)
   const [documents, setDocuments] = useState<DocumentData[]>([])
   const [deadlines, setDeadlines] = useState<DeadlineData[]>([])
@@ -65,6 +90,9 @@ export default function DashboardPage() {
   const [bankApp, setBankApp] = useState<BankAppData | null>(null)
   const [loading, setLoading] = useState(true)
   const [showReOnboard, setShowReOnboard] = useState(false)
+  const [userRole, setUserRole] = useState<string>('founder')
+  const [taxRequests, setTaxRequests] = useState<ServiceRequestData[]>([])
+  const [upgrading, setUpgrading] = useState(false)
 
   const refreshDocuments = useCallback(async () => {
     try {
@@ -77,6 +105,23 @@ export default function DashboardPage() {
       // silently fail
     }
   }, [])
+
+  const handleUpgrade = async () => {
+    setUpgrading(true)
+    try {
+      const res = await fetch('/api/founders/upgrade', { method: 'POST' })
+      if (res.ok) {
+        toast.success('Upgraded to founder! Redirecting...')
+        setTimeout(() => window.location.reload(), 1000)
+      } else {
+        toast.error('Failed to upgrade')
+      }
+    } catch {
+      toast.error('Something went wrong')
+    } finally {
+      setUpgrading(false)
+    }
+  }
 
   useEffect(() => {
     async function fetchData() {
@@ -93,11 +138,23 @@ export default function DashboardPage() {
         let trustScorePayload = undefined
         let onboardingPayload = undefined
         let oauthPayload: Record<string, unknown> | undefined = undefined
+        let rolePayload: string | undefined = undefined
         try {
           const storedScore = localStorage.getItem('trustScoreResult')
           if (storedScore) trustScorePayload = JSON.parse(storedScore)
           const storedData = localStorage.getItem('onboardingData')
-          if (storedData) onboardingPayload = JSON.parse(storedData)
+          if (storedData) {
+            onboardingPayload = JSON.parse(storedData)
+            // Merge student-specific data back in (saved separately to survive onboarding overwrite)
+            const studentData = localStorage.getItem('studentOnboardingData')
+            if (studentData) {
+              const parsed = JSON.parse(studentData)
+              onboardingPayload = { ...onboardingPayload, ...parsed }
+            }
+          }
+          // Check for student role
+          const storedRole = localStorage.getItem('student_role')
+          if (storedRole) rolePayload = storedRole
           // Collect OAuth profile data from localStorage
           const oauthData: Record<string, unknown> = {}
           const gh = localStorage.getItem('oauth_github_data')
@@ -116,49 +173,86 @@ export default function DashboardPage() {
             trustScore: trustScorePayload,
             onboardingData: onboardingPayload,
             oauthData: oauthPayload,
+            role: rolePayload,
           }),
         })
 
-        // Only clean up after confirmed save
+        let founderRole = 'founder'
         if (ensureRes.ok) {
+          const ensureData = await ensureRes.json()
+          founderRole = ensureData.founder?.role || 'founder'
           try {
             localStorage.removeItem('trustScoreResult')
             localStorage.removeItem('onboardingData')
             localStorage.removeItem('oauth_github_data')
             localStorage.removeItem('oauth_linkedin_data')
             localStorage.removeItem('oauth_stripe_data')
+            localStorage.removeItem('student_role')
+            localStorage.removeItem('studentOnboardingData')
           } catch { /* ignore */ }
         }
 
-        // Step 2: Fetch all dashboard data
-        const [tsRes, docRes, compRes, coRes, bankRes] = await Promise.all([
-          fetch('/api/trust-score'),
-          fetch('/api/documents'),
-          fetch('/api/compliance'),
-          fetch('/api/companies'),
-          fetch('/api/bank-applications'),
-        ])
+        setUserRole(founderRole)
 
-        if (tsRes.ok) {
-          const tsData = await tsRes.json()
-          setTrustScore(tsData.trustScore ?? null)
-        }
-        if (docRes.ok) {
-          const docData = await docRes.json()
-          setDocuments(docData.documents ?? [])
-        }
-        if (compRes.ok) {
-          const compData = await compRes.json()
-          setDeadlines(compData.deadlines ?? [])
-        }
-        if (coRes.ok) {
-          const coData = await coRes.json()
-          setCompany(coData.company ?? null)
-        }
-        if (bankRes.ok) {
-          const bankData = await bankRes.json()
-          if (bankData.applications && bankData.applications.length > 0) {
-            setBankApp(bankData.applications[0])
+        // Step 2: Fetch dashboard data based on role
+        if (founderRole === 'student') {
+          // Student: fetch trust score, documents, and tax service requests
+          const [tsRes, docRes, tax8843Res, tax1040nrRes] = await Promise.all([
+            fetch('/api/trust-score'),
+            fetch('/api/documents'),
+            fetch('/api/service-requests?type=tax_8843'),
+            fetch('/api/service-requests?type=tax_1040nr'),
+          ])
+
+          if (tsRes.ok) {
+            const tsData = await tsRes.json()
+            setTrustScore(tsData.trustScore ?? null)
+          }
+          if (docRes.ok) {
+            const docData = await docRes.json()
+            setDocuments(docData.documents ?? [])
+          }
+          const allTaxRequests: ServiceRequestData[] = []
+          if (tax8843Res.ok) {
+            const data = await tax8843Res.json()
+            allTaxRequests.push(...(data.requests || []))
+          }
+          if (tax1040nrRes.ok) {
+            const data = await tax1040nrRes.json()
+            allTaxRequests.push(...(data.requests || []))
+          }
+          setTaxRequests(allTaxRequests)
+        } else {
+          // Founder: fetch all dashboard data
+          const [tsRes, docRes, compRes, coRes, bankRes] = await Promise.all([
+            fetch('/api/trust-score'),
+            fetch('/api/documents'),
+            fetch('/api/compliance'),
+            fetch('/api/companies'),
+            fetch('/api/bank-applications'),
+          ])
+
+          if (tsRes.ok) {
+            const tsData = await tsRes.json()
+            setTrustScore(tsData.trustScore ?? null)
+          }
+          if (docRes.ok) {
+            const docData = await docRes.json()
+            setDocuments(docData.documents ?? [])
+          }
+          if (compRes.ok) {
+            const compData = await compRes.json()
+            setDeadlines(compData.deadlines ?? [])
+          }
+          if (coRes.ok) {
+            const coData = await coRes.json()
+            setCompany(coData.company ?? null)
+          }
+          if (bankRes.ok) {
+            const bankData = await bankRes.json()
+            if (bankData.applications && bankData.applications.length > 0) {
+              setBankApp(bankData.applications[0])
+            }
           }
         }
       } catch {
@@ -169,6 +263,9 @@ export default function DashboardPage() {
     }
     fetchData()
   }, [])
+
+  // Show upgrade dialog if ?upgrade=true
+  const showUpgradePrompt = searchParams.get('upgrade') === 'true' && userRole === 'student' && !loading
 
   if (loading) {
     return (
@@ -188,6 +285,182 @@ export default function DashboardPage() {
     )
   }
 
+  // === STUDENT DASHBOARD ===
+  if (userRole === 'student') {
+    const activeTaxRequest = taxRequests.find(
+      (r) => r.status === 'requested' || r.status === 'in_progress'
+    )
+    const completedTaxRequest = taxRequests.find((r) => r.status === 'completed')
+    const taxRequest = activeTaxRequest || completedTaxRequest
+    const taxStatus = taxRequest?.status || 'not_started'
+
+    const studentActions: {
+      id: string
+      title: string
+      description: string
+      priority: 'high' | 'medium' | 'low'
+      icon: 'document' | 'calendar' | 'payment' | 'alert'
+      href: string
+    }[] = []
+
+    if (!taxRequest) {
+      studentActions.push({
+        id: 'file-8843',
+        title: 'File Your Form 8843',
+        description: 'Required for all F-1/J-1 students, even with $0 income',
+        priority: 'high',
+        icon: 'alert',
+        href: '/dashboard/tax-filing',
+      })
+    }
+
+    if (documents.length === 0) {
+      studentActions.push({
+        id: 'upload-docs',
+        title: 'Upload Documents',
+        description: 'Upload your tax documents (W-2, 1042-S, etc.)',
+        priority: 'medium',
+        icon: 'document',
+        href: '/dashboard/documents',
+      })
+    }
+
+    studentActions.push({
+      id: 'start-company',
+      title: 'Start a US Company',
+      description: 'Ready to incorporate? Upgrade to founder for LLC formation, banking, and more.',
+      priority: 'low',
+      icon: 'payment',
+      href: '/dashboard?upgrade=true',
+    })
+
+    return (
+      <div>
+        <PendingUploadBanner onUploadsComplete={refreshDocuments} />
+
+        {/* Upgrade prompt */}
+        {showUpgradePrompt && (
+          <div className="mb-6 rounded-xl border border-violet-500/20 bg-gradient-to-r from-violet-500/10 to-blue-500/10 p-6">
+            <div className="flex items-start gap-4">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-violet-500/20 shrink-0">
+                <Rocket className="h-5 w-5 text-violet-400" />
+              </div>
+              <div className="flex-1">
+                <h3 className="text-base font-semibold text-white">Upgrade to Founder</h3>
+                <p className="mt-1 text-sm text-zinc-400">
+                  Your trust score, documents, and tax filing history will carry over.
+                  You&apos;ll get access to LLC formation, EIN, bank account opening, and more.
+                </p>
+                <div className="mt-4 flex gap-3">
+                  <Button
+                    onClick={handleUpgrade}
+                    disabled={upgrading}
+                    className="bg-gradient-to-r from-violet-500 to-blue-600 hover:from-violet-400 hover:to-blue-500"
+                  >
+                    {upgrading ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Upgrading...
+                      </>
+                    ) : (
+                      'Upgrade Now'
+                    )}
+                  </Button>
+                  <Link href="/dashboard">
+                    <Button variant="outline">Maybe Later</Button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-xl sm:text-2xl font-bold text-white">Dashboard</h1>
+          <p className="mt-1 text-sm text-zinc-500">
+            Welcome back! Here&apos;s your tax filing status.
+          </p>
+        </div>
+
+        {/* Status Overview */}
+        <div className="mb-6 sm:mb-8 grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-4">
+          <StatusCard
+            title="Trust Score"
+            icon={Shield}
+            status={trustScore ? 'completed' : 'not_started'}
+            statusText={trustScore ? `${trustScore.total_score} / 100` : 'Not calculated'}
+            description={trustScore ? statusLabels[trustScore.status] : 'Complete onboarding first'}
+          />
+          <StatusCard
+            title="Tax Filing"
+            icon={FileText}
+            status={
+              taxStatus === 'completed' ? 'completed' :
+              taxStatus === 'in_progress' || taxStatus === 'requested' ? 'in_progress' :
+              'not_started'
+            }
+            statusText={
+              taxStatus === 'completed' ? 'Filed' :
+              taxStatus === 'in_progress' ? 'In Progress' :
+              taxStatus === 'requested' ? 'Submitted' :
+              'Not Started'
+            }
+            description={taxRequest ? `Request #${taxRequest.id.slice(0, 8)}` : 'File your Form 8843'}
+          />
+          <StatusCard
+            title="Documents"
+            icon={FileText}
+            status={documents.length > 0 ? 'completed' : 'not_started'}
+            statusText={`${documents.length} uploaded`}
+            description={documents.length > 0 ? `${documents.filter(d => d.verified).length} verified` : 'Upload your documents'}
+          />
+          <StatusCard
+            title="US Company"
+            icon={Building2}
+            status="not_started"
+            statusText="Available"
+            description="Upgrade when ready"
+          />
+        </div>
+
+        {/* Main Content Grid */}
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+          {/* Trust Score */}
+          <div className="lg:col-span-1">
+            {trustScore ? (
+              <TrustScoreCard
+                score={trustScore.total_score}
+                status={trustScore.status}
+                statusLabel={statusLabels[trustScore.status]}
+                breakdown={{
+                  digitalLineage: trustScore.digital_lineage_score,
+                  business: trustScore.business_score,
+                  identity: trustScore.identity_score,
+                  network: trustScore.network_score,
+                }}
+                scoreBreakdown={trustScore.score_breakdown}
+              />
+            ) : (
+              <div className="rounded-xl border border-border bg-card py-12 text-center">
+                <Shield className="mx-auto mb-3 h-10 w-10 text-zinc-600" />
+                <p className="font-medium text-white">No Trust Score Yet</p>
+                <p className="mt-1 text-sm text-zinc-500">
+                  Your trust score will build as you use BedRock services.
+                </p>
+              </div>
+            )}
+          </div>
+
+          {/* Action Items */}
+          <div className="lg:col-span-2">
+            <ActionItems items={studentActions} />
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // === FOUNDER DASHBOARD (existing) ===
   const verifiedDocs = documents.filter((d) => d.verified).length
   const pendingDocs = documents.filter((d) => !d.verified).length
   const upcomingDeadlines = deadlines.filter((d) => !d.completed).length

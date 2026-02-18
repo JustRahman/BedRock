@@ -196,6 +196,18 @@
       "namedRegex": "^/api/founders/ensure(?:/)?$"
     },
     {
+      "page": "/api/founders/me",
+      "regex": "^/api/founders/me(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/founders/me(?:/)?$"
+    },
+    {
+      "page": "/api/founders/upgrade",
+      "regex": "^/api/founders/upgrade(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/founders/upgrade(?:/)?$"
+    },
+    {
       "page": "/api/oauth/github/callback",
       "regex": "^/api/oauth/github/callback(?:/)?$",
       "routeKeys": {},
@@ -406,6 +418,12 @@
       "namedRegex": "^/dashboard/stripe(?:/)?$"
     },
     {
+      "page": "/dashboard/tax-filing",
+      "regex": "^/dashboard/tax\\-filing(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/dashboard/tax\\-filing(?:/)?$"
+    },
+    {
       "page": "/docs",
       "regex": "^/docs(?:/)?$",
       "routeKeys": {},
@@ -430,6 +448,12 @@
       "namedRegex": "^/onboarding(?:/)?$"
     },
     {
+      "page": "/onboarding/choose",
+      "regex": "^/onboarding/choose(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/onboarding/choose(?:/)?$"
+    },
+    {
       "page": "/onboarding/oauth-success",
       "regex": "^/onboarding/oauth\\-success(?:/)?$",
       "routeKeys": {},
@@ -452,6 +476,12 @@
       "regex": "^/onboarding/result(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/onboarding/result(?:/)?$"
+    },
+    {
+      "page": "/onboarding/student",
+      "regex": "^/onboarding/student(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/onboarding/student(?:/)?$"
     },
     {
       "page": "/privacy",

@@ -125,6 +125,7 @@ export default function RegisterPage() {
             countryOfResidence: basicInfo.countryOfResidence || '',
             trustScore,
             oauthVerifications: oauthVerifications.length > 0 ? oauthVerifications : undefined,
+            role: localStorage.getItem('student_role') || undefined,
           }),
         })
         registrationSaved = regRes.ok
@@ -222,7 +223,7 @@ export default function RegisterPage() {
             </Link>
             <h1 className="mt-6 text-2xl font-bold text-white">Create an account</h1>
             <p className="mt-2 text-sm text-zinc-400">
-              Start your journey to a US bank account
+              Start your journey with BedRock
             </p>
           </div>
 

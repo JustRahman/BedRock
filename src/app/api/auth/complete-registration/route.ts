@@ -11,7 +11,7 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json()
-    const { email, fullName, phone, dateOfBirth, countryOfOrigin, countryOfResidence, trustScore, oauthVerifications } = body
+    const { email, fullName, phone, dateOfBirth, countryOfOrigin, countryOfResidence, trustScore, oauthVerifications, role } = body
 
     if (!email || !fullName) {
       return NextResponse.json({ error: 'Email and full name are required' }, { status: 400 })
@@ -45,6 +45,7 @@ export async function POST(request: Request) {
         country_of_origin: countryOfOrigin || '',
         country_of_residence: countryOfResidence || '',
         onboarding_completed: !!trustScore,
+        role: role || 'founder',
       })
       .select('id')
       .single()

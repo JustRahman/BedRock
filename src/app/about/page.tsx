@@ -150,7 +150,7 @@ export default function AboutPage() {
                 Check your eligibility in 2 minutes. No credit card required.
               </p>
               <div className="mt-8">
-                <Link href="/onboarding">
+                <Link href="/onboarding/choose">
                   <Button
                     size="lg"
                     className="bg-gradient-to-r from-blue-500 to-violet-600 text-white hover:from-blue-400 hover:to-violet-500 rounded-xl px-8 py-6 text-base font-medium gap-2 transition-all duration-300 hover:shadow-[0_0_30px_rgba(99,102,241,0.3)]"

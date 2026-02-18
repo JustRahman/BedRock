@@ -51,6 +51,8 @@ const serviceTypeConfig: Record<string, { label: string; icon: React.ElementType
   stripe_activation: { label: 'Stripe Activation', icon: Zap, color: 'bg-cyan-100 text-cyan-700' },
   credit_building: { label: 'Business Credit', icon: CreditCard, color: 'bg-indigo-100 text-indigo-700' },
   alternative_id: { label: 'Alternative ID', icon: Heart, color: 'bg-emerald-100 text-emerald-700' },
+  tax_8843: { label: 'Tax - Form 8843', icon: FileText, color: 'bg-teal-100 text-teal-700' },
+  tax_1040nr: { label: 'Tax - 1040-NR', icon: FileText, color: 'bg-orange-100 text-orange-700' },
 }
 
 const statusConfig: Record<string, { label: string; color: string; icon: React.ElementType }> = {
@@ -203,6 +205,8 @@ export function ServicesClient({ requests }: { requests: ServiceReq[] }) {
                 <SelectItem value="stripe_activation">Stripe Activation</SelectItem>
                 <SelectItem value="credit_building">Business Credit</SelectItem>
                 <SelectItem value="alternative_id">Alternative ID</SelectItem>
+                <SelectItem value="tax_8843">Tax - Form 8843</SelectItem>
+                <SelectItem value="tax_1040nr">Tax - 1040-NR</SelectItem>
               </SelectContent>
             </Select>
             <Select value={statusFilter} onValueChange={setStatusFilter}>

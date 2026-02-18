@@ -160,7 +160,7 @@ export async function POST(request: Request) {
           mime_type: file.type,
           verified: isAdminUpload ? true : false,
           verified_at: isAdminUpload ? new Date().toISOString() : null,
-          verified_by: isAdminUpload ? 'admin' : null,
+          verified_by: isAdminUpload ? founder.id : null,
         })
         .eq('id', existingDoc.id)
         .select()

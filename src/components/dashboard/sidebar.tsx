@@ -16,6 +16,7 @@ import {
   X,
   Zap,
   Heart,
+  Rocket,
 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
@@ -27,18 +28,21 @@ interface NavItem {
   href: string
   icon: React.ElementType
   section?: string
+  roles?: string[]
 }
 
 const navigation: NavItem[] = [
   { name: 'Overview', href: '/dashboard', icon: LayoutDashboard },
-  // Services
-  { name: 'Formation', href: '/dashboard/formation', icon: Landmark, section: 'Services' },
-  { name: 'Bank Account', href: '/dashboard/bank', icon: Building2 },
-  { name: 'Compliance', href: '/dashboard/compliance', icon: Calendar },
-  { name: 'Stripe Help', href: '/dashboard/stripe', icon: Zap },
-  { name: 'Business Credit', href: '/dashboard/credit', icon: CreditCard },
-  { name: 'Alternative ID', href: '/dashboard/alternative-id', icon: Heart },
-  // Account
+  // Founder services
+  { name: 'Formation', href: '/dashboard/formation', icon: Landmark, section: 'Services', roles: ['founder'] },
+  { name: 'Bank Account', href: '/dashboard/bank', icon: Building2, roles: ['founder'] },
+  { name: 'Compliance', href: '/dashboard/compliance', icon: Calendar, roles: ['founder'] },
+  { name: 'Stripe Help', href: '/dashboard/stripe', icon: Zap, roles: ['founder'] },
+  { name: 'Business Credit', href: '/dashboard/credit', icon: CreditCard, roles: ['founder'] },
+  { name: 'Alternative ID', href: '/dashboard/alternative-id', icon: Heart, roles: ['founder'] },
+  // Student services
+  { name: 'Tax Filing', href: '/dashboard/tax-filing', icon: FileText, section: 'Services', roles: ['student'] },
+  // Account (shared)
   { name: 'Documents', href: '/dashboard/documents', icon: FileText, section: 'Account' },
   { name: 'Settings', href: '/dashboard/settings', icon: Settings },
 ]
@@ -47,6 +51,17 @@ export function Sidebar() {
   const pathname = usePathname()
   const router = useRouter()
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [userRole, setUserRole] = useState<string>('founder')
+
+  // Fetch user role
+  useEffect(() => {
+    fetch('/api/founders/me')
+      .then((r) => r.json())
+      .then((data) => {
+        if (data.role) setUserRole(data.role)
+      })
+      .catch(() => {})
+  }, [])
 
   // Close mobile menu on route change
   useEffect(() => {
@@ -69,10 +84,14 @@ export function Sidebar() {
     router.push('/login')
   }
 
+  const filteredNavigation = navigation.filter(
+    (item) => !item.roles || item.roles.includes(userRole)
+  )
+
   const navContent = (
     <>
       <nav className="flex-1 space-y-0.5 px-3 py-4 overflow-y-auto">
-        {navigation.map((item) => {
+        {filteredNavigation.map((item) => {
           const isActive = pathname === item.href || (item.href !== '/dashboard' && pathname.startsWith(item.href))
           return (
             <div key={item.name}>
@@ -96,6 +115,23 @@ export function Sidebar() {
           )
         })}
       </nav>
+
+      {/* Student upgrade CTA */}
+      {userRole === 'student' && (
+        <div className="px-3 pb-2">
+          <Link href="/dashboard?upgrade=true">
+            <div className="rounded-xl border border-violet-500/20 bg-gradient-to-br from-violet-500/10 to-blue-500/10 p-4 cursor-pointer hover:border-violet-500/40 transition-colors">
+              <div className="flex items-center gap-2 mb-1.5">
+                <Rocket className="h-4 w-4 text-violet-400" />
+                <span className="text-sm font-semibold text-white">Start a US Company</span>
+              </div>
+              <p className="text-xs text-zinc-400 leading-relaxed">
+                Ready to incorporate? Upgrade to founder and get LLC formation, banking, and more.
+              </p>
+            </div>
+          </Link>
+        </div>
+      )}
 
       <div className="border-t border-border p-4">
         <Button
