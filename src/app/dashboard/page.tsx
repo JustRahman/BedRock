@@ -294,13 +294,13 @@ export default function DashboardPage() {
     <div>
       <PendingUploadBanner onUploadsComplete={refreshDocuments} />
 
-      {trustScore ? (
+      {trustScore && (!trustScore.score_breakdown || typeof trustScore.score_breakdown !== 'object' || !('github' in trustScore.score_breakdown)) ? (
         <Link href="/onboarding">
           <div className="mb-6 flex items-center gap-3 rounded-xl border border-blue-500/20 bg-blue-500/10 p-4 cursor-pointer hover:bg-blue-500/15 transition-colors">
             <RefreshCw className="h-5 w-5 text-blue-400 shrink-0" />
             <div className="flex-1">
               <p className="text-sm font-medium text-blue-300">Re-do Onboarding</p>
-              <p className="text-xs text-blue-400/70">Update your identity, social profiles, and digital presence to recalculate your trust score.</p>
+              <p className="text-xs text-blue-400/70">We&apos;ve improved our scoring system. Re-complete onboarding to get a more accurate score with detailed per-provider breakdown.</p>
             </div>
           </div>
         </Link>

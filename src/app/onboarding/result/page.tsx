@@ -173,16 +173,21 @@ export default function OnboardingResultPage() {
         })
 
         if (res.ok) {
-          setScoreSaved(true)
-          try {
-            sessionStorage.removeItem('onboardingData')
-            sessionStorage.removeItem('trustScoreResult')
-            localStorage.removeItem('onboardingData')
-            localStorage.removeItem('trustScoreResult')
-            localStorage.removeItem('oauth_github_data')
-            localStorage.removeItem('oauth_linkedin_data')
-            localStorage.removeItem('oauth_stripe_data')
-          } catch { /* ignore */ }
+          const resData = await res.json().catch(() => ({}))
+          if (resData.trustScoreSaved) {
+            setScoreSaved(true)
+            try {
+              sessionStorage.setItem('just_completed_onboarding', '1')
+              sessionStorage.removeItem('onboardingData')
+              sessionStorage.removeItem('trustScoreResult')
+              localStorage.removeItem('onboardingData')
+              localStorage.removeItem('trustScoreResult')
+              localStorage.removeItem('oauth_github_data')
+              localStorage.removeItem('oauth_linkedin_data')
+              localStorage.removeItem('oauth_stripe_data')
+            } catch { /* ignore */ }
+          }
+          // If trustScoreSaved is false, keep localStorage so dashboard can retry
         }
       } catch {
         // Non-critical — dashboard will retry from localStorage
