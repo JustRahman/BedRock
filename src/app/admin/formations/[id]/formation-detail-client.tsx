@@ -16,7 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { ArrowLeft, Building2, Loader2, Save, Clock, User, CheckCircle, AlertCircle, RefreshCw, Calendar, Landmark } from 'lucide-react'
+import { ArrowLeft, Building2, Loader2, Save, Clock, User, CheckCircle, AlertCircle, RefreshCw, Calendar, Landmark, FileText } from 'lucide-react'
 import { toast } from 'sonner'
 import { format, differenceInDays, isPast } from 'date-fns'
 
@@ -53,6 +53,8 @@ export function FormationDetailClient({ company, founder, updates, deadlines, ba
   const [raNotes, setRaNotes] = useState((company.registered_agent_notes as string) || '')
   const [submittingRA, setSubmittingRA] = useState(false)
   const [completingDeadline, setCompletingDeadline] = useState<string | null>(null)
+  const [generatingDocs, setGeneratingDocs] = useState(false)
+  const [generatedDocs, setGeneratedDocs] = useState<{ id: string; type: string; fileName: string }[] | null>(null)
 
   const handleStatusUpdate = async () => {
     setSubmittingStatus(true)
@@ -155,6 +157,33 @@ export function FormationDetailClient({ company, founder, updates, deadlines, ba
       setCompletingDeadline(null)
     }
   }
+
+  const handleGenerateDocs = async () => {
+    setGeneratingDocs(true)
+    try {
+      const res = await fetch('/api/documents/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ companyId: company.id }),
+      })
+
+      if (res.ok) {
+        const data = await res.json()
+        setGeneratedDocs(data.documents)
+        toast.success('LLC documents generated and uploaded')
+        router.refresh()
+      } else {
+        const data = await res.json()
+        toast.error(data.error || 'Failed to generate documents')
+      }
+    } catch {
+      toast.error('Something went wrong')
+    } finally {
+      setGeneratingDocs(false)
+    }
+  }
+
+  const canGenerateDocs = !!(company.name && company.state && company.formation_date)
 
   const statusLabel = (s: string) => {
     switch (s) {
@@ -340,6 +369,60 @@ export function FormationDetailClient({ company, founder, updates, deadlines, ba
                   </>
                 )}
               </Button>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Generate Documents */}
+        <Card>
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <FileText className="h-5 w-5 text-gray-400" />
+              <CardTitle className="text-base">Generate LLC Documents</CardTitle>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              <p className="text-sm text-gray-500">
+                Generate the Statement of LLC Organizer and Operating Agreement. These will be uploaded to the founder&apos;s document vault as verified documents.
+              </p>
+              {!canGenerateDocs && (
+                <p className="text-sm text-yellow-600">
+                  Company must have a name, state, and formation date before documents can be generated.
+                </p>
+              )}
+              {generatedDocs ? (
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2 text-sm text-green-700">
+                    <CheckCircle className="h-4 w-4" />
+                    Documents generated successfully
+                  </div>
+                  {generatedDocs.map((doc) => (
+                    <div key={doc.id} className="flex items-center gap-2 rounded-md border border-green-200 bg-green-50 px-3 py-2 text-sm">
+                      <FileText className="h-4 w-4 text-green-600" />
+                      {doc.fileName}
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <Button
+                  onClick={handleGenerateDocs}
+                  disabled={generatingDocs || !canGenerateDocs}
+                  className="gap-2"
+                >
+                  {generatingDocs ? (
+                    <>
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      Generating...
+                    </>
+                  ) : (
+                    <>
+                      <FileText className="h-4 w-4" />
+                      Generate Documents
+                    </>
+                  )}
+                </Button>
+              )}
             </div>
           </CardContent>
         </Card>
