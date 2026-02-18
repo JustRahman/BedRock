@@ -28,7 +28,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Label } from '@/components/ui/label'
-import { Upload, Download, Trash2, FileText, CheckCircle, Clock, Loader2, AlertTriangle, Eye } from 'lucide-react'
+import { Upload, Trash2, FileText, CheckCircle, Clock, Loader2, AlertTriangle, Eye } from 'lucide-react'
 import { format } from 'date-fns'
 
 interface Document {
@@ -212,17 +212,6 @@ export default function DocumentsPage() {
       // ignore
     } finally {
       setDeleting(null)
-    }
-  }
-
-  const handleDownload = async (doc: Document) => {
-    try {
-      const res = await fetch(`/api/documents/download?id=${doc.id}`)
-      if (!res.ok) return
-      const data = await res.json()
-      if (data.url) window.open(data.url, '_blank')
-    } catch {
-      // ignore
     }
   }
 
@@ -482,9 +471,6 @@ export default function DocumentsPage() {
                             <Eye className="h-3.5 w-3.5" />
                           </Button>
                         )}
-                        <Button variant="ghost" size="sm" className="h-7 w-7 p-0" onClick={() => handleDownload(doc)}>
-                          <Download className="h-3.5 w-3.5" />
-                        </Button>
                         <Button variant="ghost" size="sm" className="h-7 w-7 p-0" onClick={() => handleDelete(doc.id)} disabled={deleting === doc.id}>
                           {deleting === doc.id ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Trash2 className="h-3.5 w-3.5 text-red-400" />}
                         </Button>
@@ -555,13 +541,6 @@ export default function DocumentsPage() {
                                 <Eye className="h-4 w-4" />
                               </Button>
                             )}
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => handleDownload(doc)}
-                            >
-                              <Download className="h-4 w-4" />
-                            </Button>
                             <Button
                               variant="ghost"
                               size="sm"

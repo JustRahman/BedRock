@@ -129,7 +129,7 @@ export function ITINSection() {
         {/* CTA */}
         <ScrollReveal delay={200}>
           <div className="mt-16 text-center">
-            <Link href="/onboarding">
+            <Link href="/onboarding/choose">
               <Button
                 size="lg"
                 className="bg-gradient-to-r from-violet-500 to-blue-600 text-white hover:from-violet-400 hover:to-blue-500 rounded-xl px-8 py-6 text-base font-medium gap-2 transition-all duration-300 hover:shadow-[0_0_30px_rgba(139,92,246,0.3)]"

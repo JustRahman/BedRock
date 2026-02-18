@@ -1760,17 +1760,19 @@ async function POST(request) {
         if (existingFounder) {
             founderId = existingFounder.id;
             // Update founder with any new onboarding data
+            const updates = {};
             if (body.onboardingData?.basicInfo) {
                 const bi = body.onboardingData.basicInfo;
-                const updates = {};
                 if (bi.phone) updates.phone = bi.phone;
                 if (bi.dateOfBirth) updates.date_of_birth = bi.dateOfBirth;
                 if (bi.countryOfOrigin) updates.country_of_origin = bi.countryOfOrigin;
                 if (bi.countryOfResidence) updates.country_of_residence = bi.countryOfResidence;
-                if (Object.keys(updates).length > 0) {
-                    updates.onboarding_completed = true;
-                    await supabase.from('founders').update(updates).eq('id', founderId);
-                }
+            }
+            // Set role if provided (handles case where complete-registration ran first without role)
+            if (body.role) updates.role = body.role;
+            if (Object.keys(updates).length > 0) {
+                if (body.onboardingData?.basicInfo) updates.onboarding_completed = true;
+                await supabase.from('founders').update(updates).eq('id', founderId);
             }
         } else {
             // Create founder record
@@ -1784,7 +1786,8 @@ async function POST(request) {
                 date_of_birth: bi.dateOfBirth || null,
                 country_of_origin: bi.countryOfOrigin || '',
                 country_of_residence: bi.countryOfResidence || '',
-                onboarding_completed: !!body.trustScore
+                onboarding_completed: !!body.trustScore,
+                role: body.role || 'founder'
             }).select('id').single();
             if (founderError) {
                 // Race condition: another request created the founder between our check and insert
@@ -2013,9 +2016,13 @@ async function POST(request) {
                 }
             }
         }
+        // Fetch founder role
+        const { data: founderRow } = await supabase.from('founders').select('role').eq('id', founderId).single();
+        const role = founderRow?.role || 'founder';
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
             founder: {
-                id: founderId
+                id: founderId,
+                role
             },
             created: !existingFounder,
             trustScoreSaved

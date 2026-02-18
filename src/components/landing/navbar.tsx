@@ -60,7 +60,7 @@ export function Navbar() {
               Log In
             </Button>
           </Link>
-          <Link href="/onboarding">
+          <Link href="/onboarding/choose">
             <Button className="bg-white text-black hover:bg-zinc-100 rounded-lg px-5 font-medium">
               Get Started
             </Button>
@@ -102,7 +102,7 @@ export function Navbar() {
                   Log In
                 </Button>
               </Link>
-              <Link href="/onboarding" onClick={() => setMobileMenuOpen(false)}>
+              <Link href="/onboarding/choose" onClick={() => setMobileMenuOpen(false)}>
                 <Button className="w-full bg-white text-black hover:bg-zinc-100">
                   Get Started
                 </Button>

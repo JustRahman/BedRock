@@ -555,6 +555,8 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$re
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$alert$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__AlertCircle$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/circle-alert.js [app-client] (ecmascript) <export default as AlertCircle>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$refresh$2d$cw$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__RefreshCw$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/refresh-cw.js [app-client] (ecmascript) <export default as RefreshCw>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$calendar$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Calendar$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/calendar.js [app-client] (ecmascript) <export default as Calendar>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$landmark$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Landmark$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/landmark.js [app-client] (ecmascript) <export default as Landmark>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$file$2d$text$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__FileText$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/file-text.js [app-client] (ecmascript) <export default as FileText>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/sonner/dist/index.mjs [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$date$2d$fns$2f$format$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i("[project]/node_modules/date-fns/format.js [app-client] (ecmascript) <locals>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$date$2d$fns$2f$differenceInDays$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/date-fns/differenceInDays.js [app-client] (ecmascript)");
@@ -580,7 +582,29 @@ const statusColors = {
     processing: 'bg-blue-100 text-blue-700',
     formed: 'bg-green-100 text-green-700'
 };
-function FormationDetailClient({ company, founder, updates, deadlines }) {
+const bankStatusConfig = {
+    draft: {
+        label: 'Draft',
+        color: 'bg-gray-100 text-gray-700'
+    },
+    submitted: {
+        label: 'New Request',
+        color: 'bg-blue-100 text-blue-700'
+    },
+    under_review: {
+        label: 'In Progress',
+        color: 'bg-yellow-100 text-yellow-700'
+    },
+    approved: {
+        label: 'Account Opened',
+        color: 'bg-green-100 text-green-700'
+    },
+    rejected: {
+        label: 'Rejected',
+        color: 'bg-red-100 text-red-700'
+    }
+};
+function FormationDetailClient({ company, founder, updates, deadlines, bankApps }) {
     _s();
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"])();
     const [newStatus, setNewStatus] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(company.formation_status);
@@ -592,6 +616,8 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
     const [raNotes, setRaNotes] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(company.registered_agent_notes || '');
     const [submittingRA, setSubmittingRA] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const [completingDeadline, setCompletingDeadline] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [generatingDocs, setGeneratingDocs] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [generatedDocs, setGeneratedDocs] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
     const handleStatusUpdate = async ()=>{
         setSubmittingStatus(true);
         try {
@@ -697,6 +723,34 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
             setCompletingDeadline(null);
         }
     };
+    const handleGenerateDocs = async ()=>{
+        setGeneratingDocs(true);
+        try {
+            const res = await fetch('/api/documents/generate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    companyId: company.id
+                })
+            });
+            if (res.ok) {
+                const data = await res.json();
+                setGeneratedDocs(data.documents);
+                __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["toast"].success('LLC documents generated and uploaded');
+                router.refresh();
+            } else {
+                const data = await res.json();
+                __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["toast"].error(data.error || 'Failed to generate documents');
+            }
+        } catch  {
+            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["toast"].error('Something went wrong');
+        } finally{
+            setGeneratingDocs(false);
+        }
+    };
+    const canGenerateDocs = !!(company.name && company.state && company.formation_date);
     const statusLabel = (s)=>{
         switch(s){
             case 'pending':
@@ -722,14 +776,14 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                 className: "h-4 w-4"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                lineNumber: 164,
+                                lineNumber: 202,
                                 columnNumber: 11
                             }, this),
                             "Back to Formations"
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                        lineNumber: 163,
+                        lineNumber: 201,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -739,7 +793,7 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                 className: "h-6 w-6 text-gray-400"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                lineNumber: 168,
+                                lineNumber: 206,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -749,7 +803,7 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                         children: company.name
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                        lineNumber: 170,
+                                        lineNumber: 208,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -757,13 +811,13 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                         children: company.legal_name || company.name
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                        lineNumber: 171,
+                                        lineNumber: 209,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                lineNumber: 169,
+                                lineNumber: 207,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Badge"], {
@@ -771,19 +825,19 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                 children: statusLabel(company.formation_status)
                             }, void 0, false, {
                                 fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                lineNumber: 173,
+                                lineNumber: 211,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                        lineNumber: 167,
+                        lineNumber: 205,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                lineNumber: 162,
+                lineNumber: 200,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -797,12 +851,12 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                     children: "Company Information"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                    lineNumber: 183,
+                                    lineNumber: 221,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                lineNumber: 182,
+                                lineNumber: 220,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -817,7 +871,7 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                         children: "Company Name"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                        lineNumber: 188,
+                                                        lineNumber: 226,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -825,13 +879,13 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                         children: company.name
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                        lineNumber: 189,
+                                                        lineNumber: 227,
                                                         columnNumber: 17
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                lineNumber: 187,
+                                                lineNumber: 225,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -841,7 +895,7 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                         children: "Legal Name"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                        lineNumber: 192,
+                                                        lineNumber: 230,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -849,13 +903,13 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                         children: company.legal_name || '—'
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                        lineNumber: 193,
+                                                        lineNumber: 231,
                                                         columnNumber: 17
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                lineNumber: 191,
+                                                lineNumber: 229,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -865,7 +919,7 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                         children: "State"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                        lineNumber: 196,
+                                                        lineNumber: 234,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -873,13 +927,13 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                         children: company.state === 'DE' ? 'Delaware' : company.state === 'WY' ? 'Wyoming' : company.state || '—'
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                        lineNumber: 197,
+                                                        lineNumber: 235,
                                                         columnNumber: 17
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                lineNumber: 195,
+                                                lineNumber: 233,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -889,7 +943,7 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                         children: "Formation Date"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                        lineNumber: 202,
+                                                        lineNumber: 240,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -897,13 +951,13 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                         children: company.formation_date || 'Not yet formed'
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                        lineNumber: 203,
+                                                        lineNumber: 241,
                                                         columnNumber: 17
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                lineNumber: 201,
+                                                lineNumber: 239,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -913,7 +967,7 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                         children: "EIN"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                        lineNumber: 206,
+                                                        lineNumber: 244,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -921,13 +975,13 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                         children: company.ein || 'Not assigned'
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                        lineNumber: 207,
+                                                        lineNumber: 245,
                                                         columnNumber: 17
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                lineNumber: 205,
+                                                lineNumber: 243,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -937,7 +991,7 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                         children: "Registered Agent"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                        lineNumber: 210,
+                                                        lineNumber: 248,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -945,13 +999,13 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                         children: company.registered_agent_name || 'Not assigned'
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                        lineNumber: 211,
+                                                        lineNumber: 249,
                                                         columnNumber: 17
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                lineNumber: 209,
+                                                lineNumber: 247,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -961,7 +1015,7 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                         children: "Created"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                        lineNumber: 214,
+                                                        lineNumber: 252,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -969,19 +1023,19 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                         children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$date$2d$fns$2f$format$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["format"])(new Date(company.created_at), 'MMM d, yyyy')
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                        lineNumber: 215,
+                                                        lineNumber: 253,
                                                         columnNumber: 17
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                lineNumber: 213,
+                                                lineNumber: 251,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                        lineNumber: 186,
+                                        lineNumber: 224,
                                         columnNumber: 13
                                     }, this),
                                     company.description ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -992,7 +1046,7 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                 children: "Description"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                lineNumber: 220,
+                                                lineNumber: 258,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1000,25 +1054,25 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                 children: company.description
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                lineNumber: 221,
+                                                lineNumber: 259,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                        lineNumber: 219,
+                                        lineNumber: 257,
                                         columnNumber: 15
                                     }, this) : null
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                lineNumber: 185,
+                                lineNumber: 223,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                        lineNumber: 181,
+                        lineNumber: 219,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Card"], {
@@ -1029,12 +1083,12 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                     children: "Founder"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                    lineNumber: 230,
+                                    lineNumber: 268,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                lineNumber: 229,
+                                lineNumber: 267,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -1050,12 +1104,12 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                         className: "h-5 w-5 text-blue-600"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                        lineNumber: 237,
+                                                        lineNumber: 275,
                                                         columnNumber: 21
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                    lineNumber: 236,
+                                                    lineNumber: 274,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1065,7 +1119,7 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                             children: founder.full_name
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                            lineNumber: 240,
+                                                            lineNumber: 278,
                                                             columnNumber: 21
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1073,19 +1127,19 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                             children: founder.email
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                            lineNumber: 241,
+                                                            lineNumber: 279,
                                                             columnNumber: 21
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                    lineNumber: 239,
+                                                    lineNumber: 277,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                            lineNumber: 235,
+                                            lineNumber: 273,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1095,7 +1149,7 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                     children: "Country of Origin"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                    lineNumber: 245,
+                                                    lineNumber: 283,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1103,13 +1157,13 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                     children: founder.country_of_origin || '—'
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                    lineNumber: 246,
+                                                    lineNumber: 284,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                            lineNumber: 244,
+                                            lineNumber: 282,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -1121,36 +1175,36 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                 children: "View Founder Profile"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                lineNumber: 249,
+                                                lineNumber: 287,
                                                 columnNumber: 19
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                            lineNumber: 248,
+                                            lineNumber: 286,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                    lineNumber: 234,
+                                    lineNumber: 272,
                                     columnNumber: 15
                                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                     className: "text-gray-500",
                                     children: "Founder not found"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                    lineNumber: 255,
+                                    lineNumber: 293,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                lineNumber: 232,
+                                lineNumber: 270,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                        lineNumber: 228,
+                        lineNumber: 266,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Card"], {
@@ -1161,12 +1215,12 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                     children: "Update Status"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                    lineNumber: 263,
+                                    lineNumber: 301,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                lineNumber: 262,
+                                lineNumber: 300,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -1180,7 +1234,7 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                     children: "Formation Status"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                    lineNumber: 268,
+                                                    lineNumber: 306,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Select"], {
@@ -1190,12 +1244,12 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectTrigger"], {
                                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectValue"], {}, void 0, false, {
                                                                 fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                                lineNumber: 271,
+                                                                lineNumber: 309,
                                                                 columnNumber: 21
                                                             }, this)
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                            lineNumber: 270,
+                                                            lineNumber: 308,
                                                             columnNumber: 19
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectContent"], {
@@ -1205,7 +1259,7 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                                     children: "Pending"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                                    lineNumber: 274,
+                                                                    lineNumber: 312,
                                                                     columnNumber: 21
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
@@ -1213,7 +1267,7 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                                     children: "Processing"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                                    lineNumber: 275,
+                                                                    lineNumber: 313,
                                                                     columnNumber: 21
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
@@ -1221,25 +1275,25 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                                     children: "Formed"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                                    lineNumber: 276,
+                                                                    lineNumber: 314,
                                                                     columnNumber: 21
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                            lineNumber: 273,
+                                                            lineNumber: 311,
                                                             columnNumber: 19
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                    lineNumber: 269,
+                                                    lineNumber: 307,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                            lineNumber: 267,
+                                            lineNumber: 305,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1249,7 +1303,7 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                     children: "Note (optional)"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                    lineNumber: 281,
+                                                    lineNumber: 319,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$textarea$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Textarea"], {
@@ -1259,13 +1313,13 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                     rows: 3
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                    lineNumber: 282,
+                                                    lineNumber: 320,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                            lineNumber: 280,
+                                            lineNumber: 318,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -1278,7 +1332,7 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                         className: "h-4 w-4 animate-spin"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                        lineNumber: 292,
+                                                        lineNumber: 330,
                                                         columnNumber: 21
                                                     }, this),
                                                     "Updating..."
@@ -1289,7 +1343,7 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                         className: "h-4 w-4"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                        lineNumber: 297,
+                                                        lineNumber: 335,
                                                         columnNumber: 21
                                                     }, this),
                                                     "Update Status"
@@ -1297,24 +1351,24 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                             }, void 0, true)
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                            lineNumber: 289,
+                                            lineNumber: 327,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                    lineNumber: 266,
+                                    lineNumber: 304,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                lineNumber: 265,
+                                lineNumber: 303,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                        lineNumber: 261,
+                        lineNumber: 299,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Card"], {
@@ -1325,12 +1379,12 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                     children: "EIN"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                    lineNumber: 309,
+                                    lineNumber: 347,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                lineNumber: 308,
+                                lineNumber: 346,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -1344,7 +1398,7 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                     children: "Employer Identification Number"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                    lineNumber: 314,
+                                                    lineNumber: 352,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -1353,13 +1407,13 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                     placeholder: "XX-XXXXXXX"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                    lineNumber: 315,
+                                                    lineNumber: 353,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                            lineNumber: 313,
+                                            lineNumber: 351,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -1373,7 +1427,7 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                         className: "h-4 w-4 animate-spin"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                        lineNumber: 324,
+                                                        lineNumber: 362,
                                                         columnNumber: 21
                                                     }, this),
                                                     "Saving..."
@@ -1384,7 +1438,7 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                         className: "h-4 w-4"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                        lineNumber: 329,
+                                                        lineNumber: 367,
                                                         columnNumber: 21
                                                     }, this),
                                                     "Save EIN"
@@ -1392,24 +1446,167 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                             }, void 0, true)
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                            lineNumber: 321,
+                                            lineNumber: 359,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                    lineNumber: 312,
+                                    lineNumber: 350,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                lineNumber: 311,
+                                lineNumber: 349,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                        lineNumber: 307,
+                        lineNumber: 345,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Card"], {
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardHeader"], {
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "flex items-center gap-2",
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$file$2d$text$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__FileText$3e$__["FileText"], {
+                                            className: "h-5 w-5 text-gray-400"
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
+                                            lineNumber: 380,
+                                            columnNumber: 15
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardTitle"], {
+                                            className: "text-base",
+                                            children: "Generate LLC Documents"
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
+                                            lineNumber: 381,
+                                            columnNumber: 15
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
+                                    lineNumber: 379,
+                                    columnNumber: 13
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
+                                lineNumber: 378,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "space-y-4",
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                            className: "text-sm text-gray-500",
+                                            children: "Generate the Statement of LLC Organizer and Operating Agreement. These will be uploaded to the founder's document vault as verified documents."
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
+                                            lineNumber: 386,
+                                            columnNumber: 15
+                                        }, this),
+                                        !canGenerateDocs && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                            className: "text-sm text-yellow-600",
+                                            children: "Company must have a name, state, and formation date before documents can be generated."
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
+                                            lineNumber: 390,
+                                            columnNumber: 17
+                                        }, this),
+                                        generatedDocs ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "space-y-2",
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    className: "flex items-center gap-2 text-sm text-green-700",
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$check$2d$big$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__CheckCircle$3e$__["CheckCircle"], {
+                                                            className: "h-4 w-4"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
+                                                            lineNumber: 397,
+                                                            columnNumber: 21
+                                                        }, this),
+                                                        "Documents generated successfully"
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
+                                                    lineNumber: 396,
+                                                    columnNumber: 19
+                                                }, this),
+                                                generatedDocs.map((doc)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        className: "flex items-center gap-2 rounded-md border border-green-200 bg-green-50 px-3 py-2 text-sm",
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$file$2d$text$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__FileText$3e$__["FileText"], {
+                                                                className: "h-4 w-4 text-green-600"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
+                                                                lineNumber: 402,
+                                                                columnNumber: 23
+                                                            }, this),
+                                                            doc.fileName
+                                                        ]
+                                                    }, doc.id, true, {
+                                                        fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
+                                                        lineNumber: 401,
+                                                        columnNumber: 21
+                                                    }, this))
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
+                                            lineNumber: 395,
+                                            columnNumber: 17
+                                        }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
+                                            onClick: handleGenerateDocs,
+                                            disabled: generatingDocs || !canGenerateDocs,
+                                            className: "gap-2",
+                                            children: generatingDocs ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$loader$2d$circle$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Loader2$3e$__["Loader2"], {
+                                                        className: "h-4 w-4 animate-spin"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
+                                                        lineNumber: 415,
+                                                        columnNumber: 23
+                                                    }, this),
+                                                    "Generating..."
+                                                ]
+                                            }, void 0, true) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$file$2d$text$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__FileText$3e$__["FileText"], {
+                                                        className: "h-4 w-4"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
+                                                        lineNumber: 420,
+                                                        columnNumber: 23
+                                                    }, this),
+                                                    "Generate Documents"
+                                                ]
+                                            }, void 0, true)
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
+                                            lineNumber: 408,
+                                            columnNumber: 17
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
+                                    lineNumber: 385,
+                                    columnNumber: 13
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
+                                lineNumber: 384,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
+                        lineNumber: 377,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Card"], {
@@ -1420,12 +1617,12 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                     children: "Registered Agent"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                    lineNumber: 341,
+                                    lineNumber: 433,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                lineNumber: 340,
+                                lineNumber: 432,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -1439,7 +1636,7 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                     children: "Provider Name"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                    lineNumber: 346,
+                                                    lineNumber: 438,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -1448,13 +1645,13 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                     placeholder: "e.g. Northwest Registered Agent"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                    lineNumber: 347,
+                                                    lineNumber: 439,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                            lineNumber: 345,
+                                            lineNumber: 437,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1464,7 +1661,7 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                     children: "Notes"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                    lineNumber: 354,
+                                                    lineNumber: 446,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$textarea$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Textarea"], {
@@ -1474,13 +1671,13 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                     rows: 3
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                    lineNumber: 355,
+                                                    lineNumber: 447,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                            lineNumber: 353,
+                                            lineNumber: 445,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -1494,7 +1691,7 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                         className: "h-4 w-4 animate-spin"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                        lineNumber: 365,
+                                                        lineNumber: 457,
                                                         columnNumber: 21
                                                     }, this),
                                                     "Saving..."
@@ -1505,7 +1702,7 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                         className: "h-4 w-4"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                        lineNumber: 370,
+                                                        lineNumber: 462,
                                                         columnNumber: 21
                                                     }, this),
                                                     "Save RA Info"
@@ -1513,30 +1710,30 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                             }, void 0, true)
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                            lineNumber: 362,
+                                            lineNumber: 454,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                    lineNumber: 344,
+                                    lineNumber: 436,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                lineNumber: 343,
+                                lineNumber: 435,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                        lineNumber: 339,
+                        lineNumber: 431,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                lineNumber: 179,
+                lineNumber: 217,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Card"], {
@@ -1553,7 +1750,7 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                             className: "h-5 w-5 text-gray-400"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                            lineNumber: 385,
+                                            lineNumber: 477,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardTitle"], {
@@ -1561,13 +1758,13 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                             children: "Compliance Deadlines"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                            lineNumber: 386,
+                                            lineNumber: 478,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                    lineNumber: 384,
+                                    lineNumber: 476,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Badge"], {
@@ -1578,18 +1775,18 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                    lineNumber: 388,
+                                    lineNumber: 480,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                            lineNumber: 383,
+                            lineNumber: 475,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                        lineNumber: 382,
+                        lineNumber: 474,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -1598,7 +1795,7 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                             children: 'No compliance deadlines yet. They are auto-created when the formation status is set to "Formed".'
                         }, void 0, false, {
                             fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                            lineNumber: 393,
+                            lineNumber: 485,
                             columnNumber: 13
                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "space-y-3",
@@ -1618,19 +1815,19 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                     className: "mt-0.5 h-5 w-5 text-green-600"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                    lineNumber: 418,
+                                                    lineNumber: 510,
                                                     columnNumber: 25
                                                 }, this) : isOverdue ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$circle$2d$alert$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__AlertCircle$3e$__["AlertCircle"], {
                                                     className: "mt-0.5 h-5 w-5 text-red-600"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                    lineNumber: 420,
+                                                    lineNumber: 512,
                                                     columnNumber: 25
                                                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$clock$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Clock$3e$__["Clock"], {
                                                     className: "mt-0.5 h-5 w-5 text-gray-400"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                    lineNumber: 422,
+                                                    lineNumber: 514,
                                                     columnNumber: 25
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1643,7 +1840,7 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                                     children: d.title
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                                    lineNumber: 426,
+                                                                    lineNumber: 518,
                                                                     columnNumber: 27
                                                                 }, this),
                                                                 isRecurring && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1652,18 +1849,18 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                                         className: "h-3.5 w-3.5 text-blue-500"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                                        lineNumber: 431,
+                                                                        lineNumber: 523,
                                                                         columnNumber: 31
                                                                     }, this)
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                                    lineNumber: 430,
+                                                                    lineNumber: 522,
                                                                     columnNumber: 29
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                            lineNumber: 425,
+                                                            lineNumber: 517,
                                                             columnNumber: 25
                                                         }, this),
                                                         d.description ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1671,7 +1868,7 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                             children: d.description
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                            lineNumber: 436,
+                                                            lineNumber: 528,
                                                             columnNumber: 27
                                                         }, this) : null,
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1689,25 +1886,25 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                                    lineNumber: 441,
+                                                                    lineNumber: 533,
                                                                     columnNumber: 29
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                            lineNumber: 438,
+                                                            lineNumber: 530,
                                                             columnNumber: 25
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                    lineNumber: 424,
+                                                    lineNumber: 516,
                                                     columnNumber: 23
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                            lineNumber: 416,
+                                            lineNumber: 508,
                                             columnNumber: 21
                                         }, this),
                                         !completed && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -1720,36 +1917,178 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                 className: "h-4 w-4 animate-spin"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                lineNumber: 457,
+                                                lineNumber: 549,
                                                 columnNumber: 27
                                             }, this) : 'Mark Complete'
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                            lineNumber: 449,
+                                            lineNumber: 541,
                                             columnNumber: 23
                                         }, this)
                                     ]
                                 }, d.id, true, {
                                     fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                    lineNumber: 404,
+                                    lineNumber: 496,
                                     columnNumber: 19
                                 }, this);
                             })
                         }, void 0, false, {
                             fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                            lineNumber: 395,
+                            lineNumber: 487,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                        lineNumber: 391,
+                        lineNumber: 483,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                lineNumber: 381,
+                lineNumber: 473,
                 columnNumber: 7
+            }, this),
+            bankApps.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Card"], {
+                className: "mt-6",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardHeader"], {
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "flex items-center justify-between",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "flex items-center gap-2",
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$landmark$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Landmark$3e$__["Landmark"], {
+                                            className: "h-5 w-5 text-gray-400"
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
+                                            lineNumber: 569,
+                                            columnNumber: 17
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardTitle"], {
+                                            className: "text-base",
+                                            children: "Bank Applications"
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
+                                            lineNumber: 570,
+                                            columnNumber: 17
+                                        }, this)
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
+                                    lineNumber: 568,
+                                    columnNumber: 15
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Badge"], {
+                                    variant: "outline",
+                                    children: [
+                                        bankApps.length,
+                                        " app",
+                                        bankApps.length !== 1 ? 's' : ''
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
+                                    lineNumber: 572,
+                                    columnNumber: 15
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
+                            lineNumber: 567,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
+                        lineNumber: 566,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "space-y-3",
+                            children: bankApps.map((app)=>{
+                                const status = bankStatusConfig[app.status] || bankStatusConfig.draft;
+                                return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: `flex items-start justify-between rounded-lg border p-4 ${app.status === 'approved' ? 'border-green-200 bg-green-50' : app.status === 'rejected' ? 'border-red-200 bg-red-50' : app.status === 'under_review' ? 'border-yellow-200 bg-yellow-50' : 'border-blue-200 bg-blue-50'}`,
+                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "flex items-start gap-3",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$landmark$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Landmark$3e$__["Landmark"], {
+                                                className: "mt-0.5 h-5 w-5 text-gray-400"
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
+                                                lineNumber: 593,
+                                                columnNumber: 23
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                        className: "font-medium text-gray-900 capitalize",
+                                                        children: app.bank_name
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
+                                                        lineNumber: 595,
+                                                        columnNumber: 25
+                                                    }, this),
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Badge"], {
+                                                        className: `mt-1 ${status.color}`,
+                                                        children: status.label
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
+                                                        lineNumber: 596,
+                                                        columnNumber: 25
+                                                    }, this),
+                                                    app.notes ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                        className: "mt-2 text-xs text-gray-500",
+                                                        children: app.notes
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
+                                                        lineNumber: 598,
+                                                        columnNumber: 27
+                                                    }, this) : null,
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                        className: "mt-1 text-xs text-gray-400",
+                                                        children: [
+                                                            app.submitted_at ? `Submitted ${(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$date$2d$fns$2f$format$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["format"])(new Date(app.submitted_at), 'MMM d, yyyy')}` : '',
+                                                            app.approved_at ? ` · Opened ${(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$date$2d$fns$2f$format$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["format"])(new Date(app.approved_at), 'MMM d, yyyy')}` : ''
+                                                        ]
+                                                    }, void 0, true, {
+                                                        fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
+                                                        lineNumber: 600,
+                                                        columnNumber: 25
+                                                    }, this)
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
+                                                lineNumber: 594,
+                                                columnNumber: 23
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
+                                        lineNumber: 592,
+                                        columnNumber: 21
+                                    }, this)
+                                }, app.id, false, {
+                                    fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
+                                    lineNumber: 580,
+                                    columnNumber: 19
+                                }, this);
+                            })
+                        }, void 0, false, {
+                            fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
+                            lineNumber: 576,
+                            columnNumber: 13
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
+                        lineNumber: 575,
+                        columnNumber: 11
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
+                lineNumber: 565,
+                columnNumber: 9
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Card"], {
                 className: "mt-6",
@@ -1760,12 +2099,12 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                             children: "Activity Timeline"
                         }, void 0, false, {
                             fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                            lineNumber: 474,
+                            lineNumber: 621,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                        lineNumber: 473,
+                        lineNumber: 620,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -1774,7 +2113,7 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                             children: "No activity yet. Update the status to create the first entry."
                         }, void 0, false, {
                             fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                            lineNumber: 478,
+                            lineNumber: 625,
                             columnNumber: 13
                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "space-y-4",
@@ -1791,7 +2130,7 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                         children: statusLabel(update.status)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                        lineNumber: 485,
+                                                        lineNumber: 632,
                                                         columnNumber: 23
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1801,20 +2140,20 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                                 className: "h-3 w-3"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                                lineNumber: 489,
+                                                                lineNumber: 636,
                                                                 columnNumber: 25
                                                             }, this),
                                                             (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$date$2d$fns$2f$format$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["format"])(new Date(update.created_at), 'MMM d, yyyy h:mm a')
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                        lineNumber: 488,
+                                                        lineNumber: 635,
                                                         columnNumber: 23
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                lineNumber: 484,
+                                                lineNumber: 631,
                                                 columnNumber: 21
                                             }, this),
                                             update.note ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1822,44 +2161,44 @@ function FormationDetailClient({ company, founder, updates, deadlines }) {
                                                 children: update.note
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                                lineNumber: 494,
+                                                lineNumber: 641,
                                                 columnNumber: 23
                                             }, this) : null
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                        lineNumber: 483,
+                                        lineNumber: 630,
                                         columnNumber: 19
                                     }, this)
                                 }, update.id, false, {
                                     fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                                    lineNumber: 482,
+                                    lineNumber: 629,
                                     columnNumber: 17
                                 }, this))
                         }, void 0, false, {
                             fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                            lineNumber: 480,
+                            lineNumber: 627,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                        lineNumber: 476,
+                        lineNumber: 623,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-                lineNumber: 472,
+                lineNumber: 619,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/app/admin/formations/[id]/formation-detail-client.tsx",
-        lineNumber: 160,
+        lineNumber: 198,
         columnNumber: 5
     }, this);
 }
-_s(FormationDetailClient, "YS7pS7fK+SAL/JHf+UpfWa2C7LQ=", false, function() {
+_s(FormationDetailClient, "vcjRkpjAFqq8CgHknBx1p3kk6yk=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"]
     ];

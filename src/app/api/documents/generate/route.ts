@@ -147,7 +147,7 @@ export async function POST(request: Request) {
         mime_type: 'application/pdf',
         verified: true,
         verified_at: now,
-        verified_by: 'admin',
+        verified_by: founder.id,
       })
       .select()
       .single()
@@ -167,7 +167,7 @@ export async function POST(request: Request) {
         mime_type: 'application/pdf',
         verified: true,
         verified_at: now,
-        verified_by: 'admin',
+        verified_by: founder.id,
       })
       .select()
       .single()

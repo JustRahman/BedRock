@@ -285,7 +285,7 @@ export function Solutions() {
                 </p>
 
                 <div className="mt-8">
-                  <Link href="/onboarding">
+                  <Link href="/onboarding/choose">
                     <Button
                       size="lg"
                       className={`bg-gradient-to-r ${active.ctaGradient} text-white rounded-xl px-6 py-5 text-sm font-medium gap-2 transition-all duration-300 ${active.ctaShadow}`}

@@ -1835,13 +1835,21 @@ function PendingUploadBanner({ onUploadsComplete }) {
                 setStatus('idle');
                 return;
             }
-            // Ensure founder exists before uploading documents
+            // Ensure founder exists (with profile data) before uploading documents
+            // Pass onboarding data so founder has full_name/country for document verification
+            let onboardingData = undefined;
+            try {
+                const stored = sessionStorage.getItem('onboardingData') || localStorage.getItem('onboardingData');
+                if (stored) onboardingData = JSON.parse(stored);
+            } catch  {}
             await fetch('/api/founders/ensure', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({})
+                body: JSON.stringify({
+                    onboardingData
+                })
             });
             const results = [];
             for (const upload of uploads){
@@ -1914,7 +1922,7 @@ function PendingUploadBanner({ onUploadsComplete }) {
                         className: "h-5 w-5 animate-spin text-blue-400"
                     }, void 0, false, {
                         fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                        lineNumber: 107,
+                        lineNumber: 114,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1924,7 +1932,7 @@ function PendingUploadBanner({ onUploadsComplete }) {
                                 children: "Uploading and verifying your documents..."
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                                lineNumber: 109,
+                                lineNumber: 116,
                                 columnNumber: 13
                             }, this),
                             uploadedDocs.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1935,19 +1943,19 @@ function PendingUploadBanner({ onUploadsComplete }) {
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                                lineNumber: 111,
+                                lineNumber: 118,
                                 columnNumber: 15
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                        lineNumber: 108,
+                        lineNumber: 115,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                lineNumber: 106,
+                lineNumber: 113,
                 columnNumber: 9
             }, this),
             status === 'success' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1957,7 +1965,7 @@ function PendingUploadBanner({ onUploadsComplete }) {
                         className: "mt-0.5 h-5 w-5 text-emerald-400"
                     }, void 0, false, {
                         fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                        lineNumber: 121,
+                        lineNumber: 128,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1967,7 +1975,7 @@ function PendingUploadBanner({ onUploadsComplete }) {
                                 children: "Documents uploaded successfully!"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                                lineNumber: 123,
+                                lineNumber: 130,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1980,7 +1988,7 @@ function PendingUploadBanner({ onUploadsComplete }) {
                                                 children: doc.label
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                                                lineNumber: 127,
+                                                lineNumber: 134,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1988,7 +1996,7 @@ function PendingUploadBanner({ onUploadsComplete }) {
                                                 children: "—"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                                                lineNumber: 128,
+                                                lineNumber: 135,
                                                 columnNumber: 19
                                             }, this),
                                             doc.verificationStatus === 'verified' ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1998,14 +2006,14 @@ function PendingUploadBanner({ onUploadsComplete }) {
                                                         className: "h-3.5 w-3.5"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                                                        lineNumber: 131,
+                                                        lineNumber: 138,
                                                         columnNumber: 23
                                                     }, this),
                                                     "Verified"
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                                                lineNumber: 130,
+                                                lineNumber: 137,
                                                 columnNumber: 21
                                             }, this) : doc.verificationStatus === 'review_needed' ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                 className: "flex items-center gap-1 text-orange-400",
@@ -2014,14 +2022,14 @@ function PendingUploadBanner({ onUploadsComplete }) {
                                                         className: "h-3.5 w-3.5"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                                                        lineNumber: 136,
+                                                        lineNumber: 143,
                                                         columnNumber: 23
                                                     }, this),
                                                     "Review needed"
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                                                lineNumber: 135,
+                                                lineNumber: 142,
                                                 columnNumber: 21
                                             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                                 className: "flex items-center gap-1 text-zinc-500",
@@ -2030,25 +2038,25 @@ function PendingUploadBanner({ onUploadsComplete }) {
                                                         className: "h-3.5 w-3.5"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                                                        lineNumber: 141,
+                                                        lineNumber: 148,
                                                         columnNumber: 23
                                                     }, this),
                                                     "Pending review"
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                                                lineNumber: 140,
+                                                lineNumber: 147,
                                                 columnNumber: 21
                                             }, this)
                                         ]
                                     }, i, true, {
                                         fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                                        lineNumber: 126,
+                                        lineNumber: 133,
                                         columnNumber: 17
                                     }, this))
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                                lineNumber: 124,
+                                lineNumber: 131,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2062,26 +2070,26 @@ function PendingUploadBanner({ onUploadsComplete }) {
                                         children: "Documents page"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                                        lineNumber: 150,
+                                        lineNumber: 157,
                                         columnNumber: 15
                                     }, this),
                                     "."
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                                lineNumber: 148,
+                                lineNumber: 155,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                        lineNumber: 122,
+                        lineNumber: 129,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                lineNumber: 120,
+                lineNumber: 127,
                 columnNumber: 9
             }, this),
             status === 'error' && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2094,7 +2102,7 @@ function PendingUploadBanner({ onUploadsComplete }) {
                                 className: "h-5 w-5 text-orange-400"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                                lineNumber: 159,
+                                lineNumber: 166,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2104,7 +2112,7 @@ function PendingUploadBanner({ onUploadsComplete }) {
                                         children: "Upload failed"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                                        lineNumber: 161,
+                                        lineNumber: 168,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2112,19 +2120,19 @@ function PendingUploadBanner({ onUploadsComplete }) {
                                         children: errorMsg
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                                        lineNumber: 162,
+                                        lineNumber: 169,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                                lineNumber: 160,
+                                lineNumber: 167,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                        lineNumber: 158,
+                        lineNumber: 165,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
@@ -2137,26 +2145,26 @@ function PendingUploadBanner({ onUploadsComplete }) {
                                 className: "h-4 w-4"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                                lineNumber: 171,
+                                lineNumber: 178,
                                 columnNumber: 13
                             }, this),
                             "Retry"
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                        lineNumber: 165,
+                        lineNumber: 172,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-                lineNumber: 157,
+                lineNumber: 164,
                 columnNumber: 9
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/dashboard/pending-upload-banner.tsx",
-        lineNumber: 104,
+        lineNumber: 111,
         columnNumber: 5
     }, this);
 }
@@ -2171,11 +2179,15 @@ __turbopack_context__.s([
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/client/app-dir/link.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/navigation.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$file$2d$text$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__FileText$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/file-text.js [app-ssr] (ecmascript) <export default as FileText>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$calendar$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Calendar$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/calendar.js [app-ssr] (ecmascript) <export default as Calendar>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$shield$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Shield$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/shield.js [app-ssr] (ecmascript) <export default as Shield>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$building$2d$2$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Building2$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/building-2.js [app-ssr] (ecmascript) <export default as Building2>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$landmark$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Landmark$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/landmark.js [app-ssr] (ecmascript) <export default as Landmark>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$refresh$2d$cw$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__RefreshCw$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/refresh-cw.js [app-ssr] (ecmascript) <export default as RefreshCw>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$rocket$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Rocket$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/rocket.js [app-ssr] (ecmascript) <export default as Rocket>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$loader$2d$circle$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Loader2$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/loader-circle.js [app-ssr] (ecmascript) <export default as Loader2>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$dashboard$2f$index$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i("[project]/src/components/dashboard/index.ts [app-ssr] (ecmascript) <locals>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$dashboard$2f$status$2d$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/dashboard/status-card.tsx [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$dashboard$2f$action$2d$items$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/dashboard/action-items.tsx [app-ssr] (ecmascript)");
@@ -2183,7 +2195,12 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$dashboa
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$dashboard$2f$economic$2d$activity$2d$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/dashboard/economic-activity-card.tsx [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$dashboard$2f$pending$2d$upload$2d$banner$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/dashboard/pending-upload-banner.tsx [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$supabase$2f$client$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/lib/supabase/client.ts [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/ui/button.tsx [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/sonner/dist/index.mjs [app-ssr] (ecmascript)");
 'use client';
+;
+;
+;
 ;
 ;
 ;
@@ -2194,8 +2211,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$supabase$2f$cl
 ;
 const RE_ONBOARD_EMAILS = [
     'contact@nazarly.digital',
-    'ra@nemy.agency',
-    'rahmanbazarov4567@gmail.com'
+    'ra@nemy.agency'
 ];
 const statusLabels = {
     elite: 'Elite',
@@ -2205,6 +2221,49 @@ const statusLabels = {
     not_eligible: 'Not Eligible'
 };
 function DashboardPage() {
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Suspense"], {
+        fallback: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "mb-8",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "h-8 w-48 animate-pulse rounded bg-muted"
+                    }, void 0, false, {
+                        fileName: "[project]/src/app/dashboard/page.tsx",
+                        lineNumber: 74,
+                        columnNumber: 11
+                    }, void 0),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "mt-2 h-4 w-72 animate-pulse rounded bg-muted"
+                    }, void 0, false, {
+                        fileName: "[project]/src/app/dashboard/page.tsx",
+                        lineNumber: 75,
+                        columnNumber: 11
+                    }, void 0)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/app/dashboard/page.tsx",
+                lineNumber: 73,
+                columnNumber: 9
+            }, void 0)
+        }, void 0, false, {
+            fileName: "[project]/src/app/dashboard/page.tsx",
+            lineNumber: 72,
+            columnNumber: 7
+        }, void 0),
+        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(DashboardContent, {}, void 0, false, {
+            fileName: "[project]/src/app/dashboard/page.tsx",
+            lineNumber: 79,
+            columnNumber: 7
+        }, this)
+    }, void 0, false, {
+        fileName: "[project]/src/app/dashboard/page.tsx",
+        lineNumber: 71,
+        columnNumber: 5
+    }, this);
+}
+function DashboardContent() {
+    const searchParams = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useSearchParams"])();
     const [trustScore, setTrustScore] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
     const [documents, setDocuments] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])([]);
     const [deadlines, setDeadlines] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])([]);
@@ -2212,6 +2271,9 @@ function DashboardPage() {
     const [bankApp, setBankApp] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
     const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(true);
     const [showReOnboard, setShowReOnboard] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [userRole, setUserRole] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])('founder');
+    const [taxRequests, setTaxRequests] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])([]);
+    const [upgrading, setUpgrading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
     const refreshDocuments = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])(async ()=>{
         try {
             const res = await fetch('/api/documents');
@@ -2223,6 +2285,24 @@ function DashboardPage() {
         // silently fail
         }
     }, []);
+    const handleUpgrade = async ()=>{
+        setUpgrading(true);
+        try {
+            const res = await fetch('/api/founders/upgrade', {
+                method: 'POST'
+            });
+            if (res.ok) {
+                __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["toast"].success('Upgraded to founder! Redirecting...');
+                setTimeout(()=>window.location.reload(), 1000);
+            } else {
+                __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["toast"].error('Failed to upgrade');
+            }
+        } catch  {
+            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["toast"].error('Something went wrong');
+        } finally{
+            setUpgrading(false);
+        }
+    };
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         async function fetchData() {
             try {
@@ -2237,11 +2317,15 @@ function DashboardPage() {
                 let trustScorePayload = undefined;
                 let onboardingPayload = undefined;
                 let oauthPayload = undefined;
+                let rolePayload = undefined;
                 try {
                     const storedScore = localStorage.getItem('trustScoreResult');
                     if (storedScore) trustScorePayload = JSON.parse(storedScore);
                     const storedData = localStorage.getItem('onboardingData');
                     if (storedData) onboardingPayload = JSON.parse(storedData);
+                    // Check for student role
+                    const storedRole = localStorage.getItem('student_role');
+                    if (storedRole) rolePayload = storedRole;
                     // Collect OAuth profile data from localStorage
                     const oauthData = {};
                     const gh = localStorage.getItem('oauth_github_data');
@@ -2260,47 +2344,81 @@ function DashboardPage() {
                     body: JSON.stringify({
                         trustScore: trustScorePayload,
                         onboardingData: onboardingPayload,
-                        oauthData: oauthPayload
+                        oauthData: oauthPayload,
+                        role: rolePayload
                     })
                 });
-                // Only clean up after confirmed save
+                let founderRole = 'founder';
                 if (ensureRes.ok) {
+                    const ensureData = await ensureRes.json();
+                    founderRole = ensureData.founder?.role || 'founder';
                     try {
                         localStorage.removeItem('trustScoreResult');
                         localStorage.removeItem('onboardingData');
                         localStorage.removeItem('oauth_github_data');
                         localStorage.removeItem('oauth_linkedin_data');
                         localStorage.removeItem('oauth_stripe_data');
+                        localStorage.removeItem('student_role');
                     } catch  {}
                 }
-                // Step 2: Fetch all dashboard data
-                const [tsRes, docRes, compRes, coRes, bankRes] = await Promise.all([
-                    fetch('/api/trust-score'),
-                    fetch('/api/documents'),
-                    fetch('/api/compliance'),
-                    fetch('/api/companies'),
-                    fetch('/api/bank-applications')
-                ]);
-                if (tsRes.ok) {
-                    const tsData = await tsRes.json();
-                    setTrustScore(tsData.trustScore ?? null);
-                }
-                if (docRes.ok) {
-                    const docData = await docRes.json();
-                    setDocuments(docData.documents ?? []);
-                }
-                if (compRes.ok) {
-                    const compData = await compRes.json();
-                    setDeadlines(compData.deadlines ?? []);
-                }
-                if (coRes.ok) {
-                    const coData = await coRes.json();
-                    setCompany(coData.company ?? null);
-                }
-                if (bankRes.ok) {
-                    const bankData = await bankRes.json();
-                    if (bankData.applications && bankData.applications.length > 0) {
-                        setBankApp(bankData.applications[0]);
+                setUserRole(founderRole);
+                // Step 2: Fetch dashboard data based on role
+                if (founderRole === 'student') {
+                    // Student: fetch trust score, documents, and tax service requests
+                    const [tsRes, docRes, tax8843Res, tax1040nrRes] = await Promise.all([
+                        fetch('/api/trust-score'),
+                        fetch('/api/documents'),
+                        fetch('/api/service-requests?type=tax_8843'),
+                        fetch('/api/service-requests?type=tax_1040nr')
+                    ]);
+                    if (tsRes.ok) {
+                        const tsData = await tsRes.json();
+                        setTrustScore(tsData.trustScore ?? null);
+                    }
+                    if (docRes.ok) {
+                        const docData = await docRes.json();
+                        setDocuments(docData.documents ?? []);
+                    }
+                    const allTaxRequests = [];
+                    if (tax8843Res.ok) {
+                        const data = await tax8843Res.json();
+                        allTaxRequests.push(...data.requests || []);
+                    }
+                    if (tax1040nrRes.ok) {
+                        const data = await tax1040nrRes.json();
+                        allTaxRequests.push(...data.requests || []);
+                    }
+                    setTaxRequests(allTaxRequests);
+                } else {
+                    // Founder: fetch all dashboard data
+                    const [tsRes, docRes, compRes, coRes, bankRes] = await Promise.all([
+                        fetch('/api/trust-score'),
+                        fetch('/api/documents'),
+                        fetch('/api/compliance'),
+                        fetch('/api/companies'),
+                        fetch('/api/bank-applications')
+                    ]);
+                    if (tsRes.ok) {
+                        const tsData = await tsRes.json();
+                        setTrustScore(tsData.trustScore ?? null);
+                    }
+                    if (docRes.ok) {
+                        const docData = await docRes.json();
+                        setDocuments(docData.documents ?? []);
+                    }
+                    if (compRes.ok) {
+                        const compData = await compRes.json();
+                        setDeadlines(compData.deadlines ?? []);
+                    }
+                    if (coRes.ok) {
+                        const coData = await coRes.json();
+                        setCompany(coData.company ?? null);
+                    }
+                    if (bankRes.ok) {
+                        const bankData = await bankRes.json();
+                        if (bankData.applications && bankData.applications.length > 0) {
+                            setBankApp(bankData.applications[0]);
+                        }
                     }
                 }
             } catch  {
@@ -2311,6 +2429,8 @@ function DashboardPage() {
         }
         fetchData();
     }, []);
+    // Show upgrade dialog if ?upgrade=true
+    const showUpgradePrompt = searchParams.get('upgrade') === 'true' && userRole === 'student' && !loading;
     if (loading) {
         return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             children: [
@@ -2321,20 +2441,20 @@ function DashboardPage() {
                             className: "h-8 w-48 animate-pulse rounded bg-muted"
                         }, void 0, false, {
                             fileName: "[project]/src/app/dashboard/page.tsx",
-                            lineNumber: 178,
+                            lineNumber: 265,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "mt-2 h-4 w-72 animate-pulse rounded bg-muted"
                         }, void 0, false, {
                             fileName: "[project]/src/app/dashboard/page.tsx",
-                            lineNumber: 179,
+                            lineNumber: 266,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/dashboard/page.tsx",
-                    lineNumber: 177,
+                    lineNumber: 264,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2347,26 +2467,343 @@ function DashboardPage() {
                                 className: "h-24 animate-pulse rounded bg-muted"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/dashboard/page.tsx",
-                                lineNumber: 184,
+                                lineNumber: 271,
                                 columnNumber: 15
                             }, this)
                         }, i, false, {
                             fileName: "[project]/src/app/dashboard/page.tsx",
-                            lineNumber: 183,
+                            lineNumber: 270,
                             columnNumber: 13
                         }, this))
                 }, void 0, false, {
                     fileName: "[project]/src/app/dashboard/page.tsx",
-                    lineNumber: 181,
+                    lineNumber: 268,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/app/dashboard/page.tsx",
-            lineNumber: 176,
+            lineNumber: 263,
             columnNumber: 7
         }, this);
     }
+    // === STUDENT DASHBOARD ===
+    if (userRole === 'student') {
+        const activeTaxRequest = taxRequests.find((r)=>r.status === 'requested' || r.status === 'in_progress');
+        const completedTaxRequest = taxRequests.find((r)=>r.status === 'completed');
+        const taxRequest = activeTaxRequest || completedTaxRequest;
+        const taxStatus = taxRequest?.status || 'not_started';
+        const studentActions = [];
+        if (!trustScore) {
+            studentActions.push({
+                id: 'build-trust',
+                title: 'Build Your Trust Score',
+                description: 'Complete identity and digital verification to build your trust history',
+                priority: 'high',
+                icon: 'alert',
+                href: '/onboarding'
+            });
+        }
+        if (!taxRequest) {
+            studentActions.push({
+                id: 'file-8843',
+                title: 'File Your Form 8843',
+                description: 'Required for all F-1/J-1 students, even with $0 income',
+                priority: 'high',
+                icon: 'alert',
+                href: '/dashboard/tax-filing'
+            });
+        }
+        if (documents.length === 0) {
+            studentActions.push({
+                id: 'upload-docs',
+                title: 'Upload Documents',
+                description: 'Upload your tax documents (W-2, 1042-S, etc.)',
+                priority: 'medium',
+                icon: 'document',
+                href: '/dashboard/documents'
+            });
+        }
+        studentActions.push({
+            id: 'start-company',
+            title: 'Start a US Company',
+            description: 'Ready to incorporate? Upgrade to founder for LLC formation, banking, and more.',
+            priority: 'low',
+            icon: 'payment',
+            href: '/dashboard?upgrade=true'
+        });
+        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            children: [
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$dashboard$2f$pending$2d$upload$2d$banner$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["PendingUploadBanner"], {
+                    onUploadsComplete: refreshDocuments
+                }, void 0, false, {
+                    fileName: "[project]/src/app/dashboard/page.tsx",
+                    lineNumber: 341,
+                    columnNumber: 9
+                }, this),
+                showUpgradePrompt && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "mb-6 rounded-xl border border-violet-500/20 bg-gradient-to-r from-violet-500/10 to-blue-500/10 p-6",
+                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "flex items-start gap-4",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "flex h-10 w-10 items-center justify-center rounded-lg bg-violet-500/20 shrink-0",
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$rocket$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Rocket$3e$__["Rocket"], {
+                                    className: "h-5 w-5 text-violet-400"
+                                }, void 0, false, {
+                                    fileName: "[project]/src/app/dashboard/page.tsx",
+                                    lineNumber: 348,
+                                    columnNumber: 17
+                                }, this)
+                            }, void 0, false, {
+                                fileName: "[project]/src/app/dashboard/page.tsx",
+                                lineNumber: 347,
+                                columnNumber: 15
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "flex-1",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                                        className: "text-base font-semibold text-white",
+                                        children: "Upgrade to Founder"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/app/dashboard/page.tsx",
+                                        lineNumber: 351,
+                                        columnNumber: 17
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        className: "mt-1 text-sm text-zinc-400",
+                                        children: "Your trust score, documents, and tax filing history will carry over. You'll get access to LLC formation, EIN, bank account opening, and more."
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/app/dashboard/page.tsx",
+                                        lineNumber: 352,
+                                        columnNumber: 17
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "mt-4 flex gap-3",
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
+                                                onClick: handleUpgrade,
+                                                disabled: upgrading,
+                                                className: "bg-gradient-to-r from-violet-500 to-blue-600 hover:from-violet-400 hover:to-blue-500",
+                                                children: upgrading ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$loader$2d$circle$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Loader2$3e$__["Loader2"], {
+                                                            className: "mr-2 h-4 w-4 animate-spin"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/app/dashboard/page.tsx",
+                                                            lineNumber: 364,
+                                                            columnNumber: 25
+                                                        }, this),
+                                                        "Upgrading..."
+                                                    ]
+                                                }, void 0, true) : 'Upgrade Now'
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/dashboard/page.tsx",
+                                                lineNumber: 357,
+                                                columnNumber: 19
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
+                                                href: "/dashboard",
+                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Button"], {
+                                                    variant: "outline",
+                                                    children: "Maybe Later"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/dashboard/page.tsx",
+                                                    lineNumber: 372,
+                                                    columnNumber: 21
+                                                }, this)
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/dashboard/page.tsx",
+                                                lineNumber: 371,
+                                                columnNumber: 19
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/app/dashboard/page.tsx",
+                                        lineNumber: 356,
+                                        columnNumber: 17
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/app/dashboard/page.tsx",
+                                lineNumber: 350,
+                                columnNumber: 15
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/app/dashboard/page.tsx",
+                        lineNumber: 346,
+                        columnNumber: 13
+                    }, this)
+                }, void 0, false, {
+                    fileName: "[project]/src/app/dashboard/page.tsx",
+                    lineNumber: 345,
+                    columnNumber: 11
+                }, this),
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "mb-6 sm:mb-8",
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
+                            className: "text-xl sm:text-2xl font-bold text-white",
+                            children: "Dashboard"
+                        }, void 0, false, {
+                            fileName: "[project]/src/app/dashboard/page.tsx",
+                            lineNumber: 381,
+                            columnNumber: 11
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                            className: "mt-1 text-sm text-zinc-500",
+                            children: "Welcome back! Here's your tax filing status."
+                        }, void 0, false, {
+                            fileName: "[project]/src/app/dashboard/page.tsx",
+                            lineNumber: 382,
+                            columnNumber: 11
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/src/app/dashboard/page.tsx",
+                    lineNumber: 380,
+                    columnNumber: 9
+                }, this),
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "mb-6 sm:mb-8 grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-4",
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$dashboard$2f$status$2d$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["StatusCard"], {
+                            title: "Trust Score",
+                            icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$shield$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Shield$3e$__["Shield"],
+                            status: trustScore ? 'completed' : 'not_started',
+                            statusText: trustScore ? `${trustScore.total_score} / 100` : 'Not calculated',
+                            description: trustScore ? statusLabels[trustScore.status] : 'Complete onboarding first'
+                        }, void 0, false, {
+                            fileName: "[project]/src/app/dashboard/page.tsx",
+                            lineNumber: 389,
+                            columnNumber: 11
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$dashboard$2f$status$2d$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["StatusCard"], {
+                            title: "Tax Filing",
+                            icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$file$2d$text$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__FileText$3e$__["FileText"],
+                            status: taxStatus === 'completed' ? 'completed' : taxStatus === 'in_progress' || taxStatus === 'requested' ? 'in_progress' : 'not_started',
+                            statusText: taxStatus === 'completed' ? 'Filed' : taxStatus === 'in_progress' ? 'In Progress' : taxStatus === 'requested' ? 'Submitted' : 'Not Started',
+                            description: taxRequest ? `Request #${taxRequest.id.slice(0, 8)}` : 'File your Form 8843'
+                        }, void 0, false, {
+                            fileName: "[project]/src/app/dashboard/page.tsx",
+                            lineNumber: 396,
+                            columnNumber: 11
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$dashboard$2f$status$2d$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["StatusCard"], {
+                            title: "Documents",
+                            icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$file$2d$text$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__FileText$3e$__["FileText"],
+                            status: documents.length > 0 ? 'completed' : 'not_started',
+                            statusText: `${documents.length} uploaded`,
+                            description: documents.length > 0 ? `${documents.filter((d)=>d.verified).length} verified` : 'Upload your documents'
+                        }, void 0, false, {
+                            fileName: "[project]/src/app/dashboard/page.tsx",
+                            lineNumber: 412,
+                            columnNumber: 11
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$dashboard$2f$status$2d$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["StatusCard"], {
+                            title: "US Company",
+                            icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$building$2d$2$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Building2$3e$__["Building2"],
+                            status: "not_started",
+                            statusText: "Available",
+                            description: "Upgrade when ready"
+                        }, void 0, false, {
+                            fileName: "[project]/src/app/dashboard/page.tsx",
+                            lineNumber: 419,
+                            columnNumber: 11
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/src/app/dashboard/page.tsx",
+                    lineNumber: 388,
+                    columnNumber: 9
+                }, this),
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "grid grid-cols-1 gap-6 lg:grid-cols-3",
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "lg:col-span-1",
+                            children: trustScore ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$dashboard$2f$trust$2d$score$2d$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["TrustScoreCard"], {
+                                score: trustScore.total_score,
+                                status: trustScore.status,
+                                statusLabel: statusLabels[trustScore.status],
+                                breakdown: {
+                                    digitalLineage: trustScore.digital_lineage_score,
+                                    business: trustScore.business_score,
+                                    identity: trustScore.identity_score,
+                                    network: trustScore.network_score
+                                },
+                                scoreBreakdown: trustScore.score_breakdown
+                            }, void 0, false, {
+                                fileName: "[project]/src/app/dashboard/page.tsx",
+                                lineNumber: 433,
+                                columnNumber: 15
+                            }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "rounded-xl border border-border bg-card py-12 text-center",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$shield$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Shield$3e$__["Shield"], {
+                                        className: "mx-auto mb-3 h-10 w-10 text-zinc-600"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/app/dashboard/page.tsx",
+                                        lineNumber: 447,
+                                        columnNumber: 17
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        className: "font-medium text-white",
+                                        children: "No Trust Score Yet"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/app/dashboard/page.tsx",
+                                        lineNumber: 448,
+                                        columnNumber: 17
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                        className: "mt-1 text-sm text-zinc-500",
+                                        children: "Your trust score will build as you use BedRock services."
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/app/dashboard/page.tsx",
+                                        lineNumber: 449,
+                                        columnNumber: 17
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/app/dashboard/page.tsx",
+                                lineNumber: 446,
+                                columnNumber: 15
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "[project]/src/app/dashboard/page.tsx",
+                            lineNumber: 431,
+                            columnNumber: 11
+                        }, this),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "lg:col-span-2",
+                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$dashboard$2f$action$2d$items$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["ActionItems"], {
+                                items: studentActions
+                            }, void 0, false, {
+                                fileName: "[project]/src/app/dashboard/page.tsx",
+                                lineNumber: 458,
+                                columnNumber: 13
+                            }, this)
+                        }, void 0, false, {
+                            fileName: "[project]/src/app/dashboard/page.tsx",
+                            lineNumber: 457,
+                            columnNumber: 11
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/src/app/dashboard/page.tsx",
+                    lineNumber: 429,
+                    columnNumber: 9
+                }, this)
+            ]
+        }, void 0, true, {
+            fileName: "[project]/src/app/dashboard/page.tsx",
+            lineNumber: 340,
+            columnNumber: 7
+        }, this);
+    }
+    // === FOUNDER DASHBOARD (existing) ===
     const verifiedDocs = documents.filter((d)=>d.verified).length;
     const pendingDocs = documents.filter((d)=>!d.verified).length;
     const upcomingDeadlines = deadlines.filter((d)=>!d.completed).length;
@@ -2455,7 +2892,7 @@ function DashboardPage() {
                 onUploadsComplete: refreshDocuments
             }, void 0, false, {
                 fileName: "[project]/src/app/dashboard/page.tsx",
-                lineNumber: 310,
+                lineNumber: 584,
                 columnNumber: 7
             }, this),
             showReOnboard ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -2467,7 +2904,7 @@ function DashboardPage() {
                             className: "h-5 w-5 text-blue-400 shrink-0"
                         }, void 0, false, {
                             fileName: "[project]/src/app/dashboard/page.tsx",
-                            lineNumber: 315,
+                            lineNumber: 589,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2478,7 +2915,7 @@ function DashboardPage() {
                                     children: "Re-do Onboarding"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/dashboard/page.tsx",
-                                    lineNumber: 317,
+                                    lineNumber: 591,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2486,24 +2923,24 @@ function DashboardPage() {
                                     children: "Update your identity, social profiles, and digital presence to recalculate your trust score."
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/dashboard/page.tsx",
-                                    lineNumber: 318,
+                                    lineNumber: 592,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/dashboard/page.tsx",
-                            lineNumber: 316,
+                            lineNumber: 590,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/dashboard/page.tsx",
-                    lineNumber: 314,
+                    lineNumber: 588,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/app/dashboard/page.tsx",
-                lineNumber: 313,
+                lineNumber: 587,
                 columnNumber: 9
             }, this) : null,
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2514,7 +2951,7 @@ function DashboardPage() {
                         children: "Dashboard"
                     }, void 0, false, {
                         fileName: "[project]/src/app/dashboard/page.tsx",
-                        lineNumber: 325,
+                        lineNumber: 599,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2522,13 +2959,13 @@ function DashboardPage() {
                         children: "Welcome back! Here's an overview of your account status."
                     }, void 0, false, {
                         fileName: "[project]/src/app/dashboard/page.tsx",
-                        lineNumber: 326,
+                        lineNumber: 600,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/dashboard/page.tsx",
-                lineNumber: 324,
+                lineNumber: 598,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2542,7 +2979,7 @@ function DashboardPage() {
                         description: trustScore ? statusLabels[trustScore.status] : 'Complete onboarding first'
                     }, void 0, false, {
                         fileName: "[project]/src/app/dashboard/page.tsx",
-                        lineNumber: 333,
+                        lineNumber: 607,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$dashboard$2f$status$2d$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["StatusCard"], {
@@ -2553,7 +2990,7 @@ function DashboardPage() {
                         description: company ? `${company.name}` : 'Start LLC formation'
                     }, void 0, false, {
                         fileName: "[project]/src/app/dashboard/page.tsx",
-                        lineNumber: 340,
+                        lineNumber: 614,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$dashboard$2f$status$2d$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["StatusCard"], {
@@ -2564,7 +3001,7 @@ function DashboardPage() {
                         description: overdueDeadlines > 0 ? `${overdueDeadlines} overdue` : 'All on track'
                     }, void 0, false, {
                         fileName: "[project]/src/app/dashboard/page.tsx",
-                        lineNumber: 351,
+                        lineNumber: 625,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$dashboard$2f$status$2d$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["StatusCard"], {
@@ -2575,13 +3012,13 @@ function DashboardPage() {
                         description: bankApp ? `${bankApp.bank_name || 'Bank'}` : 'Available after EIN'
                     }, void 0, false, {
                         fileName: "[project]/src/app/dashboard/page.tsx",
-                        lineNumber: 358,
+                        lineNumber: 632,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/dashboard/page.tsx",
-                lineNumber: 332,
+                lineNumber: 606,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2603,7 +3040,7 @@ function DashboardPage() {
                                 scoreBreakdown: trustScore.score_breakdown
                             }, void 0, false, {
                                 fileName: "[project]/src/app/dashboard/page.tsx",
-                                lineNumber: 377,
+                                lineNumber: 651,
                                 columnNumber: 13
                             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "rounded-xl border border-border bg-card py-12 text-center",
@@ -2612,7 +3049,7 @@ function DashboardPage() {
                                         className: "mx-auto mb-3 h-10 w-10 text-zinc-600"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/dashboard/page.tsx",
-                                        lineNumber: 391,
+                                        lineNumber: 665,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2620,7 +3057,7 @@ function DashboardPage() {
                                         children: "No Trust Score Yet"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/dashboard/page.tsx",
-                                        lineNumber: 392,
+                                        lineNumber: 666,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2628,13 +3065,13 @@ function DashboardPage() {
                                         children: "Complete the onboarding process to calculate your score."
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/dashboard/page.tsx",
-                                        lineNumber: 393,
+                                        lineNumber: 667,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/dashboard/page.tsx",
-                                lineNumber: 390,
+                                lineNumber: 664,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$dashboard$2f$economic$2d$activity$2d$card$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["EconomicActivityCard"], {
@@ -2648,13 +3085,13 @@ function DashboardPage() {
                                 onRefresh: ()=>window.location.reload()
                             }, void 0, false, {
                                 fileName: "[project]/src/app/dashboard/page.tsx",
-                                lineNumber: 399,
+                                lineNumber: 673,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/dashboard/page.tsx",
-                        lineNumber: 375,
+                        lineNumber: 649,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2663,24 +3100,24 @@ function DashboardPage() {
                             items: actionItems
                         }, void 0, false, {
                             fileName: "[project]/src/app/dashboard/page.tsx",
-                            lineNumber: 414,
+                            lineNumber: 688,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/app/dashboard/page.tsx",
-                        lineNumber: 413,
+                        lineNumber: 687,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/dashboard/page.tsx",
-                lineNumber: 373,
+                lineNumber: 647,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/app/dashboard/page.tsx",
-        lineNumber: 309,
+        lineNumber: 583,
         columnNumber: 5
     }, this);
 }

@@ -924,6 +924,10 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$re
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$x$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__X$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/x.js [app-client] (ecmascript) <export default as X>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$square$2d$pen$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Edit$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/square-pen.js [app-client] (ecmascript) <export default as Edit>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$calendar$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Calendar$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/calendar.js [app-client] (ecmascript) <export default as Calendar>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$download$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Download$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/download.js [app-client] (ecmascript) <export default as Download>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$dollar$2d$sign$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__DollarSign$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/dollar-sign.js [app-client] (ecmascript) <export default as DollarSign>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$upload$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Upload$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/upload.js [app-client] (ecmascript) <export default as Upload>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$loader$2d$circle$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Loader2$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/loader-circle.js [app-client] (ecmascript) <export default as Loader2>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$date$2d$fns$2f$format$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i("[project]/node_modules/date-fns/format.js [app-client] (ecmascript) <locals>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$progress$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/components/ui/progress.tsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/sonner/dist/index.mjs [app-client] (ecmascript)");
@@ -946,6 +950,48 @@ var _s = __turbopack_context__.k.signature();
 ;
 ;
 ;
+const adminDocumentTypes = [
+    {
+        value: 'articles_of_organization',
+        label: 'Articles of Organization'
+    },
+    {
+        value: 'ein_letter',
+        label: 'EIN Letter'
+    },
+    {
+        value: 'operating_agreement',
+        label: 'Operating Agreement'
+    },
+    {
+        value: 'registered_agent',
+        label: 'Registered Agent'
+    },
+    {
+        value: 'passport',
+        label: 'Passport'
+    },
+    {
+        value: 'local_id',
+        label: 'Local ID'
+    },
+    {
+        value: 'address_proof',
+        label: 'Address Proof'
+    },
+    {
+        value: 'bank_statement',
+        label: 'Bank Statement'
+    },
+    {
+        value: 'business_license',
+        label: 'Business License'
+    },
+    {
+        value: 'other',
+        label: 'Other'
+    }
+];
 const statusOptions = [
     {
         value: 'elite',
@@ -976,6 +1022,58 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
     const [overrideStatus, setOverrideStatus] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(trustScore?.status || 'review_needed');
     const [overrideReason, setOverrideReason] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('');
     const [saving, setSaving] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [paymentVerified, setPaymentVerified] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(verifications.some({
+        "FounderDetailClient.useState": (v)=>v.verification_type === 'payment_verified' && v.status === 'verified'
+    }["FounderDetailClient.useState"]));
+    const [paymentToggling, setPaymentToggling] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [isUploadOpen, setIsUploadOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [uploadType, setUploadType] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('');
+    const [uploadFile, setUploadFile] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [uploading, setUploading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [uploadError, setUploadError] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('');
+    const fileInputRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
+    const handleUploadDocument = async ()=>{
+        if (!uploadFile || !uploadType) {
+            setUploadError('Please select a document type and file.');
+            return;
+        }
+        setUploadError('');
+        setUploading(true);
+        try {
+            const formData = new FormData();
+            formData.append('file', uploadFile);
+            formData.append('type', uploadType);
+            formData.append('founderId', founder.id);
+            const res = await fetch('/api/documents', {
+                method: 'POST',
+                body: formData
+            });
+            if (!res.ok) {
+                const data = await res.json();
+                setUploadError(data.error || 'Upload failed');
+                return;
+            }
+            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["toast"].success('Document uploaded successfully');
+            setIsUploadOpen(false);
+            setUploadFile(null);
+            setUploadType('');
+            router.refresh();
+        } catch  {
+            setUploadError('Upload failed. Please try again.');
+        } finally{
+            setUploading(false);
+        }
+    };
+    const handleDownloadDoc = async (docId)=>{
+        try {
+            const res = await fetch(`/api/documents/download?id=${docId}`);
+            if (!res.ok) return;
+            const data = await res.json();
+            if (data.url) window.open(data.url, '_blank');
+        } catch  {
+            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["toast"].error('Failed to download document');
+        }
+    };
     const handleOverride = async ()=>{
         setSaving(true);
         try {
@@ -1044,6 +1142,33 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
             __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["toast"].error('Failed to reject founder');
         }
     };
+    const handlePaymentToggle = async ()=>{
+        setPaymentToggling(true);
+        const newValue = !paymentVerified;
+        try {
+            const res = await fetch('/api/admin/payment-verified', {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    founderId: founder.id,
+                    verified: newValue
+                })
+            });
+            if (res.ok) {
+                setPaymentVerified(newValue);
+                __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["toast"].success(newValue ? 'Payment marked as verified' : 'Payment verification removed');
+                router.refresh();
+            } else {
+                __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["toast"].error('Failed to update payment verification');
+            }
+        } catch  {
+            __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$sonner$2f$dist$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["toast"].error('Failed to update payment verification');
+        } finally{
+            setPaymentToggling(false);
+        }
+    };
     const score = trustScore?.total_score;
     const scoreStatus = trustScore?.status;
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1059,14 +1184,14 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                 className: "h-4 w-4"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                lineNumber: 157,
+                                lineNumber: 253,
                                 columnNumber: 11
                             }, this),
                             "Back to Applications"
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                        lineNumber: 153,
+                        lineNumber: 249,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1080,7 +1205,7 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                         children: founder.full_name.charAt(0)
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                        lineNumber: 162,
+                                        lineNumber: 258,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1090,7 +1215,7 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                 children: founder.full_name
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                lineNumber: 166,
+                                                lineNumber: 262,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1098,19 +1223,19 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                 children: company ? company.name : 'No company'
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                lineNumber: 167,
+                                                lineNumber: 263,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                        lineNumber: 165,
+                                        lineNumber: 261,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                lineNumber: 161,
+                                lineNumber: 257,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1130,19 +1255,19 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                             className: "h-4 w-4"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                            lineNumber: 174,
+                                                            lineNumber: 270,
                                                             columnNumber: 19
                                                         }, this),
                                                         "Override Score"
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                    lineNumber: 173,
+                                                    lineNumber: 269,
                                                     columnNumber: 17
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                lineNumber: 172,
+                                                lineNumber: 268,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DialogContent"], {
@@ -1153,20 +1278,20 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                                 children: "Override Trust Score"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                lineNumber: 180,
+                                                                lineNumber: 276,
                                                                 columnNumber: 19
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DialogDescription"], {
                                                                 children: "Manually adjust the trust score and status for this founder."
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                lineNumber: 181,
+                                                                lineNumber: 277,
                                                                 columnNumber: 19
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                        lineNumber: 179,
+                                                        lineNumber: 275,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1179,7 +1304,7 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                                         children: "New Score (0-100)"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                        lineNumber: 187,
+                                                                        lineNumber: 283,
                                                                         columnNumber: 21
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$input$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Input"], {
@@ -1190,13 +1315,13 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                                         onChange: (e)=>setOverrideScore(e.target.value)
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                        lineNumber: 188,
+                                                                        lineNumber: 284,
                                                                         columnNumber: 21
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                lineNumber: 186,
+                                                                lineNumber: 282,
                                                                 columnNumber: 19
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1206,7 +1331,7 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                                         children: "New Status"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                        lineNumber: 197,
+                                                                        lineNumber: 293,
                                                                         columnNumber: 21
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Select"], {
@@ -1216,12 +1341,12 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectTrigger"], {
                                                                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectValue"], {}, void 0, false, {
                                                                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                                    lineNumber: 200,
+                                                                                    lineNumber: 296,
                                                                                     columnNumber: 25
                                                                                 }, this)
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                                lineNumber: 199,
+                                                                                lineNumber: 295,
                                                                                 columnNumber: 23
                                                                             }, this),
                                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectContent"], {
@@ -1230,24 +1355,24 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                                                         children: option.label
                                                                                     }, option.value, false, {
                                                                                         fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                                        lineNumber: 204,
+                                                                                        lineNumber: 300,
                                                                                         columnNumber: 27
                                                                                     }, this))
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                                lineNumber: 202,
+                                                                                lineNumber: 298,
                                                                                 columnNumber: 23
                                                                             }, this)
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                        lineNumber: 198,
+                                                                        lineNumber: 294,
                                                                         columnNumber: 21
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                lineNumber: 196,
+                                                                lineNumber: 292,
                                                                 columnNumber: 19
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1257,7 +1382,7 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                                         children: "Reason for Override"
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                        lineNumber: 212,
+                                                                        lineNumber: 308,
                                                                         columnNumber: 21
                                                                     }, this),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$textarea$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Textarea"], {
@@ -1267,13 +1392,13 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                                         rows: 3
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                        lineNumber: 213,
+                                                                        lineNumber: 309,
                                                                         columnNumber: 21
                                                                     }, this)
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                lineNumber: 211,
+                                                                lineNumber: 307,
                                                                 columnNumber: 19
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -1283,25 +1408,25 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                                 children: saving ? 'Saving...' : 'Save Override'
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                lineNumber: 220,
+                                                                lineNumber: 316,
                                                                 columnNumber: 19
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                        lineNumber: 185,
+                                                        lineNumber: 281,
                                                         columnNumber: 17
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                lineNumber: 178,
+                                                lineNumber: 274,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                        lineNumber: 171,
+                                        lineNumber: 267,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -1312,14 +1437,14 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                 className: "h-4 w-4"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                lineNumber: 227,
+                                                lineNumber: 323,
                                                 columnNumber: 15
                                             }, this),
                                             "Approve"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                        lineNumber: 226,
+                                        lineNumber: 322,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -1331,32 +1456,32 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                 className: "h-4 w-4"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                lineNumber: 231,
+                                                lineNumber: 327,
                                                 columnNumber: 15
                                             }, this),
                                             "Reject"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                        lineNumber: 230,
+                                        lineNumber: 326,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                lineNumber: 170,
+                                lineNumber: 266,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                        lineNumber: 160,
+                        lineNumber: 256,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                lineNumber: 152,
+                lineNumber: 248,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1374,7 +1499,7 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                             children: "Overview"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                            lineNumber: 244,
+                                            lineNumber: 340,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$tabs$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TabsTrigger"], {
@@ -1382,7 +1507,7 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                             children: "Verifications"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                            lineNumber: 245,
+                                            lineNumber: 341,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$tabs$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TabsTrigger"], {
@@ -1390,13 +1515,13 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                             children: "Documents"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                            lineNumber: 246,
+                                            lineNumber: 342,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                    lineNumber: 243,
+                                    lineNumber: 339,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$tabs$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TabsContent"], {
@@ -1413,19 +1538,19 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                                 className: "h-5 w-5"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                lineNumber: 254,
+                                                                lineNumber: 350,
                                                                 columnNumber: 21
                                                             }, this),
                                                             "Personal Information"
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                        lineNumber: 253,
+                                                        lineNumber: 349,
                                                         columnNumber: 19
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                    lineNumber: 252,
+                                                    lineNumber: 348,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -1438,7 +1563,7 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                                     children: "Full Name"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                    lineNumber: 260,
+                                                                    lineNumber: 356,
                                                                     columnNumber: 21
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1446,13 +1571,13 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                                     children: founder.full_name
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                    lineNumber: 261,
+                                                                    lineNumber: 357,
                                                                     columnNumber: 21
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                            lineNumber: 259,
+                                                            lineNumber: 355,
                                                             columnNumber: 19
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1462,7 +1587,7 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                                     children: "Email"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                    lineNumber: 264,
+                                                                    lineNumber: 360,
                                                                     columnNumber: 21
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1470,13 +1595,13 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                                     children: founder.email
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                    lineNumber: 265,
+                                                                    lineNumber: 361,
                                                                     columnNumber: 21
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                            lineNumber: 263,
+                                                            lineNumber: 359,
                                                             columnNumber: 19
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1486,7 +1611,7 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                                     children: "Phone"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                    lineNumber: 268,
+                                                                    lineNumber: 364,
                                                                     columnNumber: 21
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1494,13 +1619,13 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                                     children: founder.phone || 'N/A'
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                    lineNumber: 269,
+                                                                    lineNumber: 365,
                                                                     columnNumber: 21
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                            lineNumber: 267,
+                                                            lineNumber: 363,
                                                             columnNumber: 19
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1510,7 +1635,7 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                                     children: "Country of Origin"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                    lineNumber: 272,
+                                                                    lineNumber: 368,
                                                                     columnNumber: 21
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1518,13 +1643,13 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                                     children: founder.country_of_origin || 'N/A'
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                    lineNumber: 273,
+                                                                    lineNumber: 369,
                                                                     columnNumber: 21
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                            lineNumber: 271,
+                                                            lineNumber: 367,
                                                             columnNumber: 19
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1534,7 +1659,7 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                                     children: "Country of Residence"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                    lineNumber: 276,
+                                                                    lineNumber: 372,
                                                                     columnNumber: 21
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1542,13 +1667,13 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                                     children: founder.country_of_residence || 'N/A'
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                    lineNumber: 277,
+                                                                    lineNumber: 373,
                                                                     columnNumber: 21
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                            lineNumber: 275,
+                                                            lineNumber: 371,
                                                             columnNumber: 19
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1558,7 +1683,7 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                                     children: "Member Since"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                    lineNumber: 280,
+                                                                    lineNumber: 376,
                                                                     columnNumber: 21
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1566,25 +1691,25 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                                     children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$date$2d$fns$2f$format$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["format"])(new Date(founder.created_at), 'MMM d, yyyy')
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                    lineNumber: 281,
+                                                                    lineNumber: 377,
                                                                     columnNumber: 21
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                            lineNumber: 279,
+                                                            lineNumber: 375,
                                                             columnNumber: 19
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                    lineNumber: 258,
+                                                    lineNumber: 354,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                            lineNumber: 251,
+                                            lineNumber: 347,
                                             columnNumber: 15
                                         }, this),
                                         company && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Card"], {
@@ -1597,19 +1722,19 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                                 className: "h-5 w-5"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                lineNumber: 293,
+                                                                lineNumber: 389,
                                                                 columnNumber: 23
                                                             }, this),
                                                             "Company Information"
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                        lineNumber: 292,
+                                                        lineNumber: 388,
                                                         columnNumber: 21
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                    lineNumber: 291,
+                                                    lineNumber: 387,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -1622,7 +1747,7 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                                     children: "Company Name"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                    lineNumber: 299,
+                                                                    lineNumber: 395,
                                                                     columnNumber: 23
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1630,13 +1755,13 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                                     children: company.name
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                    lineNumber: 300,
+                                                                    lineNumber: 396,
                                                                     columnNumber: 23
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                            lineNumber: 298,
+                                                            lineNumber: 394,
                                                             columnNumber: 21
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1646,7 +1771,7 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                                     children: "State"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                    lineNumber: 303,
+                                                                    lineNumber: 399,
                                                                     columnNumber: 23
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1654,13 +1779,13 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                                     children: company.state || 'N/A'
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                    lineNumber: 304,
+                                                                    lineNumber: 400,
                                                                     columnNumber: 23
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                            lineNumber: 302,
+                                                            lineNumber: 398,
                                                             columnNumber: 21
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1670,20 +1795,20 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                                     children: "Formation Status"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                    lineNumber: 307,
+                                                                    lineNumber: 403,
                                                                     columnNumber: 23
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Badge"], {
                                                                     children: company.formation_status || 'N/A'
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                    lineNumber: 308,
+                                                                    lineNumber: 404,
                                                                     columnNumber: 23
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                            lineNumber: 306,
+                                                            lineNumber: 402,
                                                             columnNumber: 21
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1693,7 +1818,7 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                                     children: "EIN"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                    lineNumber: 311,
+                                                                    lineNumber: 407,
                                                                     columnNumber: 23
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1701,13 +1826,13 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                                     children: company.ein || 'Not assigned'
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                    lineNumber: 312,
+                                                                    lineNumber: 408,
                                                                     columnNumber: 23
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                            lineNumber: 310,
+                                                            lineNumber: 406,
                                                             columnNumber: 21
                                                         }, this),
                                                         company.website ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1717,7 +1842,7 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                                     children: "Website"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                    lineNumber: 316,
+                                                                    lineNumber: 412,
                                                                     columnNumber: 25
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1725,25 +1850,25 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                                     children: company.website
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                    lineNumber: 317,
+                                                                    lineNumber: 413,
                                                                     columnNumber: 25
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                            lineNumber: 315,
+                                                            lineNumber: 411,
                                                             columnNumber: 23
                                                         }, this) : null
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                    lineNumber: 297,
+                                                    lineNumber: 393,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                            lineNumber: 290,
+                                            lineNumber: 386,
                                             columnNumber: 17
                                         }, this),
                                         bankApplication && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Card"], {
@@ -1756,19 +1881,19 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                                 className: "h-5 w-5"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                lineNumber: 329,
+                                                                lineNumber: 425,
                                                                 columnNumber: 23
                                                             }, this),
                                                             "Bank Application"
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                        lineNumber: 328,
+                                                        lineNumber: 424,
                                                         columnNumber: 21
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                    lineNumber: 327,
+                                                    lineNumber: 423,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -1781,7 +1906,7 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                                     children: "Bank"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                    lineNumber: 335,
+                                                                    lineNumber: 431,
                                                                     columnNumber: 23
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1789,13 +1914,13 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                                     children: bankApplication.bank_name || 'N/A'
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                    lineNumber: 336,
+                                                                    lineNumber: 432,
                                                                     columnNumber: 23
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                            lineNumber: 334,
+                                                            lineNumber: 430,
                                                             columnNumber: 21
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1805,20 +1930,20 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                                     children: "Status"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                    lineNumber: 339,
+                                                                    lineNumber: 435,
                                                                     columnNumber: 23
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Badge"], {
                                                                     children: bankApplication.status || 'N/A'
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                    lineNumber: 340,
+                                                                    lineNumber: 436,
                                                                     columnNumber: 23
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                            lineNumber: 338,
+                                                            lineNumber: 434,
                                                             columnNumber: 21
                                                         }, this),
                                                         bankApplication.submitted_at ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1828,7 +1953,7 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                                     children: "Submitted"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                    lineNumber: 344,
+                                                                    lineNumber: 440,
                                                                     columnNumber: 25
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1836,31 +1961,31 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                                     children: (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$date$2d$fns$2f$format$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["format"])(new Date(bankApplication.submitted_at), 'MMM d, yyyy')
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                    lineNumber: 345,
+                                                                    lineNumber: 441,
                                                                     columnNumber: 25
                                                                 }, this)
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                            lineNumber: 343,
+                                                            lineNumber: 439,
                                                             columnNumber: 23
                                                         }, this) : null
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                    lineNumber: 333,
+                                                    lineNumber: 429,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                            lineNumber: 326,
+                                            lineNumber: 422,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                    lineNumber: 249,
+                                    lineNumber: 345,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$tabs$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TabsContent"], {
@@ -1874,20 +1999,20 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                         children: "Verification Status"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                        lineNumber: 358,
+                                                        lineNumber: 454,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardDescription"], {
                                                         children: "Track the verification progress for this founder."
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                        lineNumber: 359,
+                                                        lineNumber: 455,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                lineNumber: 357,
+                                                lineNumber: 453,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -1898,7 +2023,7 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                         children: "No verifications yet."
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                        lineNumber: 366,
+                                                        lineNumber: 462,
                                                         columnNumber: 23
                                                     }, this) : verifications.map((v)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                             className: "flex items-center justify-between rounded-lg border p-4",
@@ -1912,12 +2037,12 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                                                 className: "h-4 w-4 text-green-600"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                                lineNumber: 376,
+                                                                                lineNumber: 472,
                                                                                 columnNumber: 33
                                                                             }, this)
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                            lineNumber: 375,
+                                                                            lineNumber: 471,
                                                                             columnNumber: 31
                                                                         }, this) : v.status === 'pending' ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                             className: "flex h-8 w-8 items-center justify-center rounded-full bg-yellow-100",
@@ -1925,12 +2050,12 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                                                 className: "h-4 w-4 text-yellow-600"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                                lineNumber: 380,
+                                                                                lineNumber: 476,
                                                                                 columnNumber: 33
                                                                             }, this)
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                            lineNumber: 379,
+                                                                            lineNumber: 475,
                                                                             columnNumber: 31
                                                                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                             className: "flex h-8 w-8 items-center justify-center rounded-full bg-gray-100",
@@ -1938,12 +2063,12 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                                                 className: "h-4 w-4 text-gray-400"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                                lineNumber: 384,
+                                                                                lineNumber: 480,
                                                                                 columnNumber: 33
                                                                             }, this)
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                            lineNumber: 383,
+                                                                            lineNumber: 479,
                                                                             columnNumber: 31
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1953,7 +2078,7 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                                                     children: v.verification_type
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                                    lineNumber: 388,
+                                                                                    lineNumber: 484,
                                                                                     columnNumber: 31
                                                                                 }, this),
                                                                                 v.verified_at ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1964,19 +2089,19 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                                                     ]
                                                                                 }, void 0, true, {
                                                                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                                    lineNumber: 390,
+                                                                                    lineNumber: 486,
                                                                                     columnNumber: 33
                                                                                 }, this) : null
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                            lineNumber: 387,
+                                                                            lineNumber: 483,
                                                                             columnNumber: 29
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                    lineNumber: 373,
+                                                                    lineNumber: 469,
                                                                     columnNumber: 27
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Badge"], {
@@ -1984,34 +2109,34 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                                     children: v.status === 'verified' ? 'Verified' : v.status === 'pending' ? 'Pending' : v.status
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                    lineNumber: 396,
+                                                                    lineNumber: 492,
                                                                     columnNumber: 27
                                                                 }, this)
                                                             ]
                                                         }, v.id, true, {
                                                             fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                            lineNumber: 369,
+                                                            lineNumber: 465,
                                                             columnNumber: 25
                                                         }, this))
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                    lineNumber: 364,
+                                                    lineNumber: 460,
                                                     columnNumber: 19
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                lineNumber: 363,
+                                                lineNumber: 459,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                        lineNumber: 356,
+                                        lineNumber: 452,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                    lineNumber: 355,
+                                    lineNumber: 451,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$tabs$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TabsContent"], {
@@ -2020,25 +2145,268 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Card"], {
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardHeader"], {
+                                                className: "flex flex-row items-center justify-between",
                                                 children: [
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardTitle"], {
-                                                        children: "Uploaded Documents"
-                                                    }, void 0, false, {
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardTitle"], {
+                                                                children: "Uploaded Documents"
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
+                                                                lineNumber: 515,
+                                                                columnNumber: 21
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardDescription"], {
+                                                                children: "Review and verify submitted documents."
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
+                                                                lineNumber: 516,
+                                                                columnNumber: 21
+                                                            }, this)
+                                                        ]
+                                                    }, void 0, true, {
                                                         fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                        lineNumber: 418,
+                                                        lineNumber: 514,
                                                         columnNumber: 19
                                                     }, this),
-                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardDescription"], {
-                                                        children: "Review and verify submitted documents."
-                                                    }, void 0, false, {
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Dialog"], {
+                                                        open: isUploadOpen,
+                                                        onOpenChange: (open)=>{
+                                                            setIsUploadOpen(open);
+                                                            if (!open) {
+                                                                setUploadError('');
+                                                                setUploadFile(null);
+                                                                setUploadType('');
+                                                            }
+                                                        },
+                                                        children: [
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DialogTrigger"], {
+                                                                asChild: true,
+                                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
+                                                                    size: "sm",
+                                                                    className: "gap-2",
+                                                                    children: [
+                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$upload$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Upload$3e$__["Upload"], {
+                                                                            className: "h-4 w-4"
+                                                                        }, void 0, false, {
+                                                                            fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
+                                                                            lineNumber: 526,
+                                                                            columnNumber: 25
+                                                                        }, this),
+                                                                        "Upload Document"
+                                                                    ]
+                                                                }, void 0, true, {
+                                                                    fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
+                                                                    lineNumber: 525,
+                                                                    columnNumber: 23
+                                                                }, this)
+                                                            }, void 0, false, {
+                                                                fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
+                                                                lineNumber: 524,
+                                                                columnNumber: 21
+                                                            }, this),
+                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DialogContent"], {
+                                                                children: [
+                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DialogHeader"], {
+                                                                        children: [
+                                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DialogTitle"], {
+                                                                                children: "Upload Document for Founder"
+                                                                            }, void 0, false, {
+                                                                                fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
+                                                                                lineNumber: 532,
+                                                                                columnNumber: 25
+                                                                            }, this),
+                                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$dialog$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["DialogDescription"], {
+                                                                                children: "Select the document type and upload a file. Admin uploads are automatically marked as verified."
+                                                                            }, void 0, false, {
+                                                                                fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
+                                                                                lineNumber: 533,
+                                                                                columnNumber: 25
+                                                                            }, this)
+                                                                        ]
+                                                                    }, void 0, true, {
+                                                                        fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
+                                                                        lineNumber: 531,
+                                                                        columnNumber: 23
+                                                                    }, this),
+                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                        className: "space-y-4 py-4",
+                                                                        children: [
+                                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                                className: "space-y-2",
+                                                                                children: [
+                                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Label"], {
+                                                                                        children: "Document Type"
+                                                                                    }, void 0, false, {
+                                                                                        fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
+                                                                                        lineNumber: 539,
+                                                                                        columnNumber: 27
+                                                                                    }, this),
+                                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Select"], {
+                                                                                        value: uploadType,
+                                                                                        onValueChange: setUploadType,
+                                                                                        children: [
+                                                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectTrigger"], {
+                                                                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectValue"], {
+                                                                                                    placeholder: "Select document type"
+                                                                                                }, void 0, false, {
+                                                                                                    fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
+                                                                                                    lineNumber: 542,
+                                                                                                    columnNumber: 31
+                                                                                                }, this)
+                                                                                            }, void 0, false, {
+                                                                                                fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
+                                                                                                lineNumber: 541,
+                                                                                                columnNumber: 29
+                                                                                            }, this),
+                                                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectContent"], {
+                                                                                                children: adminDocumentTypes.map((t)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$select$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SelectItem"], {
+                                                                                                        value: t.value,
+                                                                                                        children: t.label
+                                                                                                    }, t.value, false, {
+                                                                                                        fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
+                                                                                                        lineNumber: 546,
+                                                                                                        columnNumber: 33
+                                                                                                    }, this))
+                                                                                            }, void 0, false, {
+                                                                                                fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
+                                                                                                lineNumber: 544,
+                                                                                                columnNumber: 29
+                                                                                            }, this)
+                                                                                        ]
+                                                                                    }, void 0, true, {
+                                                                                        fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
+                                                                                        lineNumber: 540,
+                                                                                        columnNumber: 27
+                                                                                    }, this)
+                                                                                ]
+                                                                            }, void 0, true, {
+                                                                                fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
+                                                                                lineNumber: 538,
+                                                                                columnNumber: 25
+                                                                            }, this),
+                                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                                className: "space-y-2",
+                                                                                children: [
+                                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$label$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Label"], {
+                                                                                        children: "File"
+                                                                                    }, void 0, false, {
+                                                                                        fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
+                                                                                        lineNumber: 554,
+                                                                                        columnNumber: 27
+                                                                                    }, this),
+                                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                                        className: "flex cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed p-6 hover:bg-gray-50",
+                                                                                        onClick: ()=>fileInputRef.current?.click(),
+                                                                                        children: [
+                                                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$upload$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Upload$3e$__["Upload"], {
+                                                                                                className: "mb-2 h-8 w-8 text-gray-400"
+                                                                                            }, void 0, false, {
+                                                                                                fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
+                                                                                                lineNumber: 559,
+                                                                                                columnNumber: 29
+                                                                                            }, this),
+                                                                                            uploadFile ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                                                                className: "text-sm font-medium",
+                                                                                                children: uploadFile.name
+                                                                                            }, void 0, false, {
+                                                                                                fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
+                                                                                                lineNumber: 561,
+                                                                                                columnNumber: 31
+                                                                                            }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
+                                                                                                children: [
+                                                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                                                                        className: "text-sm text-gray-500",
+                                                                                                        children: "Click to upload"
+                                                                                                    }, void 0, false, {
+                                                                                                        fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
+                                                                                                        lineNumber: 564,
+                                                                                                        columnNumber: 33
+                                                                                                    }, this),
+                                                                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                                                                        className: "mt-1 text-xs text-gray-400",
+                                                                                                        children: "PDF, PNG, JPG up to 10MB"
+                                                                                                    }, void 0, false, {
+                                                                                                        fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
+                                                                                                        lineNumber: 565,
+                                                                                                        columnNumber: 33
+                                                                                                    }, this)
+                                                                                                ]
+                                                                                            }, void 0, true),
+                                                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                                                                                ref: fileInputRef,
+                                                                                                type: "file",
+                                                                                                className: "hidden",
+                                                                                                accept: ".pdf,.png,.jpg,.jpeg",
+                                                                                                onChange: (e)=>setUploadFile(e.target.files?.[0] ?? null)
+                                                                                            }, void 0, false, {
+                                                                                                fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
+                                                                                                lineNumber: 568,
+                                                                                                columnNumber: 29
+                                                                                            }, this)
+                                                                                        ]
+                                                                                    }, void 0, true, {
+                                                                                        fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
+                                                                                        lineNumber: 555,
+                                                                                        columnNumber: 27
+                                                                                    }, this)
+                                                                                ]
+                                                                            }, void 0, true, {
+                                                                                fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
+                                                                                lineNumber: 553,
+                                                                                columnNumber: 25
+                                                                            }, this),
+                                                                            uploadError && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                                                className: "text-sm text-red-500",
+                                                                                children: uploadError
+                                                                            }, void 0, false, {
+                                                                                fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
+                                                                                lineNumber: 577,
+                                                                                columnNumber: 41
+                                                                            }, this),
+                                                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
+                                                                                onClick: handleUploadDocument,
+                                                                                className: "w-full",
+                                                                                disabled: uploading,
+                                                                                children: uploading ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
+                                                                                    children: [
+                                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$loader$2d$circle$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Loader2$3e$__["Loader2"], {
+                                                                                            className: "mr-2 h-4 w-4 animate-spin"
+                                                                                        }, void 0, false, {
+                                                                                            fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
+                                                                                            lineNumber: 581,
+                                                                                            columnNumber: 31
+                                                                                        }, this),
+                                                                                        "Uploading..."
+                                                                                    ]
+                                                                                }, void 0, true) : 'Upload'
+                                                                            }, void 0, false, {
+                                                                                fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
+                                                                                lineNumber: 578,
+                                                                                columnNumber: 25
+                                                                            }, this)
+                                                                        ]
+                                                                    }, void 0, true, {
+                                                                        fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
+                                                                        lineNumber: 537,
+                                                                        columnNumber: 23
+                                                                    }, this)
+                                                                ]
+                                                            }, void 0, true, {
+                                                                fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
+                                                                lineNumber: 530,
+                                                                columnNumber: 21
+                                                            }, this)
+                                                        ]
+                                                    }, void 0, true, {
                                                         fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                        lineNumber: 419,
+                                                        lineNumber: 520,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                lineNumber: 417,
+                                                lineNumber: 513,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -2049,7 +2417,7 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                         children: "No documents uploaded yet."
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                        lineNumber: 426,
+                                                        lineNumber: 595,
                                                         columnNumber: 23
                                                     }, this) : documents.map((doc)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                             className: "flex items-center justify-between rounded-lg border p-4",
@@ -2061,7 +2429,7 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                                             className: "h-8 w-8 text-gray-400"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                            lineNumber: 434,
+                                                                            lineNumber: 603,
                                                                             columnNumber: 29
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2071,85 +2439,103 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                                                     children: doc.file_name
                                                                                 }, void 0, false, {
                                                                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                                    lineNumber: 436,
+                                                                                    lineNumber: 605,
                                                                                     columnNumber: 31
                                                                                 }, this),
                                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                                                                     className: "text-sm text-gray-500",
                                                                                     children: [
-                                                                                        doc.type,
+                                                                                        doc.type.replace(/_/g, ' '),
                                                                                         " • Uploaded",
                                                                                         ' ',
                                                                                         (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$date$2d$fns$2f$format$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$locals$3e$__["format"])(new Date(doc.created_at), 'MMM d, yyyy')
                                                                                     ]
                                                                                 }, void 0, true, {
                                                                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                                    lineNumber: 437,
+                                                                                    lineNumber: 606,
                                                                                     columnNumber: 31
                                                                                 }, this)
                                                                             ]
                                                                         }, void 0, true, {
                                                                             fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                            lineNumber: 435,
+                                                                            lineNumber: 604,
                                                                             columnNumber: 29
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                    lineNumber: 433,
+                                                                    lineNumber: 602,
                                                                     columnNumber: 27
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                     className: "flex items-center gap-2",
-                                                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Badge"], {
-                                                                        className: doc.verified ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700',
-                                                                        children: doc.verified ? 'Verified' : 'Pending'
-                                                                    }, void 0, false, {
-                                                                        fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                        lineNumber: 444,
-                                                                        columnNumber: 29
-                                                                    }, this)
-                                                                }, void 0, false, {
+                                                                    children: [
+                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Badge"], {
+                                                                            className: doc.verified ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700',
+                                                                            children: doc.verified ? 'Verified' : 'Pending'
+                                                                        }, void 0, false, {
+                                                                            fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
+                                                                            lineNumber: 613,
+                                                                            columnNumber: 29
+                                                                        }, this),
+                                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
+                                                                            variant: "ghost",
+                                                                            size: "sm",
+                                                                            onClick: ()=>handleDownloadDoc(doc.id),
+                                                                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$download$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Download$3e$__["Download"], {
+                                                                                className: "h-4 w-4"
+                                                                            }, void 0, false, {
+                                                                                fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
+                                                                                lineNumber: 627,
+                                                                                columnNumber: 31
+                                                                            }, this)
+                                                                        }, void 0, false, {
+                                                                            fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
+                                                                            lineNumber: 622,
+                                                                            columnNumber: 29
+                                                                        }, this)
+                                                                    ]
+                                                                }, void 0, true, {
                                                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                                    lineNumber: 443,
+                                                                    lineNumber: 612,
                                                                     columnNumber: 27
                                                                 }, this)
                                                             ]
                                                         }, doc.id, true, {
                                                             fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                            lineNumber: 429,
+                                                            lineNumber: 598,
                                                             columnNumber: 25
                                                         }, this))
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                    lineNumber: 424,
+                                                    lineNumber: 593,
                                                     columnNumber: 19
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                lineNumber: 423,
+                                                lineNumber: 592,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                        lineNumber: 416,
+                                        lineNumber: 512,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                    lineNumber: 415,
+                                    lineNumber: 511,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                            lineNumber: 242,
+                            lineNumber: 338,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                        lineNumber: 241,
+                        lineNumber: 337,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2165,19 +2551,19 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                     className: "h-5 w-5"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                    lineNumber: 470,
+                                                    lineNumber: 646,
                                                     columnNumber: 17
                                                 }, this),
                                                 "Trust Score"
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                            lineNumber: 469,
+                                            lineNumber: 645,
                                             columnNumber: 15
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                        lineNumber: 468,
+                                        lineNumber: 644,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -2191,7 +2577,7 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                             children: score
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                            lineNumber: 478,
+                                                            lineNumber: 654,
                                                             columnNumber: 21
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Badge"], {
@@ -2199,7 +2585,7 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                             children: formatStatus(scoreStatus || 'pending')
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                            lineNumber: 481,
+                                                            lineNumber: 657,
                                                             columnNumber: 21
                                                         }, this),
                                                         trustScore.manual_override ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2207,13 +2593,13 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                             children: "* Manually overridden"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                            lineNumber: 485,
+                                                            lineNumber: 661,
                                                             columnNumber: 23
                                                         }, this) : null
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                    lineNumber: 477,
+                                                    lineNumber: 653,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2222,19 +2608,19 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ScoreBar, {
                                                             label: "Digital Lineage",
                                                             value: trustScore.digital_lineage_score || 0,
-                                                            max: 40
+                                                            max: 35
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                            lineNumber: 491,
+                                                            lineNumber: 667,
                                                             columnNumber: 21
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ScoreBar, {
-                                                            label: "Business",
+                                                            label: "Economic Activity",
                                                             value: trustScore.business_score || 0,
                                                             max: 25
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                            lineNumber: 492,
+                                                            lineNumber: 668,
                                                             columnNumber: 21
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ScoreBar, {
@@ -2243,22 +2629,22 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                             max: 20
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                            lineNumber: 493,
+                                                            lineNumber: 669,
                                                             columnNumber: 21
                                                         }, this),
                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ScoreBar, {
                                                             label: "Network",
                                                             value: trustScore.network_score || 0,
-                                                            max: 15
+                                                            max: 10
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                            lineNumber: 494,
+                                                            lineNumber: 670,
                                                             columnNumber: 21
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                    lineNumber: 490,
+                                                    lineNumber: 666,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
@@ -2267,18 +2653,109 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                             children: "No trust score calculated"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                            lineNumber: 498,
+                                            lineNumber: 674,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                        lineNumber: 474,
+                                        lineNumber: 650,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                lineNumber: 467,
+                                lineNumber: 643,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Card"], {
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardHeader"], {
+                                        children: [
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardTitle"], {
+                                                className: "flex items-center gap-2 text-base",
+                                                children: [
+                                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$dollar$2d$sign$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__DollarSign$3e$__["DollarSign"], {
+                                                        className: "h-5 w-5"
+                                                    }, void 0, false, {
+                                                        fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
+                                                        lineNumber: 683,
+                                                        columnNumber: 17
+                                                    }, this),
+                                                    "Payment Verification"
+                                                ]
+                                            }, void 0, true, {
+                                                fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
+                                                lineNumber: 682,
+                                                columnNumber: 15
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardDescription"], {
+                                                children: "Toggle whether this founder's formation payment has been verified."
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
+                                                lineNumber: 686,
+                                                columnNumber: 15
+                                            }, this)
+                                        ]
+                                    }, void 0, true, {
+                                        fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
+                                        lineNumber: 681,
+                                        columnNumber: 13
+                                    }, this),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
+                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "flex items-center justify-between",
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                            className: "text-sm font-medium",
+                                                            children: paymentVerified ? 'Verified' : 'Not Verified'
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
+                                                            lineNumber: 693,
+                                                            columnNumber: 19
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                                            className: "text-xs text-gray-500",
+                                                            children: paymentVerified ? '+5 trust score points' : '0 trust score points'
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
+                                                            lineNumber: 696,
+                                                            columnNumber: 19
+                                                        }, this)
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
+                                                    lineNumber: 692,
+                                                    columnNumber: 17
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
+                                                    size: "sm",
+                                                    variant: paymentVerified ? 'default' : 'outline',
+                                                    onClick: handlePaymentToggle,
+                                                    disabled: paymentToggling,
+                                                    className: paymentVerified ? 'bg-green-600 hover:bg-green-700' : '',
+                                                    children: paymentToggling ? 'Updating...' : paymentVerified ? 'Verified' : 'Mark Verified'
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
+                                                    lineNumber: 700,
+                                                    columnNumber: 17
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
+                                            lineNumber: 691,
+                                            columnNumber: 15
+                                        }, this)
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
+                                        lineNumber: 690,
+                                        columnNumber: 13
+                                    }, this)
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
+                                lineNumber: 680,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Card"], {
@@ -2289,12 +2766,12 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                             children: "Quick Stats"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                            lineNumber: 506,
+                                            lineNumber: 716,
                                             columnNumber: 15
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                        lineNumber: 505,
+                                        lineNumber: 715,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$card$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["CardContent"], {
@@ -2308,7 +2785,7 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                         children: "Documents"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                        lineNumber: 510,
+                                                        lineNumber: 720,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2321,13 +2798,13 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                        lineNumber: 511,
+                                                        lineNumber: 721,
                                                         columnNumber: 17
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                lineNumber: 509,
+                                                lineNumber: 719,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2338,7 +2815,7 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                         children: "Verifications"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                        lineNumber: 516,
+                                                        lineNumber: 726,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2351,13 +2828,13 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                        lineNumber: 517,
+                                                        lineNumber: 727,
                                                         columnNumber: 17
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                lineNumber: 515,
+                                                lineNumber: 725,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2368,20 +2845,20 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                         children: "Status"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                        lineNumber: 522,
+                                                        lineNumber: 732,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$badge$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Badge"], {
                                                         children: founder.status || 'N/A'
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                        lineNumber: 523,
+                                                        lineNumber: 733,
                                                         columnNumber: 17
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                lineNumber: 521,
+                                                lineNumber: 731,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2392,7 +2869,7 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                         children: "Tier"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                        lineNumber: 526,
+                                                        lineNumber: 736,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2400,47 +2877,47 @@ function FounderDetailClient({ founder, trustScore, documents, verifications, co
                                                         children: founder.tier || 'N/A'
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                        lineNumber: 527,
+                                                        lineNumber: 737,
                                                         columnNumber: 17
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                                lineNumber: 525,
+                                                lineNumber: 735,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                        lineNumber: 508,
+                                        lineNumber: 718,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                                lineNumber: 504,
+                                lineNumber: 714,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                        lineNumber: 465,
+                        lineNumber: 641,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                lineNumber: 239,
+                lineNumber: 335,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-        lineNumber: 150,
+        lineNumber: 246,
         columnNumber: 5
     }, this);
 }
-_s(FounderDetailClient, "O7vgT8UzoEkak3ntT2UrkKjjUco=", false, function() {
+_s(FounderDetailClient, "Z1ANmjwkRn0ByWN5Y1vnu/lxc3U=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"]
     ];
@@ -2459,7 +2936,7 @@ function ScoreBar({ label, value, max }) {
                         children: label
                     }, void 0, false, {
                         fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                        lineNumber: 543,
+                        lineNumber: 753,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2471,13 +2948,13 @@ function ScoreBar({ label, value, max }) {
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                        lineNumber: 544,
+                        lineNumber: 754,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                lineNumber: 542,
+                lineNumber: 752,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$progress$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Progress"], {
@@ -2485,13 +2962,13 @@ function ScoreBar({ label, value, max }) {
                 className: "h-2"
             }, void 0, false, {
                 fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-                lineNumber: 548,
+                lineNumber: 758,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/app/admin/founders/[id]/founder-detail-client.tsx",
-        lineNumber: 541,
+        lineNumber: 751,
         columnNumber: 5
     }, this);
 }

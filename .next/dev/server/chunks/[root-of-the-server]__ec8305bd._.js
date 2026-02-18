@@ -418,8 +418,8 @@ async function POST(request) {
                 status: 401
             });
         }
-        // Get founder with profile fields for verification
-        const { data: founderData } = await supabase.from('founders').select('id, full_name, date_of_birth, country_of_origin').eq('user_id', user.id).single();
+        // Get caller's founder record (need role check for admin uploads)
+        const { data: founderData } = await supabase.from('founders').select('id, full_name, date_of_birth, country_of_origin, role').eq('user_id', user.id).single();
         const founder = founderData;
         if (!founder) {
             return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
@@ -431,6 +431,7 @@ async function POST(request) {
         const formData = await request.formData();
         const file = formData.get('file');
         const type = formData.get('type');
+        const targetFounderId = formData.get('founderId');
         if (!file || !type) {
             return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
                 error: 'File and type are required'
@@ -438,6 +439,17 @@ async function POST(request) {
                 status: 400
             });
         }
+        // Admin upload: if founderId is provided, verify caller is admin
+        const isAdminUpload = !!targetFounderId;
+        if (isAdminUpload && founder.role !== 'admin') {
+            return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+                error: 'Unauthorized'
+            }, {
+                status: 403
+            });
+        }
+        // Determine which founder the document belongs to
+        const ownerFounderId = isAdminUpload ? targetFounderId : founder.id;
         // Validate file size (max 10MB)
         const MAX_FILE_SIZE = 10 * 1024 * 1024;
         if (file.size > MAX_FILE_SIZE) {
@@ -447,12 +459,15 @@ async function POST(request) {
                 status: 400
             });
         }
+        // Check if a document of this type already exists for this founder
+        const { data: existingDocs } = await supabase.from('documents').select('id, file_path').eq('founder_id', ownerFounderId).eq('type', type);
+        const existingDoc = existingDocs?.[0];
         // Read file buffer once (File stream can only be consumed once)
         const arrayBuffer = await file.arrayBuffer();
         const buffer = Buffer.from(arrayBuffer);
         // Upload file to Supabase Storage
         const fileExt = file.name.split('.').pop();
-        const fileName = `${founder.id}/${Date.now()}.${fileExt}`;
+        const fileName = `${ownerFounderId}/${Date.now()}.${fileExt}`;
         const { data: uploadData, error: uploadError } = await supabase.storage.from('documents').upload(fileName, buffer, {
             contentType: file.type
         });
@@ -463,22 +478,69 @@ async function POST(request) {
                 status: 500
             });
         }
-        // Create document record with type assertion
-        const insertData = {
-            founder_id: founder.id,
-            type: type,
-            file_name: file.name,
-            file_path: uploadData.path,
-            file_size: file.size,
-            mime_type: file.type
-        };
-        const { data: document, error } = await supabase.from('documents').insert(insertData).select().single();
+        let document;
+        let error = null;
+        if (existingDoc) {
+            // Replace existing document: update the record and delete old file from storage
+            const { data: updated, error: updateError } = await supabase.from('documents').update({
+                file_name: file.name,
+                file_path: uploadData.path,
+                file_size: file.size,
+                mime_type: file.type,
+                verified: isAdminUpload ? true : false,
+                verified_at: isAdminUpload ? new Date().toISOString() : null,
+                verified_by: isAdminUpload ? founder.id : null
+            }).eq('id', existingDoc.id).select().single();
+            document = updated;
+            error = updateError;
+            // Clean up old file from storage
+            if (!updateError && existingDoc.file_path) {
+                await supabase.storage.from('documents').remove([
+                    existingDoc.file_path
+                ]);
+            }
+        } else {
+            // Create new document record
+            const insertData = {
+                founder_id: ownerFounderId,
+                type: type,
+                file_name: file.name,
+                file_path: uploadData.path,
+                file_size: file.size,
+                mime_type: file.type,
+                ...isAdminUpload ? {
+                    verified: true,
+                    verified_at: new Date().toISOString(),
+                    verified_by: 'admin'
+                } : {}
+            };
+            const { data: inserted, error: insertError } = await supabase.from('documents').insert(insertData).select().single();
+            document = inserted;
+            error = insertError;
+        }
         if (error) {
             return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
                 error: error.message
             }, {
                 status: 500
             });
+        }
+        // Skip AI verification for admin uploads — already marked verified
+        if (isAdminUpload) {
+            return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+                document,
+                verification: null
+            }, {
+                status: 201
+            });
+        }
+        // Auto-verify selfie (face match already passed before upload)
+        if (type === 'selfie') {
+            await supabase.from('documents').update({
+                verified: true,
+                verified_at: new Date().toISOString(),
+                verified_by: 'face_match'
+            }).eq('id', document.id);
         }
         // Auto-verify identity documents with Claude Vision
         let verification = null;

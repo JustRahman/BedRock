@@ -159,7 +159,7 @@ export function AlternativeID() {
               This isn&apos;t just a product feature. It&apos;s access to the financial system
               for people who&apos;ve been locked out through no fault of their own.
             </p>
-            <Link href="/onboarding">
+            <Link href="/onboarding/choose">
               <Button
                 size="lg"
                 className="bg-gradient-to-r from-emerald-500 to-blue-600 text-white hover:from-emerald-400 hover:to-blue-500 rounded-xl px-8 py-6 text-base font-medium gap-2 transition-all duration-300 hover:shadow-[0_0_30px_rgba(16,185,129,0.3)]"

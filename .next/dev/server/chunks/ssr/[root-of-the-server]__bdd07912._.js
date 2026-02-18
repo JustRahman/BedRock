@@ -121,23 +121,27 @@ async function FormationDetailPage({ params }) {
         (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$components$2f$navigation$2e$react$2d$server$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["notFound"])();
     }
     const companyRecord = company;
-    const [{ data: founder }, { data: updates }, { data: deadlines }] = await Promise.all([
+    const [{ data: founder }, { data: updates }, { data: deadlines }, { data: bankApps }] = await Promise.all([
         supabase.from('founders').select('id, full_name, email, country_of_origin').eq('id', companyRecord.founder_id).single(),
         supabase.from('company_updates').select('*').eq('company_id', companyRecord.id).order('created_at', {
             ascending: false
         }),
         supabase.from('compliance_deadlines').select('id, title, description, due_date, completed, is_recurring, recurring_type').eq('company_id', companyRecord.id).order('due_date', {
             ascending: true
+        }),
+        supabase.from('bank_applications').select('id, bank_name, status, submitted_at, approved_at, notes').eq('company_id', companyRecord.id).order('created_at', {
+            ascending: false
         })
     ]);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$admin$2f$formations$2f5b$id$5d2f$formation$2d$detail$2d$client$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["FormationDetailClient"], {
         company: company,
         founder: founder,
         updates: updates || [],
-        deadlines: deadlines || []
+        deadlines: deadlines || [],
+        bankApps: bankApps || []
     }, void 0, false, {
         fileName: "[project]/src/app/admin/formations/[id]/page.tsx",
-        lineNumber: 36,
+        lineNumber: 38,
         columnNumber: 5
     }, this);
 }

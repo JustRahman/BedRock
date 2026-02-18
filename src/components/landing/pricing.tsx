@@ -125,7 +125,7 @@ export function Pricing() {
                 </ul>
 
                 <div className="relative mt-8">
-                  <Link href="/onboarding">
+                  <Link href="/onboarding/choose">
                     <Button
                       className={`w-full rounded-xl py-5 font-medium transition-all duration-300 ${
                         plan.highlighted
