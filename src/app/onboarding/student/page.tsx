@@ -87,18 +87,12 @@ export default function StudentOnboardingPage() {
         },
       }
 
-      // Save student-specific data separately so it survives the full onboarding overwrite
-      localStorage.setItem('studentOnboardingData', JSON.stringify({
-        studentInfo: onboardingData.studentInfo,
-        taxSituation: onboardingData.taxSituation,
-      }))
+      // Save all data for the ensure endpoint on dashboard
+      localStorage.setItem('onboardingData', JSON.stringify(onboardingData))
       localStorage.setItem('student_role', 'student')
 
-      // Pre-fill the full onboarding's basic info via sessionStorage (that's where it reads from)
-      sessionStorage.setItem('onboarding_basic_info', JSON.stringify(onboardingData.basicInfo))
-
-      // Continue to full onboarding for trust score (identity, GitHub, LinkedIn, etc.)
-      router.push('/onboarding')
+      // Go straight to register — trust score is optional, students can do it later
+      router.push('/register')
     } catch {
       setIsSubmitting(false)
     }

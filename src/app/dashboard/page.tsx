@@ -143,15 +143,7 @@ function DashboardContent() {
           const storedScore = localStorage.getItem('trustScoreResult')
           if (storedScore) trustScorePayload = JSON.parse(storedScore)
           const storedData = localStorage.getItem('onboardingData')
-          if (storedData) {
-            onboardingPayload = JSON.parse(storedData)
-            // Merge student-specific data back in (saved separately to survive onboarding overwrite)
-            const studentData = localStorage.getItem('studentOnboardingData')
-            if (studentData) {
-              const parsed = JSON.parse(studentData)
-              onboardingPayload = { ...onboardingPayload, ...parsed }
-            }
-          }
+          if (storedData) onboardingPayload = JSON.parse(storedData)
           // Check for student role
           const storedRole = localStorage.getItem('student_role')
           if (storedRole) rolePayload = storedRole
@@ -188,7 +180,6 @@ function DashboardContent() {
             localStorage.removeItem('oauth_linkedin_data')
             localStorage.removeItem('oauth_stripe_data')
             localStorage.removeItem('student_role')
-            localStorage.removeItem('studentOnboardingData')
           } catch { /* ignore */ }
         }
 
@@ -302,6 +293,17 @@ function DashboardContent() {
       icon: 'document' | 'calendar' | 'payment' | 'alert'
       href: string
     }[] = []
+
+    if (!trustScore) {
+      studentActions.push({
+        id: 'build-trust',
+        title: 'Build Your Trust Score',
+        description: 'Complete identity and digital verification to build your trust history',
+        priority: 'high',
+        icon: 'alert',
+        href: '/onboarding',
+      })
+    }
 
     if (!taxRequest) {
       studentActions.push({
