@@ -117,10 +117,10 @@ export async function POST(request: Request) {
     // Upload both to Supabase Storage
     const [statementUpload, agreementUpload] = await Promise.all([
       supabase.storage.from('documents').upload(statementPath, statementBuffer, {
-        contentType: 'application/octet-stream',
+        contentType: 'application/pdf',
       }),
       supabase.storage.from('documents').upload(agreementPath, agreementBuffer, {
-        contentType: 'application/octet-stream',
+        contentType: 'application/pdf',
       }),
     ])
 
@@ -144,7 +144,7 @@ export async function POST(request: Request) {
         file_name: 'Statement of LLC Organizer.docx',
         file_path: statementUpload.data.path,
         file_size: statementBuffer.length,
-        mime_type: 'application/octet-stream',
+        mime_type: 'application/pdf',
         verified: true,
         verified_at: now,
         verified_by: 'admin',
@@ -164,7 +164,7 @@ export async function POST(request: Request) {
         file_name: 'Operating Agreement.docx',
         file_path: agreementUpload.data.path,
         file_size: agreementBuffer.length,
-        mime_type: 'application/octet-stream',
+        mime_type: 'application/pdf',
         verified: true,
         verified_at: now,
         verified_by: 'admin',
