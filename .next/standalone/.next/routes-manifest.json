@@ -292,6 +292,12 @@
       "namedRegex": "^/api/payments/webhook(?:/)?$"
     },
     {
+      "page": "/api/research-apply",
+      "regex": "^/api/research\\-apply(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/research\\-apply(?:/)?$"
+    },
+    {
       "page": "/api/service-requests",
       "regex": "^/api/service\\-requests(?:/)?$",
       "routeKeys": {},

@@ -30,7 +30,14 @@ export async function POST(request: Request) {
       .single()
 
     if (existingFounder) {
-      return NextResponse.json({ message: 'Founder already exists', founderId: (existingFounder as { id: string }).id })
+      const existingId = (existingFounder as { id: string }).id
+      // Update role if a different one was provided (e.g. student re-registering)
+      if (role) {
+        await (supabase.from('founders') as ReturnType<typeof supabase.from>)
+          .update({ role })
+          .eq('id', existingId)
+      }
+      return NextResponse.json({ message: 'Founder already exists', founderId: existingId })
     }
 
     // Create founder record
