@@ -14,6 +14,9 @@ export async function POST(request: Request) {
 
     const body = await request.json().catch(() => ({}))
 
+    // DEBUG: trace role detection
+    console.log('[ensure] body.role:', body.role, '| user_metadata.role:', user.user_metadata?.role)
+
     // Check if founder already exists
     const { data: existingFounder } = await (supabase
       .from('founders') as ReturnType<typeof supabase.from>)
@@ -36,7 +39,10 @@ export async function POST(request: Request) {
         if (bi.countryOfResidence) updates.country_of_residence = bi.countryOfResidence
       }
       // Set role if provided (handles case where complete-registration ran first without role)
-      if (body.role) updates.role = body.role
+      // Also check user metadata as fallback (role stored during signUp survives email confirmation)
+      const roleToSet = body.role || user.user_metadata?.role
+      if (roleToSet) updates.role = roleToSet
+      console.log('[ensure] EXISTING founder — roleToSet:', roleToSet, '| updates:', JSON.stringify(updates))
       if (Object.keys(updates).length > 0) {
         if (body.onboardingData?.basicInfo) updates.onboarding_completed = true
         await (supabase.from('founders') as ReturnType<typeof supabase.from>)
@@ -58,10 +64,11 @@ export async function POST(request: Request) {
           country_of_origin: bi.countryOfOrigin || '',
           country_of_residence: bi.countryOfResidence || '',
           onboarding_completed: !!body.trustScore,
-          role: body.role || 'founder',
+          role: body.role || user.user_metadata?.role || 'founder',
         })
         .select('id')
         .single()
+      console.log('[ensure] NEW founder — role:', body.role || user.user_metadata?.role || 'founder')
 
       if (founderError) {
         // Race condition: another request created the founder between our check and insert

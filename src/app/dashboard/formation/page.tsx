@@ -16,7 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { Building2, Check, ArrowRight, ArrowLeft, Loader2, FileText, Clock, CheckCircle, Plus, FolderOpen } from 'lucide-react'
+import { Building2, Check, ArrowRight, ArrowLeft, Loader2, FileText, Clock, CheckCircle, Plus, FolderOpen, X } from 'lucide-react'
 import { toast } from 'sonner'
 
 const US_STATES = [
@@ -72,8 +72,14 @@ export default function FormationPage() {
   const [bankApp, setBankApp] = useState<{ id: string; status: string; bank_name: string } | null>(null)
   const [itinRequest, setItinRequest] = useState<ServiceRequestData | null>(null)
   const [einRequest, setEinRequest] = useState<ServiceRequestData | null>(null)
+  const [taxFormRequest, setTaxFormRequest] = useState<ServiceRequestData | null>(null)
   const [submittingItin, setSubmittingItin] = useState(false)
   const [submittingEin, setSubmittingEin] = useState(false)
+  const [showTaxFormModal, setShowTaxFormModal] = useState(false)
+  const [submittingTaxForm, setSubmittingTaxForm] = useState(false)
+  const [selectedTaxForms, setSelectedTaxForms] = useState<string[]>([])
+  const [customTaxForm, setCustomTaxForm] = useState('')
+  const [taxFormNotes, setTaxFormNotes] = useState('')
   const [loading, setLoading] = useState(true)
   const [step, setStep] = useState(0)
   const [submitting, setSubmitting] = useState(false)
@@ -102,8 +108,9 @@ export default function FormationPage() {
       fetch('/api/bank-applications').then((r) => r.json()),
       fetch('/api/service-requests?type=itin').then((r) => r.json()),
       fetch('/api/service-requests?type=ein_only').then((r) => r.json()),
+      fetch('/api/service-requests?type=tax_form_help').then((r) => r.json()),
     ])
-      .then(([companyData, bankData, itinData, einData]) => {
+      .then(([companyData, bankData, itinData, einData, taxFormData]) => {
         if (companyData.company) setCompany(companyData.company)
         if (companyData.updates) setUpdates(companyData.updates)
         if (bankData.applications && bankData.applications.length > 0) {
@@ -114,6 +121,9 @@ export default function FormationPage() {
         }
         if (einData.requests && einData.requests.length > 0) {
           setEinRequest(einData.requests[0])
+        }
+        if (taxFormData.requests && taxFormData.requests.length > 0) {
+          setTaxFormRequest(taxFormData.requests[0])
         }
       })
       .catch(() => {})
@@ -518,6 +528,206 @@ export default function FormationPage() {
             </CardContent>
           </Card>
         )}
+
+        {/* Tax Form Help */}
+        {company && (
+          <Card>
+            <CardContent className="py-6">
+              {taxFormRequest ? (
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    {taxFormRequest.status === 'completed' ? (
+                      <CheckCircle className="h-5 w-5 text-green-500" />
+                    ) : (
+                      <Clock className="h-5 w-5 text-blue-500" />
+                    )}
+                    <div>
+                      <p className="font-medium text-foreground">Tax Form Help</p>
+                      <p className="text-sm text-muted-foreground">
+                        {taxFormRequest.status === 'requested' && 'Your tax form help request has been submitted. Our team will reach out shortly.'}
+                        {taxFormRequest.status === 'in_progress' && 'We\'re working on your tax form request.'}
+                        {taxFormRequest.status === 'completed' && 'Your tax form request has been completed!'}
+                      </p>
+                      {taxFormRequest.admin_notes ? (
+                        <p className="mt-1 text-xs text-muted-foreground">Update: {taxFormRequest.admin_notes}</p>
+                      ) : null}
+                    </div>
+                  </div>
+                  <Badge className={
+                    taxFormRequest.status === 'completed' ? 'bg-green-500/15 text-green-600' :
+                    taxFormRequest.status === 'in_progress' ? 'bg-yellow-500/15 text-yellow-600' :
+                    'bg-blue-500/15 text-blue-600'
+                  }>
+                    {taxFormRequest.status === 'requested' ? 'Submitted' :
+                     taxFormRequest.status === 'in_progress' ? 'In Progress' :
+                     taxFormRequest.status === 'completed' ? 'Completed' : taxFormRequest.status}
+                  </Badge>
+                </div>
+              ) : (
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-medium text-foreground">Need Help with a Tax Form?</p>
+                    <p className="text-sm text-muted-foreground">
+                      Form 5472, BOI Report, Form 1120, and more — we help you prepare and file the required tax forms for your LLC.
+                    </p>
+                  </div>
+                  <Button
+                    variant="outline"
+                    className="gap-2 shrink-0"
+                    onClick={() => setShowTaxFormModal(true)}
+                  >
+                    <FileText className="h-4 w-4" />
+                    Request Tax Form Help
+                  </Button>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Tax Form Help Modal */}
+        {showTaxFormModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60" onClick={() => setShowTaxFormModal(false)}>
+            <div className="mx-4 w-full max-w-md rounded-xl border border-border bg-background p-6 shadow-xl" onClick={(e) => e.stopPropagation()}>
+              <div className="flex items-center justify-between mb-5">
+                <h3 className="text-lg font-semibold text-foreground">Request Tax Form Help</h3>
+                <button onClick={() => setShowTaxFormModal(false)} className="text-muted-foreground hover:text-foreground">
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+
+              <div className="space-y-5">
+                <div className="space-y-3">
+                  <Label className="text-sm font-medium text-foreground">Select tax forms you need help with</Label>
+                  {[
+                    { value: 'Form 5472', desc: 'Foreign-owned LLC reporting' },
+                    { value: 'BOI Report', desc: 'Beneficial Ownership Information' },
+                    { value: 'Form 1120', desc: 'US Corporation Income Tax' },
+                    { value: 'Form 1065', desc: 'Partnership Return' },
+                    { value: 'State Annual Report', desc: 'State compliance filing' },
+                  ].map((form) => {
+                    const isChecked = selectedTaxForms.includes(form.value)
+                    return (
+                      <label
+                        key={form.value}
+                        className={`flex cursor-pointer items-center gap-3 rounded-lg border p-3 transition-colors ${
+                          isChecked ? 'border-blue-500 bg-blue-500/10' : 'border-border hover:border-muted-foreground/30'
+                        }`}
+                      >
+                        <div className={`flex h-5 w-5 shrink-0 items-center justify-center rounded border-2 transition-colors ${
+                          isChecked ? 'border-blue-500 bg-blue-500' : 'border-muted-foreground/40'
+                        }`}>
+                          {isChecked && <Check className="h-3 w-3 text-white" />}
+                        </div>
+                        <input
+                          type="checkbox"
+                          className="sr-only"
+                          checked={isChecked}
+                          onChange={() => {
+                            setSelectedTaxForms(prev =>
+                              prev.includes(form.value)
+                                ? prev.filter(f => f !== form.value)
+                                : [...prev, form.value]
+                            )
+                          }}
+                        />
+                        <div>
+                          <p className="text-sm font-medium text-foreground">{form.value}</p>
+                          <p className="text-xs text-zinc-400">{form.desc}</p>
+                        </div>
+                      </label>
+                    )
+                  })}
+                  <label
+                    className={`flex cursor-pointer items-center gap-3 rounded-lg border p-3 transition-colors ${
+                      selectedTaxForms.includes('other') ? 'border-blue-500 bg-blue-500/10' : 'border-border hover:border-muted-foreground/30'
+                    }`}
+                  >
+                    <div className={`flex h-5 w-5 shrink-0 items-center justify-center rounded border-2 transition-colors ${
+                      selectedTaxForms.includes('other') ? 'border-blue-500 bg-blue-500' : 'border-muted-foreground/40'
+                    }`}>
+                      {selectedTaxForms.includes('other') && <Check className="h-3 w-3 text-white" />}
+                    </div>
+                    <input
+                      type="checkbox"
+                      className="sr-only"
+                      checked={selectedTaxForms.includes('other')}
+                      onChange={() => {
+                        setSelectedTaxForms(prev =>
+                          prev.includes('other')
+                            ? prev.filter(f => f !== 'other')
+                            : [...prev, 'other']
+                        )
+                        if (selectedTaxForms.includes('other')) setCustomTaxForm('')
+                      }}
+                    />
+                    <span className="text-sm font-medium text-foreground">Other</span>
+                  </label>
+                  {selectedTaxForms.includes('other') && (
+                    <Input
+                      value={customTaxForm}
+                      onChange={(e) => setCustomTaxForm(e.target.value)}
+                      placeholder="Enter tax form name..."
+                      className="mt-1"
+                    />
+                  )}
+                </div>
+
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium text-foreground">Notes (optional)</Label>
+                  <Textarea
+                    value={taxFormNotes}
+                    onChange={(e) => setTaxFormNotes(e.target.value)}
+                    placeholder="Any details about your situation..."
+                    rows={3}
+                  />
+                </div>
+
+                <Button
+                  className="w-full gap-2"
+                  disabled={submittingTaxForm || selectedTaxForms.length === 0 || (selectedTaxForms.length === 1 && selectedTaxForms[0] === 'other' && !customTaxForm.trim())}
+                  onClick={async () => {
+                    setSubmittingTaxForm(true)
+                    const forms = selectedTaxForms
+                      .filter(f => f !== 'other')
+                      .concat(selectedTaxForms.includes('other') && customTaxForm.trim() ? [customTaxForm.trim()] : [])
+                    try {
+                      const res = await fetch('/api/service-requests', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                          serviceType: 'tax_form_help',
+                          details: { formNames: forms, taxYear: new Date().getFullYear().toString() },
+                          notes: taxFormNotes.trim() || undefined,
+                        }),
+                      })
+                      if (res.ok) {
+                        const data = await res.json()
+                        setTaxFormRequest(data.request)
+                        setShowTaxFormModal(false)
+                        setSelectedTaxForms([])
+                        setCustomTaxForm('')
+                        setTaxFormNotes('')
+                        toast.success('Tax form help request submitted!')
+                      } else {
+                        const err = await res.json()
+                        toast.error(err.error || 'Failed to submit')
+                      }
+                    } catch { toast.error('Something went wrong') }
+                    finally { setSubmittingTaxForm(false) }
+                  }}
+                >
+                  {submittingTaxForm ? <Loader2 className="h-4 w-4 animate-spin" /> : (
+                    <>
+                      <FileText className="h-4 w-4" />
+                      Submit Request
+                    </>
+                  )}
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
         </div>
       </div>
     )
@@ -570,11 +780,46 @@ export default function FormationPage() {
                 </div>
                 <div className="space-y-2">
                   <Label>Formation Date (Optional)</Label>
-                  <Input
-                    type="date"
-                    value={existingLLCData.formationDate}
-                    onChange={(e) => setExistingLLCData({ ...existingLLCData, formationDate: e.target.value })}
-                  />
+                  <div className="grid grid-cols-2 gap-3">
+                    <Select
+                      value={existingLLCData.formationDate ? existingLLCData.formationDate.split('-')[1] || '' : ''}
+                      onValueChange={(month) => {
+                        const parts = existingLLCData.formationDate ? existingLLCData.formationDate.split('-') : ['', '', '']
+                        const year = parts[0] || ''
+                        const day = parts[2] || '01'
+                        setExistingLLCData({ ...existingLLCData, formationDate: year ? `${year}-${month}-${day}` : `--${month}` })
+                      }}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Month" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {['01','02','03','04','05','06','07','08','09','10','11','12'].map((m, i) => (
+                          <SelectItem key={m} value={m}>
+                            {['January','February','March','April','May','June','July','August','September','October','November','December'][i]}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <Select
+                      value={existingLLCData.formationDate ? existingLLCData.formationDate.split('-')[0] || '' : ''}
+                      onValueChange={(year) => {
+                        const parts = existingLLCData.formationDate ? existingLLCData.formationDate.split('-') : ['', '', '']
+                        const month = parts[1] || '01'
+                        setExistingLLCData({ ...existingLLCData, formationDate: `${year}-${month}-01` })
+                      }}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Year" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {Array.from({ length: 15 }, (_, i) => {
+                          const yr = String(new Date().getFullYear() - i)
+                          return <SelectItem key={yr} value={yr}>{yr}</SelectItem>
+                        })}
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
               </div>
 

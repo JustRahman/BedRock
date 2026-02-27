@@ -346,6 +346,12 @@
       "namedRegex": "^/api/verify/trust\\-signals(?:/)?$"
     },
     {
+      "page": "/api/waitlist",
+      "regex": "^/api/waitlist(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/waitlist(?:/)?$"
+    },
+    {
       "page": "/careers",
       "regex": "^/careers(?:/)?$",
       "routeKeys": {},

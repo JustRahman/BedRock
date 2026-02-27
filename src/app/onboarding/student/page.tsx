@@ -41,6 +41,58 @@ const emptyData: StudentData = {
   incomeTypes: [],
 }
 
+// Format phone number as user types: +1 (XXX) XXX-XXXX
+function formatPhone(value: string): string {
+  const digits = value.replace(/\D/g, '')
+  // Remove leading 1 if user types it (we add +1 automatically)
+  const d = digits.startsWith('1') && digits.length > 10 ? digits.slice(1) : digits
+  if (d.length === 0) return ''
+  if (d.length <= 3) return `+1 (${d}`
+  if (d.length <= 6) return `+1 (${d.slice(0, 3)}) ${d.slice(3)}`
+  return `+1 (${d.slice(0, 3)}) ${d.slice(3, 6)}-${d.slice(6, 10)}`
+}
+
+// Get raw digits from formatted phone
+function phoneDigits(formatted: string): string {
+  return formatted.replace(/\D/g, '')
+}
+
+const MONTHS = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December',
+]
+
+function daysInMonth(month: number, year: number): number {
+  if (!month || !year) return 31
+  return new Date(year, month, 0).getDate()
+}
+
+// Parse stored date to { month, day, year }
+// Supports both complete YYYY-MM-DD and partial "m|d|y" format
+function parseDate(val: string): { month: string; day: string; year: string } {
+  if (!val) return { month: '', day: '', year: '' }
+  if (val.includes('|')) {
+    const [m, d, y] = val.split('|')
+    return { month: m || '', day: d || '', year: y || '' }
+  }
+  const [y, m, d] = val.split('-')
+  return { month: String(parseInt(m || '0')), day: String(parseInt(d || '0')), year: y || '' }
+}
+
+// Build date string from parts — stores partial as "m|d|y", complete as YYYY-MM-DD
+function buildDate(month: string, day: string, year: string): string {
+  if (month && day && year && year.length === 4) {
+    return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
+  }
+  // Store partial so selects keep their value
+  return `${month}|${day}|${year}`
+}
+
+// Check if a date value is complete (YYYY-MM-DD)
+function isDateComplete(val: string): boolean {
+  return /^\d{4}-\d{2}-\d{2}$/.test(val)
+}
+
 const steps = [
   { id: 1, name: 'Basic Info' },
   { id: 2, name: 'Student Info' },
@@ -64,16 +116,8 @@ export default function StudentOnboardingPage() {
   const handleComplete = async () => {
     setIsSubmitting(true)
     try {
-      // Store onboarding data for the ensure endpoint
-      const onboardingData = {
-        basicInfo: {
-          fullName: data.fullName,
-          email: data.email,
-          phone: data.phone,
-          dateOfBirth: data.dateOfBirth,
-          countryOfOrigin: data.citizenship,
-          countryOfResidence: 'US',
-        },
+      // Save student-specific data for later (ensure endpoint on dashboard)
+      const studentData = {
         studentInfo: {
           visaType: data.visaType,
           universityName: data.universityName,
@@ -86,13 +130,24 @@ export default function StudentOnboardingPage() {
           incomeTypes: data.incomeTypes,
         },
       }
+      sessionStorage.setItem('student_onboarding_extra', JSON.stringify(studentData))
+      sessionStorage.setItem('student_role', 'student')
 
-      // Save all data for the ensure endpoint on dashboard
-      localStorage.setItem('onboardingData', JSON.stringify(onboardingData))
-      localStorage.setItem('student_role', 'student')
+      // Pre-fill basic info for the main onboarding flow (trust score steps)
+      const basicInfo = {
+        fullName: data.fullName,
+        email: data.email,
+        phone: data.phone,
+        dateOfBirth: data.dateOfBirth,
+        countryOfOrigin: data.citizenship,
+        countryOfResidence: 'US',
+      }
+      sessionStorage.setItem('onboarding_basic_info', JSON.stringify(basicInfo))
+      // Start at step 2 (identity) — basic info is already collected
+      sessionStorage.setItem('onboarding_current_step', '2')
 
-      // Go straight to register — trust score is optional, students can do it later
-      router.push('/register')
+      // Redirect to main onboarding flow for trust score calculation
+      router.push('/onboarding')
     } catch {
       setIsSubmitting(false)
     }
@@ -156,42 +211,94 @@ export default function StudentOnboardingPage() {
                   className="border-white/[0.1] bg-white/[0.05] text-white placeholder-zinc-500"
                 />
               </div>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="space-y-2">
-                  <Label htmlFor="phone" className="text-zinc-300">Phone</Label>
+              <div className="space-y-2">
+                <Label htmlFor="phone" className="text-zinc-300">Phone</Label>
+                <Input
+                  id="phone"
+                  type="tel"
+                  value={data.phone}
+                  onChange={(e) => {
+                    const formatted = formatPhone(e.target.value)
+                    update({ phone: formatted })
+                  }}
+                  placeholder="+1 (555) 000-0000"
+                  maxLength={17}
+                  className="border-white/[0.1] bg-white/[0.05] text-white placeholder-zinc-500"
+                />
+                {data.phone && phoneDigits(data.phone).length > 0 && phoneDigits(data.phone).length < 11 && (
+                  <p className="text-xs text-zinc-500">Enter 10-digit US number</p>
+                )}
+              </div>
+              <div className="space-y-2">
+                <Label className="text-zinc-300">Date of Birth *</Label>
+                <div className="grid grid-cols-3 gap-2">
+                  <select
+                    value={parseDate(data.dateOfBirth).month}
+                    onChange={(e) => {
+                      const p = parseDate(data.dateOfBirth)
+                      update({ dateOfBirth: buildDate(e.target.value, p.day, p.year) })
+                    }}
+                    className="rounded-xl border border-white/[0.1] bg-white/[0.05] px-3 py-2.5 text-sm text-white outline-none transition-colors focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/30 appearance-none"
+                  >
+                    <option value="" className="bg-zinc-900">Month</option>
+                    {MONTHS.map((m, i) => (
+                      <option key={m} value={String(i + 1)} className="bg-zinc-900">{m}</option>
+                    ))}
+                  </select>
+                  <select
+                    value={parseDate(data.dateOfBirth).day}
+                    onChange={(e) => {
+                      const p = parseDate(data.dateOfBirth)
+                      update({ dateOfBirth: buildDate(p.month, e.target.value, p.year) })
+                    }}
+                    className="rounded-xl border border-white/[0.1] bg-white/[0.05] px-3 py-2.5 text-sm text-white outline-none transition-colors focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/30 appearance-none"
+                  >
+                    <option value="" className="bg-zinc-900">Day</option>
+                    {Array.from({ length: daysInMonth(parseInt(parseDate(data.dateOfBirth).month) || 1, parseInt(parseDate(data.dateOfBirth).year) || 2000) }, (_, i) => (
+                      <option key={i + 1} value={String(i + 1)} className="bg-zinc-900">{i + 1}</option>
+                    ))}
+                  </select>
                   <Input
-                    id="phone"
-                    value={data.phone}
-                    onChange={(e) => update({ phone: e.target.value })}
-                    placeholder="+1 (555) 000-0000"
+                    type="text"
+                    inputMode="numeric"
+                    placeholder="Year"
+                    maxLength={4}
+                    value={parseDate(data.dateOfBirth).year}
+                    onChange={(e) => {
+                      const yr = e.target.value.replace(/\D/g, '').slice(0, 4)
+                      const p = parseDate(data.dateOfBirth)
+                      update({ dateOfBirth: buildDate(p.month, p.day, yr) })
+                    }}
                     className="border-white/[0.1] bg-white/[0.05] text-white placeholder-zinc-500"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="dob" className="text-zinc-300">Date of Birth *</Label>
-                  <Input
-                    id="dob"
-                    type="date"
-                    value={data.dateOfBirth}
-                    onChange={(e) => update({ dateOfBirth: e.target.value })}
-                    className="border-white/[0.1] bg-white/[0.05] text-white"
                   />
                 </div>
               </div>
               <div className="space-y-2">
                 <Label htmlFor="citizenship" className="text-zinc-300">Country of Citizenship *</Label>
-                <Input
+                <select
                   id="citizenship"
                   value={data.citizenship}
                   onChange={(e) => update({ citizenship: e.target.value })}
-                  placeholder="e.g. India, China, South Korea"
-                  className="border-white/[0.1] bg-white/[0.05] text-white placeholder-zinc-500"
-                />
+                  className="w-full rounded-xl border border-white/[0.1] bg-white/[0.05] px-3 py-2.5 text-sm text-white outline-none transition-colors focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/30 appearance-none"
+                >
+                  <option value="" className="bg-zinc-900">Select country</option>
+                  {[
+                    'India', 'China', 'South Korea', 'Japan', 'Brazil', 'Nigeria',
+                    'Turkey', 'Iran', 'Saudi Arabia', 'Vietnam', 'Taiwan', 'Nepal',
+                    'Bangladesh', 'Pakistan', 'Indonesia', 'Mexico', 'Colombia',
+                    'Thailand', 'Philippines', 'Egypt', 'Kenya', 'Ghana',
+                    'Germany', 'France', 'United Kingdom', 'Canada', 'Australia',
+                    'Russia', 'Ukraine', 'Kazakhstan', 'Uzbekistan', 'Azerbaijan',
+                    'Georgia', 'Armenia', 'Belarus', 'Other',
+                  ].map((c) => (
+                    <option key={c} value={c} className="bg-zinc-900">{c}</option>
+                  ))}
+                </select>
               </div>
               <div className="flex justify-end pt-2">
                 <Button
                   onClick={() => setStep(2)}
-                  disabled={!data.fullName || !data.email || !data.dateOfBirth || !data.citizenship}
+                  disabled={!data.fullName || !data.email || !isDateComplete(data.dateOfBirth) || !data.citizenship}
                   className="gap-2 bg-gradient-to-r from-teal-500 to-blue-600 hover:from-teal-400 hover:to-blue-500"
                 >
                   Next <ArrowRight className="h-4 w-4" />
@@ -241,23 +348,50 @@ export default function StudentOnboardingPage() {
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-2">
                   <Label htmlFor="gradYear" className="text-zinc-300">Expected Graduation</Label>
-                  <Input
+                  <select
                     id="gradYear"
                     value={data.graduationYear}
                     onChange={(e) => update({ graduationYear: e.target.value })}
-                    placeholder="e.g. 2027"
-                    className="border-white/[0.1] bg-white/[0.05] text-white placeholder-zinc-500"
-                  />
+                    className="w-full rounded-xl border border-white/[0.1] bg-white/[0.05] px-3 py-2.5 text-sm text-white outline-none transition-colors focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/30 appearance-none"
+                  >
+                    <option value="" className="bg-zinc-900">Select year</option>
+                    {Array.from({ length: 8 }, (_, i) => {
+                      const yr = new Date().getFullYear() + i
+                      return <option key={yr} value={String(yr)} className="bg-zinc-900">{yr}</option>
+                    })}
+                  </select>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="arrival" className="text-zinc-300">US Arrival Date *</Label>
-                  <Input
-                    id="arrival"
-                    type="date"
-                    value={data.arrivalDate}
-                    onChange={(e) => update({ arrivalDate: e.target.value })}
-                    className="border-white/[0.1] bg-white/[0.05] text-white"
-                  />
+                  <Label className="text-zinc-300">US Arrival Date *</Label>
+                  <div className="grid grid-cols-2 gap-1.5">
+                    <select
+                      value={parseDate(data.arrivalDate).month}
+                      onChange={(e) => {
+                        const p = parseDate(data.arrivalDate)
+                        update({ arrivalDate: buildDate(e.target.value, p.day, p.year) })
+                      }}
+                      className="rounded-xl border border-white/[0.1] bg-white/[0.05] px-2 py-2.5 text-sm text-white outline-none transition-colors focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/30 appearance-none"
+                    >
+                      <option value="" className="bg-zinc-900">Month</option>
+                      {MONTHS.map((m, i) => (
+                        <option key={m} value={String(i + 1)} className="bg-zinc-900">{m.slice(0, 3)}</option>
+                      ))}
+                    </select>
+                    <Input
+                      type="text"
+                      inputMode="numeric"
+                      placeholder="Year"
+                      maxLength={4}
+                      value={parseDate(data.arrivalDate).year}
+                      onChange={(e) => {
+                        const yr = e.target.value.replace(/\D/g, '').slice(0, 4)
+                        const p = parseDate(data.arrivalDate)
+                        // Default day to 1 for arrival date (exact day not critical)
+                        update({ arrivalDate: buildDate(p.month, p.day || '1', yr) })
+                      }}
+                      className="border-white/[0.1] bg-white/[0.05] text-white placeholder-zinc-500"
+                    />
+                  </div>
                 </div>
               </div>
               <div className="flex justify-between pt-2">
@@ -266,7 +400,7 @@ export default function StudentOnboardingPage() {
                 </Button>
                 <Button
                   onClick={() => setStep(3)}
-                  disabled={!data.visaType || !data.universityName || !data.arrivalDate}
+                  disabled={!data.visaType || !data.universityName || !isDateComplete(data.arrivalDate)}
                   className="gap-2 bg-gradient-to-r from-teal-500 to-blue-600 hover:from-teal-400 hover:to-blue-500"
                 >
                   Next <ArrowRight className="h-4 w-4" />
@@ -280,13 +414,17 @@ export default function StudentOnboardingPage() {
             <div className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="taxYear" className="text-zinc-300">Tax Year *</Label>
-                <Input
+                <select
                   id="taxYear"
                   value={data.taxYear}
                   onChange={(e) => update({ taxYear: e.target.value })}
-                  placeholder="2025"
-                  className="border-white/[0.1] bg-white/[0.05] text-white placeholder-zinc-500"
-                />
+                  className="w-full rounded-xl border border-white/[0.1] bg-white/[0.05] px-3 py-2.5 text-sm text-white outline-none transition-colors focus:border-teal-500/50 focus:ring-1 focus:ring-teal-500/30 appearance-none"
+                >
+                  {Array.from({ length: 4 }, (_, i) => {
+                    const yr = new Date().getFullYear() - i
+                    return <option key={yr} value={String(yr)} className="bg-zinc-900">{yr}</option>
+                  })}
+                </select>
               </div>
               <div className="space-y-2">
                 <Label className="text-zinc-300">Did you have US income this tax year? *</Label>
@@ -381,7 +519,7 @@ export default function StudentOnboardingPage() {
                     </>
                   ) : (
                     <>
-                      Go to Dashboard <ArrowRight className="h-4 w-4" />
+                      Continue to Trust Score <ArrowRight className="h-4 w-4" />
                     </>
                   )}
                 </Button>

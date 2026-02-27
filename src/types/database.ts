@@ -11,7 +11,7 @@ export type ApplicationStatus = 'draft' | 'submitted' | 'under_review' | 'approv
 export type TrustScoreStatus = 'elite' | 'approved' | 'review_needed' | 'conditional' | 'not_eligible'
 export type DocumentType = 'passport' | 'local_id' | 'address_proof' | 'bank_statement' | 'business_license' | 'articles_of_organization' | 'ein_letter' | 'operating_agreement' | 'registered_agent' | 'form_8843' | 'form_1040nr' | 'w2' | 'form_1042s' | 'other'
 export type PaymentStatus = 'pending' | 'processing' | 'completed' | 'failed' | 'refunded'
-export type ServiceType = 'itin' | 'ein_only' | 'stripe_activation' | 'credit_building' | 'alternative_id' | 'tax_8843' | 'tax_1040nr'
+export type ServiceType = 'itin' | 'ein_only' | 'stripe_activation' | 'credit_building' | 'alternative_id' | 'tax_8843' | 'tax_1040nr' | 'tax_form_help'
 export type ServiceRequestStatus = 'requested' | 'in_progress' | 'completed' | 'rejected'
 export type UserRole = 'founder' | 'admin' | 'student'
 export type FounderStatus = 'onboarding' | 'verified' | 'active' | 'churned'
@@ -577,6 +577,26 @@ export interface Database {
           created_at?: string
         }
       }
+      waitlist: {
+        Row: {
+          id: string
+          email: string
+          name: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          email: string
+          name?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          email?: string
+          name?: string | null
+          created_at?: string
+        }
+      }
       service_requests: {
         Row: {
           id: string
@@ -655,3 +675,4 @@ export type ReferralCode = Tables<'referral_codes'>
 export type UniversityVerificationCode = Tables<'university_verification_codes'>
 export type CompanyUpdate = Tables<'company_updates'>
 export type ServiceRequest = Tables<'service_requests'>
+export type Waitlist = Tables<'waitlist'>

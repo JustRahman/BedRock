@@ -176,8 +176,18 @@ export default function OnboardingPage() {
     }
 
     try {
-      sessionStorage.setItem('onboardingData', JSON.stringify(finalData))
-      localStorage.setItem('onboardingData', JSON.stringify(finalData))
+      // Merge student-specific data if coming from student onboarding
+      let mergedData: Record<string, unknown> = { ...finalData }
+      try {
+        const studentExtra = sessionStorage.getItem('student_onboarding_extra') || localStorage.getItem('student_onboarding_extra')
+        if (studentExtra) {
+          const parsed = JSON.parse(studentExtra)
+          mergedData = { ...mergedData, ...parsed }
+        }
+      } catch { /* ignore */ }
+
+      sessionStorage.setItem('onboardingData', JSON.stringify(mergedData))
+      localStorage.setItem('onboardingData', JSON.stringify(mergedData))
 
       // Copy OAuth profile data to localStorage so result page can read it
       try {
@@ -198,7 +208,7 @@ export default function OnboardingPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          ...finalData,
+          ...mergedData,
           oauthData: Object.keys(oauthData).length > 0 ? oauthData : undefined,
         }),
       })
@@ -220,6 +230,8 @@ export default function OnboardingPage() {
         sessionStorage.removeItem('identity_basic_info')
         sessionStorage.removeItem(BASIC_INFO_STORAGE_KEY)
         sessionStorage.removeItem(STEP_DATA_STORAGE_KEY)
+        sessionStorage.removeItem('student_onboarding_extra')
+        localStorage.removeItem('student_onboarding_extra')
       } catch {
         // Ignore cleanup errors
       }

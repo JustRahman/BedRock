@@ -68,12 +68,15 @@ export default function RegisterPage() {
       const supabase = createClient()
 
       const siteUrl = window.location.origin
+      const storedRole = sessionStorage.getItem('student_role') || localStorage.getItem('student_role')
+      console.log('[register] student_role:', storedRole)
       const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
         email: data.email,
         password: data.password,
         options: {
           data: {
             full_name: data.fullName,
+            role: storedRole || 'founder',
           },
           emailRedirectTo: `${siteUrl}/login`,
         },
@@ -125,21 +128,24 @@ export default function RegisterPage() {
             countryOfResidence: basicInfo.countryOfResidence || '',
             trustScore,
             oauthVerifications: oauthVerifications.length > 0 ? oauthVerifications : undefined,
-            role: localStorage.getItem('student_role') || undefined,
+            role: sessionStorage.getItem('student_role') || localStorage.getItem('student_role') || undefined,
           }),
         })
         registrationSaved = regRes.ok
+        console.log('[register] complete-registration status:', regRes.status, 'ok:', regRes.ok)
       } catch {
         console.error('Failed to save registration data')
       }
 
-      // Only clean up trustScoreResult — keep onboardingData and OAuth data
-      // in localStorage so the dashboard ensure endpoint can save ALL
-      // verifications (identity, digital presence, trust signals, etc.)
+      // Clean up registration-specific localStorage keys
       if (registrationSaved) {
         try {
           localStorage.removeItem('trustScoreResult')
           sessionStorage.removeItem('trustScoreResult')
+          localStorage.removeItem('student_role')
+          sessionStorage.removeItem('student_role')
+          localStorage.removeItem('student_onboarding_extra')
+          sessionStorage.removeItem('student_onboarding_extra')
         } catch { /* ignore */ }
       }
 

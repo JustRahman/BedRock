@@ -11,6 +11,8 @@ import {
   AlternativeID,
   Pricing,
   FAQ,
+  Waitlist,
+  WaitlistBanner,
   CTA,
   Footer,
 } from '@/components/landing'
@@ -18,6 +20,7 @@ import {
 export default function Home() {
   return (
     <div className="min-h-screen bg-[#09090b] text-white">
+      <WaitlistBanner />
       <Navbar />
       <main>
         <Hero />
@@ -31,6 +34,7 @@ export default function Home() {
         <AlternativeID />
         <Pricing />
         <FAQ />
+        <Waitlist />
         <CTA />
       </main>
       <Footer />

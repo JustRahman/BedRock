@@ -53,14 +53,26 @@ export function Sidebar() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [userRole, setUserRole] = useState<string>('founder')
 
-  // Fetch user role
+  // Fetch user role (retry if founder not created yet by ensure endpoint)
   useEffect(() => {
-    fetch('/api/founders/me')
-      .then((r) => r.json())
-      .then((data) => {
-        if (data.role) setUserRole(data.role)
-      })
-      .catch(() => {})
+    let cancelled = false
+    const fetchRole = async (retries: number) => {
+      try {
+        const r = await fetch('/api/founders/me')
+        if (r.ok) {
+          const data = await r.json()
+          if (!cancelled && data.role) setUserRole(data.role)
+        } else if (retries > 0 && !cancelled) {
+          setTimeout(() => fetchRole(retries - 1), 1000)
+        }
+      } catch {
+        if (retries > 0 && !cancelled) {
+          setTimeout(() => fetchRole(retries - 1), 1000)
+        }
+      }
+    }
+    fetchRole(3)
+    return () => { cancelled = true }
   }, [])
 
   // Close mobile menu on route change
