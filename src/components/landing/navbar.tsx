@@ -52,17 +52,9 @@ export function Navbar() {
         </div>
 
         <div className="hidden items-center gap-3 md:flex">
-          <Link href="/login">
-            <Button
-              variant="ghost"
-              className="text-zinc-300 hover:text-white hover:bg-white/[0.06]"
-            >
-              Log In
-            </Button>
-          </Link>
-          <Link href="/onboarding/choose">
-            <Button className="bg-white text-black hover:bg-zinc-100 rounded-lg px-5 font-medium">
-              Get Started
+          <Link href="#waitlist">
+            <Button className="bg-gradient-to-r from-blue-500 to-violet-600 text-white hover:from-blue-400 hover:to-violet-500 rounded-lg px-5 font-medium">
+              Join Waitlist
             </Button>
           </Link>
         </div>
@@ -94,17 +86,9 @@ export function Navbar() {
               </Link>
             ))}
             <div className="mt-4 space-y-2 border-t border-white/[0.06] pt-4">
-              <Link href="/login" onClick={() => setMobileMenuOpen(false)}>
-                <Button
-                  variant="ghost"
-                  className="w-full text-zinc-300 hover:text-white hover:bg-white/[0.06]"
-                >
-                  Log In
-                </Button>
-              </Link>
-              <Link href="/onboarding/choose" onClick={() => setMobileMenuOpen(false)}>
-                <Button className="w-full bg-white text-black hover:bg-zinc-100">
-                  Get Started
+              <Link href="#waitlist" onClick={() => setMobileMenuOpen(false)}>
+                <Button className="w-full bg-gradient-to-r from-blue-500 to-violet-600 text-white hover:from-blue-400 hover:to-violet-500">
+                  Join Waitlist
                 </Button>
               </Link>
             </div>
